@@ -1,0 +1,1 @@
+# # 기능: scikit-learn/XGBoost/LightGBM 등 ML 의존성 고정

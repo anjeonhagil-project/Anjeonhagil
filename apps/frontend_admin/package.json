@@ -1,0 +1,9 @@
+{
+  "name": "anjeonhagil-admin-web",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}

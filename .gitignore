@@ -1,0 +1,41 @@
+# Secret
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+dist/
+coverage/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# GIS / raw large data
+data-pipeline/data/raw/*
+data-pipeline/data/processed/*
+!data-pipeline/data/raw/.gitkeep
+!data-pipeline/data/processed/.gitkeep
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+
+# ML artifacts
+ml/artifacts/*
+!ml/artifacts/.gitkeep
+*.pkl
+*.joblib
+*.onnx
+*.pt
+*.pth
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/settings.json

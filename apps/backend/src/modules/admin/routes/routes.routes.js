@@ -1,0 +1,1 @@
+// # 기능: 관리자 경로 요청 목록/상세/실패·미지원 조회 endpoint URL/middleware 연결

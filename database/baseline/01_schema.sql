@@ -1,0 +1,3 @@
+-- # 기능: FINAL v8 Core 22 table / 225 columns / 31 FK / 9 spatial 생성
+-- # 주의: 실제 FINAL SQL 원본을 이 파일에 복사/이관해서 사용하세요.
+-- # 이 skeleton은 파일 위치와 역할만 정의합니다.

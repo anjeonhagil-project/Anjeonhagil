@@ -1,0 +1,4 @@
+# support
+
+# 기능: 최신 Figma `M-SUPPORT-001/004/005/006/007` 화면 구현 영역
+# 원칙: API 호출은 feature의 api.js 또는 공통 apiClient를 사용합니다.

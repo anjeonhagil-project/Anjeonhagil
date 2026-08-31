@@ -1,0 +1,3 @@
+-- # 기능: PostGIS + pgRouting extension 활성화
+-- # 주의: 실제 FINAL SQL 원본을 이 파일에 복사/이관해서 사용하세요.
+-- # 이 skeleton은 파일 위치와 역할만 정의합니다.
