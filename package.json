@@ -4,12 +4,11 @@
   "version": "0.1.0",
   "description": "안전하길 — 초보운전자를 위한 개인화 내비게이션 서비스 (KDT 중간프로젝트 2팀)",
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ],
   "scripts": {
-    "dev:api": "npm run dev -w apps/api",
-    "dev:admin": "npm run dev -w apps/admin",
-    "dev:mobile": "npm run start -w apps/mobile"
+    "dev:api": "npm run dev -w apps/backend",
+    "dev:admin": "npm run dev -w apps/frontend_admin",
+    "dev:mobile": "npm run dev -w apps/frontend_mobile"
   }
 }
