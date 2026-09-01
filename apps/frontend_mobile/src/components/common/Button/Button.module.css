@@ -1,0 +1,84 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), filter var(--transition-fast);
+    white-space: nowrap;
+}
+
+.button:disabled {
+    cursor: not-allowed;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+/* ---------- size ---------- */
+.md {
+    height: 52px;
+    padding: 0 var(--space-5);
+}
+
+.sm {
+    height: 44px;
+    padding: 0 var(--space-4);
+    font-size: var(--font-size-md);
+}
+
+/* ---------- variant: primary ----------
+   기본(활성화) = --color-primary-500-main
+   disabled(비활성화, 폼 미완성 등) = --color-primary-300
+   누르는 순간 :active(완료 상태) = --color-primary-600
+*/
+.primary {
+    background: var(--color-primary-500-main);
+    color: var(--color-text-white);
+}
+
+.primary:disabled {
+    background: var(--color-primary-300);
+    color: var(--color-text-white);
+}
+
+.primary:not(:disabled):hover {
+    background: var(--color-primary-600);
+}
+
+.primary:not(:disabled):active {
+    background: var(--color-primary-600);
+}
+
+/* ---------- variant: secondary (취소 버튼) ---------- */
+.secondary {
+    background: var(--color-bg-gray-soft);
+    color: var(--color-text-sub);
+}
+
+.secondary:not(:disabled):hover,
+.secondary:not(:disabled):active {
+    filter: brightness(0.96);
+}
+
+/* ---------- variant: danger (로그아웃 / 회원탈퇴) ---------- */
+.danger {
+    background: var(--color-danger);
+    color: var(--color-text-white);
+}
+
+.danger:disabled {
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
+}
+
+.danger:not(:disabled):hover,
+.danger:not(:disabled):active {
+    filter: brightness(0.9);
+}

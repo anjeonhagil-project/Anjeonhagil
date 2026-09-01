@@ -1,0 +1,85 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--color-bg-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    padding: var(--space-4);
+}
+
+.card {
+    width: 100%;
+    max-width: 320px;
+    background: var(--color-bg-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6) var(--space-5) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+    box-shadow: var(--shadow-card);
+}
+
+.iconCircle {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-2);
+}
+
+.warning {
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
+}
+
+.success {
+    background: var(--color-success-soft);
+    color: var(--color-success);
+}
+
+.edit {
+    background: var(--color-success-soft);
+    color: var(--color-primary-600);
+}
+
+.title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.description {
+    font-size: var(--font-size-base);
+    color: var(--color-text-sub);
+    line-height: 1.5;
+    white-space: pre-line;
+    margin-bottom: var(--space-3);
+}
+
+.actions {
+    display: flex;
+    gap: var(--space-2);
+    width: 100%;
+    margin-top: var(--space-2);
+}
+
+.actions > * {
+    flex: 1;
+}
+
+.link {
+    margin-top: var(--space-3);
+    background: none;
+    border: none;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-sub);
+    text-decoration: underline;
+    cursor: pointer;
+    font-family: inherit;
+}

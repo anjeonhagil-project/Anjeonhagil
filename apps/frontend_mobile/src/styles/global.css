@@ -1,1 +1,85 @@
 /* # 기능: reset 및 전역 base style */
+
+
+:root {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #24212a;
+    background: #f6f6f8;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+
+    /* ========================= Brand / Color ========================= */
+    --color-primary-50: #f3f8f7;
+    --color-primary-100: #d9f3f0;
+    --color-primary-200: #bfe9e4;
+    --color-primary-300: #94d6ce;
+    --color-primary-400: #52c0b3;
+    --color-primary-500-main: #00a99d;
+    --color-primary-600: #07817c;
+    --color-primary-700: #0c6263;
+    --color-primary-800: #123f46;
+    --color-accent-gold: #ffd166;
+
+    --color-bg-white: #ffffff;
+    --color-bg-selected: rgba(217, 243, 240, 0.5);
+    --color-bg-modal: rgba(0, 0, 0, 0.16);
+    --color-bg-gray-soft: #f3f4f6;
+
+    --color-border-gray: #e5e7eb;
+
+    --color-text: #123f46;
+    --color-text-sub: #617574;
+    --color-text-white: #ffffff;
+
+    --color-success: #00a99d;
+    --color-success-soft: #d9f3f0;
+    --color-warning: #d99a2b;
+    --color-warning-soft: #fbecd3;
+    --color-danger: #c94646;
+    --color-danger-soft: #f8dede;
+    --color-notice: #9ca3af;
+    --color-notice-soft: #e5e7eb;
+
+    /* ========================= 고정값 ========================= */
+    --radius-sm: 8px;      /* 뱃지, 작은 태그 */
+    --radius-md: 12px;     /* input, button */
+    --radius-lg: 20px;     /* modal 카드, 큰 컨테이너 */
+    --radius-full: 999px;  /* 원형 버튼, 아바타 */
+
+    --font-size-xs: 12px;   /* 보조 라벨 (예: "또는 간편 로그인") */
+    --font-size-sm: 13px;   /* 에러 문구, 텍스트 링크 */
+    --font-size-base: 14px; /* input 라벨, modal 설명 */
+    --font-size-md: 15px;   /* input 입력 텍스트, 작은 버튼 */
+    --font-size-lg: 16px;   /* 기본 버튼 */
+    --font-size-xl: 17px;   /* modal 제목 */
+    --font-size-2xl: 22px;  /* 로고, 화면 타이틀 */
+
+    --z-header: 100;
+    --z-dropdown: 200;
+    --z-modal: 1000;
+    --z-toast: 1100;
+
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.25s ease;
+
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    --layout-max-width: 402px; /* Figma 모바일 프레임 기준 */
+
+    /* ========================= Spacing ========================= */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-7: 32px;
+}
+
+/* 초기화 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
