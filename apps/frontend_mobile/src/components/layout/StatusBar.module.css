@@ -1,0 +1,23 @@
+.statusBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 44px;
+
+    padding-left: 30px;
+    padding-right: 24px;
+    
+    background: transparent;
+    color: var(--color-header-fixed);
+}
+
+.time {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}

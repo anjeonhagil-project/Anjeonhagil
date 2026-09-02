@@ -40,6 +40,8 @@
     --color-notice: #9ca3af;
     --color-notice-soft: #e5e7eb;
 
+    --color-header-fixed: #111827;
+
     /* ========================= 고정값 ========================= */
     --radius-sm: 8px;      /* 뱃지, 작은 태그 */
     --radius-md: 12px;     /* input, button */

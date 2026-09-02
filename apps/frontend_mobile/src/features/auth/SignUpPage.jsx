@@ -194,7 +194,7 @@ function SignUpPage() {
                     onChange={(e) => setNickname(e.target.value)}
                     error={errors.nickname}
                 />
-                <Button type="submit" fullWidth disabled={!isValid || submitting}>
+                <Button type="submit" fullWidth disabled={!isValid || submitting} className={styles.signUpBtn}>
                     {submitting ? '가입 중...' : '가입하기'}
                 </Button>
                 <div className={styles.divider}>또는 소셜 회원가입</div>
