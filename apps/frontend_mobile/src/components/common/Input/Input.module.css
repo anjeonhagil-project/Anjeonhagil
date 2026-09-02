@@ -37,9 +37,10 @@
 .input {
     flex: 1;
     min-width: 0;
-    height: 52px;
+    height: 44px;
     padding: 0 var(--space-4);
     border: none;
+    border-radius: var(--radius-md);
     outline: none;
     background: transparent;
     font-size: var(--font-size-md);
@@ -49,6 +50,18 @@
 
 .input::placeholder {
     color: var(--color-notice);
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-bg-white) inset;
+    -webkit-text-fill-color: var(--color-text);
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+.errorWrap .input::placeholder {
+    color: var(--color-danger);
 }
 
 .toggleButton {

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styles from './Input.module.css'
 
+// 비밀번호 노출 (눈 뜬 아이콘)
 function EyeIcon() {
     return (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -16,6 +17,7 @@ function EyeIcon() {
     )
 }
 
+// 비밀번호 미노출 (눈 감은 아이콘)
 function EyeOffIcon() {
     return (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -38,6 +40,8 @@ function EyeOffIcon() {
  *
  * error: 문자열을 넘기면 테두리가 danger 색으로 바뀌고 아래에 에러 문구가 표시됨
  *   (예: "아이디, 이메일 중복 및 비밀번호 미일치")
+ * hideErrorText: true면 테두리는 그대로 danger 색이 되지만 내부 에러 문구는 렌더링하지 않음
+ *   (버튼과 한 줄에 나란히 두는 등, 에러 문구를 바깥에서 직접 그리고 싶을 때 사용)
  *
  * 사용 예)
  *   <Input label="아이디" placeholder="아이디를 입력해주세요" value={id} onChange={(e) => setId(e.target.value)} />
@@ -50,6 +54,7 @@ export default function Input({
     value,
     onChange,
     error,
+    hideErrorText = false,
     disabled = false,
     id,
     ...rest
@@ -93,11 +98,11 @@ export default function Input({
                         aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
                         tabIndex={-1}
                     >
-                        {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                        {showPassword ? <EyeIcon /> : <EyeOffIcon />}
                     </button>
                 )}
             </div>
-            {error && <p className={styles.errorText}>{error}</p>}
+            {error && !hideErrorText && <p className={styles.errorText}>{error}</p>}
         </div>
     )
 }
