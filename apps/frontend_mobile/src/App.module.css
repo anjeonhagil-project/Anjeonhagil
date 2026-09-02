@@ -1,0 +1,9 @@
+.mobileFrame {
+    width: var(--layout-max-width);
+    height: var(--layout-max-height);
+    background: var(--color-bg-white);
+
+    border-radius: var(--radius-frame);
+
+    overflow-y: auto;   /* height 넘어가면 세로 스크롤 생성 */
+}
