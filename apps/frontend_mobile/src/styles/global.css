@@ -44,6 +44,7 @@
     --radius-sm: 8px;      /* 뱃지, 작은 태그 */
     --radius-md: 12px;     /* input, button */
     --radius-lg: 20px;     /* modal 카드, 큰 컨테이너 */
+    --radius-frame: 40px;  /* 모바일 frame */
     --radius-full: 999px;  /* 원형 버튼, 아바타 */
 
     --font-size-xs: 12px;   /* 보조 라벨 (예: "또는 간편 로그인") */
@@ -66,6 +67,7 @@
     --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.06);
 
     --layout-max-width: 402px; /* Figma 모바일 프레임 기준 */
+    --layout-max-height: 874px; /* Figma 모바일 프레임 기준 */
 
     /* ========================= Spacing ========================= */
     --space-1: 4px;
@@ -82,4 +84,11 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
