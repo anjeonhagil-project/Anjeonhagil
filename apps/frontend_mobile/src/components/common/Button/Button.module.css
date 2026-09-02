@@ -5,7 +5,7 @@
     gap: var(--space-2);
     border: none;
     border-radius: var(--radius-md);
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--font-size-lg);
     font-family: inherit;
     cursor: pointer;
@@ -34,9 +34,10 @@
 }
 
 /* ---------- variant: primary ----------
-   기본(활성화) = --color-primary-500-main
-   disabled(비활성화, 폼 미완성 등) = --color-primary-300
-   누르는 순간 :active(완료 상태) = --color-primary-600
+    기본(활성화) = --color-primary-500-main
+    disabled(비활성화, 폼 미완성 등) = --color-primary-300
+    hover = --color-primary-600
+    누르는 순간 :active(완료 상태) = --color-primary-800
 */
 .primary {
     background: var(--color-primary-500-main);
@@ -53,7 +54,7 @@
 }
 
 .primary:not(:disabled):active {
-    background: var(--color-primary-600);
+    background: var(--color-primary-800);
 }
 
 /* ---------- variant: secondary (취소 버튼) ---------- */
