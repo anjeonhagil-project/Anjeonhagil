@@ -23,6 +23,7 @@
 }
 
 .mobileFrame {
+    position: relative;  /* Modal(.backdrop)이 뷰포트가 아닌 이 프레임 기준으로 뜨도록 */
     width: var(--layout-max-width);
     height: var(--layout-max-height);
     background: var(--color-bg-white);
