@@ -3,10 +3,9 @@ import { useState } from 'react'
 import { supabase } from '../../lib/supabaseClient.js'
 import { Input, Button, SocialLoginButton } from '../../components/common/index.js'
 import Header from '../../components/layout/Header.jsx'
-import { checkUsername, checkEmail } from './api.js'
+import { checkEmail } from './api.js'
 import styles from './SignUpPage.module.css'
 
-const USERNAME_REGEX = /^[a-z][a-z0-9_]{4,19}$/
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?!.*\s).{8,20}$/
 const NICKNAME_REGEX = /^[가-힣a-zA-Z0-9]{2,10}$/
@@ -18,7 +17,6 @@ const OAUTH_PROVIDER_MAP = {
 }
 
 function SignUpPage() {
-    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -26,33 +24,13 @@ function SignUpPage() {
     const [errors, setErrors] = useState({})
     const [submitting, setSubmitting] = useState(false)
     const [done, setDone] = useState(false)
-    const [usernameCheck, setUsernameCheck] = useState('idle') // idle | checking | available | taken
     const [emailCheck, setEmailCheck] = useState('idle')
 
     const isValid =
-        usernameCheck === 'available' &&
         emailCheck === 'available' &&
         password.length > 0 &&
         passwordConfirm.length > 0 &&
         nickname.length > 0
-
-    const handleCheckUsername = async () => {
-        if (usernameCheck === 'checking') return
-
-        if (!USERNAME_REGEX.test(username)) {
-            setErrors((prev) => ({ ...prev, username: '아이디를 형식에 맞게 입력해주세요' }))
-            return
-        }
-
-        setErrors((prev) => ({ ...prev, username: undefined }))
-        setUsernameCheck('checking')
-        try {
-            const { available } = await checkUsername(username)
-            setUsernameCheck(available ? 'available' : 'taken')
-        } catch {
-            setUsernameCheck('idle')
-        }
-    }
 
     const handleCheckEmail = async () => {
         if (emailCheck === 'checking') return
@@ -76,8 +54,6 @@ function SignUpPage() {
         e.preventDefault()
 
         const nextErrors = {}
-        if (!USERNAME_REGEX.test(username)) nextErrors.username = '영문 소문자로 시작, 5~20자(영문/숫자/_)로 입력해주세요'
-        else if (usernameCheck !== 'available') nextErrors.username = '아이디 중복확인을 해주세요'
         if (!EMAIL_REGEX.test(email)) nextErrors.email = '올바른 이메일 형식이 아닙니다'
         else if (emailCheck !== 'available') nextErrors.email = '이메일 중복확인을 해주세요'
         if (!PASSWORD_REGEX.test(password)) nextErrors.password = '영문+숫자+특수문자 포함 8~20자로 입력해주세요'
@@ -92,7 +68,7 @@ function SignUpPage() {
             email,
             password,
             options: {
-                data: { username, nickname },
+                data: { nickname },
             },
         })
         setSubmitting(false)
@@ -122,30 +98,6 @@ function SignUpPage() {
         <div>
             <Header title="회원가입" onBack={() => window.history.back()} />
             <form className={styles.page} onSubmit={handleSubmit}>
-                <div className={styles.inputRow}>
-                    <Input
-                        label="아이디"
-                        placeholder="아이디를 입력해주세요"
-                        value={username}
-                        onChange={(e) => {
-                            setUsername(e.target.value)
-                            setUsernameCheck('idle')
-                        }}
-                        error={errors.username}
-                        hideErrorText
-                    />
-                    <Button
-                        type="button"
-                        variant="primary"
-                        size="sm"
-                        onClick={handleCheckUsername}
-                    >
-                        중복확인
-                    </Button>
-                </div>
-                {errors.username && username && <p className={styles.hintError}>{errors.username}</p>}
-                {!errors.username && usernameCheck === 'available' && <p className={styles.hint}>사용 가능한 아이디입니다</p>}
-                {!errors.username && usernameCheck === 'taken' && <p className={styles.hintError}>이미 사용 중인 아이디입니다</p>}
                 <div className={styles.inputRow}>
                     <Input
                         label="이메일"

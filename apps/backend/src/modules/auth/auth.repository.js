@@ -11,11 +11,6 @@ async function existsBy(column, value) {
     return count > 0
 }
 
-// 회원가입 시 아이디 중복 확인용
-export function usernameExists(username) {
-    return existsBy('username', username)
-}
-
 // 회원가입 시 이메일 중복 확인용
 export function emailExists(email) {
     return existsBy('email', email)
