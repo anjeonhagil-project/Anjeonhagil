@@ -16,6 +16,11 @@
     background: transparent;
     cursor: pointer;
     color: var(--color-text);
+    transition: color var(--transition-fast);
+}
+
+.backButton:hover {
+    color: var(--color-text-sub);
 }
 
 .title {
