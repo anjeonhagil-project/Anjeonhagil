@@ -6,6 +6,9 @@ import SplashPage from '../features/auth/SplashPage.jsx'
 import LoginPage from '../features/auth/LoginPage.jsx'
 import SignUpPage from '../features/auth/SignUpPage.jsx'
 import ForgotPasswordPage from '../features/auth/ForgotPasswordPage.jsx'
+import TermsPage from '../features/auth/TermsPage.jsx'
+import TermsDetailPage from '../features/auth/TermsDetailPage.jsx'
+import LocationPermissionPage from '../features/auth/LocationPermissionPage.jsx'
 import HomePage from '../features/home/HomePage.jsx'
 import OnboardingPage from '../features/onboarding/OnboardingPage.jsx'
 import AuthRedirect from './AuthRedirect.jsx'
@@ -18,6 +21,9 @@ function AppRouter() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/terms" element={<TermsPage />} />
+                <Route path="/terms/:type" element={<TermsDetailPage />} />
+                <Route path="/location-permission" element={<LocationPermissionPage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/onboarding" element={<OnboardingPage />} />
                 <Route path="/" element={<SplashPage />} />

@@ -6,3 +6,13 @@ import { apiClient } from '../../lib/apiClient.js'
 export function checkEmail(value) {
     return apiClient.get(`/auth/check-email?value=${encodeURIComponent(value)}`)
 }
+
+// 약관 동의 상태 조회
+export function getTerms() {
+    return apiClient.get('/users/me/terms')
+}
+
+// 약관 동의 저장
+export function agreeToTerms() {
+    return apiClient.put('/users/me/terms', { agreed: true })
+}

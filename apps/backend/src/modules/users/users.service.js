@@ -13,3 +13,28 @@ export async function getMe(userId) {
 
     return user
 }
+
+const REQUIRED_TERMS = ['service', 'privacy', 'location']
+
+// 약관 동의 상태 조회
+export async function getTerms(userId) {
+    const agreement = await usersRepository.findTermsAgreement(userId)
+    return {
+        required: REQUIRED_TERMS,
+        agreed: Boolean(agreement),
+        agreedAt: agreement?.agreed_at ?? null,
+    }
+}
+
+// 약관 동의 저장
+export async function updateTerms(userId, agreed) {
+    if (!agreed) {
+        const err = new Error('필수 약관에 동의해야 합니다')
+        err.status = 400
+        err.code = 'TERMS_REQUIRED'
+        throw err
+    }
+
+    const agreement = await usersRepository.upsertTermsAgreement(userId)
+    return { agreed: true, agreedAt: agreement.agreed_at }
+}
