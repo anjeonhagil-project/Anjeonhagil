@@ -23,6 +23,11 @@
     font-size: var(--font-size-sm);
     color: var(--color-text-sub);
     cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.link:hover {
+    color: var(--color-text-faint);
 }
 
 .linkDivider {

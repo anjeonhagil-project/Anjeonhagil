@@ -9,6 +9,7 @@
     background: var(--color-bg-white);
     cursor: pointer;
     padding: 0;
+    transition: background-color var(--transition-fast);
 }
 
 .naver {
@@ -17,13 +18,25 @@
     border: none;
 }
 
+.naver:hover {
+    background: color-mix(in srgb, #03c75a 85%, black);
+}
+
 .kakao {
     background: #fee500;
     color: #191600;
     border: none;
 }
 
+.kakao:hover {
+    background: color-mix(in srgb, #fee500 85%, black);
+}
+
 .google {
     background: var(--color-bg-white);
     color: var(--color-text);
+}
+
+.google:hover {
+    background: var(--color-bg-gray-soft);
 }
