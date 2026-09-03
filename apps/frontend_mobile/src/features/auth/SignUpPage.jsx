@@ -1,5 +1,6 @@
 // 기능: M-AUTH-003 회원가입 화면
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabaseClient.js'
 import { Input, Button, SocialLoginButton } from '../../components/common/index.js'
 import Header from '../../components/layout/Header.jsx'
@@ -17,6 +18,7 @@ const OAUTH_PROVIDER_MAP = {
 }
 
 function SignUpPage() {
+    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -25,12 +27,6 @@ function SignUpPage() {
     const [submitting, setSubmitting] = useState(false)
     const [done, setDone] = useState(false)
     const [emailCheck, setEmailCheck] = useState('idle')
-
-    const isValid =
-        emailCheck === 'available' &&
-        password.length > 0 &&
-        passwordConfirm.length > 0 &&
-        nickname.length > 0
 
     const handleCheckEmail = async () => {
         if (emailCheck === 'checking') return
@@ -52,13 +48,14 @@ function SignUpPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (submitting) return
 
         const nextErrors = {}
         if (!EMAIL_REGEX.test(email)) nextErrors.email = '올바른 이메일 형식이 아닙니다'
         else if (emailCheck !== 'available') nextErrors.email = '이메일 중복확인을 해주세요'
-        if (!PASSWORD_REGEX.test(password)) nextErrors.password = '영문+숫자+특수문자 포함 8~20자로 입력해주세요'
+        if (!PASSWORD_REGEX.test(password)) nextErrors.password = '영문+숫자+특수문자 포함 8~20자'
         if (password !== passwordConfirm) nextErrors.passwordConfirm = '비밀번호가 일치하지 않습니다'
-        if (!NICKNAME_REGEX.test(nickname)) nextErrors.nickname = '닉네임은 한글, 영어, 숫자로 구성된 2~10글자만 가능합니다.'
+        if (!NICKNAME_REGEX.test(nickname)) nextErrors.nickname = '한글, 영어, 숫자로 구성된 2~10글자'
 
         setErrors(nextErrors)
         if (Object.keys(nextErrors).length > 0) return
@@ -146,9 +143,12 @@ function SignUpPage() {
                     onChange={(e) => setNickname(e.target.value)}
                     error={errors.nickname}
                 />
-                <Button type="submit" fullWidth disabled={!isValid || submitting} className={styles.signUpBtn}>
+                <Button type="submit" fullWidth className={styles.signUpBtn}>
                     {submitting ? '가입 중...' : '가입하기'}
                 </Button>
+                <button type="button" className={styles.link} onClick={() => navigate('/login')}>
+                    이미 계정이 있으신가요? 로그인
+                </button>
                 <div className={styles.divider}>또는 소셜 회원가입</div>
                 <div className={styles.socialRow}>
                     <SocialLoginButton provider="naver" onClick={() => handleSocialLogin('naver')} />
