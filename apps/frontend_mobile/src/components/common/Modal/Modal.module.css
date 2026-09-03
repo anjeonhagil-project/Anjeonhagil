@@ -1,5 +1,5 @@
 .backdrop {
-    position: fixed;
+    position: absolute;
     inset: 0;
     background: var(--color-bg-modal);
     display: flex;
