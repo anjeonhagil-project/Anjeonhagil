@@ -1,0 +1,45 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(var(--layout-max-height) - 44px - 56px);
+    padding: var(--space-6) var(--space-6) var(--space-6);
+    text-align: center;
+}
+
+.iconCircle {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent-gold);
+    color: var(--color-primary-500-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-5);
+}
+
+.title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
+}
+
+.description {
+    font-size: var(--font-size-base);
+    color: var(--color-text-sub);
+    line-height: 1.6;
+}
+
+.note {
+    font-size: var(--font-size-sm);
+    color: var(--color-notice);
+    margin-top: auto;
+    margin-bottom: var(--space-4);
+}
+
+.submitBtn {
+    width: 100%;
+}

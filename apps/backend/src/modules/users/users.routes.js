@@ -8,4 +8,10 @@ const router = Router()
 // 내 정보 조회
 router.get('/me', authenticate, usersController.getMe)
 
+// 약관 동의 상태 조회
+router.get('/me/terms', authenticate, usersController.getTerms)
+
+// 약관 동의 저장
+router.put('/me/terms', authenticate, usersController.updateTerms)
+
 export default router

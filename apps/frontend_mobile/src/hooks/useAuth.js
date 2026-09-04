@@ -7,6 +7,7 @@ import { apiClient } from '../lib/apiClient.js'
 export function useAuth() {
     const [session, setSession] = useState(null)
     const [profile, setProfile] = useState(null)
+    const [termsAgreed, setTermsAgreed] = useState(null) // null = 아직 확인 전
     const [loading, setLoading] = useState(true)
 
     // 최초 진입 시 현재 세션을 가져오고, 이후 로그인/로그아웃/토큰 갱신을 실시간으로 반영
@@ -32,15 +33,24 @@ export function useAuth() {
     useEffect(() => {
         if (!session) {
             setProfile(null)
+            setTermsAgreed(null)
             setLoading(false)
             return
         }
 
         setLoading(true)
-        apiClient
-            .get('/users/me')
-            .then(setProfile)
-            .catch(() => setProfile(null))
+        Promise.all([
+            apiClient.get('/users/me'),
+            apiClient.get('/users/me/terms'),
+        ])
+            .then(([profileData, termsData]) => {
+                setProfile(profileData)
+                setTermsAgreed(termsData.agreed)
+            })
+            .catch(() => {
+                setProfile(null)
+                setTermsAgreed(null)
+            })
             .finally(() => setLoading(false))
     }, [session])
 
@@ -48,6 +58,7 @@ export function useAuth() {
         session,
         user: session?.user ?? null,
         profile,
+        termsAgreed,
         loading,
         isAuthenticated: Boolean(session),
     }

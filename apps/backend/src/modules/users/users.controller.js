@@ -21,3 +21,23 @@ export async function getMe(req, res, next) {
         next(err)
     }
 }
+
+// 약관 동의 상태 조회
+export async function getTerms(req, res, next) {
+    try {
+        const result = await usersService.getTerms(req.user.id)
+        res.json({ success: true, data: result })
+    } catch (err) {
+        next(err)
+    }
+}
+
+// 약관 동의 저장
+export async function updateTerms(req, res, next) {
+    try {
+        const result = await usersService.updateTerms(req.user.id, req.body?.agreed)
+        res.json({ success: true, data: result })
+    } catch (err) {
+        next(err)
+    }
+}
