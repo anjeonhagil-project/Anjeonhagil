@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Button, Input, Modal } from '../../components/common/index.js'
 import Header from '../../components/layout/Header.jsx'
+import BottomNav from '../../components/layout/BottomNav.jsx'
 import { deleteFavorite, getFavorites, updateFavorite } from './api.js'
 import styles from './FavoritesPage.module.css'
 
@@ -80,6 +81,7 @@ function FavoriteDetailPage() {
             <div className={styles.page}>
                 <Header title="즐겨찾기 상세" onBack={() => navigate('/favorites')} />
                 <p className={styles.error}>{error || '즐겨찾기를 찾을 수 없습니다'}</p>
+                <BottomNav />
             </div>
         )
     }
@@ -104,6 +106,7 @@ function FavoriteDetailPage() {
                     <Button fullWidth variant="danger" onClick={() => setDeleting(true)}>삭제</Button>
                 </div>
             </main>
+            <BottomNav />
 
             <Modal
                 open={deleting}
