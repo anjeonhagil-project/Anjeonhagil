@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import SplashPage from '../features/auth/SplashPage.jsx'
 import LoginPage from '../features/auth/LoginPage.jsx'
 import SignUpPage from '../features/auth/SignUpPage.jsx'
+import EmailVerifyPage from '../features/auth/EmailVerifyPage.jsx'
 import ForgotPasswordPage from '../features/auth/ForgotPasswordPage.jsx'
 import TermsPage from '../features/auth/TermsPage.jsx'
 import TermsDetailPage from '../features/auth/TermsDetailPage.jsx'
@@ -24,6 +25,7 @@ function AppRouter() {
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/email-verify" element={<EmailVerifyPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/terms" element={<TermsPage />} />
                 <Route path="/terms/:type" element={<TermsDetailPage />} />

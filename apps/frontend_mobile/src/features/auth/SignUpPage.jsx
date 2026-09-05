@@ -25,7 +25,6 @@ function SignUpPage() {
     const [nickname, setNickname] = useState('')
     const [errors, setErrors] = useState({})
     const [submitting, setSubmitting] = useState(false)
-    const [done, setDone] = useState(false)
     const [emailCheck, setEmailCheck] = useState('idle')
 
     const handleCheckEmail = async () => {
@@ -75,20 +74,11 @@ function SignUpPage() {
             return
         }
 
-        setDone(true)
+        navigate('/email-verify', { state: { email } })
     }
 
     const handleSocialLogin = (provider) => {
         supabase.auth.signInWithOAuth({ provider: OAUTH_PROVIDER_MAP[provider] })
-    }
-
-    if (done) {
-        return (
-            <div>
-                <h1>이메일을 확인해주세요</h1>
-                <p>{email}로 인증 메일을 보냈습니다. 메일의 링크를 눌러 가입을 완료해주세요.</p>
-            </div>
-        )
     }
 
     return (

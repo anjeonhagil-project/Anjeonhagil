@@ -85,7 +85,10 @@ begin
     false,
     now(),
     now()
-  );
+  )
+  -- 소셜 로그인은 INSERT/UPDATE 두 트리거가 같은 가입 이벤트에서 함께 실행될 수 있어
+  -- 이미 프로필이 있으면 조용히 무시(중복 PK 에러로 로그인 자체가 막히는 것 방지)
+  on conflict (id) do nothing;
 
   return new;
 exception
