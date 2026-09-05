@@ -3,12 +3,14 @@
 import { Router } from 'express'
 import usersRouter from '../modules/users/users.routes.js'
 import authRouter from '../modules/auth/auth.routes.js'
+import preferencesRouter from '../modules/preferences/preferences.routes.js'
 import placesRouter from '../modules/places/places.routes.js'
 
 const router = Router()
 
 router.use('/users', usersRouter)
 router.use('/auth', authRouter)
+router.use('/driving-preferences', preferencesRouter)
 router.use('/places', placesRouter)
 
 export default router
