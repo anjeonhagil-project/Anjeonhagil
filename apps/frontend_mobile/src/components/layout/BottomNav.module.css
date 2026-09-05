@@ -1,0 +1,39 @@
+.nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    border-top: 1px solid var(--color-border-gray);
+    background: var(--color-bg-white);
+}
+
+.tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: var(--space-2) 0;
+    
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    color: var(--color-notice);
+    font-size: var(--font-size-xs);
+    transition: color var(--transition-fast);
+}
+
+.tab:hover {
+    color: var(--color-notice-hover);
+}
+
+.active {
+    color: var(--color-primary-500-main);
+}
+
+.active:hover {
+    color: var(--color-primary-600);
+}
