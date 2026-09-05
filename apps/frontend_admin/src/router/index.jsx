@@ -62,10 +62,27 @@ function AppRouter() {
                         }
                     />
 
+                    {/* /datasets 직접 접근 시 성공한 경로 검색으로 이동 */}
                     <Route
                         path="/datasets"
                         element={
                             <PlaceholderPage title="데이터 관리" />
+                        }
+                    />
+
+                    {/* 성공한 경로 검색 */}
+                    <Route
+                        path="/datasets/success"
+                        element={
+                            <PlaceholderPage title="성공한 경로 검색" />
+                        }
+                    />
+
+                    {/* 실패한 경로 검색 */}
+                    <Route
+                        path="/datasets/failure"
+                        element={
+                            <PlaceholderPage title="실패한 경로 검색" />
                         }
                     />
 
