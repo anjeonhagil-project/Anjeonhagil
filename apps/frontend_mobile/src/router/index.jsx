@@ -11,6 +11,8 @@ import TermsDetailPage from '../features/auth/TermsDetailPage.jsx'
 import LocationPermissionPage from '../features/auth/LocationPermissionPage.jsx'
 import HomePage from '../features/home/HomePage.jsx'
 import OnboardingPage from '../features/onboarding/OnboardingPage.jsx'
+import FavoritesPage from '../features/favorites/FavoritesPage.jsx'
+import FavoriteDetailPage from '../features/favorites/FavoriteDetailPage.jsx'
 import AuthRedirect from './AuthRedirect.jsx'
 
 function AppRouter() {
@@ -26,6 +28,8 @@ function AppRouter() {
                 <Route path="/location-permission" element={<LocationPermissionPage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/onboarding" element={<OnboardingPage />} />
+                <Route path="/favorites" element={<FavoritesPage />} />
+                <Route path="/favorites/:favoriteId" element={<FavoriteDetailPage />} />
                 <Route path="/" element={<SplashPage />} />
             </Routes>
         </BrowserRouter>
