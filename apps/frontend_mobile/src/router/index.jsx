@@ -10,6 +10,9 @@ import TermsPage from '../features/auth/TermsPage.jsx'
 import TermsDetailPage from '../features/auth/TermsDetailPage.jsx'
 import LocationPermissionPage from '../features/auth/LocationPermissionPage.jsx'
 import HomePage from '../features/home/HomePage.jsx'
+import SearchPage from '../features/search/SearchPage.jsx'
+import FavoritesPage from '../features/favorites/FavoritesPage.jsx'
+import MyPage from '../features/my/MyPage.jsx'
 import OnboardingPage from '../features/onboarding/OnboardingPage.jsx'
 import AuthRedirect from './AuthRedirect.jsx'
 
@@ -25,6 +28,9 @@ function AppRouter() {
                 <Route path="/terms/:type" element={<TermsDetailPage />} />
                 <Route path="/location-permission" element={<LocationPermissionPage />} />
                 <Route path="/home" element={<HomePage />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/favorites" element={<FavoritesPage />} />
+                <Route path="/my" element={<MyPage />} />
                 <Route path="/onboarding" element={<OnboardingPage />} />
                 <Route path="/" element={<SplashPage />} />
             </Routes>
