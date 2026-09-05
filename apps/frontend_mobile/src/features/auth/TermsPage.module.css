@@ -1,0 +1,86 @@
+.page {
+    padding: var(--space-4) var(--space-6) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.allCard {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--color-primary-300);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-50);
+    text-align: left;
+    cursor: pointer;
+}
+
+.allText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.allTitle {
+    font-weight: 700;
+    color: var(--color-text);
+    font-size: var(--font-size-base);
+}
+
+.allDescription {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-sub);
+    line-height: 1.4;
+}
+
+.list {
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-border-gray);
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.itemCheck {
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.itemLabel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    cursor: pointer;
+    text-align: left;
+}
+
+.required {
+    color: var(--color-text-sub);
+    font-weight: 400;
+}
+
+.submitBtn {
+    margin-top: var(--space-2);
+}

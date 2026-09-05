@@ -42,6 +42,8 @@ export const apiClient = {
     put: (path, body) => request(path, { method: 'PUT', body: JSON.stringify(body) }),
     // 부분 수정용 PATCH 요청 (예: 닉네임 수정)
     patch: (path, body) => request(path, { method: 'PATCH', body: JSON.stringify(body) }),
+    // 전체 저장용 PUT 요청 (예: 약관 동의 저장)
+    put: (path, body) => request(path, { method: 'PUT', body: JSON.stringify(body) }),
     // 삭제용 DELETE 요청, body가 필요한 경우(예: 탈퇴 confirm)만 실어 보냄
     delete: (path, body) => request(path, { method: 'DELETE', body: body ? JSON.stringify(body) : undefined }),
 }

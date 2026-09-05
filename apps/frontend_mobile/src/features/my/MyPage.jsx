@@ -1,13 +1,13 @@
-// 기능: M-HOME-001 홈 화면 (임시 placeholder)
+// 기능: MY 화면 (임시 placeholder)
 import BottomNav from '../../components/layout/BottomNav.jsx'
 
-function HomePage() {
+function MyPage() {
     return (
         <div>
-            <div>홈 화면</div>
+            <div>MY 화면</div>
             <BottomNav />
         </div>
     )
 }
 
-export default HomePage
+export default MyPage

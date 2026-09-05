@@ -12,3 +12,27 @@ export async function findById(userId) {
     if (error) throw error
     return data
 }
+
+// 약관 동의 상태 조회
+export async function findTermsAgreement(userId) {
+    const { data, error } = await supabase
+        .from('user_term_agreements')
+        .select('agreed_at')
+        .eq('user_id', userId)
+        .maybeSingle()
+
+    if (error) throw error
+    return data
+}
+
+// 약관 동의 저장 (idempotent upsert)
+export async function upsertTermsAgreement(userId) {
+    const { data, error } = await supabase
+        .from('user_term_agreements')
+        .upsert({ user_id: userId, agreed_at: new Date().toISOString() }, { onConflict: 'user_id' })
+        .select('agreed_at')
+        .single()
+
+    if (error) throw error
+    return data
+}
