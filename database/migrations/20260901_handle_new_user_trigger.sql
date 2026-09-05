@@ -49,21 +49,26 @@ begin
   end if;
 
   -- nickname: 이메일 가입은 프론트가 넘겨준 nickname, 소셜은 provider가 준 이름
+  -- (ck_users_nickname은 2~10자 한글/영문/숫자만 허용 → 대체값도 반드시 규칙에 맞춰야 함)
   v_nickname := coalesce(
     new.raw_user_meta_data ->> 'nickname',
     new.raw_user_meta_data ->> 'full_name',
     new.raw_user_meta_data ->> 'name',
-    v_username
+    substr(v_username, 1, 10)
   );
+  if v_nickname !~ '^[가-힣A-Za-z0-9]{2,10}$' then
+    v_nickname := substr(v_username, 1, 10);
+  end if;
 
-  -- signup_provider: 팀 컨벤션은 google / kakao / naver / local 네 가지.
-  -- Supabase는 이메일·비밀번호 가입 시 app_metadata.provider에 자동으로
-  -- 'email'을 넣어주므로, 이 값만 팀 컨벤션인 'local'로 바꿔서 저장.
-  -- (naver는 Supabase 기본 제공 provider가 아니라 Custom OAuth로 붙일 예정이라
-  --  실제 연동 시 provider 값이 'naver'로 그대로 오는지 다시 확인 필요)
+  -- signup_provider: ck_users_signup_provider 제약이 'local'/'google'/'kakao'/'naver'만 허용.
+  -- Supabase는 이메일·비밀번호 가입 시 app_metadata.provider에 자동으로 'email'을 넣어주므로
+  -- 팀 컨벤션인 'local'로 바꾸고, 네이버는 Custom OAuth라 provider 값이 'custom:naver'로 오는 걸
+  -- 실제 확인해서 'custom:' 접두사를 떼어내도록 처리
   v_provider := coalesce(new.raw_app_meta_data ->> 'provider', 'local');
   if v_provider = 'email' then
     v_provider := 'local';
+  elsif v_provider like 'custom:%' then
+    v_provider := substr(v_provider, 8);
   end if;
 
   insert into public.users (
@@ -92,12 +97,26 @@ end;
 $$;
 
 -- ── 2. 트리거 등록 ──────────────────────────────────────────────────────────
+-- 재실행해도 에러 없이 덮어써지도록 기존 트리거를 먼저 정리
 drop trigger if exists on_auth_user_created on auth.users;
+drop trigger if exists on_auth_user_confirmed on auth.users;
+drop trigger if exists on_auth_user_created_confirmed on auth.users;
 
+-- 이메일/비밀번호 가입: signUp() 시점엔 email_confirmed_at이 null이었다가,
+-- 6자리 인증번호 확인(verifyOtp) 성공 시 null → not null로 바뀌는 순간 실행
 create trigger on_auth_user_confirmed
   after update of email_confirmed_at on auth.users
   for each row
   when (old.email_confirmed_at is null and new.email_confirmed_at is not null)
+  execute function public.handle_new_user();
+
+-- 소셜 로그인(네이버/카카오/구글): 이메일 동의를 안 한 계정은 email/
+-- email_confirmed_at이 둘 다 null로 들어오기도 해서 email_confirmed_at로는
+-- 판별 불가 → provider가 'email'(자체 가입)이 아니면 무조건 즉시 생성
+create trigger on_auth_user_created_confirmed
+  after insert on auth.users
+  for each row
+  when (coalesce(new.raw_app_meta_data ->> 'provider', 'email') <> 'email')
   execute function public.handle_new_user();
 
 -- ============================================================================
