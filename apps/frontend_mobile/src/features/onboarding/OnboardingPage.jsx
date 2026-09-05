@@ -1,6 +1,8 @@
 // 기능: M-ONB 온보딩 설문 시작/4문항/완료 화면
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { FiShield } from 'react-icons/fi'
+import { FaCheck } from 'react-icons/fa6'
 import Header from '../../components/layout/Header.jsx'
 import Button from '../../components/common/Button/Button.jsx'
 import { saveDrivingPreferences } from './api.js'
@@ -75,6 +77,7 @@ function OnboardingPage() {
         return (
             <main className={styles.page}>
                 <Header title="운전 부담 설문" onBack={() => navigate(-1)} />
+                <div className={styles.body}>
                 <section className={styles.introContent} aria-labelledby="onboarding-intro-title">
                     <div className={styles.roadIllustration} aria-hidden="true">
                         <span className={styles.cloudOne} />
@@ -98,6 +101,7 @@ function OnboardingPage() {
                     <p className={styles.helperText}>답변은 언제든지 내 정보에서 바꿀 수 있어요.</p>
                     <Button fullWidth onClick={() => setScreen('questions')}>시작하기</Button>
                 </div>
+                </div>
             </main>
         )
     }
@@ -106,12 +110,23 @@ function OnboardingPage() {
         return (
             <main className={styles.page}>
                 <Header title="설정 완료" onBack={() => navigate('/home')} />
+                <div className={styles.body}>
                 <section className={styles.completeContent} aria-labelledby="onboarding-complete-title">
-                    <div className={styles.completeIcon} aria-hidden="true">✓</div>
+                    <div className={styles.completeIconWrap} aria-hidden="true">
+                        <span className={styles.completeDotPink} />
+                        <span className={styles.completeDotGold} />
+                        <div className={styles.completeIcon}>
+                            <FaCheck />
+                        </div>
+                    </div>
                     <h2 id="onboarding-complete-title" className={styles.completeTitle}>
                         나의 운전 부담 설정이 완료됐어요
                     </h2>
                     <div className={styles.completeNotice}>
+                        <div className={styles.completeNoticeHeader}>
+                            <FiShield aria-hidden="true" />
+                            <span>초보 드라이버 맞춤 경로 가이드</span>
+                        </div>
                         <p>• 도로 분위기에 맞는 경로를 찾아드려요.</p>
                         <p>• 복잡한 교차로를 최대한 피해드려요.</p>
                         <p>• 터치 한 번으로 편안한 길을 안내해요.</p>
@@ -122,6 +137,7 @@ function OnboardingPage() {
                         안전하길 시작하기
                     </Button>
                 </div>
+                </div>
             </main>
         )
     }
@@ -129,6 +145,7 @@ function OnboardingPage() {
     return (
         <main className={styles.page}>
             <Header title="운전 부담 설문" onBack={goPrevious} />
+            <div className={styles.body}>
             <section className={styles.questionContent} aria-labelledby="onboarding-question-title">
                 <div className={styles.progressHeader}>
                     <span>운전할 때 부담되는 상황을 알려주세요</span>
@@ -175,6 +192,7 @@ function OnboardingPage() {
                 <Button fullWidth onClick={goNext} disabled={!selectedScore || isSubmitting}>
                     {isSubmitting ? '저장 중...' : '다음'}
                 </Button>
+            </div>
             </div>
         </main>
     )
