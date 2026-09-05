@@ -14,6 +14,7 @@ import SearchPage from '../features/search/SearchPage.jsx'
 import FavoritesPage from '../features/favorites/FavoritesPage.jsx'
 import MyPage from '../features/my/MyPage.jsx'
 import OnboardingPage from '../features/onboarding/OnboardingPage.jsx'
+import FavoriteDetailPage from '../features/favorites/FavoriteDetailPage.jsx'
 import AuthRedirect from './AuthRedirect.jsx'
 
 function AppRouter() {
@@ -32,6 +33,7 @@ function AppRouter() {
                 <Route path="/favorites" element={<FavoritesPage />} />
                 <Route path="/my" element={<MyPage />} />
                 <Route path="/onboarding" element={<OnboardingPage />} />
+                <Route path="/favorites/:favoriteId" element={<FavoriteDetailPage />} />
                 <Route path="/" element={<SplashPage />} />
             </Routes>
         </BrowserRouter>
