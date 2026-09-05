@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Input, Modal } from '../../components/common/index.js'
 import Header from '../../components/layout/Header.jsx'
+import BottomNav from '../../components/layout/BottomNav.jsx'
 import { useAuth } from '../../hooks/useAuth.js'
 import { createFavorite, deleteFavorite, getFavorites, updateFavorite } from './api.js'
 import styles from './FavoritesPage.module.css'
@@ -189,6 +190,7 @@ function FavoritesPage() {
                     </div>
                 )}
             </main>
+            <BottomNav />
 
             <Modal
                 open={Boolean(deletingFavorite)}
