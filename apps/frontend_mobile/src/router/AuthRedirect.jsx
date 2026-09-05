@@ -18,7 +18,7 @@ function AuthRedirect() {
         const path = location.pathname
         // 이미 목적지 화면(및 약관 하위 상세 화면)에 있으면 건드리지 않음
         if (path.startsWith('/terms')) return
-        if (path === '/location-permission' || path === '/onboarding' || path === '/home') return
+        if (path === '/location-permission' || path === '/onboarding' || path === '/home' || path.startsWith('/favorites')) return
 
         const locationSeen = localStorage.getItem(LOCATION_PERMISSION_SEEN_KEY) === 'true'
 
