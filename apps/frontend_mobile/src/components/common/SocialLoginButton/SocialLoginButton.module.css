@@ -16,6 +16,13 @@
     background: #03c75a;
     color: #ffffff;
     border: none;
+    overflow: hidden;
+}
+
+.naverIcon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .naver:hover {
@@ -35,8 +42,15 @@
 .google {
     background: var(--color-bg-white);
     color: var(--color-text);
+    overflow: hidden;
 }
 
 .google:hover {
     background: var(--color-bg-gray-soft);
+}
+
+.googleIcon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
