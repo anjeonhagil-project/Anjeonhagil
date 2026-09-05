@@ -1,22 +1,10 @@
 .layout {
     min-height: 100vh;
+
     background: var(--color-bg-page);
 }
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
 
-    width: var(--admin-sidebar-width);
-    min-height: 100vh;
-
-    padding: 32px 24px;
-
-    color: var(--color-text-white);
-    background: var(--color-primary-800);
-}
 
 .mainArea {
     min-width: 0;
@@ -25,22 +13,9 @@
     margin-left: var(--admin-sidebar-width);
 }
 
-.header {
-    position: sticky;
-    top: 0;
-    z-index: var(--z-header);
-
-    display: flex;
-    align-items: center;
-
-    height: var(--admin-header-height);
-    padding: 0 var(--admin-content-padding);
-
-    background: var(--color-bg-white);
-    box-shadow: var(--shadow-header);
-}
 
 .content {
     min-height: calc(100vh - var(--admin-header-height));
+
     padding: var(--admin-content-padding);
 }
