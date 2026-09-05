@@ -1,79 +1,196 @@
-/* # 기능: 관리자 Web 전역 reset/base style */
-/* 관리자 Web 전역 디자인 토큰 및 기본 스타일 */
-/* 관리자 웹 1440 * 900 으로 화면 통일해서 진행 */
+
+/* =========================================================
+   안전하길 관리자 Web Global Style
+
+   - Global Reset / Base Style
+   - Design Token
+   - Figma 1440 × 900 기준
+   - English / Number : Geist
+   - Korean : Pretendard
+========================================================= */
 
 :root {
-    font-family:
+    /* =====================================================
+       Font Family
+    ===================================================== */
+
+    /*
+       기본 폰트
+       - 영문 / 숫자 : Geist
+       - 한글 : Geist에 한글 glyph가 없으므로 Pretendard로 fallback
+    */
+    --font-family-base:
+        "Geist Variable",
         "Pretendard Variable",
-        Pretendard,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
 
-    color: #123f46;
-    background: #f6f8f8;
+    /* 한글 중심 영역 */
+    --font-family-korean:
+        "Pretendard Variable",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    /* 영문 / 숫자 중심 영역 */
+    --font-family-english:
+        "Geist Variable",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-family: var(--font-family-base);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
 
-    /* brand color */
+
+    /* =====================================================
+       Brand Color
+       안전하길 Teal Palette
+    ===================================================== */
+
+    /* App Background */
     --color-primary-50: #f3f8f7;
+
+    /* T100 - Softest */
     --color-primary-100: #d9f3f0;
-    --color-primary-200: #bfe9e4;
-    --color-primary-300: #94d6ce;
-    --color-primary-400: #52c0b3;
+
+    /* T200 - Pale */
+    --color-primary-200: #a3e1db;
+
+    /* T300 - Light */
+    --color-primary-300: #6dcfc7;
+
+    /* T400 - Bright */
+    --color-primary-400: #36bcb2;
+
+    /* T500 - Core Brand */
     --color-primary-500-main: #00a99d;
+
+    /* T600 - Strong / CTA / Active */
     --color-primary-600: #07817c;
+
+    /* T700 - Dark / Hover */
     --color-primary-700: #0c6263;
+
+    /* T800 - Deepest / Dark Surface */
     --color-primary-800: #123f46;
+
+
+    /* =====================================================
+       Brand Accent
+    ===================================================== */
 
     --color-accent-gold: #ffd166;
 
-    /* Background */
-    --color-bg-page: #f6f8f8;
+
+    /* =====================================================
+       Background / Surface
+    ===================================================== */
+
+    /* 관리자 페이지 전체 배경 */
+    --color-bg-page: #f3f8f7;
+
+    /* Header / Card / Table / Modal / Input */
     --color-bg-white: #ffffff;
+
+    /* 선택 상태 */
     --color-bg-selected: rgba(217, 243, 240, 0.5);
+
+    /* Hover 상태 */
     --color-bg-hover: rgba(217, 243, 240, 0.35);
+
+    /* Modal Overlay */
     --color-bg-modal: rgba(0, 0, 0, 0.16);
+
+    /* 중립적인 연회색 배경 */
     --color-bg-gray-soft: #f3f4f6;
 
 
-    /* Text / Border */
-    --color-text: #123f46;
-    --color-text-strong: #172b2d;
+    /* =====================================================
+       Text
+    ===================================================== */
+
+    /* 기본 본문 / 제목 */
+    --color-text: #163133;
+
+    /* 강한 강조 텍스트 */
+    --color-text-strong: #123f46;
+
+    /* 보조 텍스트 */
     --color-text-sub: #617574;
+
+    /* 비활성 / Placeholder / Muted */
     --color-text-muted: #8a9a99;
+
+    /* Dark Surface 위의 텍스트 */
     --color-text-white: #ffffff;
 
+
+    /* =====================================================
+       Border / Divider
+    ===================================================== */
+
+    /* 일반 Border */
     --color-border-gray: #e5e7eb;
 
-    /* Status */
+    /* Teal 계열 Soft Border */
+    --color-border-soft: #d9e5e3;
+
+    /* Brand Soft Border */
+    --color-border-primary-soft: #a3e1db;
+
+
+    /* =====================================================
+       Status / Functional Color
+    ===================================================== */
+
+    /* Success */
     --color-success: #00a99d;
     --color-success-soft: #d9f3f0;
 
-    --color-warning: #d99a2b;
+    /* Warning / Caution */
+    --color-warning: #e8842b;
     --color-warning-soft: #fbecd3;
 
+    /* Danger / Risk */
     --color-danger: #c94646;
     --color-danger-soft: #f8dede;
 
+    /* Notice / Neutral */
     --color-notice: #9ca3af;
     --color-notice-soft: #e5e7eb;
 
-    /* Admin Layout Figma 1440px 기준 */
+
+    /* =====================================================
+       Admin Layout
+       Figma 1440 × 900 기준
+    ===================================================== */
 
     --admin-sidebar-width: 240px;
     --admin-header-height: 72px;
     --admin-content-padding: 32px;
 
-    /* Radius */
+
+    /* =====================================================
+       Border Radius
+    ===================================================== */
+
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 20px;
     --radius-full: 999px;
 
-    /* Font Size */
+
+    /* =====================================================
+       Font Size
+    ===================================================== */
+
     --font-size-xs: 12px;
     --font-size-sm: 13px;
     --font-size-base: 14px;
@@ -82,7 +199,21 @@
     --font-size-xl: 20px;
     --font-size-2xl: 24px;
 
-    /* Spacing */
+
+    /* =====================================================
+       Font Weight
+    ===================================================== */
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+
+    /* =====================================================
+       Spacing
+    ===================================================== */
+
     --space-1: 4px;
     --space-2: 8px;
     --space-3: 12px;
@@ -90,15 +221,35 @@
     --space-5: 20px;
     --space-6: 24px;
     --space-7: 32px;
+    --space-8: 40px;
 
-    /* Shadow / Transition */
-    --shadow-card: 0 2px 12px rgba(18, 63, 70, 0.06);
-    --shadow-header: 0 1px 0 rgba(18, 63, 70, 0.08);
+
+    /* =====================================================
+       Shadow
+    ===================================================== */
+
+    --shadow-card:
+        0 2px 12px rgba(18, 63, 70, 0.06);
+
+    --shadow-header:
+        0 1px 0 rgba(18, 63, 70, 0.08);
+
+    --shadow-modal:
+        0 12px 32px rgba(18, 63, 70, 0.12);
+
+
+    /* =====================================================
+       Transition
+    ===================================================== */
 
     --transition-fast: 0.15s ease;
     --transition-base: 0.25s ease;
 
-    /* Z-index */
+
+    /* =====================================================
+       Z-index
+    ===================================================== */
+
     --z-header: 100;
     --z-sidebar: 200;
     --z-dropdown: 300;
@@ -106,14 +257,22 @@
     --z-toast: 1100;
 }
 
-/* 전체 요소 크기 계산 방식 통일 */
+
+/* =========================================================
+   Global Reset
+========================================================= */
+
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
-/* 관리자 화면 전체 크기 확보 */
+
+/* =========================================================
+   Root
+========================================================= */
+
 html,
 body,
 #root {
@@ -121,31 +280,52 @@ body,
     min-height: 100%;
 }
 
+
+/* =========================================================
+   Body
+========================================================= */
+
 body {
     min-width: 1024px;
     min-height: 100vh;
+
     margin: 0;
+
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.5;
 
     color: var(--color-text);
     background: var(--color-bg-page);
-
-    line-height: 1.5;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* 폼 요소에서도 같은 폰트 사용 */
+
+/* =========================================================
+   Form Elements
+========================================================= */
+
 button,
 input,
 select,
 textarea {
+    margin: 0;
+
     color: inherit;
+
     font: inherit;
+    font-family: inherit;
 }
 
 button {
+    padding: 0;
+
     border: 0;
+    background: none;
+
     cursor: pointer;
 }
 
@@ -153,36 +333,74 @@ button:disabled {
     cursor: not-allowed;
 }
 
+
+/* =========================================================
+   Link
+========================================================= */
+
 a {
     color: inherit;
     text-decoration: none;
 }
 
+
+/* =========================================================
+   List
+========================================================= */
+
 ul,
 ol {
     margin: 0;
     padding: 0;
+
     list-style: none;
 }
+
+
+/* =========================================================
+   Typography Reset
+========================================================= */
 
 h1,
 h2,
 h3,
+h4,
+h5,
+h6,
 p {
     margin: 0;
 }
+
+
+/* =========================================================
+   Media
+========================================================= */
 
 img,
 svg {
     display: block;
 }
 
+img {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   Table
+========================================================= */
+
 table {
     border-spacing: 0;
     border-collapse: collapse;
 }
 
+
+/* =========================================================
+   Focus Accessibility
+========================================================= */
+
 :focus-visible {
-    outline: 2px solid var(--color-primary-500-main);
+    outline: 2px solid var(--color-primary-600);
     outline-offset: 2px;
 }

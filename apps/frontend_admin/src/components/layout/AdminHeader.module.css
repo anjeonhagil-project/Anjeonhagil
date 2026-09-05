@@ -1,0 +1,170 @@
+/* =========================================================
+   Admin Header
+   - 관리자 페이지 공통 상단 헤더
+   - Figma 1440 × 900 기준
+========================================================= */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: var(--admin-header-height);
+
+    padding: 0 var(--admin-content-padding);
+
+    background: var(--color-bg-white);
+    box-shadow: var(--shadow-header);
+}
+
+
+/* =========================================================
+   Page Title
+========================================================= */
+
+.pageTitle {
+    color: var(--color-text-strong);
+
+    font-family: var(--font-family-korean);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   Right Area
+========================================================= */
+
+.rightArea {
+    display: flex;
+    align-items: center;
+
+    gap: var(--space-4);
+}
+
+
+/* =========================================================
+   System Status
+========================================================= */
+
+.systemStatus {
+    display: flex;
+    align-items: center;
+
+    gap: var(--space-1);
+
+    padding: var(--space-1) var(--space-2);
+
+    border-radius: var(--radius-sm);
+
+    color: var(--color-primary-700);
+    background: var(--color-primary-100);
+
+    font-family: var(--font-family-korean);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+
+    line-height: 1;
+}
+
+.statusDot {
+    width: 5px;
+    height: 5px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-full);
+
+    background: var(--color-primary-500-main);
+}
+
+
+/* =========================================================
+   Admin Profile
+========================================================= */
+
+.adminProfile {
+    display: flex;
+    align-items: center;
+
+    gap: var(--space-2);
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-full);
+
+    color: var(--color-text-white);
+    background: var(--color-primary-800);
+
+    font-family: var(--font-family-english);
+    font-size: 10px;
+    font-weight: var(--font-weight-semibold);
+
+    line-height: 1;
+}
+
+.adminName {
+    color: var(--color-text);
+
+    font-family: var(--font-family-korean);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   Logout Button
+========================================================= */
+
+.logoutButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 32px;
+
+    padding: 0 var(--space-3);
+
+    border-radius: var(--radius-sm);
+
+    color: var(--color-text-sub);
+    background: transparent;
+
+    font-family: var(--font-family-korean);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+
+    white-space: nowrap;
+
+    transition:
+        color var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.logoutButton:hover {
+    color: var(--color-primary-700);
+    background: var(--color-bg-hover);
+}
+
+.logoutButton:active {
+    color: var(--color-primary-800);
+    background: var(--color-bg-selected);
+}
