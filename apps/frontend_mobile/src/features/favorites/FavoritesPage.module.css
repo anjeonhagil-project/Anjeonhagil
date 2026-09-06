@@ -30,6 +30,7 @@
 
 .frequentItem {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     min-width: 0;
     min-height: 70px;
@@ -40,7 +41,8 @@
     background: var(--color-bg-white);
 }
 
-.frequentItem.clickable {
+.frequentItem.clickable,
+.item.clickable {
     cursor: pointer;
 }
 
@@ -58,20 +60,19 @@
 }
 
 .frequentInfo span {
+    overflow-wrap: anywhere;
     color: var(--color-text);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
 }
 
 .frequentInfo strong,
 .frequentInfo small {
     display: block;
-    overflow: hidden;
+    overflow-wrap: anywhere;
     color: var(--color-text-sub);
     font-size: 11px;
     font-weight: 400;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .typeIcon {
@@ -113,13 +114,23 @@
     background: transparent;
     font: inherit;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 380;
     cursor: pointer;
 }
 
 .frequentItem .routeAction {
-    align-self: flex-end;
-    font-size: 10px;
+    margin-right: auto;
+    font-size: 12px;
+}
+
+.frequentActions {
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    gap: 8px;
+    padding-top: 8px;
+    padding-left: 42px;
+    border-top: 1px solid var(--color-border-gray);
 }
 
 .sectionHeading {
@@ -155,16 +166,10 @@
     gap: 4px;
 }
 
-.itemInfo .type {
-    display: none;
-}
-
 .itemInfo strong,
-.itemInfo > span:last-child {
+.itemInfo > span {
     display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
 }
 
 .itemInfo strong {
@@ -173,7 +178,7 @@
     font-weight: 700;
 }
 
-.itemInfo > span:last-child {
+.itemInfo > span {
     color: var(--color-text-sub);
     font-size: 11px;
 }
@@ -257,7 +262,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 40px 20px;
+    padding: 16px 16px 80px;
     text-align: center;
 }
 
@@ -289,6 +294,22 @@
     margin-top: 16px;
     text-align: left;
 }
+
+.savedPlaceCard {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--color-border-gray);
+    border-radius: 12px;
+    background: var(--color-bg-white);
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.savedPlaceCard strong { color: var(--color-text); font-size: 14px; }
+.savedPlaceHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.savedPlaceHeading strong { min-width: 0; }
+.savedPlaceHeading button { flex-shrink: 0; padding: 4px 0; }
+.savedPlaceCard p { margin-top: 6px; color: var(--color-text-sub); font-size: 12px; line-height: 1.5; }
 
 .detailActions {
     display: flex;
@@ -323,12 +344,10 @@
 }
 
 .editModal > p {
-    overflow: hidden;
     margin: 8px 0 20px;
     color: var(--color-text-sub);
     font-size: 13px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    line-height: 1.5;
 }
 
 .editActions {
@@ -371,4 +390,10 @@
     color: var(--color-text-faint);
     background: var(--color-bg-gray-soft);
     opacity: 0.65;
+}
+
+.frequentList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }

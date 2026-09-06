@@ -1,20 +1,22 @@
 import { supabase } from '../../lib/supabase.js'
 
-const FAVORITE_COLUMNS = 'id, user_id, place_type, place_name, custom_name, address, geom, created_at, updated_at'
+const FAVORITE_COLUMNS = 'id, user_id, place_type, place_name, custom_name, address, geom, provider, provider_place_id, created_at, updated_at'
 
 // 프론트의 GeoJSON Point를 PostGIS가 받는 EWKT 문자열로 변환
 function toPostgisPoint(geom) {
-	const [longitude, latitude] = geom.coordinates
-	return `SRID=4326;POINT(${longitude} ${latitude})`
+	return `SRID=4326;POINT(${geom.longitude} ${geom.latitude})`
 }
 
 // 사용자의 즐겨찾기 목록 조회
-export async function findFavorites(userId) {
-	const { data, error } = await supabase
+export async function findFavorites(userId, placeType) {
+	let query = supabase
 		.from('favorite_places')
 		.select(FAVORITE_COLUMNS)
 		.eq('user_id', userId)
 		.order('created_at', { ascending: true })
+	if (placeType) query = query.eq('place_type', placeType)
+
+	const { data, error } = await query
 
 	if (error) throw error
 	return data
@@ -44,6 +46,17 @@ export async function findFavoriteByType(userId, placeType) {
 	return data
 }
 
+export async function findFavoriteOwner(favoriteId) {
+	const { data, error } = await supabase
+		.from('favorite_places')
+		.select('user_id')
+		.eq('id', favoriteId)
+		.maybeSingle()
+
+	if (error) throw error
+	return data
+}
+
 // favorite_places 테이블에 즐겨찾기 생성
 export async function createFavorite(userId, payload) {
 	const { data, error } = await supabase
@@ -54,7 +67,9 @@ export async function createFavorite(userId, payload) {
 			place_name: payload.placeName.trim(),
 			custom_name: payload.customName?.trim() || null,
 			address: payload.address.trim(),
-			geom: toPostgisPoint(payload.geom),
+			geom: toPostgisPoint(payload),
+			provider: 'kakao',
+			provider_place_id: payload.providerPlaceId || null,
 		})
 		.select(FAVORITE_COLUMNS)
 		.single()
@@ -70,7 +85,8 @@ export async function updateFavorite(userId, favoriteId, payload) {
 	if (payload.placeName !== undefined) values.place_name = payload.placeName.trim()
 	if (payload.customName !== undefined) values.custom_name = payload.customName?.trim() || null
 	if (payload.address !== undefined) values.address = payload.address.trim()
-	if (payload.geom !== undefined) values.geom = toPostgisPoint(payload.geom)
+	if (payload.latitude !== undefined) values.geom = toPostgisPoint(payload)
+	if (payload.providerPlaceId !== undefined) values.provider_place_id = payload.providerPlaceId || null
 
 	const { data, error } = await supabase
 		.from('favorite_places')

@@ -11,6 +11,6 @@ const router = Router()
 router.use('/users', usersRouter)
 router.use('/auth', authRouter)
 router.use('/driving-preferences', preferencesRouter)
-router.use('/places', placesRouter)
+router.use('/', placesRouter)
 
 export default router

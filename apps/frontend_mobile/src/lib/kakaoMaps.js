@@ -8,18 +8,34 @@ export function loadKakaoMaps() {
     if (loadPromise) return loadPromise
 
     loadPromise = new Promise((resolve, reject) => {
-        if (window.kakao?.maps) {
-            resolve(window.kakao)
+        if (window.kakao?.maps?.load) {
+            window.kakao.maps.load(() => resolve(window.kakao))
             return
         }
 
         const script = document.createElement('script')
-        script.src = `${KAKAO_MAP_SDK_URL}?appkey=${import.meta.env.VITE_KAKAO_JS_KEY}&autoload=false`
+        const key = import.meta.env.VITE_KAKAO_JS_KEY?.trim()
+        if (!key) {
+            reject(new Error('카카오 지도 키가 설정되지 않았습니다.'))
+            return
+        }
+        script.src = `${KAKAO_MAP_SDK_URL}?appkey=${encodeURIComponent(key)}&autoload=false&libraries=services`
         script.onload = () => {
+            if (!window.kakao?.maps?.load) {
+                script.remove()
+                reject(new Error('카카오 지도를 초기화할 수 없습니다. 새로고침해주세요.'))
+                return
+            }
             window.kakao.maps.load(() => resolve(window.kakao))
         }
-        script.onerror = () => reject(new Error('Kakao Maps SDK 로드에 실패했습니다'))
+        script.onerror = () => {
+            script.remove()
+            reject(new Error('지도를 불러오지 못했습니다. 네트워크 연결을 확인해주세요.'))
+        }
         document.head.appendChild(script)
+    }).catch((error) => {
+        loadPromise = null
+        throw error
     })
 
     return loadPromise

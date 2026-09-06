@@ -3,7 +3,7 @@ import * as placesService from './places.service.js'
 // 즐겨찾기 관련 API 요청 처리
 export async function listFavorites(req, res, next) {
 	try {
-		res.json({ success: true, data: await placesService.listFavorites(req.user.id) })
+		res.json({ success: true, data: await placesService.listFavorites(req.user.id, req.query.type) })
 	} catch (error) {
 		next(error)
 	}
