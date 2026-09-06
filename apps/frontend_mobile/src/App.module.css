@@ -40,3 +40,7 @@
 .mobileFrame:has([data-page="favorites"])::-webkit-scrollbar {
     display: none;
 }
+
+.mobileFrame:has([data-page="favorite-detail"]) {
+    overflow-y: hidden;
+}

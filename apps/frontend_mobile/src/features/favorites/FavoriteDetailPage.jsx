@@ -94,7 +94,7 @@ function FavoriteDetailPage() {
     if (loading) return <p className={styles.message}>즐겨찾기를 불러오는 중입니다.</p>
     if (error || !favorite) {
         return (
-            <div className={styles.page}>
+            <div className={styles.page} data-page="favorite-detail">
                 <Header title="즐겨찾기 상세" onBack={() => navigate('/favorites')} />
                 <p className={styles.error}>{error || '즐겨찾기를 찾을 수 없습니다'}</p>
                 <BottomNav />
@@ -103,7 +103,7 @@ function FavoriteDetailPage() {
     }
 
     return (
-        <div className={styles.page}>
+        <div className={styles.page} data-page="favorite-detail">
             <Header title="즐겨찾기 수정" onBack={() => navigate('/favorites')} />
             <main className={styles.detailContent}>
                 <section className={styles.savedPlaceCard} aria-label="저장한 장소">
