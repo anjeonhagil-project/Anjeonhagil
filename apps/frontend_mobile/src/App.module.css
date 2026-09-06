@@ -32,3 +32,11 @@
 
     overflow-y: auto;   /* height 넘어가면 세로 스크롤 생성 */
 }
+
+.mobileFrame:has([data-page="favorites"]) {
+    scrollbar-width: none;
+}
+
+.mobileFrame:has([data-page="favorites"])::-webkit-scrollbar {
+    display: none;
+}

@@ -4,6 +4,10 @@ export function errorHandler(err, req, res, next) {
     const status = err.status || 500
     res.status(status).json({
         success: false,
-        error: { message: err.message || 'Internal Server Error' },
+        error: {
+            ...(err.code ? { code: err.code } : {}),
+            message: err.message || 'Internal Server Error',
+            ...(err.details ? { details: err.details } : {}),
+        },
     })
 }

@@ -1,5 +1,7 @@
 import * as placesRepository from './places.repository.js'
 import { validateFavoritePayload } from './places.validation.js'
+import { toFavoriteResponse } from './favorites.mapper.js'
+import { assertFavoriteOwnership } from './favoriteOwnership.js'
 
 function notFound() {
 	const error = new Error('즐겨찾기를 찾을 수 없습니다')
@@ -8,8 +10,14 @@ function notFound() {
 }
 
 // 로그인 사용자의 즐겨찾기 목록 조회
-export function listFavorites(userId) {
-	return placesRepository.findFavorites(userId)
+export async function listFavorites(userId, placeType) {
+	if (placeType !== undefined && !['home', 'work', 'custom'].includes(placeType)) {
+		const error = new Error('type은 home, work, custom 중 하나여야 합니다')
+		error.status = 400
+		throw error
+	}
+
+	return (await placesRepository.findFavorites(userId, placeType)).map(toFavoriteResponse)
 }
 
 // 즐겨찾기 추가 및 최대 개수·장소 유형 중복 검증
@@ -20,6 +28,7 @@ export async function addFavorite(userId, payload) {
 	if (count >= 5) {
 		const error = new Error('즐겨찾기는 최대 5개까지 저장할 수 있습니다')
 		error.status = 409
+		error.code = 'FAVORITE_LIMIT_EXCEEDED'
 		throw error
 	}
 
@@ -32,7 +41,7 @@ export async function addFavorite(userId, payload) {
 		}
 	}
 
-	return placesRepository.createFavorite(userId, payload)
+	return toFavoriteResponse(await placesRepository.createFavorite(userId, payload))
 }
 
 // 즐겨찾기 정보 수정 및 장소 유형 중복 검증
@@ -44,6 +53,8 @@ export async function editFavorite(userId, favoriteId, payload) {
 		throw error
 	}
 
+	assertFavoriteOwnership(await placesRepository.findFavoriteOwner(favoriteId), userId)
+
 	if (payload.placeType === 'home' || payload.placeType === 'work') {
 		const existing = await placesRepository.findFavoriteByType(userId, payload.placeType)
 		if (existing && existing.id !== favoriteId) {
@@ -54,7 +65,7 @@ export async function editFavorite(userId, favoriteId, payload) {
 	}
 
 	try {
-		return await placesRepository.updateFavorite(userId, favoriteId, payload)
+		return toFavoriteResponse(await placesRepository.updateFavorite(userId, favoriteId, payload))
 	} catch (error) {
 		if (error.code === 'PGRST116') throw notFound()
 		throw error
@@ -63,6 +74,7 @@ export async function editFavorite(userId, favoriteId, payload) {
 
 // 로그인 사용자의 즐겨찾기 삭제
 export async function removeFavorite(userId, favoriteId) {
+	assertFavoriteOwnership(await placesRepository.findFavoriteOwner(favoriteId), userId)
 	try {
 		await placesRepository.deleteFavorite(userId, favoriteId)
 	} catch (error) {

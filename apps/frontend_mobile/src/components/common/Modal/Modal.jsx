@@ -73,10 +73,12 @@ export default function Modal({
     danger = false,
     linkLabel,
     onLinkClick,
+    pending = false,
 }) {
     if (!open) return null
 
     const handleBackdropClick = () => {
+        if (pending) return
         (onCancel || onConfirm)?.()
     }
 
@@ -98,7 +100,7 @@ export default function Modal({
                 {description && <p className={styles.description}>{description}</p>}
                 <div className={styles.actions}>
                     {cancelLabel && (
-                        <Button variant="secondary" size="sm" onClick={onCancel}>
+                        <Button variant="secondary" size="sm" onClick={onCancel} disabled={pending}>
                             {cancelLabel}
                         </Button>
                     )}
@@ -107,6 +109,7 @@ export default function Modal({
                         size={cancelLabel ? 'sm' : 'md'}
                         fullWidth={!cancelLabel}
                         onClick={onConfirm}
+                        disabled={pending}
                     >
                         {confirmLabel}
                     </Button>
