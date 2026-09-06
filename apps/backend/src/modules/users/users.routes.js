@@ -14,4 +14,7 @@ router.get('/me/terms', authenticate, usersController.getTerms)
 // 약관 동의 저장
 router.put('/me/terms', authenticate, usersController.updateTerms)
 
+// 마이페에지: 프로필 관리
+router.patch('/me',authenticate,usersController.updateMe)
+
 export default router
