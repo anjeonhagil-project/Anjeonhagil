@@ -1,0 +1,126 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.dataStatusRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.dataStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  padding: var(--space-2) var(--space-3);
+
+  color: var(--color-text-sub);
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border-primary-soft);
+  border-radius: var(--radius-full);
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.dataStatus strong {
+  color: var(--color-primary-600);
+  font-family: var(--font-family-english);
+  font-weight: var(--font-weight-semibold);
+}
+
+.statusDot {
+  width: var(--space-1);
+  height: var(--space-1);
+
+  background: var(--color-primary-500-main);
+  border-radius: var(--radius-full);
+}
+
+.chartCard {
+  padding: var(--space-5);
+
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border-gray);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.sectionTitle {
+  color: var(--color-text-strong);
+
+  font-family: var(--font-family-korean);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.sectionDescription {
+  margin-top: var(--space-1);
+
+  color: var(--color-text-sub);
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+}
+
+.periodTabs {
+  display: flex;
+  align-items: center;
+
+  padding: var(--space-1);
+
+  background: var(--color-bg-gray-soft);
+  border-radius: var(--radius-sm);
+}
+
+.periodTab,
+.activeTab {
+  padding: var(--space-2) var(--space-3);
+
+  border-radius: var(--radius-sm);
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.periodTab {
+  color: var(--color-text-sub);
+}
+
+.periodTab:hover {
+  color: var(--color-primary-600);
+  background: var(--color-bg-hover);
+}
+
+.activeTab {
+  color: var(--color-primary-600);
+  background: var(--color-bg-white);
+}
+
+.chartArea {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+
+  background: var(--color-bg-white);
+  border-radius: var(--radius-sm);
+}
