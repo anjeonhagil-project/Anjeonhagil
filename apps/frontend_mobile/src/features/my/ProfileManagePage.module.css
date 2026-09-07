@@ -1,0 +1,38 @@
+.page {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    background: var(--color-bg-white);
+}
+
+.form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-4) var(--space-5);
+}
+
+.passwordField {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.passwordField p {
+    color: var(--color-text-faint);
+    font-size: var(--font-size-xs);
+}
+
+.saveArea {
+    padding: var(--space-4) var(--space-5) var(--space-5);
+    background: var(--color-bg-white);
+}
+
+
+.saveMessage {
+    margin-top: var(--space-3);
+    color: var(--color-success);
+    font-size: var(--font-size-sm);
+    text-align: center;
+}

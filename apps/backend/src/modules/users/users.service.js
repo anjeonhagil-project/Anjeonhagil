@@ -38,3 +38,22 @@ export async function updateTerms(userId, agreed) {
     const agreement = await usersRepository.upsertTermsAgreement(userId)
     return { agreed: true, agreedAt: agreement.agreed_at }
 }
+
+// 마이페이지: 프로필 관리 - 닉네임
+export async function updateMe(userId, nickname) {
+    const normalizedNickname = nickname?.trim()
+
+    if (!normalizedNickname) {
+        const err = new Error('닉네임을 입력해주세요.')
+        err.status = 400
+        throw err
+    }
+
+    if (!/^[가-힣a-zA-Z0-9]{2,10}$/.test(normalizedNickname)) {
+        const err = new Error('닉네임은 한글, 영문, 숫자 2~10자로 입력해주세요.')
+        err.status = 400
+        throw err
+    }
+
+    return usersRepository.updateNickname(userId, normalizedNickname)
+}

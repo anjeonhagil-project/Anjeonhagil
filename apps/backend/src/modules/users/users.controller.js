@@ -41,3 +41,23 @@ export async function updateTerms(req, res, next) {
         next(err)
     }
 }
+
+// 마이페이지 - 프로필 관리
+export async function updateMe(req, res, next) {
+    try {
+        const user = await usersService.updateMe(
+            req.user.id,
+            req.body.nickname
+        )
+
+        res.json({
+            success: true,
+            data: {
+                userId: user.id,
+                nickname: user.nickname,
+            },
+        })
+    } catch (err) {
+        next(err)
+    }
+}

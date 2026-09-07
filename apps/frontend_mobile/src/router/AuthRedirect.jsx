@@ -8,7 +8,7 @@ export const LOCATION_PERMISSION_SEEN_KEY = 'anjeonhagil:locationPermissionSeen'
 
 // 약관동의(M-AUTH-007) → 위치권한(M-AUTH-008) → 온보딩 설문 → 홈 순서로 리다이렉트
 function AuthRedirect() {
-    const { isAuthenticated, profile, termsAgreed, loading } = useAuth()
+    const { isAuthenticated, profile, termsAgreed, loading, user } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -16,11 +16,34 @@ function AuthRedirect() {
         if (!isAuthenticated || loading || !profile || termsAgreed === null) return
 
         const path = location.pathname
+        
+        // 마이페이지 - 프로필 관리: 소셜 로그인일 경우 재인증
+        const requestedAt = Number(
+            window.sessionStorage.getItem(
+                'profile_reauth_requested_at'
+            )
+        )
+
+        const lastSignInAt = new Date(
+            user?.last_sign_in_at || ''
+        ).getTime()
+
+        const isSocialReauthReturn =
+            (path === '/' || path === '/home') &&
+            Number.isFinite(requestedAt) &&
+            requestedAt > 0 &&
+            Number.isFinite(lastSignInAt) &&
+            lastSignInAt >= requestedAt
+
+        if (isSocialReauthReturn) {
+            navigate('/my/profile?reauth=1', { replace: true })
+            return
+        }
         // 이미 목적지 화면(및 약관 하위 상세 화면)에 있으면 건드리지 않음
         if (path.startsWith('/terms')) return
         if (path === '/email-verify') return
         const homeTabs = ['/location-permission', '/onboarding', '/home', '/search', '/favorites', '/my']
-        if (homeTabs.includes(path) || path.startsWith('/favorites/')) return
+        if (homeTabs.includes(path) || path.startsWith('/favorites/') || path.startsWith('/my/')) return
 
         const locationSeen = localStorage.getItem(LOCATION_PERMISSION_SEEN_KEY) === 'true'
 
@@ -31,7 +54,9 @@ function AuthRedirect() {
         } else {
             navigate(profile.onboarding ? '/home' : '/onboarding', { replace: true })
         }
-    }, [isAuthenticated, loading, profile, termsAgreed, location.pathname, navigate])
+    }, [isAuthenticated, loading, profile, termsAgreed, location.pathname, navigate, user])
+
+    
 
     return null
 }

@@ -36,3 +36,16 @@ export async function upsertTermsAgreement(userId) {
     if (error) throw error
     return data
 }
+
+// 마이페이지 - 프로필 관리
+export async function updateNickname(userId, nickname) {
+    const { data, error } = await supabase
+        .from('users')
+        .update({ nickname })
+        .eq('id', userId)
+        .select('id, nickname')
+        .single()
+
+    if (error) throw error
+    return data
+}
