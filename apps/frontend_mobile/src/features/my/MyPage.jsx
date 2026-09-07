@@ -6,6 +6,9 @@ import { useAuth } from '../../hooks/useAuth.js'
 import BottomNav from '../../components/layout/BottomNav.jsx'
 import ProfilePasswordModal from './Modal/ProfilePasswordModal.jsx'
 import styles from './MyPage.module.css'
+import { Modal } from '../../components/common/index.js'
+import SocialReauthModal from './Modal/SocialReauthModal.jsx'
+
 
 const MENU_ITEMS = [
     {
@@ -29,6 +32,7 @@ function MyPage() {
     const navigate = useNavigate()
     const { profile, user } = useAuth()
     const [isProfilePasswordOpen, setIsProfilePasswordOpen] = useState(false)
+    const [isSocialReauthOpen, setIsSocialReauthOpen] = useState(false)
 
     const nickname =
         profile?.nickname ||
@@ -38,21 +42,33 @@ function MyPage() {
 
     const isEmailLogin = user?.app_metadata?.provider === 'email'
 
-    const handleLogout = async () => {
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
+    const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
+    
+    
+    const handleOpenLogoutModal = () => {
+        setIsLogoutModalOpen(true)
+    }
+
+    const handleConfirmLogout = async () => {
         await supabase.auth.signOut()
         navigate('/login', { replace: true })
     }
 
     const handleMenuClick = (menuId) => {
-        if (menuId !== 'profile') return
+        if (menuId === 'profile') {
+            if (isEmailLogin) {
+                setIsProfilePasswordOpen(true)
+                return
+            }
 
-        if (isEmailLogin) {
-            setIsProfilePasswordOpen(true)
+            setIsSocialReauthOpen(true)
             return
         }
 
-        // 소셜 로그인은 재인증 정책 확정 전까지 바로 진입
-        navigate('/my/profile')
+        if (menuId === 'survey') {
+            navigate('/my/driving-preferences')
+        }
     }
 
     const handleProfileVerified = () => {
@@ -98,9 +114,16 @@ function MyPage() {
             </main>
 
             <div className={styles.accountActions}>
-                <button type="button">회원탈퇴</button>
+                <button
+                    type="button"
+                    onClick={() => setIsWithdrawModalOpen(true)}
+                >
+                    회원탈퇴
+                </button>
+
                 <span aria-hidden="true" />
-                <button type="button" onClick={handleLogout}>
+
+                <button type="button" onClick={handleOpenLogoutModal}>
                     로그아웃
                 </button>
             </div>
@@ -112,6 +135,40 @@ function MyPage() {
                 user={user}
                 onClose={() => setIsProfilePasswordOpen(false)}
                 onVerified={handleProfileVerified}
+            />
+
+            <SocialReauthModal
+                open={isSocialReauthOpen}
+                user={user}
+                onClose={() => setIsSocialReauthOpen(false)}
+            />
+
+            <Modal
+                open={isLogoutModalOpen}
+                icon="warning"
+                title="로그아웃"
+                description="로그아웃하시겠습니까?"
+                cancelLabel="취소"
+                onCancel={() => setIsLogoutModalOpen(false)}
+                confirmLabel="로그아웃"
+                onConfirm={handleConfirmLogout}
+                danger
+            />
+
+            <Modal
+                open={isWithdrawModalOpen}
+                icon="warning"
+                title="회원탈퇴"
+                description={
+                    '회원탈퇴를 진행하시겠습니까?\n탈퇴 시 계정 회원 정보와 저장된 데이터가 모두 삭제되며 복구할 수 없습니다.'
+                }
+                cancelLabel="취소"
+                onCancel={() => setIsWithdrawModalOpen(false)}
+                confirmLabel="회원탈퇴"
+                onConfirm={() => {
+                    // 다음 단계: 탈퇴 API 호출
+                }}
+                danger
             />
         </div>
     )

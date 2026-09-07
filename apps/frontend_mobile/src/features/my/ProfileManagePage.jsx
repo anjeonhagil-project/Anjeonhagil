@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Button, Input, Modal } from '../../components/common/index.js'
 import Header from '../../components/layout/Header.jsx'
 import { supabase } from '../../lib/supabaseClient.js'
@@ -14,7 +14,9 @@ const PASSWORD_REGEX =
 
 function ProfileManagePage() {
     const navigate = useNavigate()
-    const { profile, user } = useAuth()
+    const location = useLocation()
+    const { profile, user, loading } = useAuth()
+
 
     const initialNickname =
         profile?.nickname || user?.user_metadata?.nickname || ''
@@ -31,6 +33,54 @@ function ProfileManagePage() {
     const email = profile?.email || user?.email || ''
     const isEmailLogin = user?.app_metadata?.provider === 'email'
 
+    const [isSocialReauthVerified, setIsSocialReauthVerified] = useState(false)
+    
+    useEffect(() => {
+        if (loading || isSocialReauthVerified) return
+
+        if (!user) {
+            navigate('/login', { replace: true })
+            return
+        }
+
+        // 이메일 로그인은 기존 비밀번호 확인 모달을 사용
+        if (isEmailLogin) {
+            setIsSocialReauthVerified(true)
+            return
+        }
+
+        const requestedAt = Number(
+            window.sessionStorage.getItem(
+                'profile_reauth_requested_at'
+            )
+        )
+        const lastSignInAt = new Date(
+            user.last_sign_in_at || ''
+        ).getTime()
+
+        const hasValidReauth =
+            new URLSearchParams(location.search).get('reauth') === '1' &&
+            Number.isFinite(requestedAt) &&
+            Number.isFinite(lastSignInAt) &&
+            lastSignInAt >= requestedAt
+
+        if (!hasValidReauth) {
+            navigate('/my', { replace: true })
+            return
+        }
+
+        window.sessionStorage.removeItem(
+            'profile_reauth_requested_at'
+        )
+        setIsSocialReauthVerified(true)
+    }, [
+        isEmailLogin,
+        isSocialReauthVerified,
+        loading,
+        location.search,
+        navigate,
+        user,
+    ])
     const validateForm = () => {
         const nextErrors = {}
         const passwordChanged = Boolean(newPassword || newPasswordConfirm)
@@ -98,6 +148,10 @@ function ProfileManagePage() {
         } finally {
             setSubmitting(false)
         }
+    }
+
+    if (loading || !isSocialReauthVerified) {
+        return null
     }
 
     return (

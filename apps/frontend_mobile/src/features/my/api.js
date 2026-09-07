@@ -7,3 +7,11 @@ export function updateMyProfile({ nickname }) {
     return apiClient.patch('/users/me', { nickname })
 }
 
+export function getDrivingPreferences() {
+    return apiClient.get('/driving-preferences')
+}
+
+export function updateDrivingPreferences(answers) {
+    return apiClient.put('/driving-preferences', answers)
+}
+

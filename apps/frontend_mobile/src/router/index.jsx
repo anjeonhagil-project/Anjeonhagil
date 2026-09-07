@@ -18,6 +18,7 @@ import FavoriteDetailPage from '../features/favorites/FavoriteDetailPage.jsx'
 import AuthRedirect from './AuthRedirect.jsx'
 
 import ProfileManagePage from '../features/my/ProfileManagePage.jsx'
+import DrivingPreferencesPage from '../features/my/DrivingPreferencesPage.jsx'
 
 function AppRouter() {
     return (
@@ -36,6 +37,7 @@ function AppRouter() {
 
                 <Route path="/my" element={<MyPage />} />
                 <Route path="/my/profile" element={<ProfileManagePage />} />
+                <Route path="/my/driving-preferences" element={<DrivingPreferencesPage />}/>
 
                 <Route path="/onboarding" element={<OnboardingPage />} />
                 <Route path="/favorites/:favoriteId" element={<FavoriteDetailPage />} />
