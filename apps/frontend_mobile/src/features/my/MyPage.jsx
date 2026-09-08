@@ -69,6 +69,10 @@ function MyPage() {
         if (menuId === 'survey') {
             navigate('/my/driving-preferences')
         }
+
+        if (menuId === 'support') {
+            navigate('/my/support')
+        }
     }
 
     const handleProfileVerified = () => {

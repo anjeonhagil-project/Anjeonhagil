@@ -54,15 +54,24 @@ function ProfileManagePage() {
                 'profile_reauth_requested_at'
             )
         )
-        const lastSignInAt = new Date(
-            user.last_sign_in_at || ''
-        ).getTime()
+        // const lastSignInAt = new Date(
+        //     user.last_sign_in_at || ''
+        // ).getTime()
+
+        // const hasValidReauth =
+        //     new URLSearchParams(location.search).get('reauth') === '1' &&
+        //     Number.isFinite(requestedAt) &&
+        //     Number.isFinite(lastSignInAt) &&
+        //     lastSignInAt >= requestedAt
+
+        const isRecentReauthRequest =
+            Number.isFinite(requestedAt) &&
+            requestedAt > 0 &&
+            Date.now() - requestedAt < 10 * 60 * 1000
 
         const hasValidReauth =
             new URLSearchParams(location.search).get('reauth') === '1' &&
-            Number.isFinite(requestedAt) &&
-            Number.isFinite(lastSignInAt) &&
-            lastSignInAt >= requestedAt
+            isRecentReauthRequest
 
         if (!hasValidReauth) {
             navigate('/my', { replace: true })

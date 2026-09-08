@@ -20,6 +20,11 @@ import AuthRedirect from './AuthRedirect.jsx'
 
 import ProfileManagePage from '../features/my/ProfileManagePage.jsx'
 import DrivingPreferencesPage from '../features/my/DrivingPreferencesPage.jsx'
+import HelpSupportPage from '../features/my/HelpSupport/HelpSupportPage.jsx'
+import NoticesPage from '../features/my/HelpSupport/NoticesPage.jsx'
+import InquiriesPage from '../features/my/HelpSupport/InquiriesPage.jsx'
+import InquiryCreatePage from '../features/my/HelpSupport/InquiryCreatePage.jsx'
+import TermsInfoPage from '../features/my/HelpSupport/TermsInfoPage.jsx'
 
 function AppRouter() {
     return (
@@ -40,6 +45,11 @@ function AppRouter() {
                 <Route path="/my" element={<MyPage />} />
                 <Route path="/my/profile" element={<ProfileManagePage />} />
                 <Route path="/my/driving-preferences" element={<DrivingPreferencesPage />}/>
+                <Route path="/my/support" element={<HelpSupportPage />} />
+                <Route path="/my/support/notices" element={<NoticesPage />} />
+                <Route path="/my/support/inquiries" element={<InquiriesPage />} />
+                <Route path="/my/support/inquiries/write" element={<InquiryCreatePage />} />
+                <Route path="/my/support/terms" element={<TermsInfoPage />} />
 
                 <Route path="/onboarding" element={<OnboardingPage />} />
                 <Route path="/favorites/:favoriteId" element={<FavoriteDetailPage />} />

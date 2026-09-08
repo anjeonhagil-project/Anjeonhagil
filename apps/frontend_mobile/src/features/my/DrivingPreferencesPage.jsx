@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FiChevronRight } from 'react-icons/fi'
+// import { FiChevronRight } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/layout/Header.jsx'
 import Button from '../../components/common/Button/Button.jsx'
@@ -50,7 +50,7 @@ function DrivingPreferencesPage() {
     const navigate = useNavigate()
     const [answers, setAnswers] = useState({})
     const [initialAnswers, setInitialAnswers] = useState({})
-    const [openQuestionKey, setOpenQuestionKey] = useState(null)
+    // const [openQuestionKey, setOpenQuestionKey] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [loadError, setLoadError] = useState('')
     const [isSaveConfirmOpen, setIsSaveConfirmOpen] = useState(false)
@@ -101,13 +101,13 @@ function DrivingPreferencesPage() {
             answers[question.key] !== initialAnswers[question.key]
     )
 
-    const handleSelectAnswer = (questionKey, score) => {
-        setAnswers((current) => ({
-            ...current,
-            [questionKey]: score,
-        }))
-        setOpenQuestionKey(null)
-    }
+    // const handleSelectAnswer = (questionKey, score) => {
+    //     setAnswers((current) => ({
+    //         ...current,
+    //         [questionKey]: score,
+    //     }))
+    //     setOpenQuestionKey(null)
+    // }
 
     const handleOpenSaveModal = () => {
         if (!hasChanges || isSubmitting) return
@@ -166,53 +166,27 @@ function DrivingPreferencesPage() {
                                 {question.title}
                             </h2>
 
-                            <button
-                                type="button"
-                                className={styles.answerButton}
-                                onClick={() =>
-                                    setOpenQuestionKey((current) =>
-                                        current === question.key ? null : question.key
-                                    )
-                                }
-                                aria-expanded={openQuestionKey === question.key}
+                            <select
+                                className={styles.select}
+                                value={answers[question.key] ?? ''}
+                                disabled={isLoading}
+                                onChange={(event) => {
+                                    setAnswers((current) => ({
+                                        ...current,
+                                        [question.key]: Number(event.target.value),
+                                    }))
+                                }}
                             >
-                                <span>
-                                    {isLoading
-                                        ? '답변을 불러오는 중...'
-                                        : SCORE_LABELS[answers[question.key]] || '답변 없음'}
-                                </span>
-                                <FiChevronRight size={18} aria-hidden="true" />
-                            </button>
+                                <option value="" disabled>
+                                    선택해주세요
+                                </option>
 
-                            {openQuestionKey === question.key && (
-                                <div
-                                    className={styles.optionList}
-                                    role="radiogroup"
-                                    aria-label={`${question.number}번 부담 정도`}
-                                >
-                                    {SCORE_OPTIONS.map((option) => (
-                                        <button
-                                            key={option.value}
-                                            type="button"
-                                            className={
-                                                answers[question.key] === option.value
-                                                    ? styles.optionSelected
-                                                    : styles.option
-                                            }
-                                            role="radio"
-                                            aria-checked={
-                                                answers[question.key] === option.value
-                                            }
-                                            onClick={() =>
-                                                handleSelectAnswer(question.key, option.value)
-                                                
-                                            }
-                                        >
-                                            {option.label}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
+                                {SCORE_OPTIONS.map((option) => (
+                                    <option key={option.value} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
                         </article>
                     ))}
                 </div>
