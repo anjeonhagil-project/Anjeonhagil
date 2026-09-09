@@ -18,16 +18,20 @@ function ProfileManagePage() {
     const { profile, user, loading } = useAuth()
 
 
-    const initialNickname =
-        profile?.nickname || user?.user_metadata?.nickname || ''
-
-    const [nickname, setNickname] = useState(initialNickname)
+    const [nickname, setNickname] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [newPasswordConfirm, setNewPasswordConfirm] = useState('')
     const [errors, setErrors] = useState({})
     const [submitting, setSubmitting] = useState(false)
     const [isSaveConfirmOpen, setIsSaveConfirmOpen] = useState(false)
     const [saveMessage, setSaveMessage] = useState('')
+
+    useEffect(() => {
+        const loadedNickname =
+            profile?.nickname || user?.user_metadata?.nickname || ''
+
+        setNickname(loadedNickname)
+    }, [profile?.nickname, user?.user_metadata?.nickname])
 
     const username = profile?.username || ''
     const email = profile?.email || user?.email || ''
@@ -54,15 +58,24 @@ function ProfileManagePage() {
                 'profile_reauth_requested_at'
             )
         )
-        const lastSignInAt = new Date(
-            user.last_sign_in_at || ''
-        ).getTime()
+        // const lastSignInAt = new Date(
+        //     user.last_sign_in_at || ''
+        // ).getTime()
+
+        // const hasValidReauth =
+        //     new URLSearchParams(location.search).get('reauth') === '1' &&
+        //     Number.isFinite(requestedAt) &&
+        //     Number.isFinite(lastSignInAt) &&
+        //     lastSignInAt >= requestedAt
+
+        const isRecentReauthRequest =
+            Number.isFinite(requestedAt) &&
+            requestedAt > 0 &&
+            Date.now() - requestedAt < 10 * 60 * 1000
 
         const hasValidReauth =
             new URLSearchParams(location.search).get('reauth') === '1' &&
-            Number.isFinite(requestedAt) &&
-            Number.isFinite(lastSignInAt) &&
-            lastSignInAt >= requestedAt
+            isRecentReauthRequest
 
         if (!hasValidReauth) {
             navigate('/my', { replace: true })

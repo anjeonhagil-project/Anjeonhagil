@@ -34,8 +34,17 @@ function LoginPage() {
         // 로그인 성공 시 AuthRedirect가 onboarding 여부에 따라 /home 또는 /onboarding으로 자동 이동
     }
 
-    const handleSocialLogin = (provider) => {
-        supabase.auth.signInWithOAuth({ provider: OAUTH_PROVIDER_MAP[provider] })
+    const handleSocialLogin = async (provider) => {
+        const { error: oauthError } = await supabase.auth.signInWithOAuth({
+            provider: OAUTH_PROVIDER_MAP[provider],
+            options: {
+                redirectTo: `${window.location.origin}/`,
+            },
+        })
+
+        if (oauthError) {
+            setError('소셜 로그인 요청에 실패했습니다. 다시 시도해주세요.')
+        }
     }
 
     return (

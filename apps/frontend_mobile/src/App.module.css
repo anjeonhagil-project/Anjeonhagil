@@ -31,6 +31,14 @@
     border-radius: var(--radius-frame);
 
     overflow-y: auto;   /* height 넘어가면 세로 스크롤 생성 */
+
+    /* 스크롤 바 없애기 */
+    -ms-overflow-style: none; /* 구형 Edge/IE */
+    scrollbar-width: none; /* Firefox */
+}
+
+.mobileFrame::-webkit-scrollbar {
+    display: none; /* Chrome, Edge, Safari */
 }
 
 .mobileFrame:has([data-page="favorites"]) {

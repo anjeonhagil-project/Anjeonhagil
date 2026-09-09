@@ -1,0 +1,63 @@
+.page {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    background: var(--color-bg-white);
+}
+
+.content {
+    flex: 1;
+    padding: 0 var(--space-4) var(--space-6);
+}
+
+.noticeList {
+    border-top: 1px solid var(--color-border-gray);
+}
+
+.noticeItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 58px;
+    padding: var(--space-3) var(--space-4);
+    border: 0;
+    border-bottom: 1px solid var(--color-border-gray);
+    color: var(--color-text-faint);
+    background: var(--color-bg-white);
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--transition-fast);
+}
+
+.noticeItem:hover,
+.noticeItem:active {
+    background: var(--color-primary-50);
+}
+
+.noticeCopy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.noticeCopy strong {
+    overflow: hidden;
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.noticeCopy time {
+    color: var(--color-text-faint);
+    font-size: var(--font-size-xs);
+}
+
+.noticeItem svg {
+    flex: 0 0 auto;
+    margin-left: var(--space-3);
+    color: var(--color-text-faint);
+}

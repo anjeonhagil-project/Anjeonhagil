@@ -61,3 +61,45 @@ export async function updateMe(req, res, next) {
         next(err)
     }
 }
+
+// 회원탈퇴: 계정을 즉시 비활성화하고 30일 뒤 삭제 대상으로 표시
+export async function withdrawMe(req, res, next) {
+    try {
+        const result = await usersService.withdrawMe(req.user.id)
+
+        res.json({
+            success: true,
+            data: result,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+// 탈퇴 계정의 복구 가능 상태 조회
+export async function getAccountStatus(req, res, next) {
+    try {
+        const result = await usersService.getAccountStatus(req.user.id)
+
+        res.json({
+            success: true,
+            data: result,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+// 탈퇴 후 30일 이내 계정 복구
+export async function restoreMe(req, res, next) {
+    try {
+        const result = await usersService.restoreMe(req.user.id)
+
+        res.json({
+            success: true,
+            data: result,
+        })
+    } catch (error) {
+        next(error)
+    }
+}

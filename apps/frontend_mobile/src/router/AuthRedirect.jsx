@@ -28,12 +28,27 @@ function AuthRedirect() {
             user?.last_sign_in_at || ''
         ).getTime()
 
-        const isSocialReauthReturn =
-            (path === '/' || path === '/home') &&
+        const isRecentReauthRequest =
             Number.isFinite(requestedAt) &&
             requestedAt > 0 &&
-            Number.isFinite(lastSignInAt) &&
-            lastSignInAt >= requestedAt
+            Date.now() - requestedAt < 10 * 60 * 1000
+
+        const isSocialReauthReturn =
+            (path === '/' || path === '/home') &&
+            isRecentReauthRequest
+
+        if (isSocialReauthReturn) {
+            navigate('/my/profile?reauth=1', { replace: true })
+            return
+        }
+
+        // 원래 있던 코드
+        // const isSocialReauthReturn =
+        //     (path === '/' || path === '/home') &&
+        //     Number.isFinite(requestedAt) &&
+        //     requestedAt > 0 &&
+        //     Number.isFinite(lastSignInAt) &&
+        //     lastSignInAt >= requestedAt
 
         if (isSocialReauthReturn) {
             navigate('/my/profile?reauth=1', { replace: true })

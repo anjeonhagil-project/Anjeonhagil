@@ -1,0 +1,82 @@
+.page {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    background: var(--color-bg-white);
+}
+
+.content {
+    flex: 1;
+    padding: var(--space-6) var(--space-4);
+}
+
+.introCard {
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-50);
+}
+
+.introCard h2 {
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+}
+
+.introCard p {
+    margin-top: var(--space-3);
+    color: var(--color-text-faint);
+    font-size: var(--font-size-sm);
+    line-height: 1.55;
+    word-break: keep-all;
+}
+
+.menuList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 63px;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-md);
+    color: var(--color-text-faint);
+    background: var(--color-bg-white);
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.menuItem:hover,
+.menuItem:active {
+    border-color: var(--color-primary-200);
+    background: var(--color-primary-50);
+}
+
+.menuCopy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.menuCopy strong {
+    color: var(--color-text);
+    font-size: var(--font-size-md);
+    font-weight: 700;
+}
+
+.menuCopy small {
+    color: var(--color-text-sub);
+    font-size: var(--font-size-sm);
+}
+
+.menuItem svg {
+    flex: 0 0 auto;
+    color: var(--color-text-faint);
+}
