@@ -1,6 +1,6 @@
 .page {
     position: relative;
-    height: calc(var(--layout-max-height) - 44px);
+    height: calc(var(--layout-max-height) - var(--statusbar-height));
     isolation: isolate;
 }
 

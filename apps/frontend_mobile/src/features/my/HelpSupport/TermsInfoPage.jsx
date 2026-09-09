@@ -23,7 +23,7 @@ function TermsInfoPage() {
         <main className={styles.page}>
             <Header title="약관 및 개인정보" onBack={() => navigate('/my/support')} />
 
-            <section className={styles.content} aria-label="약관 및 개인정보 목록">
+            <section className={`${styles.content} hide-scrollbar`} aria-label="약관 및 개인정보 목록">
                 <div className={styles.termList}>
                     {TERMS.map((term) => (
                         <button

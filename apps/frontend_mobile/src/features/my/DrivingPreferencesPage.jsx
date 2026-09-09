@@ -146,7 +146,7 @@ function DrivingPreferencesPage() {
                 onBack={() => navigate('/my')}
             />
 
-            <section className={styles.content}>
+            <section className={`${styles.content} hide-scrollbar`}>
                 <p className={styles.description}>
                     운전 시 부담되는 상황을 알려주시면 맞춤 안전경로를
                     제안해 드려요.

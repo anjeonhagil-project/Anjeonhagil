@@ -32,7 +32,7 @@ function InquiryCreatePage() {
         <main className={styles.page}>
             <Header title="문의 작성" onBack={() => navigate('/my/support/inquiries')} />
 
-            <form className={styles.form} onSubmit={handleSubmit}>
+            <form className={`${styles.form} hide-scrollbar`} onSubmit={handleSubmit}>
                 <Input
                     label="제목"
                     value={title}

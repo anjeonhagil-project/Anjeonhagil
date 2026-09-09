@@ -187,6 +187,7 @@ function SearchPage() {
                 </button>
             </div>
 
+            <div className={`${styles.content} hide-scrollbar`}>
             {results.length === 0 && !message && (
                 <div className={styles.shortcuts}>
                     <section>
@@ -268,6 +269,7 @@ function SearchPage() {
                     })}
                 </ul>
             )}
+            </div>
 
             <BottomNav />
         </div>

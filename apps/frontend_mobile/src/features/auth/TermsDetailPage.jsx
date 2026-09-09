@@ -10,17 +10,17 @@ function TermsDetailPage() {
 
     if (!term) {
         return (
-            <div>
+            <div className={styles.page}>
                 <Header title="약관" onBack={() => window.history.back()} />
-                <div className={styles.page}>존재하지 않는 약관입니다.</div>
+                <div className={`${styles.content} hide-scrollbar`}>존재하지 않는 약관입니다.</div>
             </div>
         )
     }
 
     return (
-        <div>
+        <div className={styles.page}>
             <Header title={term.label} onBack={() => window.history.back()} />
-            <div className={styles.page}>
+            <div className={`${styles.content} hide-scrollbar`}>
                 <p className={styles.body}>{term.body}</p>
             </div>
         </div>

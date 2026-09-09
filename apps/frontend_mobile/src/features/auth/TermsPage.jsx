@@ -77,9 +77,9 @@ function TermsPage() {
     }
 
     return (
-        <div>
+        <div className={styles.page}>
             <Header title="약관 동의" onBack={() => window.history.back()} />
-            <div className={styles.page}>
+            <div className={`${styles.content} hide-scrollbar`}>
                 <button type="button" className={styles.allCard} onClick={toggleAll}>
                     <CheckIcon checked={allAgreed} />
                     <div className={styles.allText}>

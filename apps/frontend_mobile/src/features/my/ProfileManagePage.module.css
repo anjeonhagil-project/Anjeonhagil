@@ -1,6 +1,6 @@
 .page {
     display: flex;
-    min-height: 100%;
+    height: calc(var(--layout-max-height) - var(--statusbar-height));
     flex-direction: column;
     background: var(--color-bg-white);
 }
@@ -8,6 +8,8 @@
 .form {
     display: flex;
     flex: 1;
+    min-height: 0;
+    overflow-y: auto;
     flex-direction: column;
     gap: var(--space-5);
     padding: var(--space-4) var(--space-5);
@@ -25,8 +27,11 @@
 }
 
 .saveArea {
+    position: sticky;
+    bottom: 0;
     padding: var(--space-4) var(--space-5) var(--space-5);
     background: var(--color-bg-white);
+    border-top: 1px solid var(--color-border-gray);
 }
 
 

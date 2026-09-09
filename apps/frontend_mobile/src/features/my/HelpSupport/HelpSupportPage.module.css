@@ -1,12 +1,14 @@
 .page {
     display: flex;
-    min-height: 100%;
+    height: calc(var(--layout-max-height) - var(--statusbar-height));
     flex-direction: column;
     background: var(--color-bg-white);
 }
 
 .content {
     flex: 1;
+    min-height: 0;
+    overflow-y: auto;
     padding: var(--space-6) var(--space-4);
 }
 

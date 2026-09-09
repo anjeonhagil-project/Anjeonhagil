@@ -1,7 +1,7 @@
 .page {
     display: flex;
     flex-direction: column;
-    height: calc(var(--layout-max-height) - 44px);
+    height: calc(var(--layout-max-height) - var(--statusbar-height));
 }
 
 .map {

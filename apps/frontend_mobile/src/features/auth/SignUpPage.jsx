@@ -82,9 +82,9 @@ function SignUpPage() {
     }
 
     return (
-        <div>
+        <div className={styles.page}>
             <Header title="회원가입" onBack={() => window.history.back()} />
-            <form className={styles.page} onSubmit={handleSubmit}>
+            <form className={`${styles.content} hide-scrollbar`} onSubmit={handleSubmit}>
                 <div className={styles.inputRow}>
                     <Input
                         label="이메일"

@@ -171,7 +171,7 @@ function ProfileManagePage() {
         <div className={styles.page}>
             <Header title="프로필 관리" onBack={() => navigate('/my')} />
 
-            <form className={styles.form} onSubmit={handleOpenSaveModal}>
+            <form className={`${styles.form} hide-scrollbar`} onSubmit={handleOpenSaveModal}>
                 <Input
                     label="아이디"
                     value={username}

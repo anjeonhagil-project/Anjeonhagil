@@ -1,7 +1,8 @@
 .header {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
-    height: 56px;
+    height: var(--header-height);
     padding: 0 var(--space-4);
 }
 

@@ -41,7 +41,7 @@ function HelpSupportPage() {
         <main className={styles.page}>
             <Header title="도움말 / 지원" onBack={() => navigate('/my')} />
 
-            <section className={styles.content}>
+            <section className={`${styles.content} hide-scrollbar`}>
                 <section className={styles.introCard}>
                     <h2>무엇을 도와드릴까요?</h2>
                     <p>

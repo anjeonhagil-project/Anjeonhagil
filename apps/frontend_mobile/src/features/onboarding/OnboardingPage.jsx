@@ -77,7 +77,7 @@ function OnboardingPage() {
         return (
             <main className={styles.page}>
                 <Header title="운전 부담 설문" onBack={() => navigate(-1)} />
-                <div className={styles.body}>
+                <div className={`${styles.body} hide-scrollbar`}>
                 <section className={styles.introContent} aria-labelledby="onboarding-intro-title">
                     <div className={styles.roadIllustration} aria-hidden="true">
                         <span className={styles.cloudOne} />
@@ -110,7 +110,7 @@ function OnboardingPage() {
         return (
             <main className={styles.page}>
                 <Header title="설정 완료" onBack={() => navigate('/home')} />
-                <div className={styles.body}>
+                <div className={`${styles.body} hide-scrollbar`}>
                 <section className={styles.completeContent} aria-labelledby="onboarding-complete-title">
                     <div className={styles.completeIconWrap} aria-hidden="true">
                         <span className={styles.completeDotPink} />
@@ -145,7 +145,7 @@ function OnboardingPage() {
     return (
         <main className={styles.page}>
             <Header title="운전 부담 설문" onBack={goPrevious} />
-            <div className={styles.body}>
+            <div className={`${styles.body} hide-scrollbar`}>
             <section className={styles.questionContent} aria-labelledby="onboarding-question-title">
                 <div className={styles.progressHeader}>
                     <span>운전할 때 부담되는 상황을 알려주세요</span>
