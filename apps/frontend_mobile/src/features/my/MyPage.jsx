@@ -116,7 +116,7 @@ function MyPage() {
                 <h1>마이페이지</h1>
             </header>
 
-            <main className={styles.content}>
+            <main className={`${styles.content} hide-scrollbar`}>
                 <section className={styles.profileCard} aria-label="내 프로필">
                     <img
                         className={styles.profileLogo}

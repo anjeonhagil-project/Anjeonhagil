@@ -11,6 +11,12 @@ const NOTICES = [
     { id: 5, title: '위치기반서비스 이용약관 변경 안내', date: '2024.12.15' },
     { id: 6, title: '앱 버전 1.2.0 업데이트 안내', date: '2024.12.10' },
     { id: 7, title: '연말 시스템 점검 안내', date: '2024.12.05' },
+    { id: 8, title: '연말 시스템 점검 안내', date: '2024.12.05' },
+    { id: 9, title: '연말 시스템 점검 안내', date: '2024.12.05' },
+    { id: 10, title: '연말 시스템 점검 안내', date: '2024.12.05' },
+    { id: 11, title: '연말 시스템 점검 안내', date: '2024.12.05' },
+    { id: 12, title: '연말 시스템 점검 안내', date: '2024.12.05' },
+    { id: 13, title: '연말 시스템 점검 안내', date: '2024.12.05' },
 ]
 
 function NoticesPage() {
@@ -26,7 +32,7 @@ function NoticesPage() {
         <main className={styles.page}>
             <Header title="공지사항" onBack={() => navigate('/my/support')} />
 
-            <section className={styles.content} aria-label="공지사항 목록">
+            <section className={`${styles.content} hide-scrollbar`} aria-label="공지사항 목록">
                 <div className={styles.noticeList}>
                     {NOTICES.map((notice) => (
                         <button

@@ -48,9 +48,9 @@ function LoginPage() {
     }
 
     return (
-        <div>
+        <div className={styles.page}>
             <Header title="로그인" onBack={() => window.history.back()} />
-            <form className={styles.page} onSubmit={handleSubmit}>
+            <form className={`${styles.content} hide-scrollbar`} onSubmit={handleSubmit}>
                 <Input
                     label="이메일"
                     type="email"

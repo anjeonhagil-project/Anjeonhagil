@@ -105,7 +105,7 @@ function FavoriteDetailPage() {
     return (
         <div className={styles.page} data-page="favorite-detail">
             <Header title="즐겨찾기 수정" onBack={() => navigate('/favorites')} />
-            <main className={styles.detailContent}>
+            <main className={`${styles.detailContent} hide-scrollbar`}>
                 <section className={styles.savedPlaceCard} aria-label="저장한 장소">
                     <div className={styles.savedPlaceHeading}>
                         <strong>{replacement?.placeName || favorite.placeName}</strong>

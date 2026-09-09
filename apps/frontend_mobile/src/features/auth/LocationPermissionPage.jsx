@@ -25,9 +25,9 @@ function LocationPermissionPage() {
     }
 
     return (
-        <div>
+        <div className={styles.page}>
             <Header title="권한 설정" onBack={() => window.history.back()} />
-            <div className={styles.page}>
+            <div className={`${styles.content} hide-scrollbar`}>
                 <div className={styles.iconCircle}>
                     <FaLocationDot size={26} />
                 </div>

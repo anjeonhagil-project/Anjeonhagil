@@ -24,6 +24,54 @@ const INITIAL_INQUIRIES = [
         date: '2024.12.18',
         status: '답변 완료',
     },
+    {
+        id: 4,
+        title: '즐겨찾기가 사라졌습니다',
+        date: '2024.12.18',
+        status: '답변 완료',
+    },
+    {
+        id: 5,
+        title: '즐겨찾기가 사라졌습니다',
+        date: '2024.12.18',
+        status: '답변 완료',
+    },
+    {
+        id: 6,
+        title: '즐겨찾기가 사라졌습니다',
+        date: '2024.12.18',
+        status: '답변 완료',
+    },
+    {
+        id: 7,
+        title: '즐겨찾기가 사라졌습니다',
+        date: '2024.12.18',
+        status: '답변 완료',
+    },
+    {
+        id: 8,
+        title: '즐겨찾기가 사라졌습니다',
+        date: '2024.12.18',
+        status: '답변 완료',
+    },
+    {
+        id: 9,
+        title: '즐겨찾기가 사라졌습니다',
+        date: '2024.12.18',
+        status: '답변 완료',
+    },
+    {
+        id: 10,
+        title: '즐겨찾기가 사라졌습니다',
+        date: '2024.12.18',
+        status: '답변 완료',
+    },
+    {
+        id: 11,
+        title: '즐겨찾기가 사라졌습니다',
+        date: '2024.12.18',
+        status: '답변 완료',
+    },
 ]
 
 function InquiriesPage() {
@@ -42,7 +90,7 @@ function InquiriesPage() {
         <main className={styles.page}>
             <Header title="문의" onBack={() => navigate('/my/support')} />
 
-            <section className={styles.content}>
+            <section className={`${styles.content} hide-scrollbar`}>
                 <Button
                     fullWidth
                     onClick={() => navigate('/my/support/inquiries/write')}

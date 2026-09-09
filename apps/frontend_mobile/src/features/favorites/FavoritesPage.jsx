@@ -115,7 +115,7 @@ function FavoritesPage() {
     return (
         <div className={styles.page} data-page="favorites">
             <Header title="즐겨찾기" onBack={() => window.history.back()} />
-            <main className={styles.content}>
+            <main className={`${styles.content} hide-scrollbar`}>
                 <section className={styles.frequentSection}>
                     <h2>자주 가는 곳</h2>
                     <div className={styles.frequentList}>

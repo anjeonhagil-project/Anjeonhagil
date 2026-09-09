@@ -93,9 +93,9 @@ function EmailVerifyPage() {
     const filled = digits.every((d) => d !== '')
 
     return (
-        <div>
+        <div className={styles.page}>
             <Header title="이메일 인증" onBack={() => window.history.back()} />
-            <div className={styles.page}>
+            <div className={`${styles.content} hide-scrollbar`}>
                 <p className={styles.guide}>
                     <strong>{email}</strong>으로
                     <br />

@@ -27,7 +27,7 @@ function SplashPage() {
 
     return (
         <div className={styles.splash}>
-            <img className={styles.logo} src="../public/brand/logo.png" alt="안전하길 로고" />
+            <img className={styles.logo} src="/brand/logo.png" alt="안전하길 로고" />
             <p className={styles.tagline}>조금 돌아가도, 덜 부담스러운 길</p>
             <div className={styles.spinner} />
         </div>

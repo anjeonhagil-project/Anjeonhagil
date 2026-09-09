@@ -218,7 +218,7 @@ function HomePage() {
                 </form>
                 <p className={styles.hint} role="status">{mapError ? '지도를 불러오지 못했어요.' : message || (ready ? '지도를 누르거나 장소를 검색해 위치를 선택하세요.' : '지도를 불러오고 있어요.')}</p>
                 {results.length > 0 && (
-                    <ul className={styles.results} aria-label="장소 검색 결과">
+                    <ul className={`${styles.results} hide-scrollbar`} aria-label="장소 검색 결과">
                         {results.map((result) => (
                             <li key={result.id}>
                                 <button type="button" onClick={() => selectResult(result)}>

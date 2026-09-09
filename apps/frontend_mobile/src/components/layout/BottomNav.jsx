@@ -6,7 +6,7 @@ import styles from './BottomNav.module.css'
 const TABS = [
     { path: '/home', label: '홈', Icon: IoHomeOutline, ActiveIcon: IoHome },
     { path: '/search', label: '검색', Icon: IoSearchOutline, ActiveIcon: IoSearchOutline },
-    { path: '/favorites', label: '저장', Icon: IoHeartOutline, ActiveIcon: IoHeart },
+    { path: '/favorites', label: '즐겨찾기', Icon: IoHeartOutline, ActiveIcon: IoHeart },
     { path: '/my', label: 'MY', Icon: IoPersonOutline, ActiveIcon: IoPerson },
 ]
 

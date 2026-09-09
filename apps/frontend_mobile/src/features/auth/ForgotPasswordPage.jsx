@@ -54,9 +54,9 @@ function ForgotPasswordPage() {
 
     if (sent) {
         return (
-            <div>
+            <div className={styles.page}>
                 <Header title="비밀번호 찾기" onBack={() => window.history.back()} />
-                <div className={styles.page}>
+                <div className={`${styles.content} hide-scrollbar`}>
                     <h1>이메일을 확인해주세요</h1>
                     <p>{email}로 비밀번호 재설정 링크를 보냈습니다.</p>
                 </div>
@@ -65,9 +65,9 @@ function ForgotPasswordPage() {
     }
 
     return (
-        <div>
+        <div className={styles.page}>
             <Header title="비밀번호 찾기" onBack={() => window.history.back()} />
-            <form className={styles.page} onSubmit={handleSubmit}>
+            <form className={`${styles.content} hide-scrollbar`} onSubmit={handleSubmit}>
                 <Input
                     label="이메일"
                     type="email"
