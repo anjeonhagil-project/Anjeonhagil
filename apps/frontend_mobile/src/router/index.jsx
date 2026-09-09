@@ -16,6 +16,7 @@ import FavoritesPage from '../features/favorites/FavoritesPage.jsx'
 import MyPage from '../features/my/MyPage.jsx'
 import OnboardingPage from '../features/onboarding/OnboardingPage.jsx'
 import FavoriteDetailPage from '../features/favorites/FavoriteDetailPage.jsx'
+import RouteComparePage from '../features/routes/RouteComparePage.jsx'
 import AuthRedirect from './AuthRedirect.jsx'
 
 import ProfileManagePage from '../features/my/ProfileManagePage.jsx'
@@ -42,6 +43,7 @@ function AppRouter() {
                 <Route path="/location-permission" element={<LocationPermissionPage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/search" element={<SearchPage />} />
+                <Route path="/route-compare" element={<RouteComparePage />} />
                 <Route path="/favorites" element={<FavoritesPage />} />
 
                 <Route path="/my" element={<MyPage />} />

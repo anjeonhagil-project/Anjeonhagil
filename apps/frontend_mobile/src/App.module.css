@@ -41,11 +41,13 @@
     display: none; /* Chrome, Edge, Safari */
 }
 
-.mobileFrame:has([data-page="favorites"]) {
+.mobileFrame:has([data-page="favorites"]),
+.mobileFrame:has([data-page="search"]) {
     scrollbar-width: none;
 }
 
-.mobileFrame:has([data-page="favorites"])::-webkit-scrollbar {
+.mobileFrame:has([data-page="favorites"])::-webkit-scrollbar,
+.mobileFrame:has([data-page="search"])::-webkit-scrollbar {
     display: none;
 }
 
