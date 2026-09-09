@@ -1,0 +1,80 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    height: calc(var(--layout-max-height) - 44px);
+}
+
+.map {
+    flex: 1;
+    min-height: 0;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background: var(--color-bg-white);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: var(--shadow-card);
+}
+
+.message {
+    text-align: center;
+    color: var(--color-text-sub);
+    font-size: var(--font-size-sm);
+    padding: var(--space-4) 0;
+}
+
+.summary {
+    color: var(--color-text-sub);
+    font-size: var(--font-size-xs);
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-white);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.card:hover {
+    background: var(--color-bg-gray-soft);
+}
+
+.cardSelected {
+    border-color: var(--color-primary-500-main);
+    background: var(--color-primary-50);
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: var(--color-notice);
+    color: var(--color-text-white);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.comingSoon {
+    color: var(--color-text-faint);
+    font-size: var(--font-size-sm);
+}
+
+.stats {
+    color: var(--color-text);
+    font-size: var(--font-size-md);
+    font-weight: 700;
+}
+
+.startBtn {
+    margin-top: var(--space-2);
+}
