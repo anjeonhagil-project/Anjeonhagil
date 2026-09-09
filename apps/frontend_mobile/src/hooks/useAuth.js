@@ -9,6 +9,7 @@ export function useAuth() {
     const [profile, setProfile] = useState(null)
     const [termsAgreed, setTermsAgreed] = useState(null) // null = 아직 확인 전
     const [loading, setLoading] = useState(true)
+    const [accountStatus, setAccountStatus] = useState(null)
 
     // 최초 진입 시 현재 세션을 가져오고, 이후 로그인/로그아웃/토큰 갱신을 실시간으로 반영
     useEffect(() => {
@@ -54,6 +55,32 @@ export function useAuth() {
             .finally(() => setLoading(false))
     }, [session])
 
+    useEffect(() => {
+        let mounted = true
+
+        if (!session) {
+            setAccountStatus(null)
+            return undefined
+        }
+
+        apiClient
+            .get('/users/me/account-status')
+            .then((status) => {
+                if (mounted) {
+                    setAccountStatus(status)
+                }
+            })
+            .catch(() => {
+                if (mounted) {
+                    setAccountStatus(null)
+                }
+            })
+
+        return () => {
+            mounted = false
+        }
+    }, [session])
+
     return {
         session,
         user: session?.user ?? null,
@@ -61,5 +88,6 @@ export function useAuth() {
         termsAgreed,
         loading,
         isAuthenticated: Boolean(session),
+        accountStatus,
     }
 }

@@ -25,11 +25,13 @@ import NoticesPage from '../features/my/HelpSupport/NoticesPage.jsx'
 import InquiriesPage from '../features/my/HelpSupport/InquiriesPage.jsx'
 import InquiryCreatePage from '../features/my/HelpSupport/InquiryCreatePage.jsx'
 import TermsInfoPage from '../features/my/HelpSupport/TermsInfoPage.jsx'
+import AccountRecoveryGate from './AccountRecoveryGate.jsx'
 
 function AppRouter() {
     return (
         <BrowserRouter>
             <AuthRedirect />
+            <AccountRecoveryGate />
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />

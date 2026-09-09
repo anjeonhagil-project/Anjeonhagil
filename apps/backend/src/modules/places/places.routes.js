@@ -2,10 +2,14 @@ import { Router } from 'express'
 import { authenticate } from '../../middleware/authenticate.js'
 import * as placesController from './places.controller.js'
 
+// 회원 탈퇴로 인한 정보 삭제
+import { requireActiveUser } from '../../middleware/requireActiveUser.js'
+
+
 const router = Router()
 
 // 즐겨찾기 API는 로그인 사용자만 접근 가능
-router.use(authenticate)
+router.use(authenticate, requireActiveUser)
 
 // 즐겨찾기 목록 조회
 router.get('/favorites', placesController.listFavorites)

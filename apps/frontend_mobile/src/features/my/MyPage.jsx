@@ -8,6 +8,7 @@ import ProfilePasswordModal from './Modal/ProfilePasswordModal.jsx'
 import styles from './MyPage.module.css'
 import { Modal } from '../../components/common/index.js'
 import SocialReauthModal from './Modal/SocialReauthModal.jsx'
+import { withdrawMyAccount } from './api.js'
 
 
 const MENU_ITEMS = [
@@ -44,7 +45,8 @@ function MyPage() {
 
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
     const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
-    
+    const [isWithdrawing, setIsWithdrawing] = useState(false)
+    const [withdrawError, setWithdrawError] = useState('')
     
     const handleOpenLogoutModal = () => {
         setIsLogoutModalOpen(true)
@@ -53,6 +55,34 @@ function MyPage() {
     const handleConfirmLogout = async () => {
         await supabase.auth.signOut()
         navigate('/login', { replace: true })
+    }
+
+    const handleOpenWithdrawModal = () => {
+        setWithdrawError('')
+        setIsWithdrawModalOpen(true)
+    }
+
+    const handleConfirmWithdraw = async () => {
+        if (isWithdrawing) return
+
+        setIsWithdrawing(true)
+        setWithdrawError('')
+
+        try {
+            await withdrawMyAccount()
+
+            const { error } = await supabase.auth.signOut()
+            if (error) throw error
+
+            navigate('/login', { replace: true })
+        } catch (error) {
+            setWithdrawError(
+                error.message ||
+                '회원탈퇴 처리에 실패했습니다. 다시 시도해주세요.'
+            )
+        } finally {
+            setIsWithdrawing(false)
+        }
     }
 
     const handleMenuClick = (menuId) => {
@@ -120,7 +150,7 @@ function MyPage() {
             <div className={styles.accountActions}>
                 <button
                     type="button"
-                    onClick={() => setIsWithdrawModalOpen(true)}
+                    onClick={handleOpenWithdrawModal}
                 >
                     회원탈퇴
                 </button>
@@ -164,14 +194,13 @@ function MyPage() {
                 icon="warning"
                 title="회원탈퇴"
                 description={
-                    '회원탈퇴를 진행하시겠습니까?\n탈퇴 시 계정 회원 정보와 저장된 데이터가 모두 삭제되며 복구할 수 없습니다.'
+                    withdrawError ||
+                    '회원탈퇴를 진행하시겠습니까?\n탈퇴 후 30일 이내에는 계정을 복구할 수 있습니다.'
                 }
                 cancelLabel="취소"
                 onCancel={() => setIsWithdrawModalOpen(false)}
-                confirmLabel="회원탈퇴"
-                onConfirm={() => {
-                    // 다음 단계: 탈퇴 API 호출
-                }}
+                confirmLabel={isWithdrawing ? '처리 중...' : '회원탈퇴'}
+                onConfirm={handleConfirmWithdraw}
                 danger
             />
         </div>

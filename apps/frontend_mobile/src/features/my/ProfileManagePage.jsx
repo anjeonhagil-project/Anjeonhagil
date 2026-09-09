@@ -18,16 +18,20 @@ function ProfileManagePage() {
     const { profile, user, loading } = useAuth()
 
 
-    const initialNickname =
-        profile?.nickname || user?.user_metadata?.nickname || ''
-
-    const [nickname, setNickname] = useState(initialNickname)
+    const [nickname, setNickname] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [newPasswordConfirm, setNewPasswordConfirm] = useState('')
     const [errors, setErrors] = useState({})
     const [submitting, setSubmitting] = useState(false)
     const [isSaveConfirmOpen, setIsSaveConfirmOpen] = useState(false)
     const [saveMessage, setSaveMessage] = useState('')
+
+    useEffect(() => {
+        const loadedNickname =
+            profile?.nickname || user?.user_metadata?.nickname || ''
+
+        setNickname(loadedNickname)
+    }, [profile?.nickname, user?.user_metadata?.nickname])
 
     const username = profile?.username || ''
     const email = profile?.email || user?.email || ''
