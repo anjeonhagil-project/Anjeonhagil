@@ -6,11 +6,22 @@ import authRouter from '../modules/auth/auth.routes.js'
 import preferencesRouter from '../modules/preferences/preferences.routes.js'
 import placesRouter from '../modules/places/places.routes.js'
 
+import adminUsersRouter from '../modules/admin/users/users.routes.js'
+import adminAdminsRouter from '../modules/admin/admins/admins.routes.js'
+
+import { authenticate } from '../middleware/authenticate.js'
+import { requireAdmin } from '../middleware/requireAdmin.js'
+import { getCurrentAdmin } from '../modules/admin/admins/admins.controller.js'
+
 const router = Router()
 
 router.use('/users', usersRouter)
 router.use('/auth', authRouter)
 router.use('/driving-preferences', preferencesRouter)
 router.use('/', placesRouter)
+
+router.use('/admin/users', adminUsersRouter)
+router.use('/admin/admins', adminAdminsRouter)
+router.get('/admin/me', authenticate, requireAdmin, getCurrentAdmin)
 
 export default router

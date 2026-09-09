@@ -1,0 +1,375 @@
+/* =========================================================
+   A-MEMBER 회원 관리
+   - global.css Design Token 사용
+   - Figma 1440 × 900 기준
+========================================================= */
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+
+/* =========================================================
+   Page Header
+========================================================= */
+
+.pageHeader {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+}
+
+.titleArea {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.title {
+    color: var(--color-text-strong);
+
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.description {
+    color: var(--color-text-sub);
+
+    font-size: var(--font-size-base);
+}
+
+.memberCount {
+    color: var(--color-text-sub);
+
+    font-size: var(--font-size-base);
+}
+
+.memberCount strong {
+    margin-left: var(--space-1);
+
+    color: var(--color-primary-500-main);
+
+    font-weight: var(--font-weight-bold);
+}
+
+
+/* =========================================================
+   Search / Filter Toolbar
+========================================================= */
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+
+    padding: var(--space-4);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-card);
+}
+
+.searchArea {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.searchInput {
+    width: 280px;
+    height: 40px;
+
+    padding: 0 var(--space-3);
+
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.searchInput::placeholder {
+    color: var(--color-text-muted);
+}
+
+.searchInput:focus {
+    border-color: var(--color-primary-500-main);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 169, 157, 0.08);
+
+    outline: none;
+}
+
+.select {
+    height: 40px;
+
+    padding:
+        0
+        var(--space-7)
+        0
+        var(--space-3);
+
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+
+    cursor: pointer;
+
+    transition: border-color var(--transition-fast);
+}
+
+.select:focus {
+    border-color: var(--color-primary-500-main);
+
+    outline: none;
+}
+
+.searchButton {
+    height: 40px;
+
+    padding: 0 var(--space-5);
+
+    color: var(--color-text-white);
+
+    background: var(--color-primary-500-main);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.searchButton:hover {
+    background: var(--color-primary-600);
+}
+
+.searchButton:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   Table
+========================================================= */
+
+.tableCard {
+    overflow: hidden;
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-card);
+}
+
+.table {
+    width: 100%;
+
+    table-layout: fixed;
+}
+
+.table thead {
+    background: var(--color-primary-50);
+}
+
+.table th {
+    height: 48px;
+
+    padding: 0 var(--space-4);
+
+    color: var(--color-text-sub);
+
+    border-bottom: 1px solid var(--color-border-soft);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-align: left;
+}
+
+.table td {
+    height: 56px;
+
+    padding: 0 var(--space-4);
+
+    color: var(--color-text);
+
+    border-bottom: 1px solid var(--color-border-gray);
+
+    font-size: var(--font-size-sm);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table tbody tr {
+    transition: background var(--transition-fast);
+}
+
+.table tbody tr:hover {
+    background: var(--color-bg-hover);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.clickableRow {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   Badge
+========================================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 52px;
+    height: 26px;
+
+    padding: 0 var(--space-2);
+
+    border-radius: var(--radius-full);
+
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+
+/* 회원 상태 */
+
+.activeBadge {
+    color: var(--color-success);
+
+    background: var(--color-success-soft);
+}
+
+.inactiveBadge {
+    color: var(--color-text-sub);
+
+    background: var(--color-bg-gray-soft);
+}
+
+
+/* 관리자 권한 */
+
+.userBadge {
+    color: var(--color-text-sub);
+
+    background: var(--color-bg-gray-soft);
+}
+
+.adminBadge {
+    color: var(--color-primary-700);
+
+    background: var(--color-primary-100);
+}
+
+.superAdminBadge {
+    color: var(--color-warning);
+
+    background: var(--color-warning-soft);
+}
+
+
+/* =========================================================
+   Empty State
+========================================================= */
+
+.emptyCell {
+    height: 160px !important;
+
+    color: var(--color-text-muted) !important;
+
+    text-align: center !important;
+}
+
+
+/* =========================================================
+   Pagination
+========================================================= */
+
+.paginationArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+
+    padding: var(--space-4);
+}
+
+.pageButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 32px;
+    height: 32px;
+
+    padding: 0 var(--space-2);
+
+    color: var(--color-text-sub);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-sm);
+
+    transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.pageButton:hover:not(:disabled) {
+    color: var(--color-primary-600);
+
+    border-color: var(--color-primary-500-main);
+}
+
+.activePageButton {
+    color: var(--color-text-white);
+
+    background: var(--color-primary-500-main);
+    border-color: var(--color-primary-500-main);
+}
+
+.activePageButton:hover:not(:disabled) {
+    color: var(--color-text-white);
+
+    background: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+}
+
+.pageButton:disabled {
+    color: var(--color-text-muted);
+
+    cursor: not-allowed;
+
+    opacity: 0.5;
+}

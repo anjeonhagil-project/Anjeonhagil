@@ -1,0 +1,308 @@
+/* =========================================================
+   A-MEMBER 관리자 권한 수정 Modal
+   - global.css Design Token 사용
+========================================================= */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--space-6);
+
+    background: var(--color-bg-modal);
+}
+
+
+.modal {
+    width: 100%;
+    max-width: 460px;
+
+    overflow: hidden;
+
+    background: var(--color-bg-white);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-modal);
+}
+
+
+/* =========================================================
+   Header
+========================================================= */
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+
+    padding:
+        var(--space-5)
+        var(--space-6);
+
+    border-bottom: 1px solid var(--color-border-soft);
+}
+
+
+.titleArea {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+
+.title {
+    color: var(--color-text-strong);
+
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+}
+
+
+.subtitle {
+    color: var(--color-text-sub);
+
+    font-size: var(--font-size-sm);
+}
+
+
+.closeButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    color: var(--color-text-sub);
+
+    border-radius: var(--radius-sm);
+
+    font-size: 24px;
+
+    transition:
+        color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.closeButton:hover {
+    color: var(--color-text-strong);
+
+    background: var(--color-bg-hover);
+}
+
+
+/* =========================================================
+   Body
+========================================================= */
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+
+    padding:
+        var(--space-5)
+        var(--space-6);
+}
+
+
+/* 선택 회원 정보 */
+
+.memberInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    padding: var(--space-4);
+
+    background: var(--color-primary-50);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+}
+
+
+.memberName {
+    color: var(--color-text-strong);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+}
+
+
+.memberEmail {
+    color: var(--color-text-sub);
+
+    font-size: var(--font-size-sm);
+}
+
+
+/* =========================================================
+   Permission
+========================================================= */
+
+.permissionArea {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+
+.label {
+    color: var(--color-text-strong);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+
+.permissionList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+
+.permissionOption {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    min-height: 52px;
+
+    padding:
+        var(--space-3)
+        var(--space-4);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-md);
+
+    cursor: pointer;
+
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.permissionOption:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-primary-soft);
+}
+
+
+.permissionOptionSelected {
+    background: var(--color-bg-selected);
+    border-color: var(--color-primary-500-main);
+}
+
+
+.radio {
+    width: 16px;
+    height: 16px;
+
+    accent-color: var(--color-primary-500-main);
+
+    cursor: pointer;
+}
+
+
+.permissionText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+
+.permissionName {
+    color: var(--color-text);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+}
+
+
+.permissionDescription {
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-xs);
+}
+
+
+/* =========================================================
+   Footer
+========================================================= */
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-2);
+
+    padding:
+        var(--space-4)
+        var(--space-6);
+
+    border-top: 1px solid var(--color-border-soft);
+}
+
+
+.cancelButton,
+.submitButton {
+    height: 40px;
+
+    padding: 0 var(--space-5);
+
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+
+.cancelButton {
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+}
+
+
+.cancelButton:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-primary-soft);
+}
+
+
+.submitButton {
+    color: var(--color-text-white);
+
+    background: var(--color-primary-500-main);
+    border: 1px solid var(--color-primary-500-main);
+}
+
+
+.submitButton:hover {
+    background: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+}
+
+
+.submitButton:disabled {
+    background: var(--color-notice);
+    border-color: var(--color-notice);
+
+    cursor: not-allowed;
+}

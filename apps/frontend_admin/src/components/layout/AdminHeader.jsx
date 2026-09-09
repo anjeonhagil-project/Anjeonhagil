@@ -1,11 +1,13 @@
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 import { adminNavigation } from "../../config/adminNavigation"
+import { logoutAdmin } from "../../features/auth/api.js"
 
 import styles from "./AdminHeader.module.css"
 
 function AdminHeader() {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const currentMenu = adminNavigation.find(
         (menu) => menu.children
@@ -15,9 +17,17 @@ function AdminHeader() {
 
     const pageTitle = currentMenu?.label ?? "관리자";
 
-    const handleLogout = () => {
-        console.log("로그아웃");
-    };
+    const handleLogout = async () => {
+        try {
+            await logoutAdmin()
+
+            navigate('/login', {
+                replace: true,
+            })
+        } catch (error) {
+            console.error('관리자 로그아웃 실패:', error)
+        }
+    }
 
     return (
         <header className={styles.header}>
