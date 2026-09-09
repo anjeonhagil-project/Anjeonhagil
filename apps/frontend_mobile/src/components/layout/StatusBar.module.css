@@ -21,3 +21,10 @@
     align-items: center;
     gap: 6px;
 }
+
+/* 실제 모바일 화면에서는 기기의 실제 상태바가 보이므로 가짜 StatusBar는 숨김 */
+@media (max-width: 480px) {
+    .statusBar {
+        display: none;
+    }
+}

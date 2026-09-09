@@ -85,6 +85,15 @@
     --space-7: 32px;
 }
 
+/* 실제 모바일 화면에서는 폰 목업 프레임 대신 화면 전체를 그대로 사용 (가짜 StatusBar도 숨김) */
+@media (max-width: 480px) {
+    :root {
+        --layout-max-width: 100vw;
+        --layout-max-height: 100dvh;
+        --statusbar-height: 0px;
+    }
+}
+
 /* 초기화 */
 * {
     box-sizing: border-box;

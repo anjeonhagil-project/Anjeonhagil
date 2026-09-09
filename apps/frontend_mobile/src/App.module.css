@@ -44,3 +44,18 @@
 .mobileFrame:has([data-page="favorite-detail"]) {
     overflow-y: hidden;
 }
+
+/* 실제 모바일 화면에서는 폰 목업이 아니라 화면 전체를 그대로 채움 */
+@media (max-width: 480px) {
+    .wrapper {
+        gap: 0;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .mobileFrame {
+        border-radius: 0;
+    }
+}
