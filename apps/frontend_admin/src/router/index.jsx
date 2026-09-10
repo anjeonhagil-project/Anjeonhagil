@@ -15,6 +15,8 @@ import ProtectedAdminRoute from '../features/auth/ProtectedAdminRoute.jsx'
 
 import MembersPage from '../features/members/MembersPage.jsx'
 
+import InquiriesPage from '../features/inquiries/InquiriesPage.jsx'
+import InquiryDetailPage from '../features/inquiries/InquiryDetailPage.jsx'
 
 // 아직 만들지 않은 페이지를 위한 임시 컴포넌트
 function PlaceholderPage({ title }) {
@@ -101,7 +103,13 @@ function AppRouter() {
                         <Route
                             path="/inquiries"
                             element={
-                                <PlaceholderPage title="문의사항" />
+                                <InquiriesPage />
+                            }
+                        />
+                        <Route
+                            path="/inquiries/:inquiryId"
+                            element={
+                                <InquiryDetailPage />
                             }
                         />
 
