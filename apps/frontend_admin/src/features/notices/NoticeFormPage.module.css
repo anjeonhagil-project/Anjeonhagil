@@ -1,0 +1,496 @@
+/* =========================================================
+   A-NOTICE
+   공지사항 등록 / 수정
+========================================================= */
+
+.page {
+    width: 100%;
+}
+
+
+/* =========================================================
+   Form Card
+========================================================= */
+
+.formCard {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    min-height: 640px;
+    padding: 36px 40px;
+
+    background: var(--color-bg-white);
+
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-card);
+}
+
+
+/* =========================================================
+   Field
+========================================================= */
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.field label {
+    color: var(--color-text);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+}
+
+
+.required {
+    margin-left: 4px;
+
+    color: var(--color-primary-500-main);
+}
+
+
+/* =========================================================
+   Input
+========================================================= */
+
+.field input {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 14px;
+
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+    font-size: var(--font-size-base);
+
+    outline: none;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.field input:focus {
+    border-color: var(--color-primary-500-main);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 169, 157, 0.08);
+}
+
+
+.field input::placeholder {
+    color: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   Textarea
+========================================================= */
+
+.field textarea {
+    width: 100%;
+    min-height: 360px;
+
+    padding: 16px;
+
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+
+    resize: vertical;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.field textarea:focus {
+    border-color: var(--color-primary-500-main);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 169, 157, 0.08);
+}
+
+
+.field textarea::placeholder {
+    color: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   Input Info
+========================================================= */
+
+.inputInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-xs);
+}
+
+
+/* =========================================================
+   Error
+========================================================= */
+
+.errorMessage {
+    margin: -12px 0 0;
+
+    color: #d14343;
+
+    font-size: var(--font-size-sm);
+}
+
+
+/* =========================================================
+   Bottom Buttons
+========================================================= */
+
+.buttonArea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: auto;
+    padding-top: 24px;
+
+    border-top: 1px solid var(--color-border-soft);
+}
+
+
+.rightButtons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.cancelButton,
+.submitButton,
+.deleteButton {
+    min-width: 86px;
+    height: 40px;
+
+    padding: 0 20px;
+
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        opacity var(--transition-fast);
+}
+
+
+/* 취소 */
+
+.cancelButton {
+    color: var(--color-text-sub);
+
+    background: var(--color-bg-white);
+
+    border: 1px solid var(--color-border-gray);
+}
+
+
+.cancelButton:hover:not(:disabled) {
+    background: var(--color-bg-hover);
+}
+
+
+/* 등록 / 수정 */
+
+.submitButton {
+    color: var(--color-text-white);
+
+    background: var(--color-primary-500-main);
+
+    border: 1px solid var(--color-primary-500-main);
+}
+
+
+.submitButton:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+
+/* 삭제 */
+
+.deleteButton {
+    color: #d14343;
+
+    background: var(--color-bg-white);
+
+    border: 1px solid #e6a4a4;
+}
+
+
+.deleteButton:hover:not(:disabled) {
+    background: #fff5f5;
+
+    border-color: #d14343;
+}
+
+
+/* Disabled */
+
+.cancelButton:disabled,
+.submitButton:disabled,
+.deleteButton:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.55;
+}
+
+
+/* =========================================================
+   Loading
+========================================================= */
+
+.loading {
+    padding: 80px;
+
+    color: var(--color-text-muted);
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   Modal Backdrop
+========================================================= */
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(15, 23, 42, 0.36);
+}
+
+
+/* =========================================================
+   Modal
+========================================================= */
+
+.modal {
+    width: 340px;
+
+    padding: 32px 28px 26px;
+
+    background: var(--color-bg-white);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.16);
+
+    text-align: center;
+}
+
+
+.modal h2 {
+    margin: 0 0 8px;
+
+    color: var(--color-text);
+
+    font-size: 18px;
+    font-weight: var(--font-weight-bold);
+}
+
+
+.modal p {
+    margin: 0 0 24px;
+
+    color: var(--color-text-sub);
+
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   Success Modal
+========================================================= */
+
+.successIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 16px;
+
+    color: var(--color-primary-500-main);
+
+    background: rgba(0, 169, 157, 0.1);
+
+    border-radius: 50%;
+}
+
+
+.modalButton {
+    width: 100%;
+    height: 40px;
+
+    color: var(--color-text-white);
+
+    background: var(--color-primary-500-main);
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+
+    cursor: pointer;
+
+    transition:
+        opacity var(--transition-fast);
+}
+
+
+.modalButton:hover {
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   Delete Modal Buttons
+========================================================= */
+
+.modalButtons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.modalCancelButton,
+.modalDeleteButton {
+    flex: 1;
+
+    height: 40px;
+
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        opacity var(--transition-fast);
+}
+
+
+/* 삭제 모달 - 취소 */
+
+.modalCancelButton {
+    color: var(--color-text-sub);
+
+    background: var(--color-bg-white);
+
+    border: 1px solid var(--color-border-gray);
+}
+
+
+.modalCancelButton:hover:not(:disabled) {
+    background: var(--color-bg-hover);
+}
+
+
+/* 삭제 모달 - 삭제 */
+
+.modalDeleteButton {
+    color: #ffffff;
+
+    background: #d14343;
+
+    border: 1px solid #d14343;
+}
+
+
+.modalDeleteButton:hover:not(:disabled) {
+    background: #b93636;
+
+    border-color: #b93636;
+}
+
+
+.modalCancelButton:disabled,
+.modalDeleteButton:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.55;
+}
+
+
+/* =========================================================
+   Responsive
+========================================================= */
+
+@media (max-width: 768px) {
+    .formCard {
+        min-height: auto;
+
+        padding: 24px;
+    }
+
+    .field textarea {
+        min-height: 280px;
+    }
+
+    .buttonArea {
+        gap: 12px;
+    }
+
+    .rightButtons {
+        flex: 1;
+        justify-content: flex-end;
+    }
+}

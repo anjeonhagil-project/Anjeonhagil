@@ -8,11 +8,13 @@ import placesRouter from '../modules/places/places.routes.js'
 import routesRouter from '../modules/routes/routes.routes.js'
 
 import adminUsersRouter from '../modules/admin/users/users.routes.js'
-import adminAdminsRouter from '../modules/admin/admins/admins.routes.js'
+
+import adminNoticesRouter from '../modules/admin/notices/notices.routes.js'
 
 import { authenticate } from '../middleware/authenticate.js'
 import { requireAdmin } from '../middleware/requireAdmin.js'
 import { getCurrentAdmin } from '../modules/admin/admins/admins.controller.js'
+
 
 const router = Router()
 
@@ -23,7 +25,7 @@ router.use('/', placesRouter)
 router.use('/routes', routesRouter)
 
 router.use('/admin/users', adminUsersRouter)
-router.use('/admin/admins', adminAdminsRouter)
+router.use('/admin/notices', adminNoticesRouter)
 router.get('/admin/me', authenticate, requireAdmin, getCurrentAdmin)
 
 export default router
