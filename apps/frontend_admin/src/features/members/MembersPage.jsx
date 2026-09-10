@@ -8,6 +8,12 @@ import { getCurrentAdmin } from '../auth/api.js'
 
 import MemberPermissionModal from './components/MemberPermissionModal.jsx'
 
+import PermissionConfirmModal from './components/PermissionConfirmModal.jsx'
+
+import {grantAdmin, revokeAdmin } from '../admins/api.js'
+
+import PermissionResultModal from './components/PermissionResultModal.jsx'
+
 import styles from './MembersPage.module.css'
 
 
@@ -38,6 +44,14 @@ export default function MembersPage() {
 
     const [isDetailOpen, setIsDetailOpen] = useState(false)
     const [isPermissionOpen, setIsPermissionOpen] = useState(false)
+
+    // 권한 변경 확인
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+    const [pendingRole, setPendingRole] = useState(null)
+    const [isPermissionSubmitting, setIsPermissionSubmitting] =
+        useState(false)
+
+    const [permissionResult, setPermissionResult] = useState(null)
 
     // 슈퍼관리자
     const canManageAdmins = currentAdmin?.role === 'super_admin'
@@ -164,10 +178,24 @@ export default function MembersPage() {
             setSelectedMember(null)
 
             const response = await getMemberById(userId)
-            setSelectedMember(response.data)
+            setSelectedMember({
+                ...response.data,
+
+                // 상세 응답에 userId가 없더라도
+                // 목록에서 클릭한 실제 회원 UUID를 유지
+                userId:
+                    response.data?.userId ??
+                    userId,
+            })
         } catch (error) {
-            console.error('회원 상세 조회 실패:', error)
-            setDetailError('회원 상세 정보를 불러오지 못했습니다.')
+            console.error(
+                '회원 상세 조회 실패:',
+                error
+            )
+
+            setDetailError(
+                '회원 정보를 불러오지 못했습니다.'
+            )
         } finally {
             setIsDetailLoading(false)
         }
@@ -189,7 +217,131 @@ export default function MembersPage() {
     }
 
     function handlePermissionSubmit(selectedRole) {
-        console.log('변경할 권한:', selectedRole)
+        setPendingRole(selectedRole)
+        setIsPermissionOpen(false)
+        setIsConfirmOpen(true)
+    }
+
+    function handleConfirmCancel() {
+        setIsConfirmOpen(false)
+        setIsPermissionOpen(true)
+    }
+
+    async function handlePermissionConfirm() {
+        if (
+            !selectedMember?.userId ||
+            !pendingRole
+        ) {
+            return
+        }
+
+        const userId = selectedMember.userId
+        const nextRole = pendingRole
+
+        const currentRole =
+            selectedMember.role === 'admin'
+                ? 'admin'
+                : 'user'
+
+        try {
+            setIsPermissionSubmitting(true)
+
+
+            // ==============================
+            // 1. 실제 권한 변경
+            // ==============================
+
+            // 일반 회원 → 관리자
+            if (
+                currentRole === 'user' &&
+                nextRole === 'admin'
+            ) {
+                await grantAdmin({
+                    adminId: userId,
+                    role: 'admin',
+                })
+            }
+
+
+            // 관리자 → 일반 회원
+            if (
+                currentRole === 'admin' &&
+                nextRole === 'user'
+            ) {
+                await revokeAdmin(userId)
+            }
+
+
+            // 여기까지 왔으면
+            // 실제 권한 변경 API는 성공한 상태
+            setIsConfirmOpen(false)
+
+            setPermissionResult({
+                type: 'success',
+                nextRole,
+            })
+
+
+            // ==============================
+            // 2. 화면 데이터 새로고침
+            // 권한 변경 성공과 별도로 처리
+            // ==============================
+
+            try {
+                const detailResponse =
+                    await getMemberById(userId)
+
+                setSelectedMember({
+                    ...detailResponse.data,
+                    userId:
+                        detailResponse.data?.userId ??
+                        userId,
+                })
+
+
+                const listResponse =
+                    await getMembers({
+                        search,
+                        page,
+                        limit,
+                        sortBy,
+                        sortOrder,
+                    })
+
+                setMembers(
+                    listResponse.data.items
+                )
+
+                setPagination(
+                    listResponse.data.pagination
+                )
+            } catch (refreshError) {
+                console.error(
+                    '권한 변경 후 화면 갱신 실패:',
+                    refreshError
+                )
+            }
+        } catch (error) {
+            // 여기에는 진짜 grant/revoke 실패만 들어옴
+            console.error(
+                '관리자 권한 변경 실패:',
+                error
+            )
+
+            setIsConfirmOpen(false)
+
+            setPermissionResult({
+                type: 'error',
+                nextRole,
+            })
+        } finally {
+            setIsPermissionSubmitting(false)
+            setPendingRole(null)
+        }
+    }
+
+    function handlePermissionResultClose() {
+        setPermissionResult(null)
     }
 
 
@@ -496,6 +648,25 @@ export default function MembersPage() {
                     member={selectedMember}
                     onSubmit={handlePermissionSubmit}
                     onClose={handlePermissionClose}
+                />
+            
+            )}
+            {isConfirmOpen && pendingRole && (
+                <PermissionConfirmModal
+                    member={selectedMember}
+                    currentRole={selectedMember?.role === 'admin' ? 'admin' : 'user'}
+                    nextRole={pendingRole}
+                    isSubmitting={isPermissionSubmitting}
+                    onCancel={handleConfirmCancel}
+                    onConfirm={handlePermissionConfirm}
+                />
+            )}
+            {permissionResult && (
+                <PermissionResultModal
+                    type={permissionResult.type}
+                    member={selectedMember}
+                    nextRole={permissionResult.nextRole}
+                    onClose={handlePermissionResultClose}
                 />
             )}
         </section>

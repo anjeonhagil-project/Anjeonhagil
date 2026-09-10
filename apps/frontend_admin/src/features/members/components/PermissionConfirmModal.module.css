@@ -1,0 +1,163 @@
+/* =========================================================
+   A-MEMBER 관리자 권한 변경 확인 Modal
+   - global.css Design Token 사용
+========================================================= */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--space-6);
+
+    background: var(--color-bg-modal);
+}
+
+
+.modal {
+    width: 100%;
+    max-width: 420px;
+
+    overflow: hidden;
+
+    background: var(--color-bg-white);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-modal);
+}
+
+
+/* =========================================================
+   Body
+========================================================= */
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+
+    padding:
+        var(--space-7)
+        var(--space-6)
+        var(--space-5);
+
+    text-align: center;
+}
+
+
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    color: var(--color-warning);
+
+    background: var(--color-warning-soft);
+    border-radius: var(--radius-full);
+
+    font-size: 22px;
+    font-weight: var(--font-weight-bold);
+}
+
+
+.title {
+    color: var(--color-text-strong);
+
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+}
+
+
+.message {
+    margin: 0;
+
+    color: var(--color-text-sub);
+
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+}
+
+
+.highlight {
+    color: var(--color-primary-600);
+
+    font-weight: var(--font-weight-semibold);
+}
+
+
+/* =========================================================
+   Footer
+========================================================= */
+
+.footer {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+
+    padding:
+        var(--space-4)
+        var(--space-6)
+        var(--space-5);
+}
+
+
+.cancelButton,
+.confirmButton {
+    min-width: 96px;
+    height: 40px;
+
+    padding: 0 var(--space-5);
+
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+
+.cancelButton {
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+}
+
+
+.cancelButton:hover {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-primary-soft);
+}
+
+
+.confirmButton {
+    color: var(--color-text-white);
+
+    background: var(--color-primary-500-main);
+    border: 1px solid var(--color-primary-500-main);
+}
+
+
+.confirmButton:hover {
+    background: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+}
+
+
+.confirmButton:disabled {
+    background: var(--color-notice);
+    border-color: var(--color-notice);
+
+    cursor: not-allowed;
+}
