@@ -1,0 +1,375 @@
+/* =========================================================
+   A-AUTH 관리자 로그인
+   - global.css Design Token 사용
+   - Figma 기준 로그인 화면
+========================================================= */
+
+.page {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 100vh;
+
+    padding: var(--space-6);
+
+    overflow: hidden;
+
+    background: var(--color-bg-page);
+}
+
+
+/* =========================================================
+   Background Decoration
+========================================================= */
+
+.page::before,
+.page::after {
+    position: absolute;
+
+    content: '';
+
+    border-radius: var(--radius-full);
+
+    pointer-events: none;
+}
+
+
+.page::before {
+    top: -140px;
+    left: -120px;
+
+    width: 420px;
+    height: 420px;
+
+    background: rgba(0, 169, 157, 0.06);
+}
+
+
+.page::after {
+    right: -170px;
+    bottom: -190px;
+
+    width: 520px;
+    height: 520px;
+
+    background: rgba(18, 63, 70, 0.035);
+}
+
+
+/* =========================================================
+   Login Card
+========================================================= */
+
+.card {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    max-width: 420px;
+
+    padding:
+        var(--space-7)
+        var(--space-6);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-card);
+}
+
+
+/* =========================================================
+   Brand
+========================================================= */
+
+.brandArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-bottom: var(--space-6);
+
+    text-align: center;
+}
+
+
+.logo {
+    width: 72px;
+    height: auto;
+
+    margin-bottom: var(--space-3);
+
+    object-fit: contain;
+}
+
+
+.title {
+    margin: 0;
+
+    color: var(--color-text-strong);
+
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+}
+
+
+.titleAccent {
+    margin-left: var(--space-1);
+
+    color: var(--color-primary-700);
+}
+
+
+.description {
+    margin-top: var(--space-2);
+
+    color: var(--color-text-sub);
+
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   Form
+========================================================= */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+
+.label {
+    color: var(--color-text-strong);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+
+.inputWrapper {
+    position: relative;
+}
+
+
+.input {
+    width: 100%;
+    height: 44px;
+
+    padding:
+        0
+        var(--space-3);
+
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.input::placeholder {
+    color: var(--color-text-muted);
+}
+
+
+.input:hover {
+    border-color: var(--color-border-soft);
+}
+
+
+.input:focus {
+    border-color: var(--color-primary-500-main);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 169, 157, 0.08);
+
+    outline: none;
+}
+
+
+/* 비밀번호 input은 우측 아이콘 공간 확보 */
+.passwordInput {
+    padding-right: 46px;
+}
+
+
+/* =========================================================
+   Password Toggle
+========================================================= */
+
+.passwordToggle {
+    position: absolute;
+    top: 50%;
+    right: var(--space-3);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    color: var(--color-text-muted);
+
+    background: transparent;
+    border-radius: var(--radius-sm);
+
+    transform: translateY(-50%);
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition:
+        color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.passwordToggle:hover {
+    color: var(--color-text-strong);
+
+    background: var(--color-bg-hover);
+}
+
+
+/* =========================================================
+   Validation
+========================================================= */
+
+.inputError {
+    border-color: var(--color-danger);
+}
+
+
+.inputError:focus {
+    border-color: var(--color-danger);
+
+    box-shadow:
+        0 0 0 3px rgba(201, 70, 70, 0.08);
+}
+
+
+.errorMessage {
+    margin: 0;
+
+    color: var(--color-danger);
+
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   Login Button
+========================================================= */
+
+.loginButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 46px;
+
+    margin-top: var(--space-2);
+
+    color: var(--color-text-white);
+
+    background: var(--color-primary-500-main);
+    border: 1px solid var(--color-primary-500-main);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+
+.loginButton:hover:not(:disabled) {
+    background: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+}
+
+
+.loginButton:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+
+.loginButton:disabled {
+    background: var(--color-notice);
+    border-color: var(--color-notice);
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   Footer Message
+========================================================= */
+
+.guideMessage {
+    margin-top: var(--space-4);
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-xs);
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   Responsive
+========================================================= */
+
+@media (max-width: 520px) {
+    .page {
+        padding: var(--space-4);
+    }
+
+    .card {
+        padding:
+            var(--space-6)
+            var(--space-4);
+    }
+
+    .page::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .page::after {
+        width: 360px;
+        height: 360px;
+    }
+}
