@@ -1,5 +1,6 @@
 // # 기능: 관리자 화면 A-* 전용 라우팅
 // # 예: /login, /dashboard, /members, /datasets, /notices, /inquiries, /routes, /admins
+
 import {
     BrowserRouter,
     Navigate,
@@ -10,6 +11,10 @@ import {
 import AdminLayout from '../components/layout/AdminLayout.jsx'
 import DashboardPage from '../features/dashboard/DashboardPage.jsx'
 import LoginPage from '../features/auth/LoginPage.jsx'
+import ProtectedAdminRoute from '../features/auth/ProtectedAdminRoute.jsx'
+
+import MembersPage from '../features/members/MembersPage.jsx'
+
 
 // 아직 만들지 않은 페이지를 위한 임시 컴포넌트
 function PlaceholderPage({ title }) {
@@ -21,91 +26,92 @@ function PlaceholderPage({ title }) {
     )
 }
 
+
 function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                {/* 로그인 화면은 AdminLayout 밖 */}
+                {/* 로그인 화면 */}
                 <Route
                     path="/login"
                     element={<LoginPage />}
                 />
 
-                {/* 사이드바와 헤더가 표시되는 관리자 화면 */}
-                <Route element={<AdminLayout />}>
-                    <Route
-                        index
-                        element={
-                            <Navigate
-                                to="/dashboard"
-                                replace
-                            />
-                        }
-                    />
+                {/* 관리자 인증이 필요한 화면 */}
+                <Route element={<ProtectedAdminRoute />}>
+                    {/* 사이드바와 헤더가 표시되는 관리자 화면 */}
+                    <Route element={<AdminLayout />}>
+                        <Route
+                            index
+                            element={
+                                <Navigate
+                                    to="/dashboard"
+                                    replace
+                                />
+                            }
+                        />
 
-                    <Route
-                        path="/dashboard"
-                        element={<DashboardPage />}
-                    />
+                        <Route
+                            path="/dashboard"
+                            element={<DashboardPage />}
+                        />
 
-                    <Route
-                        path="/members"
-                        element={
-                            <PlaceholderPage title="회원 관리" />
-                        }
-                    />
+                        <Route
+                            path="/members"
+                            element={
+                                <MembersPage />
+                            }
+                        />
 
-                    <Route
-                        path="/routes"
-                        element={
-                            <PlaceholderPage title="경로 관리" />
-                        }
-                    />
+                        <Route
+                            path="/routes"
+                            element={
+                                <PlaceholderPage title="경로 관리" />
+                            }
+                        />
 
-                    {/* /datasets 직접 접근 시 성공한 경로 검색으로 이동 */}
-                    <Route
-                        path="/datasets"
-                        element={
-                            <PlaceholderPage title="데이터 관리" />
-                        }
-                    />
+                        <Route
+                            path="/datasets"
+                            element={
+                                <PlaceholderPage title="데이터 관리" />
+                            }
+                        />
 
-                    {/* 성공한 경로 검색 */}
-                    <Route
-                        path="/datasets/success"
-                        element={
-                            <PlaceholderPage title="성공한 경로 검색" />
-                        }
-                    />
+                        <Route
+                            path="/datasets/success"
+                            element={
+                                <PlaceholderPage title="성공한 경로 검색" />
+                            }
+                        />
 
-                    {/* 실패한 경로 검색 */}
-                    <Route
-                        path="/datasets/failure"
-                        element={
-                            <PlaceholderPage title="실패한 경로 검색" />
-                        }
-                    />
+                        <Route
+                            path="/datasets/failure"
+                            element={
+                                <PlaceholderPage title="실패한 경로 검색" />
+                            }
+                        />
 
-                    <Route
-                        path="/notices"
-                        element={
-                            <PlaceholderPage title="공지사항" />
-                        }
-                    />
+                        <Route
+                            path="/notices"
+                            element={
+                                <PlaceholderPage title="공지사항" />
+                            }
+                        />
 
-                    <Route
-                        path="/inquiries"
-                        element={
-                            <PlaceholderPage title="문의사항" />
-                        }
-                    />
+                        <Route
+                            path="/inquiries"
+                            element={
+                                <PlaceholderPage title="문의사항" />
+                            }
+                        />
 
-                    <Route
-                        path="/admins"
-                        element={
-                            <PlaceholderPage title="관리자 관리" />
-                        }
-                    />
+                        <Route
+                            path="/admins"
+                            element={
+                                <PlaceholderPage title="관리자 관리" />
+                            }
+                        />
+                    </Route>
                 </Route>
 
                 {/* 존재하지 않는 주소 처리 */}
