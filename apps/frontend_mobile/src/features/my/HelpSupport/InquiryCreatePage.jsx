@@ -3,29 +3,32 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../../../components/common/Button/Button.jsx'
 import Input from '../../../components/common/Input/Input.jsx'
 import Header from '../../../components/layout/Header.jsx'
+import { createInquiry } from '../../support/api.js'
 import styles from './InquiryCreatePage.module.css'
 
 function InquiryCreatePage() {
     const navigate = useNavigate()
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
 
-        if (!title.trim() || !content.trim()) return
+        if (!title.trim() || !content.trim() || isSubmitting) return
 
-        navigate('/my/support/inquiries', {
-            replace: true,
-            state: {
-                createdInquiry: {
-                    id: Date.now(),
-                    title: title.trim(),
-                    date: new Date().toLocaleDateString('sv-SE').replaceAll('-', '.'),
-                    status: '답변 대기',
-                },
-            },
-        })
+        setIsSubmitting(true)
+        setErrorMessage('')
+
+        try {
+            await createInquiry({ title: title.trim(), content: content.trim() })
+            navigate('/my/support/inquiries', { replace: true })
+        } catch (error) {
+            setErrorMessage(error.message || '문의 등록에 실패했습니다')
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     return (
@@ -49,12 +52,14 @@ function InquiryCreatePage() {
                     />
                 </label>
 
+                {errorMessage && <p className={styles.errorMessage} role="alert">{errorMessage}</p>}
+
                 <Button
                     type="submit"
                     fullWidth
-                    disabled={!title.trim() || !content.trim()}
+                    disabled={!title.trim() || !content.trim() || isSubmitting}
                 >
-                    문의 등록
+                    {isSubmitting ? '등록 중...' : '문의 등록'}
                 </Button>
             </form>
         </main>

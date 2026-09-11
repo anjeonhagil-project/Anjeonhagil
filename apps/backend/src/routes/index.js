@@ -6,6 +6,8 @@ import authRouter from '../modules/auth/auth.routes.js'
 import preferencesRouter from '../modules/preferences/preferences.routes.js'
 import placesRouter from '../modules/places/places.routes.js'
 import routesRouter from '../modules/routes/routes.routes.js'
+import inquiriesRouter from '../modules/inquiries/inquiries.routes.js'
+import noticesRouter from '../modules/notices/notices.routes.js'
 
 import adminUsersRouter from '../modules/admin/users/users.routes.js'
 import adminAdminsRouter from '../modules/admin/admins/admins.routes.js'
@@ -25,6 +27,8 @@ router.use('/auth', authRouter)
 router.use('/driving-preferences', preferencesRouter)
 router.use('/', placesRouter)
 router.use('/routes', routesRouter)
+router.use('/inquiries', inquiriesRouter)
+router.use('/notices', noticesRouter)
 
 router.use('/admin/users', adminUsersRouter)
 router.use('/admin/notices', adminNoticesRouter)

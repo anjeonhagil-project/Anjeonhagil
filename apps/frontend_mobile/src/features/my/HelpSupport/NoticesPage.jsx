@@ -1,31 +1,43 @@
+import { useEffect, useState } from 'react'
 import { FiChevronRight } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../../components/layout/Header.jsx'
+import { getNotices } from '../../support/api.js'
 import styles from './NoticesPage.module.css'
 
-const NOTICES = [
-    { id: 1, title: '안전하길 서비스 정식 오픈 안내', date: '2025.01.15' },
-    { id: 2, title: '개인정보 처리방침 개정 안내', date: '2025.01.10' },
-    { id: 3, title: '안심경로 알고리즘 업데이트 안내', date: '2025.01.05' },
-    { id: 4, title: '겨울철 안전 운전 가이드', date: '2024.12.20' },
-    { id: 5, title: '위치기반서비스 이용약관 변경 안내', date: '2024.12.15' },
-    { id: 6, title: '앱 버전 1.2.0 업데이트 안내', date: '2024.12.10' },
-    { id: 7, title: '연말 시스템 점검 안내', date: '2024.12.05' },
-    { id: 8, title: '연말 시스템 점검 안내', date: '2024.12.05' },
-    { id: 9, title: '연말 시스템 점검 안내', date: '2024.12.05' },
-    { id: 10, title: '연말 시스템 점검 안내', date: '2024.12.05' },
-    { id: 11, title: '연말 시스템 점검 안내', date: '2024.12.05' },
-    { id: 12, title: '연말 시스템 점검 안내', date: '2024.12.05' },
-    { id: 13, title: '연말 시스템 점검 안내', date: '2024.12.05' },
-]
+function formatDate(value) {
+    return value
+        ? new Date(value).toLocaleDateString('sv-SE').replaceAll('-', '.')
+        : ''
+}
 
 function NoticesPage() {
     const navigate = useNavigate()
+    const [notices, setNotices] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [errorMessage, setErrorMessage] = useState('')
+
+    useEffect(() => {
+        let isMounted = true
+
+        getNotices()
+            .then((result) => {
+                if (isMounted) setNotices(result.items ?? [])
+            })
+            .catch((error) => {
+                if (isMounted) setErrorMessage(error.message || '공지사항을 불러오지 못했습니다')
+            })
+            .finally(() => {
+                if (isMounted) setIsLoading(false)
+            })
+
+        return () => {
+            isMounted = false
+        }
+    }, [])
 
     const handleNoticeClick = (noticeId) => {
-        // 공지 상세 화면을 만든 뒤 연결합니다.
-        // navigate(`/my/support/notices/${noticeId}`)
-        console.log('선택한 공지 ID:', noticeId)
+        navigate(`/my/support/notices/${noticeId}`)
     }
 
     return (
@@ -34,16 +46,21 @@ function NoticesPage() {
 
             <section className={`${styles.content} hide-scrollbar`} aria-label="공지사항 목록">
                 <div className={styles.noticeList}>
-                    {NOTICES.map((notice) => (
+                    {isLoading && <p className={styles.feedback}>공지사항을 불러오는 중입니다.</p>}
+                    {!isLoading && errorMessage && <p className={styles.feedback}>{errorMessage}</p>}
+                    {!isLoading && !errorMessage && notices.length === 0 && (
+                        <p className={styles.feedback}>게시된 공지사항이 없습니다.</p>
+                    )}
+                    {!isLoading && !errorMessage && notices.map((notice) => (
                         <button
-                            key={notice.id}
+                            key={notice.noticeId}
                             type="button"
                             className={styles.noticeItem}
-                            onClick={() => handleNoticeClick(notice.id)}
+                            onClick={() => handleNoticeClick(notice.noticeId)}
                         >
                             <span className={styles.noticeCopy}>
                                 <strong>{notice.title}</strong>
-                                <time>{notice.date}</time>
+                                <time>{formatDate(notice.publishedAt)}</time>
                             </span>
 
                             <FiChevronRight size={20} aria-hidden="true" />

@@ -5,6 +5,9 @@ import { useAuth } from '../hooks/useAuth.js'
 
 // 위치 권한 화면은 브라우저 권한 상태라 계정에 귀속되지 않음 → 로컬에 "봤는지"만 기록
 export const LOCATION_PERMISSION_SEEN_KEY = 'anjeonhagil:locationPermissionSeen'
+// 설문 저장 직후, /users/me를 다시 불러오기 전에도 같은 로그인 세션에서
+// 완료 상태를 유지하기 위한 사용자별 임시 표시다. 다음 로그인부터는 DB 값을 사용한다.
+export const ONBOARDING_COMPLETED_USER_ID_KEY = 'anjeonhagil:onboardingCompletedUserId'
 
 // 약관동의(M-AUTH-007) → 위치권한(M-AUTH-008) → 온보딩 설문 → 홈 순서로 리다이렉트
 function AuthRedirect() {
@@ -54,20 +57,32 @@ function AuthRedirect() {
             navigate('/my/profile?reauth=1', { replace: true })
             return
         }
-        // 이미 목적지 화면(및 약관 하위 상세 화면)에 있으면 건드리지 않음
+        // 약관 하위 화면과 이메일 인증 화면은 현재 흐름을 유지한다.
         if (path.startsWith('/terms')) return
         if (path === '/email-verify') return
-        const homeTabs = ['/location-permission', '/onboarding', '/home', '/search', '/favorites', '/my', '/route-compare']
-        if (homeTabs.includes(path) || path.startsWith('/favorites/') || path.startsWith('/my/')) return
 
         const locationSeen = localStorage.getItem(LOCATION_PERMISSION_SEEN_KEY) === 'true'
+        const onboardingCompletedInSession =
+            window.sessionStorage.getItem(ONBOARDING_COMPLETED_USER_ID_KEY) === user?.id
+        const onboardingCompleted = profile.onboarding === true || onboardingCompletedInSession
 
         if (!termsAgreed) {
             navigate('/terms', { replace: true })
-        } else if (!locationSeen) {
-            navigate('/location-permission', { replace: true })
-        } else {
-            navigate(profile.onboarding ? '/home' : '/onboarding', { replace: true })
+            return
+        }
+
+        // 완료한 회원은 로그인할 때 홈으로 이동하고, 직접 접근해도 설문/권한 화면을 다시 보지 않는다.
+        if (onboardingCompleted) {
+            if (path === '/' || path === '/login' || path === '/onboarding' || path === '/location-permission') {
+                navigate('/home', { replace: true })
+            }
+            return
+        }
+
+        // 미완료 회원은 최초 흐름에서만 위치 권한 → 설문을 진행한다.
+        const firstOnboardingPath = locationSeen ? '/onboarding' : '/location-permission'
+        if (path !== firstOnboardingPath) {
+            navigate(firstOnboardingPath, { replace: true })
         }
     }, [isAuthenticated, loading, profile, termsAgreed, location.pathname, navigate, user])
 

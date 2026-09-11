@@ -23,7 +23,9 @@ import ProfileManagePage from '../features/my/ProfileManagePage.jsx'
 import DrivingPreferencesPage from '../features/my/DrivingPreferencesPage.jsx'
 import HelpSupportPage from '../features/my/HelpSupport/HelpSupportPage.jsx'
 import NoticesPage from '../features/my/HelpSupport/NoticesPage.jsx'
+import NoticeDetailPage from '../features/my/HelpSupport/NoticeDetailPage.jsx'
 import InquiriesPage from '../features/my/HelpSupport/InquiriesPage.jsx'
+import InquiryDetailPage from '../features/my/HelpSupport/InquiryDetailPage.jsx'
 import InquiryCreatePage from '../features/my/HelpSupport/InquiryCreatePage.jsx'
 import TermsInfoPage from '../features/my/HelpSupport/TermsInfoPage.jsx'
 import AccountRecoveryGate from './AccountRecoveryGate.jsx'
@@ -51,8 +53,10 @@ function AppRouter() {
                 <Route path="/my/driving-preferences" element={<DrivingPreferencesPage />}/>
                 <Route path="/my/support" element={<HelpSupportPage />} />
                 <Route path="/my/support/notices" element={<NoticesPage />} />
+                <Route path="/my/support/notices/:noticeId" element={<NoticeDetailPage />} />
                 <Route path="/my/support/inquiries" element={<InquiriesPage />} />
                 <Route path="/my/support/inquiries/write" element={<InquiryCreatePage />} />
+                <Route path="/my/support/inquiries/:inquiryId" element={<InquiryDetailPage />} />
                 <Route path="/my/support/terms" element={<TermsInfoPage />} />
 
                 <Route path="/onboarding" element={<OnboardingPage />} />

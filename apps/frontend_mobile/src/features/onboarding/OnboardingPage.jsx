@@ -6,6 +6,7 @@ import { FaCheck } from 'react-icons/fa6'
 import Header from '../../components/layout/Header.jsx'
 import Button from '../../components/common/Button/Button.jsx'
 import { saveDrivingPreferences } from './api.js'
+import { ONBOARDING_COMPLETED_USER_ID_KEY } from '../../router/AuthRedirect.jsx'
 import styles from './OnboardingPage.module.css'
 
 const QUESTIONS = [
@@ -64,7 +65,12 @@ function OnboardingPage() {
         setSubmitError('')
 
         try {
-            await saveDrivingPreferences(answers)
+            const preferences = await saveDrivingPreferences(answers)
+            // /users/me 재조회 전에도 완료 화면에서 홈으로 안전하게 이동하도록 표시한다.
+            window.sessionStorage.setItem(
+                ONBOARDING_COMPLETED_USER_ID_KEY,
+                preferences.userId
+            )
             setScreen('complete')
         } catch (error) {
             setSubmitError(error.message || '설문 저장에 실패했습니다. 잠시 후 다시 시도해주세요.')

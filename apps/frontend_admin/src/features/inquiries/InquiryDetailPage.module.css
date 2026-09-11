@@ -64,22 +64,6 @@
     font-weight: var(--font-weight-semibold);
 }
 
-.answerHeader select {
-    height: 36px;
-
-    padding: 0 30px 0 12px;
-
-    color: var(--color-text);
-
-    background: var(--color-bg-white);
-
-    border: 1px solid var(--color-border-gray);
-    border-radius: var(--radius-sm);
-
-    outline: none;
-}
-
-
 /* =========================================================
    Status
 ========================================================= */

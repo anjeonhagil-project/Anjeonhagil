@@ -100,8 +100,20 @@ export default function InquiryDetailPage() {
                         inquiryId
                     )
 
-                const data =
+                let data =
                     response.data
+
+                // 관리자가 처음 열어본 문의는 접수에서 처리중으로 자동 변경한다.
+                // 답변완료 문의와 이미 처리중인 문의는 상태를 다시 바꾸지 않는다.
+                if (data.status === 'received') {
+                    const statusResponse =
+                        await updateInquiryStatus(
+                            inquiryId,
+                            'in_review'
+                        )
+
+                    data = statusResponse.data
+                }
 
                 setInquiry(data)
 
@@ -125,48 +137,6 @@ export default function InquiryDetailPage() {
 
         loadInquiry()
     }, [inquiryId])
-
-
-    async function handleStatusChange(
-        event
-    ) {
-        const nextStatus =
-            event.target.value
-
-        if (
-            !nextStatus ||
-            nextStatus ===
-                inquiry.status
-        ) {
-            return
-        }
-
-        try {
-            setIsSubmitting(true)
-            setErrorMessage('')
-
-            const response =
-                await updateInquiryStatus(
-                    inquiryId,
-                    nextStatus
-                )
-
-            setInquiry(
-                response.data
-            )
-        } catch (error) {
-            console.error(
-                '문의 상태 변경 실패:',
-                error
-            )
-
-            setErrorMessage(
-                '문의 처리 상태 변경에 실패했습니다.'
-            )
-        } finally {
-            setIsSubmitting(false)
-        }
-    }
 
 
     async function handleAnswer() {
@@ -403,28 +373,6 @@ export default function InquiryDetailPage() {
                             <h2>
                                 관리자 답변
                             </h2>
-
-                            {!isAnswered && (
-                                <select
-                                    value={
-                                        inquiry.status
-                                    }
-                                    onChange={
-                                        handleStatusChange
-                                    }
-                                    disabled={
-                                        isSubmitting
-                                    }
-                                >
-                                    <option value="received">
-                                        접수
-                                    </option>
-
-                                    <option value="in_review">
-                                        처리중
-                                    </option>
-                                </select>
-                            )}
                         </div>
 
 
