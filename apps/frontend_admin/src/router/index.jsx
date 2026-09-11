@@ -15,6 +15,8 @@ import ProtectedAdminRoute from '../features/auth/ProtectedAdminRoute.jsx'
 
 import MembersPage from '../features/members/MembersPage.jsx'
 
+import InquiriesPage from '../features/inquiries/InquiriesPage.jsx'
+import InquiryDetailPage from '../features/inquiries/InquiryDetailPage.jsx'
 import NoticesPage from '../features/notices/NoticesPage.jsx'
 import NoticeFormPage from '../features/notices/NoticeFormPage.jsx'
 
@@ -115,7 +117,13 @@ function AppRouter() {
                         <Route
                             path="/inquiries"
                             element={
-                                <PlaceholderPage title="문의사항" />
+                                <InquiriesPage />
+                            }
+                        />
+                        <Route
+                            path="/inquiries/:inquiryId"
+                            element={
+                                <InquiryDetailPage />
                             }
                         />
 

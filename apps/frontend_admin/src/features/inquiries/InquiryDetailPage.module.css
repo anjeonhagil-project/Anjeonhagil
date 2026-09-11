@@ -1,0 +1,422 @@
+.page {
+    width: 100%;
+}
+
+.detailGrid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap: var(--space-5);
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 560px;
+
+    padding: 28px;
+
+    background: var(--color-bg-white);
+
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-card);
+}
+
+
+/* =========================================================
+   Header
+========================================================= */
+
+.cardHeader,
+.answerHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+
+    padding-bottom: var(--space-5);
+
+    border-bottom:
+        1px solid
+        var(--color-border-soft);
+}
+
+.cardHeader h2,
+.answerHeader h2 {
+    margin: 8px 0 0;
+
+    color: var(--color-text);
+
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+.category {
+    color: var(--color-warning);
+
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+.answerHeader select {
+    height: 36px;
+
+    padding: 0 30px 0 12px;
+
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    outline: none;
+}
+
+
+/* =========================================================
+   Status
+========================================================= */
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 70px;
+    height: 28px;
+
+    padding: 0 10px;
+
+    border-radius: var(--radius-full);
+
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+.received {
+    color: var(--color-text-sub);
+    background: var(--color-notice-soft);
+}
+
+.inReview {
+    color: var(--color-warning);
+    background: var(--color-warning-soft);
+}
+
+.answered {
+    color: var(--color-success);
+    background: var(--color-success-soft);
+}
+
+
+/* =========================================================
+   Meta
+========================================================= */
+
+.metaGrid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: var(--space-4);
+
+    padding: var(--space-5) 0;
+}
+
+.metaGrid div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.metaGrid span {
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-xs);
+}
+
+.metaGrid strong {
+    color: var(--color-text);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   Inquiry Content
+========================================================= */
+
+.contentBox {
+    flex: 1;
+
+    padding: var(--space-5);
+
+    color: var(--color-text);
+
+    background: var(--color-primary-50);
+
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+    line-height: 1.8;
+
+    white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   Answer
+========================================================= */
+
+.answerInfo {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+
+    padding: var(--space-3) 0;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-xs);
+}
+
+.answerTextarea {
+    flex: 1;
+
+    width: 100%;
+    min-height: 330px;
+
+    margin-top: var(--space-5);
+    padding: var(--space-4);
+
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+
+    resize: none;
+
+    outline: none;
+}
+
+.answerTextarea:focus {
+    border-color:
+        var(--color-primary-500-main);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0, 169, 157, 0.08);
+}
+
+.answerTextarea:read-only {
+    color: var(--color-text-sub);
+
+    background:
+        var(--color-bg-gray-soft);
+}
+
+.answerTextarea::placeholder {
+    color: var(--color-text-muted);
+}
+
+.errorMessage {
+    margin: var(--space-2) 0 0;
+
+    color: var(--color-danger);
+
+    font-size: var(--font-size-sm);
+}
+
+
+/* =========================================================
+   Buttons
+========================================================= */
+
+.buttonArea {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    margin-top: var(--space-5);
+
+    padding-top: var(--space-4);
+
+    border-top:
+        1px solid
+        var(--color-border-soft);
+}
+
+.listButton,
+.answerButton {
+    min-width: 90px;
+    height: 40px;
+
+    padding: 0 18px;
+
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+
+    cursor: pointer;
+}
+
+.listButton {
+    color: var(--color-text-sub);
+
+    background: var(--color-bg-white);
+
+    border:
+        1px solid
+        var(--color-border-gray);
+}
+
+.answerButton {
+    color: var(--color-text-white);
+
+    background:
+        var(--color-primary-500-main);
+
+    border:
+        1px solid
+        var(--color-primary-500-main);
+}
+
+.answerButton:hover:not(:disabled) {
+    background:
+        var(--color-primary-600);
+}
+
+.answerButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+
+/* =========================================================
+   Modal
+========================================================= */
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(15, 23, 42, 0.36);
+}
+
+.modal {
+    width: 340px;
+
+    padding: 32px 28px 26px;
+
+    background: var(--color-bg-white);
+
+    border-radius: 14px;
+
+    box-shadow: var(--shadow-modal);
+
+    text-align: center;
+}
+
+.successIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 16px;
+
+    color:
+        var(--color-primary-500-main);
+
+    background:
+        var(--color-success-soft);
+
+    border-radius: 50%;
+}
+
+.modal h2 {
+    margin: 0 0 8px;
+
+    color: var(--color-text);
+
+    font-size: 18px;
+    font-weight: var(--font-weight-bold);
+}
+
+.modal p {
+    margin: 0 0 24px;
+
+    color: var(--color-text-sub);
+
+    font-size: var(--font-size-sm);
+}
+
+.modal button {
+    width: 100%;
+    height: 40px;
+
+    color: var(--color-text-white);
+
+    background:
+        var(--color-primary-500-main);
+
+    border: 0;
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   Loading
+========================================================= */
+
+.loading {
+    padding: 80px;
+
+    color: var(--color-text-muted);
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   Responsive
+========================================================= */
+
+@media (max-width: 1000px) {
+    .detailGrid {
+        grid-template-columns: 1fr;
+    }
+}

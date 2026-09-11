@@ -1,0 +1,291 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+
+/* =========================================================
+   Toolbar
+========================================================= */
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    padding: var(--space-4);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-card);
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    width: 300px;
+    height: 40px;
+
+    padding: 0 var(--space-3);
+
+    color: var(--color-text-muted);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+}
+
+.searchBox:focus-within {
+    border-color: var(--color-primary-500-main);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 169, 157, 0.08);
+}
+
+.searchBox input {
+    flex: 1;
+
+    min-width: 0;
+
+    color: var(--color-text);
+
+    background: transparent;
+    border: 0;
+    outline: 0;
+
+    font-size: var(--font-size-base);
+}
+
+.searchBox input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.select {
+    height: 40px;
+
+    padding:
+        0
+        var(--space-7)
+        0
+        var(--space-3);
+
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+
+    cursor: pointer;
+}
+
+.select:focus {
+    border-color: var(--color-primary-500-main);
+    outline: none;
+}
+
+
+/* =========================================================
+   Table
+========================================================= */
+
+.tableCard {
+    overflow: hidden;
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-card);
+}
+
+.table {
+    width: 100%;
+
+    table-layout: fixed;
+}
+
+.numberColumn {
+    width: 80px;
+}
+
+.categoryColumn {
+    width: 140px;
+}
+
+.userColumn {
+    width: 220px;
+}
+
+.dateColumn {
+    width: 150px;
+}
+
+.statusColumn {
+    width: 130px;
+}
+
+.table thead {
+    background: var(--color-primary-50);
+}
+
+.table th {
+    height: 48px;
+
+    padding: 0 var(--space-4);
+
+    color: var(--color-text-sub);
+
+    border-bottom: 1px solid var(--color-border-soft);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-align: left;
+}
+
+.table td {
+    height: 58px;
+
+    padding: 0 var(--space-4);
+
+    color: var(--color-text);
+
+    border-bottom: 1px solid var(--color-border-gray);
+
+    font-size: var(--font-size-sm);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.clickableRow {
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast);
+}
+
+.clickableRow:hover {
+    background: var(--color-bg-hover);
+}
+
+.titleCell {
+    font-weight: var(--font-weight-medium);
+}
+
+
+/* =========================================================
+   Status
+========================================================= */
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 66px;
+    height: 26px;
+
+    padding: 0 var(--space-2);
+
+    border-radius: var(--radius-full);
+
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+.received {
+    color: var(--color-text-sub);
+    background: var(--color-notice-soft);
+}
+
+.inReview {
+    color: var(--color-warning);
+    background: var(--color-warning-soft);
+}
+
+.answered {
+    color: var(--color-success);
+    background: var(--color-success-soft);
+}
+
+
+/* =========================================================
+   Empty
+========================================================= */
+
+.emptyCell {
+    height: 180px !important;
+
+    color: var(--color-text-muted) !important;
+
+    text-align: center !important;
+}
+
+
+/* =========================================================
+   Pagination
+========================================================= */
+
+.paginationArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+
+    padding: var(--space-4);
+}
+
+.pageButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 32px;
+    height: 32px;
+
+    padding: 0 var(--space-2);
+
+    color: var(--color-text-sub);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-sm);
+
+    cursor: pointer;
+}
+
+.pageButton:hover:not(:disabled) {
+    color: var(--color-primary-600);
+
+    border-color:
+        var(--color-primary-500-main);
+}
+
+.pageButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.activePage {
+    color: var(--color-text-white);
+
+    background:
+        var(--color-primary-500-main);
+
+    border-color:
+        var(--color-primary-500-main);
+}

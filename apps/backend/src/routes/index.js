@@ -8,6 +8,8 @@ import placesRouter from '../modules/places/places.routes.js'
 import routesRouter from '../modules/routes/routes.routes.js'
 
 import adminUsersRouter from '../modules/admin/users/users.routes.js'
+import adminAdminsRouter from '../modules/admin/admins/admins.routes.js'
+import adminInquiriesRouter from '../modules/admin/inquiries/inquiries.routes.js'
 
 import adminNoticesRouter from '../modules/admin/notices/notices.routes.js'
 
@@ -27,5 +29,8 @@ router.use('/routes', routesRouter)
 router.use('/admin/users', adminUsersRouter)
 router.use('/admin/notices', adminNoticesRouter)
 router.get('/admin/me', authenticate, requireAdmin, getCurrentAdmin)
+
+router.use('/admin/inquiries', adminInquiriesRouter)
+
 
 export default router
