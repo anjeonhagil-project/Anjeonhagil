@@ -91,6 +91,15 @@ function FavoriteDetailPage() {
         }
     }
 
+    const handleEditLocation = () => {
+        const destination = buildFavoriteLocationSelection({
+            favoriteId: favorite.id,
+            placeType: favorite.placeType,
+            draftName: name,
+        })
+        navigate(destination.to, { state: destination.state })
+    }
+
     if (loading) return <p className={styles.message}>즐겨찾기를 불러오는 중입니다.</p>
     if (error || !favorite) {
         return (
@@ -109,28 +118,46 @@ function FavoriteDetailPage() {
                 <section className={styles.savedPlaceCard} aria-label="저장한 장소">
                     <div className={styles.savedPlaceHeading}>
                         <strong>{replacement?.placeName || favorite.placeName}</strong>
-                        <button type="button" className={styles.textAction} disabled={submitting || deleted} onClick={() => {
-                            const destination = buildFavoriteLocationSelection({
-                                favoriteId: favorite.id,
-                                placeType: favorite.placeType,
-                                draftName: name,
-                            })
-                            navigate(destination.to, { state: destination.state })
-                        }}>위치 수정</button>
+                        <button
+                            type="button"
+                            className={styles.textAction}
+                            disabled={submitting || deleted}
+                            onClick={handleEditLocation}
+                        >
+                            위치 수정
+                        </button>
                     </div>
                     <p>{replacement?.address || favorite.address}</p>
                     {replacement && <p>새 위치를 선택했어요. 변경사항 저장을 눌러 확정해주세요.</p>}
                 </section>
                 <div className={styles.detailForm}>
-                    <Input label="새 이름" value={name} onChange={(event) => setName(event.target.value)} maxLength={100} placeholder="즐겨찾기 이름을 입력해주세요" disabled={submitting || deleted} />
+                    <Input
+                        label="새 이름"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                        maxLength={100}
+                        placeholder="즐겨찾기 이름을 입력해주세요"
+                        disabled={submitting || deleted}
+                    />
                 </div>
                 {actionError && <p className={styles.error} role="alert">{actionError}</p>}
 
                 <div className={styles.detailActions}>
-                    <Button fullWidth onClick={() => setConfirmingEdit(true)} disabled={!name.trim() || (!replacement && name.trim() === getFavoriteName(favorite)) || submitting || deleted}>
+                    <Button
+                        fullWidth
+                        onClick={() => setConfirmingEdit(true)}
+                        disabled={!name.trim() || (!replacement && name.trim() === getFavoriteName(favorite)) || submitting || deleted}
+                    >
                         {replacement ? '변경사항 저장' : '이름 변경'}
                     </Button>
-                    <Button fullWidth variant="secondary" onClick={() => setDeleting(true)} disabled={submitting || deleted}>삭제</Button>
+                    <Button
+                        fullWidth
+                        variant="secondary"
+                        onClick={() => setDeleting(true)}
+                        disabled={submitting || deleted}
+                    >
+                        삭제
+                    </Button>
                 </div>
             </main>
             <BottomNav />

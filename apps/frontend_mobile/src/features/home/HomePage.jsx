@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { IoHeart, IoHeartOutline } from 'react-icons/io5'
 import { loadKakaoMaps } from '../../lib/kakaoMaps.js'
-import { hasSelectedLocation, toSelectedPlace } from '../../lib/placeSelection.js'
+import { buildSafeRouteSearchState, hasSelectedLocation, toSelectedPlace } from '../../lib/placeSelection.js'
 import { Button } from '../../components/common/index.js'
 import BottomNav from '../../components/layout/BottomNav.jsx'
-import { getFavorites } from '../favorites/api.js'
-import { toFavoriteMarkerLocations } from '../favorites/favoriteContract.js'
+import { createFavorite, deleteFavorite, getFavorites } from '../favorites/api.js'
+import { buildFavoriteLocationResult, createFavoriteMarkerImage, findFavoriteForPlace, toFavoriteMarkerLocations } from '../favorites/favoriteContract.js'
+import { PLACE_TYPE_LABELS } from '../favorites/favoriteName.js'
 import styles from './HomePage.module.css'
 
 const DEFAULT_CENTER = { lat: 37.4979, lng: 127.0276 }
+const DETOUR_TIME_OPTIONS = [10, 20, 30, 60]
 
 function HomePage() {
     const navigate = useNavigate()
@@ -28,8 +31,13 @@ function HomePage() {
     const [message, setMessage] = useState('')
     const [mapError, setMapError] = useState('')
     const [favorites, setFavorites] = useState([])
+    const [favoriteBusy, setFavoriteBusy] = useState(false)
+    const [favoriteError, setFavoriteError] = useState('')
+    const [detourMinutes, setDetourMinutes] = useState(20)
     const placeType = location.state?.placeType || 'custom'
     const editingFavoriteId = location.state?.editingFavoriteId
+    const selectingFavoriteLocation = Boolean(location.state?.placeType) && !editingFavoriteId
+    const selectedFavorite = findFavoriteForPlace(favorites, selected)
 
     useEffect(() => {
         let active = true
@@ -64,6 +72,7 @@ function HomePage() {
                 clearTimeout(searchTimerRef.current)
                 const request = ++requestRef.current
                 setSelected(null)
+                setFavoriteError('')
                 setResults([])
                 setBusy(true)
                 setMessage('선택한 위치의 주소를 확인하고 있어요.')
@@ -95,7 +104,10 @@ function HomePage() {
                 observer.disconnect()
                 kakao.maps.event.removeListener(map, 'click', onClick)
                 marker.setMap(null)
-                favoriteMarkersRef.current.forEach((favoriteMarker) => favoriteMarker.setMap(null))
+                favoriteMarkersRef.current.forEach(({ favoriteMarker, onClick }) => {
+                    kakao.maps.event.removeListener(favoriteMarker, 'click', onClick)
+                    favoriteMarker.setMap(null)
+                })
                 favoriteMarkersRef.current = []
             }
             setReady(true)
@@ -115,15 +127,40 @@ function HomePage() {
         if (!ready || !sdkRef.current) return undefined
 
         const { kakao, map } = sdkRef.current
-        favoriteMarkersRef.current.forEach((favoriteMarker) => favoriteMarker.setMap(null))
-        favoriteMarkersRef.current = toFavoriteMarkerLocations(favorites).map((favorite) => new kakao.maps.Marker({
-            map,
-            position: new kakao.maps.LatLng(favorite.latitude, favorite.longitude),
-            title: favorite.title,
-        }))
+        favoriteMarkersRef.current.forEach(({ favoriteMarker, onClick }) => {
+            kakao.maps.event.removeListener(favoriteMarker, 'click', onClick)
+            favoriteMarker.setMap(null)
+        })
+        favoriteMarkersRef.current = toFavoriteMarkerLocations(favorites).map((favorite) => {
+            const position = new kakao.maps.LatLng(favorite.latitude, favorite.longitude)
+            const favoriteMarker = new kakao.maps.Marker({
+                map,
+                position,
+                title: favorite.title,
+                image: createFavoriteMarkerImage(kakao, favorite.placeType),
+            })
+            const onClick = () => {
+                sdkRef.current?.marker.setMap(null)
+                map.panTo(position)
+                setSelected({
+                    placeName: favorite.placeName,
+                    address: favorite.address,
+                    latitude: favorite.latitude,
+                    longitude: favorite.longitude,
+                })
+                setResults([])
+                setMessage('')
+                setFavoriteError('')
+            }
+            kakao.maps.event.addListener(favoriteMarker, 'click', onClick)
+            return { favoriteMarker, onClick }
+        })
 
         return () => {
-            favoriteMarkersRef.current.forEach((favoriteMarker) => favoriteMarker.setMap(null))
+            favoriteMarkersRef.current.forEach(({ favoriteMarker, onClick }) => {
+                kakao.maps.event.removeListener(favoriteMarker, 'click', onClick)
+                favoriteMarker.setMap(null)
+            })
             favoriteMarkersRef.current = []
         }
     }, [favorites, ready])
@@ -166,6 +203,7 @@ function HomePage() {
         setQuery(value)
         setResults([])
         setSelected(null)
+        setFavoriteError('')
         setBusy(false)
         setMessage(value.trim() ? '입력한 장소를 검색할게요.' : '')
         sdkRef.current?.marker.setMap(null)
@@ -188,9 +226,48 @@ function HomePage() {
         map.setLevel(3)
         map.panTo(position)
         setSelected(place)
+        setFavoriteError('')
         setResults([])
         setBusy(false)
         setMessage('')
+    }
+
+    const toggleFavorite = async () => {
+        if (!selected || favoriteBusy || editingFavoriteId) return
+
+        setFavoriteBusy(true)
+        setFavoriteError('')
+        try {
+            if (selectedFavorite) {
+                await deleteFavorite(selectedFavorite.id)
+                setFavorites((current) => current.filter((favorite) => favorite.id !== selectedFavorite.id))
+            } else {
+                const created = await createFavorite({
+                    ...selected,
+                    placeType: 'custom',
+                })
+                setFavorites((current) => [...current, created])
+            }
+        } catch (error) {
+            setFavoriteError(error.message)
+        } finally {
+            setFavoriteBusy(false)
+        }
+    }
+
+    const completeFavoriteLocationSelection = () => {
+        if (!hasSelectedLocation(selected)) return
+
+        const destination = buildFavoriteLocationResult({
+            selectedPlace: selected,
+            favoriteId: editingFavoriteId,
+            placeType,
+            draftName: location.state?.draftName,
+        })
+        navigate(destination.to, {
+            replace: destination.replace,
+            state: destination.state,
+        })
     }
 
     return (
@@ -233,12 +310,63 @@ function HomePage() {
             {mapError && <div className={styles.selection} role="alert"><p>{mapError}</p><Button onClick={() => setAttempt(value => value + 1)}>다시 시도</Button></div>}
             {selected && (
                 <section className={styles.selection} aria-label="선택한 장소">
-                    <strong>{selected.placeName}</strong>
-                    <p>{selected.address}</p>
-                    <Button fullWidth disabled={busy || !hasSelectedLocation(selected)} onClick={() => navigate(editingFavoriteId ? `/favorites/${editingFavoriteId}` : '/favorites', {
-                        replace: Boolean(editingFavoriteId),
-                        state: { selectedPlace: selected, placeType, draftName: location.state?.draftName },
-                    })}>{editingFavoriteId ? '이 위치로 변경' : '이 위치 즐겨찾기 저장'}</Button>
+                    <div className={styles.selectionHeader}>
+                        <div className={styles.selectionText}>
+                            <strong>{selected.placeName}</strong>
+                            <p>{selected.address}</p>
+                        </div>
+                        {!editingFavoriteId && !selectingFavoriteLocation && (
+                            <button
+                                type="button"
+                                className={[styles.favoriteButton, selectedFavorite ? styles.favoriteButtonActive : ''].filter(Boolean).join(' ')}
+                                aria-label={selectedFavorite ? '즐겨찾기에서 삭제' : '즐겨찾기에 추가'}
+                                aria-pressed={Boolean(selectedFavorite)}
+                                disabled={favoriteBusy || !hasSelectedLocation(selected)}
+                                onClick={toggleFavorite}
+                            >
+                                {selectedFavorite ? <IoHeart aria-hidden="true" /> : <IoHeartOutline aria-hidden="true" />}
+                            </button>
+                        )}
+                    </div>
+                    {favoriteError && <p className={styles.favoriteError} role="alert">{favoriteError}</p>}
+                    {(editingFavoriteId || selectingFavoriteLocation) && (
+                        <Button
+                            className={styles.editLocationButton}
+                            fullWidth
+                            disabled={busy || !hasSelectedLocation(selected)}
+                            onClick={completeFavoriteLocationSelection}
+                        >
+                            {editingFavoriteId ? '이 위치로 변경' : `이 위치를 ${PLACE_TYPE_LABELS[placeType]}로 등록`}
+                        </Button>
+                    )}
+                    {!editingFavoriteId && !selectingFavoriteLocation && (
+                        <div className={styles.routeControls}>
+                            <fieldset className={styles.timeFieldset}>
+                                <legend>얼마나 돌아가도 괜찮으세요?</legend>
+                                <div className={styles.timeOptions}>
+                                    {DETOUR_TIME_OPTIONS.map((minutes) => (
+                                        <button
+                                            key={minutes}
+                                            type="button"
+                                            className={minutes === detourMinutes ? styles.timeOptionActive : ''}
+                                            aria-pressed={minutes === detourMinutes}
+                                            onClick={() => setDetourMinutes(minutes)}
+                                        >
+                                            {minutes === 60 ? '1시간' : `${minutes}분`}
+                                        </button>
+                                    ))}
+                                </div>
+                            </fieldset>
+                            <Button
+                                className={styles.safeRouteButton}
+                                fullWidth
+                                disabled={busy || favoriteBusy || !hasSelectedLocation(selected)}
+                                onClick={() => navigate('/search', {
+                                    state: buildSafeRouteSearchState(selected, detourMinutes),
+                                })}
+                            >안심경로 찾기</Button>
+                        </div>
+                    )}
                 </section>
             )}
             <BottomNav />

@@ -7,7 +7,7 @@ import { restoreMyAccount } from '../features/my/api.js'
 
 function AccountRecoveryGate() {
     const navigate = useNavigate()
-    const { isAuthenticated, accountStatus, loading } = useAuth()
+    const { isAuthenticated, accountStatus, loading } = useAuth({ includeAccountStatus: true })
     const [isRestoring, setIsRestoring] = useState(false)
     const [error, setError] = useState('')
 
