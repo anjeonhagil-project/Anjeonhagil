@@ -17,6 +17,8 @@ import MembersPage from '../features/members/MembersPage.jsx'
 
 import InquiriesPage from '../features/inquiries/InquiriesPage.jsx'
 import InquiryDetailPage from '../features/inquiries/InquiryDetailPage.jsx'
+import NoticesPage from '../features/notices/NoticesPage.jsx'
+import NoticeFormPage from '../features/notices/NoticeFormPage.jsx'
 
 // 아직 만들지 않은 페이지를 위한 임시 컴포넌트
 function PlaceholderPage({ title }) {
@@ -96,7 +98,19 @@ function AppRouter() {
                         <Route
                             path="/notices"
                             element={
-                                <PlaceholderPage title="공지사항" />
+                                <NoticesPage />
+                            }
+                        />
+                        <Route
+                            path="/notices/new"
+                            element={
+                                <NoticeFormPage />
+                            }
+                        />
+                        <Route
+                            path="/notices/:noticeId/edit"
+                            element={
+                                <NoticeFormPage />
                             }
                         />
 

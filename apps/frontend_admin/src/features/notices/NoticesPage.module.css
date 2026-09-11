@@ -1,0 +1,327 @@
+/* =========================================================
+   A-NOTICE 공지사항
+========================================================= */
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+
+/* =========================================================
+   Toolbar
+========================================================= */
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+
+    padding: var(--space-4);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-card);
+}
+
+.leftTools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    width: 280px;
+    height: 40px;
+
+    padding: 0 var(--space-3);
+
+    color: var(--color-text-muted);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.searchBox:focus-within {
+    border-color: var(--color-primary-500-main);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 169, 157, 0.08);
+}
+
+.searchBox input {
+    flex: 1;
+
+    min-width: 0;
+
+    color: var(--color-text);
+
+    background: transparent;
+    border: 0;
+    outline: 0;
+
+    font-size: var(--font-size-base);
+}
+
+.searchBox input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.select {
+    height: 40px;
+
+    padding:
+        0
+        var(--space-7)
+        0
+        var(--space-3);
+
+    color: var(--color-text);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+
+    cursor: pointer;
+}
+
+.select:focus {
+    border-color: var(--color-primary-500-main);
+
+    outline: none;
+}
+
+.createButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+
+    height: 40px;
+
+    padding: 0 var(--space-4);
+
+    color: var(--color-text-white);
+
+    background: var(--color-primary-500-main);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.createButton:hover {
+    background: var(--color-primary-600);
+}
+
+.createButton:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   Table
+========================================================= */
+
+.tableCard {
+    overflow: hidden;
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-card);
+}
+
+.table {
+    width: 100%;
+
+    table-layout: fixed;
+}
+
+.numberColumn {
+    width: 80px;
+}
+
+.authorColumn {
+    width: 220px;
+}
+
+.dateColumn {
+    width: 150px;
+}
+
+.statusColumn {
+    width: 130px;
+}
+
+.table thead {
+    background: var(--color-primary-50);
+}
+
+.table th {
+    height: 48px;
+
+    padding: 0 var(--space-4);
+
+    color: var(--color-text-sub);
+
+    border-bottom: 1px solid var(--color-border-soft);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-align: left;
+}
+
+.table td {
+    height: 58px;
+
+    padding: 0 var(--space-4);
+
+    color: var(--color-text);
+
+    border-bottom: 1px solid var(--color-border-gray);
+
+    font-size: var(--font-size-sm);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.clickableRow {
+    cursor: pointer;
+
+    transition: background var(--transition-fast);
+}
+
+.clickableRow:hover {
+    background: var(--color-bg-hover);
+}
+
+.titleCell {
+    font-weight: var(--font-weight-medium);
+}
+
+
+/* =========================================================
+   Status
+========================================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 58px;
+    height: 26px;
+
+    padding: 0 var(--space-2);
+
+    border-radius: var(--radius-full);
+
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+.publishedBadge {
+    color: var(--color-success);
+
+    background: var(--color-success-soft);
+}
+
+.hiddenBadge {
+    color: var(--color-text-sub);
+
+    background: var(--color-bg-gray-soft);
+}
+
+
+/* =========================================================
+   Empty
+========================================================= */
+
+.emptyCell {
+    height: 180px !important;
+
+    color: var(--color-text-muted) !important;
+
+    text-align: center !important;
+}
+
+
+/* =========================================================
+   Pagination
+========================================================= */
+
+.paginationArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+
+    padding: var(--space-4);
+}
+
+.pageButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 32px;
+    height: 32px;
+
+    padding: 0 var(--space-2);
+
+    color: var(--color-text-sub);
+
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+
+    font-size: var(--font-size-sm);
+
+    cursor: pointer;
+}
+
+.pageButton:hover:not(:disabled) {
+    color: var(--color-primary-600);
+
+    border-color: var(--color-primary-500-main);
+}
+
+.activePageButton {
+    color: var(--color-text-white);
+
+    background: var(--color-primary-500-main);
+    border-color: var(--color-primary-500-main);
+}
+
+.pageButton:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.4;
+}
