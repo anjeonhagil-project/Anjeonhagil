@@ -14,3 +14,16 @@ export function hasSelectedLocation(place) {
         && Number.isFinite(place.latitude) && Math.abs(place.latitude) <= 90
         && Number.isFinite(place.longitude) && Math.abs(place.longitude) <= 180)
 }
+
+export function buildSafeRouteSearchState(destination, detourMinutes) {
+    return { destination, detourMinutes }
+}
+
+export function buildRouteSearchFields(destination) {
+    return {
+        origin: { text: '', place: null },
+        destination: hasSelectedLocation(destination)
+            ? { text: destination.placeName, place: destination }
+            : { text: '', place: null },
+    }
+}

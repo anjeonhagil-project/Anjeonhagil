@@ -2,9 +2,10 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient.js'
 import { apiClient } from '../lib/apiClient.js'
+import { loadAuthSnapshot, shouldApplyAuthSession } from './authSession.mjs'
 
 // 로그인 여부(session)와 서비스 프로필을 화면에서 바로 쓸 수 있는 형태로 합쳐서 돌려주는 hook
-export function useAuth() {
+export function useAuth({ includeAccountStatus = false } = {}) {
     const [session, setSession] = useState(null)
     const [profile, setProfile] = useState(null)
     const [termsAgreed, setTermsAgreed] = useState(null) // null = 아직 확인 전
@@ -16,11 +17,21 @@ export function useAuth() {
         let mounted = true
 
         supabase.auth.getSession().then(({ data }) => {
-            if (mounted) setSession(data.session)
+            if (mounted) {
+                setSession((currentSession) => (
+                    shouldApplyAuthSession(currentSession, data.session, 'INITIAL_SESSION')
+                        ? data.session
+                        : currentSession
+                ))
+            }
         })
 
-        const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
-            setSession(newSession)
+        const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
+            setSession((currentSession) => (
+                shouldApplyAuthSession(currentSession, newSession, event)
+                    ? newSession
+                    : currentSession
+            ))
         })
 
         return () => {
@@ -35,51 +46,36 @@ export function useAuth() {
         if (!session) {
             setProfile(null)
             setTermsAgreed(null)
+            setAccountStatus(null)
             setLoading(false)
             return
         }
 
-        setLoading(true)
-        Promise.all([
-            apiClient.get('/users/me'),
-            apiClient.get('/users/me/terms'),
-        ])
-            .then(([profileData, termsData]) => {
-                setProfile(profileData)
-                setTermsAgreed(termsData.agreed)
-            })
-            .catch(() => {
-                setProfile(null)
-                setTermsAgreed(null)
-            })
-            .finally(() => setLoading(false))
-    }, [session])
-
-    useEffect(() => {
         let mounted = true
 
-        if (!session) {
-            setAccountStatus(null)
-            return undefined
-        }
+        setLoading(true)
+        loadAuthSnapshot({
+            loadProfile: () => apiClient.get('/users/me'),
+            loadTerms: () => apiClient.get('/users/me/terms'),
+            ...(includeAccountStatus ? {
+                loadAccountStatus: () => apiClient.get('/users/me/account-status'),
+            } : {}),
+        })
+            .then((snapshot) => {
+                if (!mounted) return
 
-        apiClient
-            .get('/users/me/account-status')
-            .then((status) => {
-                if (mounted) {
-                    setAccountStatus(status)
-                }
+                setProfile(snapshot.profile)
+                setTermsAgreed(snapshot.termsAgreed)
+                setAccountStatus(snapshot.accountStatus)
             })
-            .catch(() => {
-                if (mounted) {
-                    setAccountStatus(null)
-                }
+            .finally(() => {
+                if (mounted) setLoading(false)
             })
 
         return () => {
             mounted = false
         }
-    }, [session])
+    }, [includeAccountStatus, session])
 
     return {
         session,

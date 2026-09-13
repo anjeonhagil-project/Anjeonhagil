@@ -55,9 +55,122 @@
     right: 12px;
     bottom: 76px;
     z-index: 2;
-    padding: 16px;
-    border-radius: 16px;
+    padding: 28px 20px 20px;
+    border-radius: 24px;
     background: var(--color-bg-white);
     box-shadow: var(--shadow-card);
 }
-.selection p { margin: 8px 0 12px; font-size: 13px; color: var(--color-text-sub); }
+.selection::before {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 28px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--color-border-gray);
+    content: '';
+    transform: translateX(-50%);
+}
+.selectionHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+.selectionText {
+    flex: 1;
+    min-width: 0;
+}
+.selectionText strong {
+    display: block;
+    font-size: 18px;
+    line-height: 1.35;
+}
+.selection p {
+    margin: 7px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-text-sub);
+}
+.favoriteButton {
+    display: grid;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-text-sub);
+    cursor: pointer;
+    place-items: center;
+}
+.favoriteButton svg {
+    width: 30px;
+    height: 30px;
+}
+.favoriteButton:hover,
+.favoriteButton:focus-visible {
+    background: var(--color-primary-50);
+    color: var(--color-primary-600);
+    outline: none;
+}
+.favoriteButtonActive {
+    color: var(--color-primary-500-main);
+}
+.favoriteButton:disabled {
+    cursor: wait;
+    opacity: 0.55;
+}
+.selection .favoriteError {
+    margin-top: 12px;
+    color: var(--color-danger);
+}
+.editLocationButton {
+    margin-top: 16px;
+}
+.routeControls {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border-gray);
+}
+.timeFieldset {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+.timeFieldset legend {
+    padding: 0;
+    margin-bottom: 10px;
+    color: var(--color-text);
+    font-size: 13px;
+    font-weight: 700;
+}
+.timeOptions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+.timeOptions button {
+    min-width: 0;
+    height: 36px;
+    padding: 0 8px;
+    border: 1px solid var(--color-border-gray);
+    border-radius: 10px;
+    background: var(--color-bg-gray-soft);
+    color: var(--color-text);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.timeOptions button:hover,
+.timeOptions button:focus-visible,
+.timeOptions .timeOptionActive {
+    border-color: var(--color-primary-500-main);
+    background: var(--color-primary-500-main);
+    color: var(--color-text-white);
+    outline: none;
+}
+.safeRouteButton {
+    margin-top: 14px;
+}

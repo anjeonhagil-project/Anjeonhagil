@@ -10,6 +10,13 @@ import styles from './FavoritesPage.module.css'
 import { getFavoriteName, PLACE_TYPE_LABELS } from './favoriteName.js'
 import { buildFavoriteLocationSelection } from './favoriteContract.js'
 
+const FREQUENT_PLACE_TYPES = ['home', 'work']
+const PLACE_TYPE_ICONS = {
+    home: '⌂',
+    work: '▦',
+    custom: '♡',
+}
+
 function FavoritesPage() {
     const navigate = useNavigate()
     const location = useLocation()
@@ -23,6 +30,7 @@ function FavoritesPage() {
     const [saveForm, setSaveForm] = useState({ placeType: 'custom', placeName: '', customName: '', address: '' })
     const [submitting, setSubmitting] = useState(false)
     const [saveError, setSaveError] = useState('')
+    const customFavorites = favorites.filter((favorite) => favorite.placeType === 'custom')
 
     useEffect(() => {
         const selectedPlace = location.state?.selectedPlace
@@ -87,12 +95,30 @@ function FavoritesPage() {
         }
     }
 
-    const handleFindRoute = () => {
+    const navigateToFavorite = (favorite) => {
+        navigate(`/favorites/${favorite.id}`)
+    }
+
+    const handleFavoriteKeyDown = (event, favorite) => {
+        if (event.target !== event.currentTarget || (event.key !== 'Enter' && event.key !== ' ')) return
+
+        event.preventDefault()
+        navigateToFavorite(favorite)
+    }
+
+    const handleFindRoute = (event) => {
+        event.stopPropagation()
         navigate('/home')
     }
 
-    const openEditModal = (favorite) => {
-        navigate(`/favorites/${favorite.id}`)
+    const handleEdit = (event, favorite) => {
+        event.stopPropagation()
+        navigateToFavorite(favorite)
+    }
+
+    const handleDeleteRequest = (event, favorite) => {
+        event.stopPropagation()
+        setDeletingFavorite(favorite)
     }
 
     const handleDelete = async () => {
@@ -119,24 +145,19 @@ function FavoritesPage() {
                 <section className={styles.frequentSection}>
                     <h2>자주 가는 곳</h2>
                     <div className={styles.frequentList}>
-                        {['home', 'work'].map((placeType) => {
+                        {FREQUENT_PLACE_TYPES.map((placeType) => {
                             const favorite = favorites.find((item) => item.placeType === placeType)
                             return (
                                 <article
                                     className={[styles.frequentItem, favorite ? styles.clickable : ''].filter(Boolean).join(' ')}
                                     key={placeType}
-                                    onClick={() => favorite && navigate(`/favorites/${favorite.id}`)}
-                                    onKeyDown={(event) => {
-                                        if (event.target === event.currentTarget && favorite && (event.key === 'Enter' || event.key === ' ')) {
-                                            event.preventDefault()
-                                            navigate(`/favorites/${favorite.id}`)
-                                        }
-                                    }}
+                                    onClick={() => favorite && navigateToFavorite(favorite)}
+                                    onKeyDown={(event) => favorite && handleFavoriteKeyDown(event, favorite)}
                                     role={favorite ? 'button' : undefined}
                                     tabIndex={favorite ? 0 : undefined}
                                 >
                                     <div className={[styles.typeIcon, styles[placeType]].join(' ')} aria-hidden="true">
-                                        {placeType === 'home' ? '⌂' : '▦'}
+                                        {PLACE_TYPE_ICONS[placeType]}
                                     </div>
                                     <div className={styles.frequentInfo}>
                                         <span>{favorite ? getFavoriteName(favorite) : PLACE_TYPE_LABELS[placeType]}</span>
@@ -145,7 +166,7 @@ function FavoritesPage() {
                                     </div>
                                     {favorite ? (
                                         <div className={styles.frequentActions}>
-                                            <button type="button" className={styles.routeAction} onClick={(event) => { event.stopPropagation(); handleFindRoute(favorite) }}>➤ 경로 찾기</button>
+                                            <button type="button" className={styles.routeAction} onClick={handleFindRoute}>➤ 경로 찾기</button>
                                         </div>
                                     ) : (
                                         <button type="button" className={styles.textAction} onClick={() => openSaveModal(placeType)}>등록</button>
@@ -163,31 +184,26 @@ function FavoritesPage() {
 
                 {loading && <p className={styles.message}>즐겨찾기를 불러오는 중입니다.</p>}
                 {!loading && error && <p className={styles.error}>{error}</p>}
-                {!loading && !error && favorites.filter((favorite) => favorite.placeType === 'custom').length === 0 && (
+                {!loading && !error && customFavorites.length === 0 && (
                     <div className={styles.empty}>
                         <div className={styles.emptyIcon} aria-hidden="true">♡</div>
                         <strong>저장한 장소가 없습니다</strong>
                         <p>자주 가는 장소를 저장하면<br />더 빠르게 경로를 찾을 수 있어요.</p>
                     </div>
                 )}
-                {!loading && !error && favorites.filter((favorite) => favorite.placeType === 'custom').length > 0 && (
+                {!loading && !error && customFavorites.length > 0 && (
                     <div className={styles.list}>
-                        {favorites.filter((favorite) => favorite.placeType === 'custom').map((favorite) => (
+                        {customFavorites.map((favorite) => (
                             <article
                                 className={[styles.item, styles.clickable].join(' ')}
                                 key={favorite.id}
-                                onClick={() => navigate(`/favorites/${favorite.id}`)}
-                                onKeyDown={(event) => {
-                                    if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) {
-                                        event.preventDefault()
-                                        navigate(`/favorites/${favorite.id}`)
-                                    }
-                                }}
+                                onClick={() => navigateToFavorite(favorite)}
+                                onKeyDown={(event) => handleFavoriteKeyDown(event, favorite)}
                                 role="button"
                                 tabIndex={0}
                             >
                                 <div className={[styles.typeIcon, styles[favorite.placeType]].join(' ')} aria-hidden="true">
-                                    {favorite.placeType === 'home' ? '⌂' : favorite.placeType === 'work' ? '▦' : '♡'}
+                                    {PLACE_TYPE_ICONS[favorite.placeType]}
                                 </div>
                                 <div className={styles.itemInfo}>
                                     <strong>{getFavoriteName(favorite)}</strong>
@@ -195,9 +211,9 @@ function FavoritesPage() {
                                     <span>{favorite.address}</span>
                                 </div>
                                 <div className={styles.itemActions}>
-                                    <button type="button" className={styles.routeAction} onClick={(event) => { event.stopPropagation(); handleFindRoute(favorite) }}>➤ 경로 찾기</button>
-                                    <button type="button" onClick={(event) => { event.stopPropagation(); openEditModal(favorite) }}>수정</button>
-                                    <button type="button" className={styles.deleteAction} onClick={(event) => { event.stopPropagation(); setDeletingFavorite(favorite) }}>삭제</button>
+                                    <button type="button" className={styles.routeAction} onClick={handleFindRoute}>➤ 경로 찾기</button>
+                                    <button type="button" onClick={(event) => handleEdit(event, favorite)}>수정</button>
+                                    <button type="button" className={styles.deleteAction} onClick={(event) => handleDeleteRequest(event, favorite)}>삭제</button>
                                 </div>
                             </article>
                         ))}

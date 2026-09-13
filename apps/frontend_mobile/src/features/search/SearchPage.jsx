@@ -1,10 +1,10 @@
 // 기능: M-SRCH-001~004 경로검색 화면 - 출발지/목적지 검색 후 경로 비교로 이동
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { IoClose, IoSearchOutline, IoTimeOutline, IoHomeOutline, IoBusinessOutline } from 'react-icons/io5'
 import { FaLocationDot } from 'react-icons/fa6'
 import { loadKakaoMaps } from '../../lib/kakaoMaps.js'
-import { toSelectedPlace, hasSelectedLocation } from '../../lib/placeSelection.js'
+import { buildRouteSearchFields, toSelectedPlace, hasSelectedLocation } from '../../lib/placeSelection.js'
 import BottomNav from '../../components/layout/BottomNav.jsx'
 import { getFavorites } from '../favorites/api.js'
 import { loadRecentSearches, addRecentSearch, removeRecentSearch, clearRecentSearches } from './recentSearches.js'
@@ -26,18 +26,18 @@ function formatDistance(meters) {
     return meters >= 1000 ? `${(meters / 1000).toFixed(1)}km` : `${Math.round(meters)}m`
 }
 
-const EMPTY_FIELD = { text: '', place: null }
-
 function SearchPage() {
     const navigate = useNavigate()
+    const location = useLocation()
     const sdkRef = useRef(null)
     const searchTimerRef = useRef(null)
     const composingRef = useRef(false)
     const requestRef = useRef(0)
 
+    const initialFields = buildRouteSearchFields(location.state?.destination)
     const [ready, setReady] = useState(false)
-    const [origin, setOrigin] = useState(EMPTY_FIELD)
-    const [destination, setDestination] = useState(EMPTY_FIELD)
+    const [origin, setOrigin] = useState(initialFields.origin)
+    const [destination, setDestination] = useState(initialFields.destination)
     const [activeField, setActiveField] = useState('origin')
     const [results, setResults] = useState([])
     const [message, setMessage] = useState('')
@@ -141,6 +141,7 @@ function SearchPage() {
                     name: destination.place.placeName,
                     address: destination.place.address,
                 },
+                ...(location.state?.detourMinutes ? { detourMinutes: location.state.detourMinutes } : {}),
             },
         })
     }
