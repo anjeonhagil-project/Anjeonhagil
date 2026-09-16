@@ -1,6 +1,7 @@
 // 설문·행동·적용 가중치를 구분하고 파일럿 정책의 이력 부족/검증 보류를 그대로 보여준다.
 import {supabase} from '../../lib/supabase.js'
 import {callWorker} from '../../routing-engine/routingClient.js'
+import {q4Profile} from './q4Profile.service.js'
 async function value(query){const {data,error}=await query;if(error)throw error;return data}
 export async function profile(userId) {
     const user=await value(supabase.from('ag_user_profiles').select('*').eq('user_id',userId).maybeSingle())
@@ -9,7 +10,7 @@ export async function profile(userId) {
     const survey=await value(supabase.from('ag_preference_history').select('survey_weights,ranks').eq('survey_version',current.survey_version).single())
     const jobs=await value(supabase.from('ag_profile_update_jobs').select('status,reason,evidence,finished_at,input_profile_version,result_profile_version').eq('user_id',userId).gte('created_at',user.history_start_at).order('created_at',{ascending:false}).limit(1))
     const accepted=await value(supabase.from('ag_profile_update_jobs').select('evidence').eq('result_profile_version',current.profile_version).maybeSingle())
-    return {profileVersion:current.profile_version,surveyVersion:current.survey_version,surveyWeights:survey.survey_weights,
+    return {profileVersion:current.profile_version,surveyVersion:current.survey_version,surveyWeights:survey.survey_weights,q4:await q4Profile(userId,current.survey_version),
         effectiveWeights:current.effective_weights,behaviorWeights:accepted?.evidence?.behavior_weights??null,
         alpha:accepted?.evidence?.alpha??0,nEff:accepted?.evidence?.n_eff??0,enabled:user.personalization_enabled,
         historyStartAt:user.history_start_at,updatedAt:user.updated_at,reason:current.reason,latestJob:jobs[0]??null,

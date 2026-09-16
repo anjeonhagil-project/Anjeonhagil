@@ -5,11 +5,13 @@ import { searchRoutes, callWorker } from '../../routing-engine/routingClient.js'
 import { validateCandidates } from '../../routing-engine/candidateValidation.js'
 import { routeSnapshot } from './routeSnapshot.js'
 import { scheduleUpdate, reset } from '../preferences/personalization.service.js'
+import {q4Profile} from '../preferences/q4Profile.service.js'
+import {applyQ4} from '../preferences/q4Policy.js'
 let calculating=false
 export async function search(userId,input) {
     const existing=await repository.findSearch(userId,input.searchId)
     if(existing) {
-        if(existing.origin.lat!==input.origin.lat||existing.origin.lng!==input.origin.lng||existing.destination.lat!==input.destination.lat||existing.destination.lng!==input.destination.lng||Date.parse(existing.departureAt)!==Date.parse(input.departureAt)) throw Object.assign(new Error('검색 식별자가 다른 검색에서 사용되었습니다'),{status:409})
+        if(existing.origin.lat!==input.origin.lat||existing.origin.lng!==input.origin.lng||existing.origin.heading!==input.origin.heading||existing.destination.lat!==input.destination.lat||existing.destination.lng!==input.destination.lng||existing.destination.heading!==input.destination.heading||Date.parse(existing.departureAt)!==Date.parse(input.departureAt)) throw Object.assign(new Error('검색 식별자가 다른 검색에서 사용되었습니다'),{status:409})
         return existing
     }
     if(calculating) throw Object.assign(new Error('다른 경로를 계산 중입니다. 잠시 후 다시 시도해주세요.'),{status:429,code:'ROUTING_BUSY'})
@@ -33,6 +35,7 @@ export async function search(userId,input) {
         const {data:model,error:me}=await supabase.from('ag_model_versions').select('*').eq('model_version',result.model.model_version).maybeSingle()
         if(me) throw me
         if(!model||(!model.is_active&&result.recommendation_method!=='survey_fallback')||model.artifact_sha256!==result.model.artifact_sha256||model.scale_version!==result.model.scaler_version) throw Object.assign(new Error('DB와 실행 모델이 일치하지 않습니다. 모델 등록 상태를 확인해주세요.'),{status:503,code:'MODEL_REGISTRY_MISMATCH'})
+        applyQ4(result,await q4Profile(userId,profile.survey_version))
         const payload=routeSnapshot(userId,input,profile,result)
         await repository.saveSearch(userId,payload)
         return payload.response
@@ -56,3 +59,12 @@ export async function detail(userId,searchId) {
     return result
 }
 export async function history(userId) {return repository.history(userId)}
+
+// Guidance is derived on demand, including old snapshots, without changing choice logs.
+export async function guidance(userId,searchId) {
+    const snapshot=await detail(userId,searchId)
+    const candidate=snapshot.candidates.find(c=>c.candidate_id===snapshot.selectedCandidateId)
+    if(!candidate)throw Object.assign(new Error('먼저 안내할 경로를 선택해주세요.'),{status:409,expose:true})
+    const instructions=await callWorker('/guidance',{...snapshot.versions,segments:candidate.segments})
+    return {searchId,origin:snapshot.origin,destination:snapshot.destination,candidate,...instructions}
+}

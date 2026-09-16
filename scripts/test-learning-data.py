@@ -20,6 +20,12 @@ with tempfile.TemporaryDirectory(dir=ROOT/'.test-tools') as tmp:
     path=Path(tmp)/'test-only.jsonl'
     def save(values):path.write_text('\n'.join(json.dumps(v) for v in values),encoding='utf8')
     save(records);frame,meta=load_choices(path);again,_=load_choices(path)
+    with_q4=copy.deepcopy(records)
+    for row in with_q4:row['q4_context']={'policy':{'version':'q4_tiebreak_20260917'},'applied':True}
+    save(with_q4);q4frame,_=load_choices(path)
+    from inference import FEATURES
+    assert q4frame[FEATURES+['y','sample_weight']].equals(frame[FEATURES+['y','sample_weight']])
+    assert q4frame.q4_applied.all()
     assert frame.equals(again)
     assert set(frame.y)=={0,1}
     assert (frame.groupby('search_id').sample_weight.sum()==1).all()
@@ -39,6 +45,6 @@ with tempfile.TemporaryDirectory(dir=ROOT/'.test-tools') as tmp:
     try:ChoiceModel().rank([bad],base['profile_weights'])
     except ValueError:pass
     else:raise AssertionError('single invalid candidate accepted')
-report={'passed':9,'source':'test-only fabricated labels on real road snapshots','real_user_metrics':False}
+report={'passed':11,'source':'test-only fabricated labels on real road snapshots; Q4 metadata does not change X8 or labels','real_user_metrics':False}
 (ROOT/'.test-tools/learning-data-report.json').write_text(json.dumps(report,indent=2),encoding='utf8')
 print(json.dumps(report))

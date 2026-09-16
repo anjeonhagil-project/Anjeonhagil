@@ -23,15 +23,31 @@ assert.throws(()=>validateExposureInput(input.searchId,{exposureId:exposure,cand
 assert.throws(()=>validateExposureInput(input.searchId,{exposureId:exposure,candidateIds:[candidate],recommendedCandidateId:randomUUID()}))
 assert.equal(validateChoiceInput(exposure,{choiceEventId:randomUUID(),selectedCandidateId:candidate}).selectedCandidateId,candidate)
 const bank=JSON.parse(readFileSync('apps/backend/src/config/q4Cases.json','utf8'))
+const scales=JSON.parse(readFileSync('ml/bundled/logistic.json','utf8')).scales.slice(2)
 assert.equal(Object.keys(bank.cases).length,6)
 for(const [factor,questions]of Object.entries(bank.cases)){
     assert.equal(questions.length,4)
+    const signatures=new Set()
     for(const q of questions){
         assert.equal(q.routes.length,2)
         const i=q.routes[0].factor_order.indexOf(factor)
         assert.ok(q.routes[0].raw_features[i]>q.routes[1].raw_features[i])
         assert.equal(q.lower_burden_route_key,q.routes[1].route_key)
         assert.equal(q.single_factor_isolated,false)
+        const [a,b]=q.routes,improvement=a.raw_features[i]-b.raw_features[i]
+        assert.ok(improvement+1e-9>=[1,100,100,1,2,50][i],`${factor}: insufficient burden contrast`)
+        assert.ok(improvement/a.raw_features[i]>=.2)
+        assert.ok(improvement/scales[i]>=.5)
+        const other=a.raw_features.reduce((sum,x,j)=>sum+(j===i?0:Math.abs(x-b.raw_features[j])/scales[j]),0)
+        assert.ok(other/(improvement/scales[i])<=3)
+        const arcsA=new Set(a.segments.map(s=>s.arc_id)),arcsB=new Set(b.segments.map(s=>s.arc_id))
+        assert.ok([...arcsA].filter(x=>arcsB.has(x)).length/new Set([...arcsA,...arcsB]).size<=.8)
+        assert.equal(a.departure_at,b.departure_at)
+        const signature=q.routes.map(r=>[r.display_duration_s,Math.round(r.distance_m/10),Math.round(r.raw_features[i])].join(':')).join('|')
+        assert.ok(!signatures.has(signature),'same displayed comparison repeated');signatures.add(signature)
+        const delta=b[q.dimension==='TIME'?'display_duration_s':'distance_m']-a[q.dimension==='TIME'?'display_duration_s':'distance_m']
+        const [min,max]=q.dimension==='TIME'?(q.level==='SMALL'?[60,60]:[120,600]):(q.level==='SMALL'?[100,350]:[450,1500])
+        assert.ok(delta>=min&&delta<=max)
         for(const r of q.routes){assert.equal(r.display_duration_s,Math.round(r.internal_duration_s/60)*60);assert.equal(r.quality.production_route_approved,false)}
     }
     for(const [small,large,metric]of [[questions[0],questions[1],'display_duration_s'],[questions[2],questions[3],'distance_m']])assert.ok(small.routes[1][metric]-small.routes[0][metric]<large.routes[1][metric]-large.routes[0][metric])

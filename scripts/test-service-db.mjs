@@ -13,6 +13,8 @@ try {
     await db.exec(`CREATE ROLE anon;CREATE ROLE authenticated;CREATE ROLE service_role BYPASSRLS;CREATE SCHEMA auth;
         CREATE TABLE auth.users(id uuid PRIMARY KEY,email text,raw_user_meta_data jsonb DEFAULT '{}',raw_app_meta_data jsonb DEFAULT '{}',email_confirmed_at timestamptz);${baseline}`)
     await db.exec(foundation);await db.exec(integration);await db.exec(integration);passed++
+    const q4Migration=read('database/migrations/20260917_q4_personalization.sql')
+    await db.exec(q4Migration);await db.exec(q4Migration);passed++
     const user=randomUUID(),other=randomUUID()
     for(const id of [user,other]) await db.query("INSERT INTO auth.users(id,email,raw_app_meta_data) VALUES($1,$2,'{\"provider\":\"google\"}')",[id,'test-'+id+'@example.test'])
     const pref=(await db.query("SELECT ag_save_preferences($1,'daily','[2,0,1,0,0,3]',NULL) p",[user])).rows[0].p
@@ -22,6 +24,9 @@ try {
     await reject("SELECT ag_save_preferences($1,'daily','[1,1,0,0,0,0]',NULL)",[user],/CONTIGUOUS/)
     const questions=Array.from({length:4},(_,i)=>({question_id:'fixture_'+i,routes:[{label:'A'},{label:'B'}]}))
     const q4=(await db.query("SELECT ag_begin_q4($1,$2,'test_cases','NARROW_ROAD','Q2_TOP',$3) s",[user,pref.survey_version,JSON.stringify(questions)])).rows[0].s
+    const initial={sessionId:q4.session_id,surveyVersion:pref.survey_version,policy:{version:'test'},source:'ONBOARDING_SURVEY'}
+    const storeQ4='INSERT INTO ag_q4_profiles(session_id,policy_version,user_id,survey_version,interpretation) VALUES($1,\'test\',$2,$3,$4)'
+    await reject(storeQ4,[q4.session_id,user,pref.survey_version,JSON.stringify(initial)],/COMPLETE_SESSION/)
     await reject("SELECT ag_answer_q4($1,$2,0,'A')",[other,q4.session_id],/STALE/)
     await reject("SELECT ag_answer_q4($1,$2,0,NULL)",[user,q4.session_id],/null value/)
     for(let i=0;i<4;i++) {
@@ -32,6 +37,9 @@ try {
     await reject("SELECT ag_answer_q4($1,$2,2,'A')",[user,q4.session_id],/ALREADY_RECORDED/)
     assert.equal((await db.query('SELECT count(*)::int n FROM ag_choices')).rows[0].n,0)
     assert.equal((await db.query('SELECT onboarding FROM users WHERE id=$1',[user])).rows[0].onboarding,true);passed+=2
+    await db.query(storeQ4,[q4.session_id,user,pref.survey_version,JSON.stringify(initial)]);passed++
+    await reject('UPDATE ag_q4_profiles SET interpretation=\'{}\' WHERE session_id=$1',[q4.session_id],/IMMUTABLE/)
+    await reject(storeQ4,[q4.session_id,other,pref.survey_version,JSON.stringify(initial)],/COMPLETE_SESSION/)
     await db.exec("UPDATE ag_dataset_releases SET status='ready';INSERT INTO ag_dataset_active(singleton,release_id) SELECT true,release_id FROM ag_dataset_releases LIMIT 1;")
     const fixture=JSON.parse(read('.test-tools/service-routing-fixture.json'))
     const profile=(await db.query('SELECT * FROM ag_profile_versions WHERE profile_version=$1',[pref.profile_version])).rows[0]
@@ -54,8 +62,17 @@ try {
     await reject('UPDATE ag_candidates SET distance_m=1 WHERE candidate_id=$1',[recommended],/IMMUTABLE/)
     await db.exec('SET ROLE anon')
     await reject('SELECT * FROM ag_q4_sessions',[],/permission denied/)
+    await reject('SELECT * FROM ag_q4_profiles',[],/permission denied/)
     await reject('SELECT * FROM ag_searches',[],/permission denied/)
     await db.exec('RESET ROLE')
+    await db.exec('SET ROLE service_role')
+    assert.equal((await db.query('SELECT ag_set_q4_enabled($1,false) v',[user])).rows[0].v,false)
+    await db.exec('RESET ROLE');passed++
+    const restarted=(await db.query('SELECT ag_restart_q4($1) v',[user])).rows[0].v
+    assert.notEqual(restarted,pref.survey_version)
+    assert.equal((await db.query('SELECT ag_restart_q4($1) v',[user])).rows[0].v,restarted)
+    assert.equal((await db.query('SELECT count(*)::int n FROM ag_q4_responses WHERE session_id=$1',[q4.session_id])).rows[0].n,4)
+    assert.deepEqual((await db.query('SELECT response_snapshot FROM ag_searches WHERE search_id=$1',[input.searchId])).rows[0].response_snapshot,payload.response);passed+=4
     const report={passed,scope:'temporary PostgreSQL; no remote records',q4Separated:true,realRouteFixture:true}
     writeFileSync('.test-tools/service-db-report.json',JSON.stringify(report,null,2));console.log(report)
 } finally {await db.close()}

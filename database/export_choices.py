@@ -18,7 +18,7 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with connect() as db, db.transaction(), args.output.open('x', encoding='utf-8') as out:
         with db.cursor(name='actual_choices') as cur:
-            cur.execute("SELECT * FROM ag_choice_training_events WHERE sample_origin='service' ORDER BY chosen_at,choice_event_id")
+            cur.execute("SELECT e.*,s.response_snapshot->'q4' AS q4_context FROM ag_choice_training_events e JOIN ag_searches s USING(search_id) WHERE e.sample_origin='service' ORDER BY e.chosen_at,e.choice_event_id")
             for row in cur:
                 snapshots = row['snapshots'] or []
                 if len(snapshots) < 2:
@@ -29,7 +29,7 @@ def main():
                 for snapshot in snapshots:
                     snapshot.update(exposure_id=str(row['exposure_id']), displayed=True, departure_at=row['departure_at'].isoformat())
                 keys = ['choice_event_id', 'search_id', 'user_id', 'exposure_id', 'selected_candidate_id', 'chosen_at', 'event_source', 'sample_origin', 'exposed_at', 'displayed_candidate_ids']
-                record = {'split': split, 'split_version': 'user_sha256_60_20_20_v1', 'profile_weights': row['profile_weights'], 'snapshots': snapshots, 'choice': {key: row[key] for key in keys}}
+                record = {'split': split, 'split_version': 'user_sha256_60_20_20_v1', 'profile_weights': row['profile_weights'], 'q4_context':row['q4_context'], 'snapshots': snapshots, 'choice': {key: row[key] for key in keys}}
                 out.write(json.dumps(record, ensure_ascii=False, default=str, allow_nan=False) + '\n')
                 counts[split] += 1
     print(json.dumps({'counts': counts, 'output': str(args.output), 'note': 'Fit scales on train only in a separate learning view; an empty split is possible.'}))

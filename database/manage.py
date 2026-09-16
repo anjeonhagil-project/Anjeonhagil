@@ -132,7 +132,7 @@ def activate(db):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=['preflight', 'apply', 'status', 'activate', 'integrate', 'bootstrap', 'init-admin'])
+    parser.add_argument('command', choices=['preflight', 'apply', 'status', 'activate', 'integrate', 'q4', 'bootstrap', 'init-admin'])
     parser.add_argument('--user-id',help='init-admin: UUID of an already registered service user')
     args = parser.parse_args()
     _, project = settings()
@@ -163,12 +163,19 @@ def main():
         if args.command == 'integrate':
             try:
                 db.execute((ROOT/'database/migrations/20260916_service_integration.sql').read_text(encoding='utf-8'))
+                db.execute((ROOT/'database/migrations/20260917_q4_personalization.sql').read_text(encoding='utf-8'))
             except Exception:
                 db.execute('ROLLBACK')
                 raise
         if args.command == 'activate':
             activate(db)
-        if args.command in ('status', 'apply', 'activate', 'integrate', 'bootstrap'):
+        if args.command == 'q4':
+            try:
+                db.execute((ROOT/'database/migrations/20260917_q4_personalization.sql').read_text(encoding='utf-8'))
+            except Exception:
+                db.execute('ROLLBACK')
+                raise
+        if args.command in ('status', 'apply', 'activate', 'integrate', 'bootstrap','q4'):
             out['status'] = status(db)
         print(json.dumps(out, ensure_ascii=False, default=str, indent=2))
 

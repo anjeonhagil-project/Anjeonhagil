@@ -36,7 +36,12 @@ try{
     assert.equal(preferences.onboarding.routeChoicesCompleted,false);passed++
     const q4=await call('/driving-preferences/q4',user.token)
     assert.equal(q4.questions.length,4);assert.deepEqual(q4.questions.map(q=>q.dimension),['TIME','TIME','DISTANCE','DISTANCE']);passed+=2
-    for(let i=0;i<4;i++)await call('/driving-preferences/q4',user.token,'POST',{sessionId:q4.session_id,questionIndex:i,answer:i===2?'UNSURE':i%2?'B':'A'})
+    for(let i=0;i<4;i++)await call('/driving-preferences/q4',user.token,'POST',{sessionId:q4.session_id,questionIndex:i,answer:q4.questions[i].routes.find(r=>r.route_key===q4.questions[i].lower_burden_route_key).label})
+    const initial=await call('/driving-preferences/personalization',user.token)
+    assert.equal(initial.q4.axes.TIME.state,'accept_both');assert.equal(initial.q4.applicable,true);passed+=2
+    await call('/driving-preferences/q4/settings',user.token,'PATCH',{enabled:'yes'},400)
+    const repeated=await call('/driving-preferences/q4',user.token)
+    assert.equal(repeated.q4Profile.sessionId,q4.session_id);passed++
     const me=await call('/users/me',user.token);assert.equal(me.onboarding,true);passed++
     const q4choices=await admin.from('ag_choices').select('*',{count:'exact',head:true}).eq('user_id',user.id)
     assert.equal(q4choices.count,0);passed++
@@ -47,12 +52,23 @@ try{
     assert.ok(result.candidates.length>=1&&result.candidates.length<=3);passed++
     const recovered=await call('/routes/searches/'+result.searchId,user.token)
     assert.deepEqual(recovered.candidates,result.candidates);passed++
+    assert.equal(result.q4.sessionId,q4.session_id);assert.equal(result.q4.policy.version,'q4_tiebreak_20260917')
+    assert.deepEqual(recovered.q4,result.q4);passed+=3
+    const off=await call('/driving-preferences/q4/settings',user.token,'PATCH',{enabled:false})
+    assert.equal(off.q4.enabled,false)
+    const past=await call('/routes/searches/'+result.searchId,user.token)
+    assert.equal(past.q4.enabled,true);passed+=2
+    await call('/driving-preferences/q4/settings',user.token,'PATCH',{enabled:true})
     await call('/routes/searches/'+result.searchId,other.token,'GET',undefined,404)
+    await call('/routes/searches/'+result.searchId+'/guidance',other.token,'GET',undefined,404)
+    await call('/routes/searches/'+result.searchId+'/guidance',user.token,'GET',undefined,409)
     const exposureId=randomUUID(),exposure={exposureId,candidateIds:result.candidates.map(c=>c.candidate_id),recommendedCandidateId:result.recommendedCandidateId}
     await call('/routes/searches/'+result.searchId+'/exposures',user.token,'POST',exposure,201)
     await call('/routes/searches/'+result.searchId+'/exposures',user.token,'POST',exposure,201)
     const choice={choiceEventId:randomUUID(),selectedCandidateId:result.recommendedCandidateId}
     await call('/routes/exposures/'+exposureId+'/choices',user.token,'POST',choice,201)
+    const guidance=await call('/routes/searches/'+result.searchId+'/guidance',user.token)
+    assert.deepEqual(guidance.geometry,result.candidates.find(c=>c.candidate_id===choice.selectedCandidateId).geometry);passed++
     await call('/routes/exposures/'+exposureId+'/choices',user.token,'POST',choice,201)
     const history=await call('/routes/searches',user.token);assert.equal(history[0].choice.selected_candidate_id,result.recommendedCandidateId);passed++
     await call('/admin/operations/summary',user.token,'GET',undefined,403)
@@ -72,6 +88,10 @@ try{
     assert.ok(summary.counts.searches>=1&&summary.counts.choices>=1);passed++
     await call('/admin/operations/routes',other.token)
     await call('/admin/operations/failures',other.token)
+    const restart=await call('/driving-preferences/q4/restart',user.token,'POST',{})
+    assert.notEqual(restart.surveyVersion,initial.surveyVersion)
+    assert.equal((await call('/driving-preferences/personalization',user.token)).q4.status,'INCOMPLETE')
+    assert.deepEqual((await call('/routes/searches/'+result.searchId,user.token)).q4,result.q4);passed+=3
     const report={passed,scope:'local HTTP and remote Supabase with disposable accounts',routingSeconds:result.diagnostics.elapsed_seconds,candidates:result.candidates.length,q4Separated:true}
     writeFileSync('.test-tools/service-api-report.json',JSON.stringify(report,null,2));console.log(report)
 }finally{

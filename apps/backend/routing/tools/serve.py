@@ -36,6 +36,11 @@ class Handler(BaseHTTPRequestHandler):
    if not 0<length<=2000000:return self.reply(413,{'error':'body size invalid'})
    req=json.loads(self.rfile.read(length));
    if self.path=='/search':answer=engine.search(req)
+   elif self.path=='/guidance':
+    versions(req)
+    from guidance import build_guidance
+    from routing_service import graph
+    answer=build_guidance(engine,graph,req['segments'])
    elif self.path=='/rank':answer=engine.model.rank(req['candidates'],req['weights'],comparison=True)
    elif self.path=='/personalize':answer=adapt(engine.model,req)
    elif self.path=='/evaluate':

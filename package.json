@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "node scripts/start-local.mjs",
-    "test": "node scripts/test-service-contract.mjs && node scripts/test-route-comparison.mjs && node scripts/test-admin-usage.mjs",
+    "test": "node scripts/test-service-contract.mjs && node scripts/test-route-comparison.mjs && node scripts/test-admin-usage.mjs && node scripts/test-navigation.mjs && node scripts/test-q4-policy.mjs",
     "test:db": "node scripts/test-service-db.mjs",
     "verify:data": "node scripts/verify-routing-data.mjs",
     "dev:api": "npm run dev -w apps/backend",

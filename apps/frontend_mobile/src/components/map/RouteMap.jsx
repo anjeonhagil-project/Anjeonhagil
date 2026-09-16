@@ -1,9 +1,12 @@
 // 서버 LineString을 카카오 지도에 표시하며 지도 클릭은 경로 미리보기만 변경한다.
 import { useEffect,useRef,useState } from 'react'
 import { loadKakaoMaps } from '../../lib/kakaoMaps.js'
-export default function RouteMap({candidates=[],selectedId,onSelect,origin,destination,height=300}) {
+import {buildTrack,pointAt} from '../../features/navigation/navigationMath.js'
+export default function RouteMap({candidates=[],selectedId,onSelect,origin,destination,height=300,position,progress=0,follow=false,onPan,comparison=false}) {
     const container=useRef(null),instance=useRef(null),selectRef=useRef(onSelect)
     const [ready,setReady]=useState(false),[error,setError]=useState('')
+    const panRef=useRef(onPan)
+    panRef.current=onPan
     selectRef.current=onSelect
     useEffect(()=>{
         let active=true,observer
@@ -11,6 +14,7 @@ export default function RouteMap({candidates=[],selectedId,onSelect,origin,desti
             if(!active||!container.current) return
             const map=new kakao.maps.Map(container.current,{center:new kakao.maps.LatLng(37.505,127.035),level:5})
             instance.current={kakao,map}
+            kakao.maps.event.addListener(map,'dragstart',()=>panRef.current?.())
             observer=new ResizeObserver(()=>map.relayout());observer.observe(container.current)
             setReady(true)
         }).catch(e=>active&&setError(e.message||'지도를 불러올 수 없습니다'))
@@ -23,18 +27,39 @@ export default function RouteMap({candidates=[],selectedId,onSelect,origin,desti
         for(const c of candidates) {
             const path=c.geometry.coordinates.map(([lng,lat])=>new kakao.maps.LatLng(lat,lng))
             path.forEach(p=>bounds.extend(p))
-            const line=new kakao.maps.Polyline({map,path,strokeWeight:c.candidate_id===selectedId?7:4,strokeColor:c.candidate_id===selectedId?'#087f8c':'#a7b6c6',strokeOpacity:.9,zIndex:c.candidate_id===selectedId?3:1})
+            const line=new kakao.maps.Polyline({map,path,strokeWeight:c.candidate_id===selectedId?7:4,strokeColor:comparison?(c.label==='B'?'#5264ba':'#087f8c'):c.candidate_id===selectedId?'#087f8c':'#a7b6c6',strokeStyle:comparison&&c.label==='B'?'dash':'solid',strokeOpacity:.9,zIndex:c.candidate_id===selectedId?3:1})
             const click=()=>selectRef.current?.(c.candidate_id)
             kakao.maps.event.addListener(line,'click',click);lines.push([line,click])
         }
-        for(const p of [origin,destination].filter(Boolean)) {
+        for(const [index,p] of [origin,destination].entries()) {
+            if(!p)continue
             const position=new kakao.maps.LatLng(p.lat,p.lng);bounds.extend(position)
-            markers.push(new kakao.maps.Marker({map,position,title:p.name||''}))
+            const label=document.createElement('span');label.textContent=index===0?'출발':'도착'
+            label.style.cssText='display:block;background:'+(index===0?'#123f46':'#087f8c')+';color:white;padding:6px 10px;border:2px solid white;border-radius:20px;font:bold 12px sans-serif;box-shadow:0 2px 6px #0003'
+            markers.push(new kakao.maps.CustomOverlay({map,position,content:label,yAnchor:1.2,zIndex:4}))
         }
         if(candidates.length||origin||destination) map.setBounds(bounds,30,30,30,30)
         return ()=>{lines.forEach(([l,f])=>{kakao.maps.event.removeListener(l,'click',f);l.setMap(null)});markers.forEach(m=>m.setMap(null))}
-    },[ready,candidates,selectedId,origin,destination])
-    return <section aria-label="경로 지도" style={{position:'relative',height,borderRadius:16,overflow:'hidden',background:'#e9eef1'}}>
+    },[ready,candidates,selectedId,origin,destination,comparison])
+    useEffect(()=>{
+        if(!ready||!instance.current||!position)return
+        const {kakao,map}=instance.current,here=new kakao.maps.LatLng(position.lat,position.lng)
+        const dot=document.createElement('span');dot.setAttribute('aria-label','현재 위치');dot.style.cssText='display:block;width:18px;height:18px;background:#1476e8;border:4px solid white;border-radius:50%;box-shadow:0 0 0 8px #1476e830'
+        const overlay=new kakao.maps.CustomOverlay({map,position:here,content:dot,zIndex:10})
+        const circle=Number.isFinite(position.accuracy)?new kakao.maps.Circle({map,center:here,radius:Math.min(position.accuracy,200),strokeWeight:1,strokeColor:'#1476e8',strokeOpacity:.3,fillColor:'#1476e8',fillOpacity:.08}):null
+        if(follow){map.setLevel(3);map.panTo(here)}
+        return ()=>{overlay.setMap(null);circle?.setMap(null)}
+    },[ready,position,follow])
+    useEffect(()=>{
+        if(!ready||!instance.current||progress<=0)return
+        const chosen=candidates.find(c=>c.candidate_id===selectedId)
+        if(!chosen)return
+        const {kakao,map}=instance.current,track=buildTrack(chosen.geometry),point=pointAt(track,progress)
+        const coordinates=[...track.coordinates.slice(0,point.index),[point.lng,point.lat]]
+        const line=new kakao.maps.Polyline({map,path:coordinates.map(([lng,lat])=>new kakao.maps.LatLng(lat,lng)),strokeWeight:7,strokeColor:'#92b4ae',strokeOpacity:1,zIndex:5})
+        return ()=>line.setMap(null)
+    },[ready,candidates,selectedId,progress])
+    return <section aria-label="경로 지도" style={{position:'relative',height,minHeight:height,flexShrink:0,borderRadius:16,overflow:'hidden',background:'#e9eef1'}}>
         <div ref={container} style={{height:'100%',width:'100%'}} />
         {error&&<p role="alert" style={{position:'absolute',inset:16,background:'#fff',padding:16}}>{error}<br/>아래 카드에서 계산된 경로 조건은 확인할 수 있습니다.</p>}
     </section>

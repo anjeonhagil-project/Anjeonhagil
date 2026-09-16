@@ -41,7 +41,8 @@ export function validateSearchInput(body) {
     if(!body || typeof body!=='object' || Array.isArray(body) || Object.keys(body).some(k=>!['searchId','origin','destination','departureAt'].includes(k))) invalid()
     const point=(p)=>{
         if(!p || typeof p!=='object' || ![p.lat,p.lng].every(v=>typeof v==='number' && Number.isFinite(v)) || Math.abs(p.lat)>90 || Math.abs(p.lng)>180) invalid()
-        return {lat:p.lat,lng:p.lng,...(typeof p.name==='string'?{name:p.name.trim().slice(0,100)}:{})}
+        if(p.heading!==undefined&&(!Number.isFinite(p.heading)||p.heading<0||p.heading>=360))invalid()
+        return {lat:p.lat,lng:p.lng,...(p.heading!==undefined?{heading:p.heading}:{}),...(typeof p.name==='string'?{name:p.name.trim().slice(0,100)}:{})}
     }
     if(typeof body.departureAt!=='string'||!/(Z|[+-][0-9]{2}:[0-9]{2})$/.test(body.departureAt)||!Number.isFinite(Date.parse(body.departureAt))) invalid()
     return {searchId:requireUuid(body.searchId,'검색'),origin:point(body.origin),destination:point(body.destination),departureAt:body.departureAt}

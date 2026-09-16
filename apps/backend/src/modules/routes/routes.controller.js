@@ -19,6 +19,11 @@ export async function history(req,res,next) {
     try {res.json({success:true,data:await routesService.history(req.user.id)})} catch(error) {next(error)}
 }
 
+// Only the authenticated user's saved selection is used; no client supplied arcs.
+export async function guidance(req,res,next) {
+    try {res.json({success:true,data:await routesService.guidance(req.user.id,requireUuid(req.params.searchId,'검색'))})} catch(error) {next(error)}
+}
+
 export async function recordExposure(req, res, next) {
     try {
         const input = validateExposureInput(req.params.searchId, req.body)

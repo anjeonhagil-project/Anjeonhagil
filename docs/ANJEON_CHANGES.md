@@ -4,6 +4,14 @@
 
 ## 바뀐 기능
 
+**경로 안내 추가:** 선택 결과에서 GPS 안내/시뮬레이션으로 이어진다. 모바일 접이식 패널과 PC 지도·검색 패널, 현재 위치·진행 구간·다음 방향·과거 교통자료 기준 잔여 시간, 음성 켜기/끄기, 배속·일시정지·완주, 위치 품질 검사·이탈 재검색을 구현했다. 지도는 카카오, 안내 경로는 선택한 내부 경로 그대로다. 차선/신호/상용 내비 수준의 주행 보장은 포함하지 않는다.
+
+- `routing/tools/runtime/guidance.py`: 방향이 있는 도로 구간의 연결을 검증해 참고 안내 생성. 기존 알고리즘·모델·동결 버전 유지.
+- `GET /api/routes/searches/:searchId/guidance`: 본인 소유 검색의 최종 선택만 조회. 기존 저장 경로도 지원하며 DB migration/재적재는 필요 없다.
+- `frontend_mobile/src/features/navigation/`, `hooks/useGeolocation.js`: GPS/시뮬레이션·위치 품질·종료 정리. 이동 위치를 서버에 저장하지 않고 학습 선택 기록도 추가하지 않는다.
+- **Git 포함:** `scripts/test-navigation.mjs`(GPS 수학/입력 검증), 기존 `test-service-routing.py`(안내 좌표 동일성), `test-service-api.mjs`(소유권·선택 검증), `test-ui.mjs`(화면·안내 흐름). `runtime_manifest.json`도 함께 포함한다. `.test-tools`와 인증서·키는 제외한다.
+- 휴대폰 HTTPS 실행 옵션과 카카오 도메인 설정은 루트 README 참고. 자동 검증과 실제 휴대폰/도로 주행 검증은 구분한다.
+
 | 영역 | 구현한 내용 |
 |---|---|
 | 설문 | Q3 제거, Q1/Q2 공통 폼, 순위→가중치 검증, Q4 정확히 4문항 및 A/B/판단보류 저장·재개 |
@@ -31,7 +39,7 @@ apps/backend/
     service_manifest.json        원본 반입 기록 보존
     runtime_manifest.json        현재 실행 코드 해시
     tests/                       A*/Yen 회귀 검사
-  src/config/q4Cases.json         검산된 24문항, 고유 경로 43개
+  src/config/q4Cases.json         검산된 24문항, 고유 경로 46개
   src/modules/preferences/        Q1/Q2·Q4·개인화
   src/modules/routes/             검색·노출·선택·snapshot
   src/modules/admin/dashboard/    운영 조회 API
@@ -49,15 +57,16 @@ ml/
   src/                            추론·재학습·평가·실제 선택 변환·행동 보정
 database/
   migrations/20260916_service_integration.sql
+  migrations/20260917_q4_personalization.sql
   manage.py, export_choices.py    원격 상태/반영/활성화·실제 선택 내보내기
 scripts/                          시작·복원·검증·벤치마크
 ```
 
 ## DB와 데이터 상태
 
-원격 Supabase에 통합 migration을 적용했고 **16개 ag_* 테이블**, 활성 데이터 `anjeon_final_20260915_child100_v3`, 활성 모델 `logistic_synthetic_20260916`을 확인했다. 기존 baseline/인증 테이블은 유지한다.
+원격 Supabase에 통합·Q4 migration을 적용했고 **17개 ag_* 테이블**, 활성 데이터 `anjeon_final_20260915_child100_v3`, 활성 모델 `logistic_synthetic_20260916`을 확인했다. 기존 baseline/인증 테이블은 유지한다.
 
-- Q4: `ag_q4_sessions/responses`에 저장. `ag_choices` 및 행동 건수와 분리한다.
+- Q4: `ag_q4_sessions/responses/profiles`에 응답과 정책 버전별 해석을 저장. `ag_choices` 및 행동 건수와 분리한다.
 - 검색/학습: `ag_searches/candidates/exposures/choices`에 당시 계산값과 가중치·모델을 고정한다.
 - 행동 보정: `ag_profile_versions/user_profiles/profile_update_jobs`에 새 버전과 검증 근거를 저장한다.
 - 실패: `ag_route_failures`에 오류 코드·소요시간을 기록한다.
@@ -70,7 +79,9 @@ scripts/                          시작·복원·검증·벤치마크
 
 고정 Logistic 아래에서 오래된 80% 선택으로 가중 Log Loss + 설문 이탈 정규화(0.05)를 최소화한다. 반감기 H=14일, consistency는 학습 구간에서 선택 경로의 평균 pair logit이 양수인 검색 비율이다. `n_eff=최근성 가중치 합×consistency`, `α=n_eff/(n_eff+10)`, `effective=(1−α)survey+αbehavior`다. 최신 20%(최소 2건)의 loss가 현재 프로필보다 0.001 이상 개선될 때만 채택한다. 이력 부족·모델 장애·검증 실패는 기존/설문 가중치를 유지한다. 모든 정책값과 전후 오차를 job evidence에 남긴다.
 
-Q4는 응답 저장까지만 연결했다. 시간·거리 허용 계수나 행동 학습에 반영하지 않는다. Q2 무선택은 기본 비교 사례임을 표시하며 선호로 저장하지 않는다.
+Q4는 **첫 검색부터 시간·거리 선호를 보조 추천에 반영**한다. 공통 모델의 평균 비교 확률 차이가 0.08 이내인 후보만 대상으로 축별 최대 0.04 보너스를 주며, 다른 조건의 차이와 문항 간 부담 개선량 차이만큼 영향력을 줄인다. 두 사례 모두 수용/거절한 축만 사용하고 판단 보류·엇갈린 응답·Q2 무선택은 중립이다. 수용 응답도 부담이 실제로 줄고 관찰한 증가 비율 안에 있는 후보에만 적용한다. 이는 검증된 허용 계수나 학습 효과가 아닌 실험 정책이다.
+
+`q4Policy.js`가 해석·추천, `q4Profile.service.js`가 저장·설정·재설문을 담당한다. X8·공통 모델·행동 학습 건수는 바꾸지 않는다. 검색 snapshot에 기본 추천/최종 추천/정책 근거를 함께 보존하며 실제 선택 내보내기의 Q4 정보도 학습 입력이 아닌 메타데이터다. MY에서 반영을 끄거나 다시 설문할 수 있다. 재설문은 Q2를 유지하고 행동 보정을 초기화하지만 과거 응답·검색·선택은 보존한다. 이전 문항에 품질 정보가 없으면 재설문 전까지 중립이다.
 
 ## 팀원이 확인할 위치
 
@@ -99,7 +110,7 @@ npm start -- --api-port=3001
 
 ### 별도 Supabase를 새로 만드는 경우만
 
-`database/bootstrap.py`는 baseline 01~05와 최신 migration 두 개를 조합한다. 기존 테이블이 있으면 거부하며 한 트랜잭션으로 적용한다. PostGIS를 준비하고 과거 pgRouting/위험도 seed는 설치하지 않는다. 도로는 위 ZIP 복원으로 준비한다.
+`database/bootstrap.py`는 baseline 01~05와 최신 migration 세 개를 조합한다. 기존 테이블이 있으면 거부하며 한 트랜잭션으로 적용한다. PostGIS를 준비하고 과거 pgRouting/위험도 seed는 설치하지 않는다. 도로는 위 ZIP 복원으로 준비한다. 별도로 운영하던 기존 DB에는 `.\.venv\Scripts\python.exe -X utf8 database/manage.py q4`로 Q4 migration을 적용한다. 현재 공유 DB에는 이미 반영했다.
 
 ```powershell
 # 새 프로젝트의 backend/.env 및 두 프론트 .env 설정 후
@@ -113,15 +124,17 @@ npm run doctor -- --db
 
 ### 이번 재현성 보완과 확인
 
-- `scripts/doctor.mjs`: 앱 설정·프로젝트 일치·공개 설정의 비밀키 혼입·Python·데이터 해시·원격 38개 테이블의 RLS/권한·활성 모델 해시 확인. `npm run doctor -- --db`로 실행한다.
+- `scripts/doctor.mjs`: 앱 설정·프로젝트 일치·공개 설정의 비밀키 혼입·Python·데이터 해시·원격 39개 테이블의 RLS/권한·활성 모델 해시 확인. `npm run doctor -- --db`로 실행한다.
 - `scripts/test-bootstrap.py`: 실제 PostGIS의 격리 스키마에서 신규 구성·가입·설문·첫 관리자·재실행 거부를 검사하고 전부 롤백한다. 현재 원격 데이터를 초기화하지 않는다.
 - `scripts/start-local.mjs`: 포트 중복/범위 검증, worker와 API 준비 후 화면 서버 실행.
 - Git 대상 파일만 별도 복사해 `npm ci`, 계약/비교 검사, 두 화면 빌드 통과. `.env`·Python·도로 데이터 누락도 감지했다. 실행 검증 스크립트는 Git에 포함하고 `.test-tools` 결과는 제외한다.
 
-확장 우선순위는 **실제 선택 자료로 모델 평가 → 다양한 서울 OD의 경로 품질·제한시간 회귀 검사 → 동시 요청 대기열/취소**다. Q4 반영은 시간·거리 허용 정책을 검증한 뒤 진행한다. 지금은 기능 수보다 기존 추천의 근거와 재현성을 높이는 편이 포트폴리오에 유리하다.
+확장 우선순위는 **실제 선택 자료로 모델·Q4 보조 정책 평가 → 다양한 서울 OD의 경로 품질·제한시간 회귀 검사 → 동시 요청 대기열/취소**다. Q4를 학습된 시간·거리 계수로 확대하려면 별도 학습·검증이 필요하다.
 
 ### 관리자 시안 반영
 
 청록색 사이드바·통계 카드·표·상세창을 통일했다. 대시보드는 한국 시간 기준 오늘/이번 달/올해의 저장된 검색을 실제 DB count로 집계한다(30초 캐시). 데이터·모델 상세와 최근 50건 기록의 검색/상태 필터/10건 페이지 이동, 관리자 이메일 검색·권한 변경 확인창을 추가했다. 공지는 비공개 초안 또는 공개 상태로 저장할 수 있다. 정상 문의 UUID가 거부되던 검증식을 수정했다. 기존 DB 구조를 그대로 사용하며 추가 migration은 없다. `test-admin-usage.mjs`와 관리자 Chrome 검사 18개(임시 비공개 공지·테스트 문의 답변 포함)를 통과했다.
 
 모바일은 최상위 프레임과 본문이 동시에 움직이던 중첩 스크롤을 제거하고, 화면별 본문 하나만 터치 스크롤하도록 통일했다. 390×430 화면에서 온보딩 설문·선택 경로·마이페이지·운전 부담 설정·도움말·긴 약관의 실제 스크롤 이동을 포함한 사용자 Chrome 검사 28개를 통과했다.
+
+경로 비교 설문은 실제 후보를 추가 계산해 24문항을 재선정했다. `q4Cases.json`이 실행 자료이며 후보 수집 캐시는 실행에 필요하지 않다. 카드에는 시간·거리·해당 부담값만 표시하고, 다른 조건은 펼침 표로 확인한다. A/B 지도 색상·선 모양도 구분했다. 기존 세션과 응답은 보존하며 새 설문부터 적용한다. 후속 Q4 보조 정책에는 위 migration이 필요하고 공통 모델은 유지한다. `npm test`(Q4 정책 검사 포함), `scripts/test-q4-data.py`(46개 경로 재검산), `node scripts/test-ui.mjs --q4-only`로 검증한다. 선정 기준은 문항 편집용이며, 단일 요인 실험이나 안전성 검증을 뜻하지 않는다.

@@ -59,7 +59,9 @@ try{
     }
     const vite=path.join(root,'node_modules/vite/bin/vite.js')
     const frontendEnv={...process.env,VITE_API_BASE_URL:'http://localhost:'+apiPort+'/api'}
-    start('mobile',process.execPath,[vite,'--host','127.0.0.1','--port',String(mobilePort),'--strictPort'],path.join(root,'apps/frontend_mobile'),frontendEnv)
+    const mobileEnv={...frontendEnv,VITE_API_BASE_URL:'/api',LOCAL_API_TARGET:'http://127.0.0.1:'+apiPort}
+    if(Boolean(process.env.MOBILE_HTTPS_CERT)!==Boolean(process.env.MOBILE_HTTPS_KEY))throw new Error('MOBILE_HTTPS_CERT와 MOBILE_HTTPS_KEY를 함께 지정해주세요.')
+    start('mobile',process.execPath,[vite,'--host',process.env.MOBILE_HOST||'127.0.0.1','--port',String(mobilePort),'--strictPort'],path.join(root,'apps/frontend_mobile'),mobileEnv)
     start('admin',process.execPath,[vite,'--host','127.0.0.1','--port',String(adminPort),'--strictPort'],path.join(root,'apps/frontend_admin'),frontendEnv)
-    console.log('\n안전하길: http://localhost:'+mobilePort+' | 관리자: http://localhost:'+adminPort+'\n종료: Ctrl+C')
+    console.log('\n안전하길: '+(process.env.MOBILE_HTTPS_CERT?'https':'http')+'://localhost:'+mobilePort+' | 관리자: http://localhost:'+adminPort+'\n종료: Ctrl+C')
 }catch(error){console.error(error.message);stop(1)}

@@ -33,6 +33,12 @@ with (OUT/'service-worker-test.log').open('w',encoding='utf8') as log:
         assert result['profile_weights']==[2/6,0,3/6,0,0,1/6]
         checks=5
         for c in result['candidates']:
+            status,guide=request('/guidance',{**health['versions'],'segments':c['segments']})
+            assert status==200,guide
+            assert guide['geometry']==c['geometry'], 'Guidance must preserve selected path exactly'
+            assert guide['steps'][-1]['kind']=='arrival'
+            assert all(0<=s['coordinate_index']<len(c['geometry']['coordinates']) for s in guide['steps'])
+            checks+=4
             status,again=request('/evaluate',{**health['versions'],'departure_at':query['departure_at'],'segments':c['segments']})
             assert status==200,again
             for key in ('distance_m','internal_duration_s'):
@@ -42,6 +48,8 @@ with (OUT/'service-worker-test.log').open('w',encoding='utf8') as log:
             assert c['display_duration_s']==math.floor(c['internal_duration_s']/60+.5)*60
             checks+=6
         status,ranking=request('/rank',{'candidates':result['candidates'],'weights':result['profile_weights']})
+        assert request('/guidance',{**health['versions'],'segments':[]})[0]==422
+        checks+=1
         assert status==200 and ranking['recommended_index']==result['recommended_index'],ranking
         assert request('/search',dict(query,max_detour_minutes=5))[0]==422
         assert request('/search',dict(query,origin={'lng':129.1,'lat':35.1}))[0]==422

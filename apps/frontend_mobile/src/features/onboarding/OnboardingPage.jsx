@@ -1,7 +1,8 @@
 // 기능(Anjeonhagil): Q1~Q3 공통 설문을 저장하고 Q4 경로 비교 단계와 완료 상태를 구분한다.
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useSearchParams } from 'react-router-dom'
 import RouteChoiceStep from './RouteChoiceStep.jsx'
+import Q4PreferenceSummary from '../preferences/Q4PreferenceSummary.jsx'
 import { FaCheck } from 'react-icons/fa6'
 import Header from '../../components/layout/Header.jsx'
 import Button from '../../components/common/Button/Button.jsx'
@@ -11,6 +12,7 @@ import styles from './OnboardingPage.module.css'
 
 function OnboardingPage() {
     const navigate = useNavigate()
+    const [params]=useSearchParams()
     const [screen, setScreen] = useState('intro')
     const [initialValue, setInitialValue] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -23,7 +25,8 @@ function OnboardingPage() {
             .then((result) => {
                 if (!mounted) return
                 setInitialValue(result.preferences)
-                if (result.onboarding?.routeChoicesCompleted) setScreen('complete')
+                if(params.get('q4')==='true'&&result.onboarding?.surveyCompleted)setScreen('route-choice-ready')
+                else if (result.onboarding?.routeChoicesCompleted) setScreen('complete')
                 else if (result.onboarding?.surveyCompleted) setScreen('route-choice-ready')
             })
             .catch((error) => mounted && setSubmitError(error.message || '설문 상태를 불러오지 못했습니다.'))
@@ -75,6 +78,7 @@ function OnboardingPage() {
                     <section className={styles.completeContent}>
                         <div className={styles.completeIcon}><FaCheck /></div>
                         <h2 className={styles.completeTitle}>나의 운전 부담 설정이 완료됐어요</h2>
+                        <Q4PreferenceSummary/>
                     </section>
                     <div className={styles.bottomAction}><Button fullWidth onClick={() => navigate('/home', { replace: true })}>안전하길 시작하기</Button></div>
                 </div>

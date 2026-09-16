@@ -3,10 +3,11 @@ import { readFile } from 'node:fs/promises'
 import { randomInt } from 'node:crypto'
 import { supabase } from '../../lib/supabase.js'
 import { FACTOR_ORDER } from '../../routing-engine/routingContract.js'
+import {q4Profile} from './q4Profile.service.js'
 async function progress(session) {
     const {data,error}=await supabase.from('ag_q4_responses').select('question_index,answer,answered_at').eq('session_id',session.session_id).order('question_index')
     if(error) throw error
-    return {...session,answers:data,q4AffectsRecommendation:false}
+    return {...session,answers:data,q4AffectsRecommendation:true,q4Profile:session.completed_at?await q4Profile(session.user_id,session.survey_version):null}
 }
 export async function items(userId) {
     const {data:cur,error}=await supabase.from('ag_preferences').select('survey_version').eq('user_id',userId).maybeSingle()
@@ -33,5 +34,10 @@ export async function answer(userId,body) {
     if(!body||typeof body.sessionId!=='string'||!/^[0-9a-f-]{36}$/i.test(body.sessionId)||!Number.isInteger(body.questionIndex)||body.questionIndex<0||body.questionIndex>3||!['A','B','UNSURE'].includes(body.answer)) throw Object.assign(new Error('설문 응답을 확인해주세요'),{status:400})
     const {data,error}=await supabase.rpc('ag_answer_q4',{p_user:userId,p_session:body.sessionId,p_index:body.questionIndex,p_answer:body.answer})
     if(error) throw error
+    if(data.completed){
+        const {data:session,error:se}=await supabase.from('ag_q4_sessions').select('survey_version').eq('session_id',body.sessionId).eq('user_id',userId).single()
+        if(se)throw se
+        data.q4Profile=await q4Profile(userId,session.survey_version)
+    }
     return data
 }

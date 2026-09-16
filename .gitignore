@@ -44,6 +44,7 @@ Thumbs.db
 # Anjeonhagil: 계산 데이터는 로컬에만 유지하고 ZIP에서 복원한다.
 /apps/backend/routing/data/
 /.test-tools/
+/.local-certs/
 
 # Anjeonhagil 중간 검토 문서: 최종 공유본은 docs/ANJEON_CHANGES.md
 /docs/Anjeonhagil_REVIEW.md

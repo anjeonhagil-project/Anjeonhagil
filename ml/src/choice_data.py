@@ -36,7 +36,10 @@ def load_choices(path):
             if other==chosen:continue
             a,b=(chosen,other) if rng.getrandbits(1) else (other,chosen)
             x=[u-v for u,v in zip(vectors[a],vectors[b])]
+            # Q4는 입력/정답이 아닌 노출 정책 metadata다. 이후 성능을 정책별로 나눠 분석할 수 있다.
+            q4=record.get('q4_context') or {}
             rows.append(dict(user_id=user,search_id=search,exposure_id=str(choice['exposure_id']),choice_event_id=event,
+                q4_policy_version=(q4.get('policy') or {}).get('version'),q4_applied=bool(q4.get('applied')),
                 split=split,a=a,b=b,y=int(a==chosen),sample_weight=1/(len(ids)-1),**dict(zip(FEATURES,x))))
     if not rows:raise ValueError('NO_ELIGIBLE_REAL_CHOICES')
     return pd.DataFrame(rows),{'training_source':'ACTUAL_USER_CHOICE','split_unit':'user','excluded_events':excluded}

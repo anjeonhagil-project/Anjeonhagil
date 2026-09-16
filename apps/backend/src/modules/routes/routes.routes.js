@@ -12,6 +12,7 @@ router.use(authenticate, requireActiveUser)
 router.post('/searches', routesController.search)
 router.get('/searches', routesController.history)
 router.get('/searches/:searchId', routesController.detail)
+router.get('/searches/:searchId/guidance', routesController.guidance)
 router.post('/searches/:searchId/exposures', routesController.recordExposure)
 router.post('/exposures/:exposureId/choices', routesController.recordChoice)
 
