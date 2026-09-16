@@ -1,8 +1,37 @@
-// 구현 예정(Anjeonhagil): Q1~Q3 이후 Q4 사례 제공·진행 복구를 담당한다. DB의 ag_onboarding_progress가 완료 상태의 기준이다.
-// 입력: 인증 사용자와 config/onboardingCases. Q1~Q3 저장 뒤 ag_start_onboarding(user,caseSetVersion,caseIds)으로 2~3개 필수 사례를 고정한다.
-// Q4 검색은 sample_origin=onboarding, onboarding_case_set_version, onboarding_case_id를 서버에서 지정한다. 프로필의 survey_version도 일치해야 한다.
-// routes의 후보 저장·실제 노출·선택 RPC를 재사용한다. Q4 노출은 정확히 두 후보이며 사용자 선택 전에 완료 처리하지 않는다.
-// ag_record_choice가 현재 설문/사례 집합의 고유 선택을 집계해 completed_at과 users.onboarding을 한 트랜잭션으로 갱신한다.
-// 중단 후 같은 사례를 재개하며 같은 사례의 여러 검색·재전송은 완료 수를 늘리지 않는다. 미완료 중 설문 변경 시 새 설문으로 사례를 다시 시작한다.
-// 최초 Q4 완료 뒤 설정 화면에서 설문을 바꾸면 최초 온보딩 완료는 유지한다. 과거 선택/설문 이력은 그대로 보존한다.
-// getMe/AuthRedirect는 새 설문 존재와 completed_at을 함께 확인한다. 원본 ZIP의 온보딩 코드나 구 boolean 단독 판정을 복사하지 않는다.
+// Q4는 실제 경로 기반 설문 4문항이며 실제 선택·행동학습과 분리한다.
+import { readFile } from 'node:fs/promises'
+import { randomInt } from 'node:crypto'
+import { supabase } from '../../lib/supabase.js'
+import { FACTOR_ORDER } from '../../routing-engine/routingContract.js'
+async function progress(session) {
+    const {data,error}=await supabase.from('ag_q4_responses').select('question_index,answer,answered_at').eq('session_id',session.session_id).order('question_index')
+    if(error) throw error
+    return {...session,answers:data,q4AffectsRecommendation:false}
+}
+export async function items(userId) {
+    const {data:cur,error}=await supabase.from('ag_preferences').select('survey_version').eq('user_id',userId).maybeSingle()
+    if(error) throw error
+    if(!cur) throw Object.assign(new Error('기본 설문부터 완료해주세요'),{status:409})
+    const {data:session,error:se}=await supabase.from('ag_q4_sessions').select('*').eq('user_id',userId).eq('survey_version',cur.survey_version).maybeSingle()
+    if(se) throw se
+    if(session) return progress(session)
+    const {data:history,error:he}=await supabase.from('ag_preference_history').select('ranks').eq('survey_version',cur.survey_version).single()
+    if(he) throw he
+    const top=history.ranks.indexOf(1),reference=FACTOR_ORDER[top<0?2:top]
+    let bank
+    try {bank=JSON.parse(await readFile(new URL('../../config/q4Cases.json',import.meta.url),'utf8'))}
+    catch {throw Object.assign(new Error('검증된 비교 설문 자료를 준비 중입니다. 잠시 후 다시 시도해주세요.'),{status:503,code:'Q4_DATA_UNAVAILABLE'})}
+    const questions=bank.cases[reference].map(q=>{
+        const routes=randomInt(2)?[...q.routes].reverse():q.routes
+        return {...q,routes:routes.map((r,i)=>({...r,label:i?'B':'A'}))}
+    })
+    const {data,error:be}=await supabase.rpc('ag_begin_q4',{p_user:userId,p_survey:cur.survey_version,p_case_set:bank.case_set_version,p_reference:reference,p_source:top<0?'DEFAULT_REFERENCE':'Q2_TOP',p_questions:questions})
+    if(be) throw be
+    return progress(data)
+}
+export async function answer(userId,body) {
+    if(!body||typeof body.sessionId!=='string'||!/^[0-9a-f-]{36}$/i.test(body.sessionId)||!Number.isInteger(body.questionIndex)||body.questionIndex<0||body.questionIndex>3||!['A','B','UNSURE'].includes(body.answer)) throw Object.assign(new Error('설문 응답을 확인해주세요'),{status:400})
+    const {data,error}=await supabase.rpc('ag_answer_q4',{p_user:userId,p_session:body.sessionId,p_index:body.questionIndex,p_answer:body.answer})
+    if(error) throw error
+    return data
+}

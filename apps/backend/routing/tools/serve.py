@@ -3,19 +3,23 @@ from pathlib import Path
 import sys,json,os,hmac,hashlib
 from http.server import HTTPServer,BaseHTTPRequestHandler
 sys.path.insert(0,str(Path(__file__).resolve().parent/'runtime'))
-from routing_service import RouteService,VERSIONS
+from routing_service import VERSIONS
+from integrated_service import IntegratedService
+from personalize import adapt
 from learning import versions
 ROOT=Path(__file__).resolve().parent.parent
 # Check all supplied dataset hashes before serving. The manifest is generated at packaging.
 def verify():
  p=ROOT/'service_manifest.json'
  if not p.is_file():raise RuntimeError('service_manifest.json required')
- for name,expected in json.loads(p.read_text())['files'].items():
+ data_files={k:v for k,v in json.loads(p.read_text())['files'].items() if not k.endswith('.py')}
+ runtime=json.loads((ROOT/'runtime_manifest.json').read_text())
+ for name,expected in {**data_files,**runtime['files']}.items():
   f=(ROOT/name).resolve()
   if not f.is_relative_to(ROOT.resolve()) or not f.is_file():raise RuntimeError('dataset path missing')
   with f.open('rb') as r:actual=hashlib.file_digest(r,'sha256').hexdigest()
   if actual!=expected:raise RuntimeError('dataset hash mismatch: '+name)
-verify();engine=RouteService();token=os.environ.get('ROUTING_WORKER_TOKEN','')
+verify();engine=IntegratedService();token=os.environ.get('ROUTING_WORKER_TOKEN','')
 class Handler(BaseHTTPRequestHandler):
  def log_message(self,*args):pass
  def reply(self,status,value):
@@ -23,7 +27,7 @@ class Handler(BaseHTTPRequestHandler):
  def authorized(self):return not token or hmac.compare_digest(self.headers.get('Authorization',''),'Bearer '+token)
  def do_GET(self):
   if not self.authorized():return self.reply(401,{'error':'worker authentication required'})
-  if self.path=='/health':return self.reply(200,{'ok':True,'versions':VERSIONS,'mapped_arcs':sum(r['matched'] for r in engine.clock.mapping.values())})
+  if self.path=='/health':return self.reply(200,{'ok':True,'versions':VERSIONS,'model':engine.model.status(),'mapped_arcs':sum(r['matched'] for r in engine.clock.mapping.values())})
   return self.reply(404,{'error':'not found'})
  def do_POST(self):
   if not self.authorized():return self.reply(401,{'error':'worker authentication required'})
@@ -32,6 +36,8 @@ class Handler(BaseHTTPRequestHandler):
    if not 0<length<=2000000:return self.reply(413,{'error':'body size invalid'})
    req=json.loads(self.rfile.read(length));
    if self.path=='/search':answer=engine.search(req)
+   elif self.path=='/rank':answer=engine.model.rank(req['candidates'],req['weights'],comparison=True)
+   elif self.path=='/personalize':answer=adapt(engine.model,req)
    elif self.path=='/evaluate':
     versions(req);answer=engine.evaluate(req['segments'],req['departure_at'])
    else:return self.reply(404,{'error':'not found'})

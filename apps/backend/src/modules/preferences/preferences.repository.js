@@ -19,9 +19,11 @@ export async function findByUserId(userId) {
             .eq('survey_version', current.survey_version)
             .single(),
         supabase
-            .from('ag_onboarding_progress')
-            .select('survey_version, case_set_version, required_case_ids, completed_at, created_at')
+            .from('ag_q4_sessions')
+            .select('survey_version, case_set_version, completed_at, created_at')
             .eq('user_id', userId)
+            .not('completed_at','is',null)
+            .order('completed_at',{ascending:false}).limit(1)
             .maybeSingle(),
     ])
 
@@ -40,7 +42,7 @@ export async function save(userId, answers) {
         p_user: userId,
         p_frequency: answers.drivingFrequency,
         p_ranks: answers.ranks,
-        p_q3: answers.maxDetourMinutes,
+        p_q3: null,
     })
 
     if (error) throw error

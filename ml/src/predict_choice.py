@@ -1,3 +1,8 @@
-# 기능: Logistic/XGBoost의 공통 predict_pair 및 후보 순위 계산을 구현할 자리. 사고 위험 예측 파일과 구분한다.
-# X8 = 표시시간·거리 차이 + 당시 적용 가중치로 가중한 raw6 차이. train에서만 적합한 양수 scale로 나눈다.
-# p(X)와 1-p(-X)의 평균으로 순서를 대칭화하고, 후보별 쌍대 승률 평균으로 순위를 정한다. 실패 시 설문 순위로 복귀한다.
+"""Small CLI for the same candidate ranking used by the local routing worker."""
+import argparse,json
+from pathlib import Path
+from inference import ChoiceModel
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('input',type=Path);args=parser.parse_args()
+    payload=json.loads(args.input.read_text(encoding='utf8'))
+    print(json.dumps(ChoiceModel().rank(payload['candidates'],payload['weights'],comparison=True),ensure_ascii=False))

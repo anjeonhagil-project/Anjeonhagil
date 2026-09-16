@@ -1,29 +1,27 @@
-// 수정 필요(Anjeonhagil): 원본 /search는 ranks만 사용하므로 learned 프로필 연결 시 tools/profile_adapter.py 구현과 응답 profile_weights 일치 검사를 추가한다. URL/시간 초과/비JSON 오류 처리도 연결한다.
-// 기능: Express에서 Anjeonhagil Python 계산기를 호출하는 내부 클라이언트. routes.service.js에 연결하기 전까지 현재 카카오 경로 기능에는 영향이 없다.
+// 로컬 SQLite 계산기 전용 HTTP 통신. 데이터 버전과 오류를 확인한다.
 import { VERSIONS } from './routingContract.js'
-
-export async function searchRoutes(input, { fetchImpl = fetch } = {}) {
-    const response = await fetchImpl(`${process.env.ROUTING_WORKER_URL || 'http://127.0.0.1:8100'}/search`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            ...(process.env.ROUTING_WORKER_TOKEN ? { Authorization: `Bearer ${process.env.ROUTING_WORKER_TOKEN}` } : {}),
-        },
-        body: JSON.stringify(input),
-        signal: AbortSignal.timeout(150000),
-    })
-    const result = await response.json()
-    if (!response.ok) {
-        const error = new Error(result.error || '경로 계산에 실패했습니다')
-        error.status = response.status === 422 ? 422 : 503
-        throw error
+export async function callWorker(endpoint, input, { fetchImpl = fetch, timeout = 45000 } = {}) {
+    let response, result
+    try {
+        response = await fetchImpl((process.env.ROUTING_WORKER_URL || 'http://127.0.0.1:8100') + endpoint, {
+            method: input === undefined ? 'GET' : 'POST',
+            headers: { 'Content-Type':'application/json', ...(process.env.ROUTING_WORKER_TOKEN ? {Authorization:'Bearer '+process.env.ROUTING_WORKER_TOKEN} : {}) },
+            body:input===undefined?undefined:JSON.stringify(input), signal:AbortSignal.timeout(timeout),
+        })
+        result=await response.json()
+    } catch {
+        throw Object.assign(new Error('경로 계산기에 연결할 수 없습니다. 로컬 실행 상태를 확인해주세요.'),{status:503,code:'ROUTING_UNAVAILABLE',expose:true})
     }
-    for (const [key, version] of Object.entries(VERSIONS)) {
-        if (result[key] !== version) {
-            const error = new Error(`경로 계산 버전이 다릅니다: ${key}`)
-            error.status = 503
-            throw error
-        }
+    if(!response.ok) {
+        const messages={OUTSIDE_SEOUL_SERVICE_AREA:'현재 서울 안의 출발지·도착지만 지원합니다.',NO_SUPPORTED_ROAD_WITHIN_40M:'선택 위치에서 40m 이내에 지원 도로가 없습니다. 가까운 도로 위 위치를 선택해주세요.',ORIGIN_DESTINATION_TOO_CLOSE:'출발지와 도착지가 너무 가깝습니다.',NO_VERIFIED_ROUTE_WITHIN_TIME_LIMIT:'제한 시간 안에 경로를 찾지 못했습니다. 가까운 구간으로 다시 검색해주세요.'}
+        throw Object.assign(new Error(messages[result.error]||'경로를 계산하지 못했습니다. 출발지와 도착지를 다시 확인해주세요.'),{status:response.status===422?422:503,code:messages[result.error]?result.error:'ROUTING_FAILED',expose:true})
+    }
+    return result
+}
+export async function searchRoutes(input, options) {
+    const result=await callWorker('/search',input,options)
+    for(const [key,version] of Object.entries(VERSIONS)) {
+        if(result[key]!==version) throw Object.assign(new Error('경로 데이터 버전이 일치하지 않습니다'),{status:503,code:'ROUTING_VERSION_MISMATCH'})
     }
     return result
 }

@@ -1,4 +1,3 @@
-// 수정 필요(Anjeonhagil): 안전 보장 대신 내게 편한 경로 비교 문구로 정리. 새로운 설문 미완료 안내 연결.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { IoHeart, IoHeartOutline } from 'react-icons/io5'
@@ -12,7 +11,6 @@ import { PLACE_TYPE_LABELS } from '../favorites/favoriteName.js'
 import styles from './HomePage.module.css'
 
 const DEFAULT_CENTER = { lat: 37.4979, lng: 127.0276 }
-const DETOUR_TIME_OPTIONS = [10, 20, 30, 60]
 
 function HomePage() {
     const navigate = useNavigate()
@@ -34,7 +32,6 @@ function HomePage() {
     const [favorites, setFavorites] = useState([])
     const [favoriteBusy, setFavoriteBusy] = useState(false)
     const [favoriteError, setFavoriteError] = useState('')
-    const [detourMinutes, setDetourMinutes] = useState(20)
     const placeType = location.state?.placeType || 'custom'
     const editingFavoriteId = location.state?.editingFavoriteId
     const selectingFavoriteLocation = Boolean(location.state?.placeType) && !editingFavoriteId
@@ -342,30 +339,15 @@ function HomePage() {
                     )}
                     {!editingFavoriteId && !selectingFavoriteLocation && (
                         <div className={styles.routeControls}>
-                            <fieldset className={styles.timeFieldset}>
-                                <legend>얼마나 돌아가도 괜찮으세요?</legend>
-                                <div className={styles.timeOptions}>
-                                    {DETOUR_TIME_OPTIONS.map((minutes) => (
-                                        <button
-                                            key={minutes}
-                                            type="button"
-                                            className={minutes === detourMinutes ? styles.timeOptionActive : ''}
-                                            aria-pressed={minutes === detourMinutes}
-                                            onClick={() => setDetourMinutes(minutes)}
-                                        >
-                                            {minutes === 60 ? '1시간' : `${minutes}분`}
-                                        </button>
-                                    ))}
-                                </div>
-                            </fieldset>
+
                             <Button
                                 className={styles.safeRouteButton}
                                 fullWidth
                                 disabled={busy || favoriteBusy || !hasSelectedLocation(selected)}
                                 onClick={() => navigate('/search', {
-                                    state: buildSafeRouteSearchState(selected, detourMinutes),
+                                    state: buildSafeRouteSearchState(selected),
                                 })}
-                            >안심경로 찾기</Button>
+                            >내게 편한 길 찾기</Button>
                         </div>
                     )}
                 </section>

@@ -7,8 +7,23 @@
     "apps/*"
   ],
   "scripts": {
+    "start": "node scripts/start-local.mjs",
+    "test": "node scripts/test-service-contract.mjs && node scripts/test-route-comparison.mjs && node scripts/test-admin-usage.mjs",
+    "test:db": "node scripts/test-service-db.mjs",
+    "verify:data": "node scripts/verify-routing-data.mjs",
     "dev:api": "npm run dev -w apps/backend",
     "dev:admin": "npm run dev -w apps/frontend_admin",
-    "dev:mobile": "npm run dev -w apps/frontend_mobile"
+    "dev:mobile": "npm run dev -w apps/frontend_mobile",
+    "test:local": "node scripts/test-local.mjs",
+    "test:api": "node scripts/test-service-api.mjs",
+    "test:ui": "node scripts/test-ui.mjs",
+    "test:ui:admin": "node scripts/test-ui-admin.mjs",
+    "build": "npm run build -w apps/frontend_mobile && npm run build -w apps/frontend_admin",
+    "doctor": "node scripts/doctor.mjs",
+    "test:bootstrap": ".venv/Scripts/python.exe -X utf8 scripts/test-bootstrap.py"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "playwright": "1.63.0"
   }
 }

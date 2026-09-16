@@ -65,6 +65,7 @@ function SignUpPage() {
             password,
             options: {
                 data: { nickname },
+                emailRedirectTo: `${window.location.origin}/`,
             },
         })
         setSubmitting(false)
@@ -77,8 +78,9 @@ function SignUpPage() {
         navigate('/email-verify', { state: { email } })
     }
 
-    const handleSocialLogin = (provider) => {
-        supabase.auth.signInWithOAuth({ provider: OAUTH_PROVIDER_MAP[provider] })
+    const handleSocialLogin = async (provider) => {
+        const {error}=await supabase.auth.signInWithOAuth({ provider: OAUTH_PROVIDER_MAP[provider], options:{redirectTo:`${window.location.origin}/`} })
+        if(error)setErrors({email:'소셜 로그인 요청에 실패했습니다. 다시 시도해주세요.'})
     }
 
     return (

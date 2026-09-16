@@ -1,125 +1,127 @@
-# Anjeonhagil 변경 및 팀 개발 안내
+# Anjeonhagil 통합 변경 안내
 
-이 문서는 기획 변경에 맞춰 준비한 **파일 구조, DB, 실행 환경과 담당별 다음 작업**을 한 번에 공유하기 위한 문서다. 세부 제약·데이터 계산 규칙은 전달받은 원본 ZIP의 `README.html`과 기획서를 기준으로 한다.
+`feature/service-integration`의 현재 작업은 **기본 틀 준비를 넘어 실제 서비스 연결까지 구현한 상태**다. 최신 통합 기획서·팀 알고리즘/모델 ZIP을 반영했고 동결 데이터의 내부 버전 식별자는 유지했다. 상세 원자료 규칙은 기존 기획서와 ZIP README를 참고한다.
 
-## 1. 이번에 준비한 범위
+## 바뀐 기능
 
-- 기존 회원·인증·장소·즐겨찾기·공지·문의 코드는 유지했다.
-- 기존 실행 파일 58개에는 대부분 첫줄에 `수정 필요(Anjeonhagil)` 주석만 추가했다. 기존 앱 파일 191개의 실행 로직이 바뀌지 않았음을 별도로 대조했다.
-- Git에 포함할 신규 파일은 이 문서를 포함해 74개다. 계산기 27개, 백엔드 골격 13개, 모바일 골격 11개, DB 5개, ML 골격 9개, 실행·검증 스크립트 8개, 이 문서 1개다.
-- 신규 JS/Python 화면·서비스 파일 중 상당수는 **역할과 입력·출력만 적은 주석 골격**이다. 파일 존재를 기능 구현 완료로 판단하지 않는다.
-- 최신 데이터에서 필요한 Python A* 계산기와 계약 파일만 `apps/backend/routing/`으로 가져왔다. 전체 ZIP 서비스 소스나 전체 도로 DB를 Supabase에 복제하지 않았다.
-- 원격 Supabase에는 기존 22개 테이블을 유지하고 신규 13개 `ag_*` 테이블과 학습 조회 view를 추가했다. 검증된 데이터 릴리스는 `ready/active`, 현재 모델은 `survey_only_v1`이다.
+| 영역 | 구현한 내용 |
+|---|---|
+| 설문 | Q3 제거, Q1/Q2 공통 폼, 순위→가중치 검증, Q4 정확히 4문항 및 A/B/판단보류 저장·재개 |
+| 경로 | 서울 경계·40m 도로 스냅, 방향·회전 제한·부분 arc를 유지한 A*와 Yen 목표 K=10, 제한시간과 중복 병합 |
+| 화면 | 내게 편한 길/최단시간/최단거리 1~3장, 별도 모델 추천 표시, 최단시간 후보 대비 시간·거리·선택 부담 요소 차이, 카카오 지도·장소 검색·즐겨찾기 연결 |
+| 모델 | 팀 Logistic·XGBoost 아티팩트 연결, 공통 X8·Train scale·대칭 확률·확률 합 순위, Logistic 운영 |
+| 이력 | 계산값 재검산 후 검색 snapshot 저장, 실제 노출과 최종 선택 분리·멱등성, 새로고침·최근 경로 복구 |
+| 개인화 | 실제 선택 기반 파일럿 보정, 최근 구간 검증 후 채택, 끄기·초기화, 이전 snapshot 보존 |
+| 운영 | 공지·문의 실제 DB 연결, 관리자 운영/경로/실패/데이터/모델/권한 화면, 일반 사용자 권한 차단 |
+| 실행 | 하나의 시작 명령, 의존성 고정, 데이터·DB·모델·브라우저 검증 스크립트, 줄바꿈 무결성 설정 |
 
-검증 결과는 데이터 파일 29개 해시와 SQLite/GeoPackage 9개 무결성, HTTP 계산기 30개, migration·권한·Q4·저장 계약 89개, X8 학습 입력 6개가 통과했다.
+기능을 별도 구현한 곳과 겹치는 **주석만 있는 미사용 파일 46개**는 제거했다. 예전 Q3 입력 컴포넌트, 중복 모델 호출 틀, 미연결 pgRouting/worker 틀 등이 대상이며, 기능 코드를 삭제한 것은 아니다.
 
-## 2. 변경된 파일 구조
+## 주요 구조
 
 ```text
-apps/
-├─ backend/
-│  ├─ routing/                         Python A* 계산기, 계약 JSON, manifest
-│  │  ├─ data/                         Git 제외, 전달 ZIP에서 복원
-│  │  └─ tools/                        serve.py, runtime/, profile_adapter.py
-│  └─ src/
-│     ├─ config/                       온보딩 사례·개인화 정책
-│     ├─ modules/models/               모델 조회·호환성·추론 호출 골격
-│     ├─ modules/preferences/          Q1~Q4·개인화 골격
-│     ├─ modules/routes/               추천·snapshot 저장 골격
-│     ├─ routing-engine/               Python 호출·계약·후보 검증 골격
-│     └─ workers/                      개인 프로필 갱신 worker 골격
-├─ frontend_mobile/src/
-│  ├─ components/map/RouteMap.jsx
-│  └─ features/
-│     ├─ preferences/                  Q1~Q3 공통 폼·항목·API
-│     ├─ onboarding/RouteChoiceStep.jsx
-│     ├─ routes/                       검색·노출·카드·표시 변환 골격
-│     └─ my/PersonalizationSettings.jsx
-ml/src/                                선택 데이터·분리·정규화·LR·XGBoost·추론 골격
+apps/backend/
+  routing/
+    data/                         원본 ZIP에서 복원한 SQLite/GPKG 9개 (Git 제외)
+    tools/serve.py                내부 Python HTTP 계산기
+    tools/runtime/
+      integrated_service.py      실제 서비스 후보 생성·대표 선정·모델 순위
+      routing_service.py         방향 스냅·시간대 A*·검산·geometry
+      search_engine.py, yen.py    팀 알고리즘 통합 및 회전 이력 보존
+    service_manifest.json        원본 반입 기록 보존
+    runtime_manifest.json        현재 실행 코드 해시
+    tests/                       A*/Yen 회귀 검사
+  src/config/q4Cases.json         검산된 24문항, 고유 경로 43개
+  src/modules/preferences/        Q1/Q2·Q4·개인화
+  src/modules/routes/             검색·노출·선택·snapshot
+  src/modules/admin/dashboard/    운영 조회 API
+  src/routing-engine/             worker 호출·계약·재검산
+apps/frontend_mobile/src/
+  features/onboarding/            실제 Q4 진행
+  features/routes/                비교·선택·최근 경로
+  features/my/                    설문 변경·개인화·공지·문의
+  components/map/RouteMap.jsx     카카오 경로 지도
+apps/frontend_admin/src/features/dashboard/
+                                  운영·데이터·경로·관리자 화면
+ml/
+  bundled/                        운영 Logistic JSON, 비교 XGBoost JSON·메타데이터
+  data/synthetic_pairwise.csv      팀 합성 학습 자료
+  src/                            추론·재학습·평가·실제 선택 변환·행동 보정
 database/
-├─ migrations/20260916_anjeonhagil_foundation.sql
-├─ manage.py                           원격 preflight/apply/status/activate
-└─ export_choices.py                   실제 선택 학습 JSONL 내보내기
-scripts/                               데이터 복원·환경 구성·실행·통합 검증
+  migrations/20260916_service_integration.sql
+  manage.py, export_choices.py    원격 상태/반영/활성화·실제 선택 내보내기
+scripts/                          시작·복원·검증·벤치마크
 ```
 
-기존 `database/baseline/`과 2026-09-01/09-05 인증 migration은 변경 이력으로 유지한다. 새 서비스 기능은 신규 `ag_*` 구조를 사용하며, 기존 `driving_preferences`, `route_requests`, `road_*`에 중복 저장하지 않는다.
+## DB와 데이터 상태
 
-## 3. DB 구조와 연결 흐름
+원격 Supabase에 통합 migration을 적용했고 **16개 ag_* 테이블**, 활성 데이터 `anjeon_final_20260915_child100_v3`, 활성 모델 `logistic_synthetic_20260916`을 확인했다. 기존 baseline/인증 테이블은 유지한다.
 
-| 영역 | 테이블 | 역할 |
-| --- | --- | --- |
-| 데이터·모델 | `ag_dataset_releases`, `ag_dataset_active`, `ag_model_versions` | 계산기 데이터와 모델 버전 고정 |
-| 설문·온보딩 | `ag_preference_history`, `ag_preferences`, `ag_onboarding_progress` | Q1~Q3 이력·현재 설문·Q4 완료 상태 |
-| 개인화 | `ag_profile_versions`, `ag_user_profiles`, `ag_profile_update_jobs` | 적용 가중치 이력·활성 프로필·보정 작업 |
-| 경로·학습 | `ag_searches`, `ag_candidates`, `ag_exposures`, `ag_choices` | 검색 당시 값·실제 노출·최종 선택 보존 |
+- Q4: `ag_q4_sessions/responses`에 저장. `ag_choices` 및 행동 건수와 분리한다.
+- 검색/학습: `ag_searches/candidates/exposures/choices`에 당시 계산값과 가중치·모델을 고정한다.
+- 행동 보정: `ag_profile_versions/user_profiles/profile_update_jobs`에 새 버전과 검증 근거를 저장한다.
+- 실패: `ag_route_failures`에 오류 코드·소요시간을 기록한다.
+- 도로 데이터는 백엔드 로컬 SQLite/GPKG에 적재했다. 동일 도로를 Supabase에 중복 적재하지 않는다.
+- 새 migration은 재실행 검증을 통과했다. 통합 후 `manage.py apply`는 구 foundation 함수로 돌아가지 않도록 차단한다. 변경 반영은 `integrate`, 조회는 `status`다.
 
-흐름은 `설문 → 활성 프로필 → 경로 검색/후보 → 실제 노출 → 최종 선택 → 학습 view → 개인 프로필 갱신` 순서다. 브라우저가 신규 테이블과 RPC를 직접 호출하지 않고, 인증된 Express 백엔드가 service key로 호출한다.
+## 개인화에서 이번에 정한 파일럿 정책
 
-원격 DB 적용은 끝났다. 다시 적용하거나 상태를 확인할 때는 실제 `.env`를 Git에 올리지 않고 다음 도구를 사용한다.
+`ml/src/personalize.py`의 **실험 정책**이며 최적 성능이 입증된 상수가 아니다. 실제 서비스 선택만 최근 7일에서 10건 이상이면 사용하고, 부족하면 30일까지 확장하여 최대 20건을 사용한다. Q2 미선택 요소는 계속 0이다.
+
+고정 Logistic 아래에서 오래된 80% 선택으로 가중 Log Loss + 설문 이탈 정규화(0.05)를 최소화한다. 반감기 H=14일, consistency는 학습 구간에서 선택 경로의 평균 pair logit이 양수인 검색 비율이다. `n_eff=최근성 가중치 합×consistency`, `α=n_eff/(n_eff+10)`, `effective=(1−α)survey+αbehavior`다. 최신 20%(최소 2건)의 loss가 현재 프로필보다 0.001 이상 개선될 때만 채택한다. 이력 부족·모델 장애·검증 실패는 기존/설문 가중치를 유지한다. 모든 정책값과 전후 오차를 job evidence에 남긴다.
+
+Q4는 응답 저장까지만 연결했다. 시간·거리 허용 계수나 행동 학습에 반영하지 않는다. Q2 무선택은 기본 비교 사례임을 표시하며 선호로 저장하지 않는다.
+
+## 팀원이 확인할 위치
+
+- **A* 담당:** `integrated_service.py/search_engine.py/yen.py`와 `scripts/test-algorithms.py`, `benchmark-routing.py`. burden A*는 후보를 찾기 위한 근사 비용이고, 최종 raw6를 다시 계산해 후보 안에서 대표 경로를 고른다. 코드 수정 뒤 `node scripts/build-runtime-manifest.mjs`와 검증을 실행한다.
+- **모델 담당:** `ml/src/train.py`는 팀 자료의 학습/평가를 재현한다. 실제 로그는 `database/export_choices.py --output .test-tools/choices.jsonl` → `ml/src/train.py --choices .test-tools/choices.jsonl` 순서다. 사용자 분리, 재현 가능한 A/B 배치, 검색별 pair 가중치 합 1을 검사한다. 결과는 `ml/artifacts/`에 생성하며 자동 활성화하지 않는다.
+- **앱 담당:** 검색 당시 snapshot을 화면·추천·선택 저장의 기준으로 유지한다. Q4를 실제 선택으로 합치거나 브라우저에서 raw6를 만들어 전송하지 않는다.
+
+## 실행·검증 파일과 Git
+
+`scripts/start-local.mjs`, `setup-python.ps1`, `import-routing-data.ps1`, `verify-routing-data.mjs`, `build-runtime-manifest.mjs`, **test-*.py/mjs/ps1**, `benchmark-routing.py`는 팀 재현에 필요하므로 포함한다. 모델 JSON/메타데이터·합성 CSV·Q4 사례·migration·package-lock·gitattributes도 포함한다.
+
+`.env`, `.venv`, `node_modules`, `dist`, `.test-tools`, 학습 출력 `ml/artifacts`, 대용량 도로 데이터는 제외한다. 예전 검토 문서 3개는 계속 Git에서 제외한다. 원본 ZIP 전체를 Git에 넣을 필요는 없다.
+
+새 PC는 Node.js 24 이상/Python 3.12와 각 앱의 `.env.example`에 맞는 로컬 설정을 준비한 뒤:
 
 ```powershell
-.\.venv\Scripts\python.exe -X utf8 database/manage.py status
+npm ci
+.\scripts\setup-python.ps1
+.\scripts\import-routing-data.ps1 -ArchivePath 'C:\자료\Anjeonhagil_FINAL_CHILD100_20260915 (1).zip'
+npm run doctor -- --db
+npm run test:local
+npm start -- --api-port=3001
 ```
 
-## 4. 담당별 다음 작업
+공유 Supabase를 쓰는 팀원은 migration을 매번 재적용하지 않는다. 카카오 허용 주소는 `http://localhost:5173`이다. 다른 포트를 쓰면 카카오 허용 주소도 별도로 맞춰야 한다.
 
-### A* 담당
+### 별도 Supabase를 새로 만드는 경우만
 
-1. `scripts/import-routing-data.ps1`로 전달 ZIP의 9개 계산 데이터 파일을 복원하고 `scripts/verify-routing-data.mjs`로 해시와 DB 무결성을 확인한다.
-2. `scripts/run-routing.ps1`로 내부 worker를 실행한다. 브라우저가 worker를 직접 호출하지 않으며 Express의 `routingClient.js`를 통해서만 호출한다.
-3. `service_area.py`를 연결해 서울 경계 검사와 40m 도로 스냅을 구분한다.
-4. 현재 `/search`는 `ranks`로 설문 가중치를 다시 만든다. `profile_adapter.py` 위치에서 서버가 검증한 `effective_weights`를 후보 생성과 최종 부담 정렬에 동일하게 적용한다.
-5. `candidateValidation.js`에서 worker `/evaluate`로 segments, 거리, 시간, raw6를 재검산한 뒤 `routeSnapshot.js`를 통해 저장한다.
-6. 기존 `pgRouting.js`, `costBuilder.js`, `snapToNetwork.js`에 두 번째 계산식을 만들지 않는다. 신규 서울 경로는 Python worker를 단일 계산 기준으로 사용한다.
-
-### 모델 담당
-
-1. `database/export_choices.py`가 내보낸 실제 노출·선택 JSONL을 `choice_data.py`에서 읽는다. 미노출 후보와 미선택 검색은 정답으로 만들지 않는다.
-2. `split.py`에서 사용자 단위로 train/validation/test를 분리하고, `normalization.py`에서 **train만으로** X8 scale을 적합한다.
-3. `logistic_model.py`와 `xgboost_model.py`는 같은 데이터·split·scale로 비교한다. 현재 `predict_choice.py`, `personalize.py`, `serve.py`는 주석 골격이므로 구현해야 한다.
-4. 모델, scaler, 학습 manifest 해시와 평가값을 함께 저장하고 `ag_model_versions`에 새 버전으로 등록한다. 기존 버전을 덮어쓰지 않는다.
-5. 실제 사용자 선택이 부족하면 `survey_only_v1`을 정상 fallback으로 유지한다. mock 정답 성능을 실제 개인화 성능으로 사용하지 않는다.
-6. `modelInference.client.js`와 `modelCompatibility.js` 계약을 맞춰 Express가 후보 순위와 개인 보정 결과를 받을 수 있게 한다.
-
-### 백엔드·모바일 담당
-
-- `preferences`는 Q1 운전 빈도, Q2 6개 순위, Q3 `null/0/5/10/15`, Q4 2~3개 사례 선택을 연결한다. `users.onboarding`만 보지 않고 `ag_onboarding_progress.completed_at`을 함께 확인한다.
-- `routes`는 검색 저장 → 실제 표시 후보 노출 저장 → 사용자의 명시적 최종 선택 저장을 분리한다.
-- `RouteComparePage`와 Q4는 `RouteMap`, `RouteCandidateCard`, `useRouteExposure`를 재사용한다. 카드 미리보기를 실제 선택으로 저장하지 않는다.
-- 개인화 끄기·초기화·프로필 갱신은 과거 snapshot을 수정하지 않고 새 profile version을 만든다.
-- 기존 파일 첫줄의 `수정 필요(Anjeonhagil)` 주석을 구현 체크리스트로 사용한다.
-
-## 5. 반드시 포함할 실행·검증 파일
-
-| 파일 | 용도 |
-| --- | --- |
-| `scripts/import-routing-data.ps1` | Git에서 제외한 계산 데이터를 원본 ZIP에서 해시 검증 후 복원 |
-| `scripts/setup-python.ps1` | Python 3.12 `.venv`와 라우팅·DB 의존성 설치 |
-| `scripts/run-routing.ps1` | 로컬 Python A* worker 실행 |
-| `scripts/verify-routing-data.mjs` | manifest 29개와 데이터 DB 9개 검사 |
-| `scripts/test-foundation.ps1` | HTTP 계산 → 로컬 SQL → X8 계약 통합 검증 |
-| `database/manage.py` | Supabase 사전 점검·migration·상태·릴리스 활성화 |
-| `database/requirements.txt` | DB 도구의 PostgreSQL 드라이버 고정 |
-| `database/migrations/20260916_anjeonhagil_foundation.sql` | 기존 DB에 신규 13개 테이블과 RPC/view 추가 |
-
-처음 받은 팀원은 프로젝트 루트에서 다음 순서로 실행한다.
+`database/bootstrap.py`는 baseline 01~05와 최신 migration 두 개를 조합한다. 기존 테이블이 있으면 거부하며 한 트랜잭션으로 적용한다. PostGIS를 준비하고 과거 pgRouting/위험도 seed는 설치하지 않는다. 도로는 위 ZIP 복원으로 준비한다.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/import-routing-data.ps1 -ArchivePath "원본 ZIP 경로"
-powershell -ExecutionPolicy Bypass -File scripts/setup-python.ps1
-node scripts/verify-routing-data.mjs
-powershell -ExecutionPolicy Bypass -File scripts/test-foundation.ps1
-powershell -ExecutionPolicy Bypass -File scripts/run-routing.ps1
+# 새 프로젝트의 backend/.env 및 두 프론트 .env 설정 후
+.\.venv\Scripts\python.exe -X utf8 database/manage.py bootstrap
+npm run test:local
+.\.venv\Scripts\python.exe -X utf8 database/manage.py activate
+npm run doctor -- --db
 ```
 
-## 6. Git에 포함하지 않는 파일
+최초 관리자만: 서비스 회원가입·이메일 확인 후 Auth의 해당 사용자 UUID로 `database/manage.py init-admin --user-id <UUID>`를 Python으로 실행한다. 관리자가 이미 있으면 거부하며 이후 권한 변경은 관리자 화면에서 한다. 소셜 공급자, 이메일 인증 및 localhost 리다이렉트 설정은 Supabase/카카오/네이버 콘솔에서 별도로 맞춘다. 키·비밀번호는 Git에 넣지 않는다.
 
-- 실제 `.env`와 `DATABASE_URL`, API key, worker token
-- `.venv/`, `venv/`, `node_modules/`, `dist/`, `__pycache__/`
-- `.test-tools/`의 테스트 DB·fixture·결과
-- `apps/backend/routing/data/`의 SQLite/GPKG 약 463MB
-- 학습 모델과 scaler 산출물
-- 이번 문서로 통합한 `Anjeonhagil_REVIEW.md`, `Anjeonhagil_IMPLEMENTATION.md`, `FILE_STRUCTURE_AND_CHANGES.md`
+### 이번 재현성 보완과 확인
 
-`apps/backend/routing/service_manifest.json`, `final_release.json`, `IMPORT_MANIFEST.json`, `source_register.json`은 데이터 파일이 아니며 실행 버전과 출처를 검증하므로 반드시 Git에 포함한다. 내부 버전 식별자는 파일명 정리 대상이 아니므로 변경하지 않는다.
+- `scripts/doctor.mjs`: 앱 설정·프로젝트 일치·공개 설정의 비밀키 혼입·Python·데이터 해시·원격 38개 테이블의 RLS/권한·활성 모델 해시 확인. `npm run doctor -- --db`로 실행한다.
+- `scripts/test-bootstrap.py`: 실제 PostGIS의 격리 스키마에서 신규 구성·가입·설문·첫 관리자·재실행 거부를 검사하고 전부 롤백한다. 현재 원격 데이터를 초기화하지 않는다.
+- `scripts/start-local.mjs`: 포트 중복/범위 검증, worker와 API 준비 후 화면 서버 실행.
+- Git 대상 파일만 별도 복사해 `npm ci`, 계약/비교 검사, 두 화면 빌드 통과. `.env`·Python·도로 데이터 누락도 감지했다. 실행 검증 스크립트는 Git에 포함하고 `.test-tools` 결과는 제외한다.
+
+확장 우선순위는 **실제 선택 자료로 모델 평가 → 다양한 서울 OD의 경로 품질·제한시간 회귀 검사 → 동시 요청 대기열/취소**다. Q4 반영은 시간·거리 허용 정책을 검증한 뒤 진행한다. 지금은 기능 수보다 기존 추천의 근거와 재현성을 높이는 편이 포트폴리오에 유리하다.
+
+### 관리자 시안 반영
+
+청록색 사이드바·통계 카드·표·상세창을 통일했다. 대시보드는 한국 시간 기준 오늘/이번 달/올해의 저장된 검색을 실제 DB count로 집계한다(30초 캐시). 데이터·모델 상세와 최근 50건 기록의 검색/상태 필터/10건 페이지 이동, 관리자 이메일 검색·권한 변경 확인창을 추가했다. 공지는 비공개 초안 또는 공개 상태로 저장할 수 있다. 정상 문의 UUID가 거부되던 검증식을 수정했다. 기존 DB 구조를 그대로 사용하며 추가 migration은 없다. `test-admin-usage.mjs`와 관리자 Chrome 검사 18개(임시 비공개 공지·테스트 문의 답변 포함)를 통과했다.
+
+모바일은 최상위 프레임과 본문이 동시에 움직이던 중첩 스크롤을 제거하고, 화면별 본문 하나만 터치 스크롤하도록 통일했다. 390×430 화면에서 온보딩 설문·선택 경로·마이페이지·운전 부담 설정·도움말·긴 약관의 실제 스크롤 이동을 포함한 사용자 Chrome 검사 28개를 통과했다.

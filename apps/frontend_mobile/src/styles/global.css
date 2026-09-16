@@ -71,7 +71,7 @@
     --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.06);
 
     --layout-max-width: 402px; /* Figma 모바일 프레임 기준 */
-    --layout-max-height: 874px; /* Figma 모바일 프레임 기준 */
+    --layout-max-height: min(874px, 100dvh); /* 작은 화면에서도 뷰포트를 넘지 않음 */
     --statusbar-height: 44px; /* StatusBar.module.css 높이와 동일하게 유지 */
     --header-height: 56px; /* Header.module.css 높이와 동일하게 유지 */
 
@@ -101,15 +101,26 @@
     padding: 0;
 }
 
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 /* 스크롤은 되지만 스크롤바는 안 보이게 하는 공통 유틸리티 (StatusBar/Header/BottomNav 고정 + 내용만 스크롤되는 화면에서 사용) */
 .hide-scrollbar {
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }

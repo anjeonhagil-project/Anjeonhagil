@@ -5,14 +5,12 @@ import { logoutAdmin } from "../../features/auth/api.js"
 
 import styles from "./AdminHeader.module.css"
 
-function AdminHeader() {
+function AdminHeader({admin}) {
     const location = useLocation();
     const navigate = useNavigate();
 
     const currentMenu = adminNavigation.find(
-        (menu) => menu.children
-        ? location.pathname.startsWith(menu.path)
-        : menu.path === location.pathname,
+        (menu) => menu.path === location.pathname || location.pathname.startsWith(menu.path + '/'),
     );
 
     const pageTitle = currentMenu?.label ?? "관리자";
@@ -38,7 +36,7 @@ function AdminHeader() {
             <div className={styles.rightArea}>
                 <div className={styles.systemStatus}>
                     <span className={styles.statusDot} />
-                    <span>시스템 정상</span>
+                    <span>관리자 연결</span>
                 </div>
 
                 <div className={styles.adminProfile}>
@@ -47,7 +45,7 @@ function AdminHeader() {
                     </div>
 
                     <span className={styles.adminName}>
-                        최고 관리자
+                        {admin?.role==='super_admin'?'슈퍼관리자':'관리자'}
                     </span>
                 </div>
 

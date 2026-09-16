@@ -1,8 +1,9 @@
-// 기능(Anjeonhagil): 최신 Q1~Q3 설문을 조회하고 새 설문·프로필 버전으로 저장한다.
+// 기능(Anjeonhagil): 최신 Q1/Q2 설문을 조회하고 새 설문·프로필 버전으로 저장한다.
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/layout/Header.jsx'
 import PreferenceRankForm from '../preferences/PreferenceRankForm.jsx'
+import PersonalizationSettings from './PersonalizationSettings.jsx'
 import { getDrivingPreferences, updateDrivingPreferences } from './api.js'
 import styles from './DrivingPreferencesPage.module.css'
 
@@ -42,7 +43,8 @@ function DrivingPreferencesPage() {
         <main className={styles.page}>
             <Header title="운전 부담 설문" onBack={() => navigate('/my')} />
             <section className={`${styles.content} hide-scrollbar`}>
-                <p className={styles.description}>운전 시 부담되는 상황을 알려주시면 맞춤 안전경로를 제안해 드려요.</p>
+                <p className={styles.description}>운전 시 부담되는 상황을 알려주시면 나에게 맞는 경로를 비교해 드려요.</p>
+                {!isLoading&&initialValue&&<PersonalizationSettings key={initialValue.surveyVersion}/>}
                 {error && <p role="alert">{error}</p>}
                 {message && <p role="status">{message}</p>}
                 {!isLoading && <PreferenceRankForm initialValue={initialValue} onSubmit={save} disabled={isSubmitting} submitLabel={isSubmitting ? '저장 중...' : '변경 사항 저장'} />}

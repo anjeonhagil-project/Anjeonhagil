@@ -1,4 +1,3 @@
-// 수정 필요(Anjeonhagil): 경로·데이터 화면 구현 시 기존 PlaceholderPage를 교체한다. 여러 모델/갱신 작업 전용 페이지를 미리 늘리지 않는다.
 // # 기능: 관리자 화면 A-* 전용 라우팅
 // # 예: /login, /dashboard, /members, /datasets, /notices, /inquiries, /routes, /admins
 
@@ -11,6 +10,8 @@ import {
 
 import AdminLayout from '../components/layout/AdminLayout.jsx'
 import DashboardPage from '../features/dashboard/DashboardPage.jsx'
+import OperationsPage from '../features/dashboard/OperationsPage.jsx'
+import AdminsPage from '../features/dashboard/AdminsPage.jsx'
 import LoginPage from '../features/auth/LoginPage.jsx'
 import ProtectedAdminRoute from '../features/auth/ProtectedAdminRoute.jsx'
 
@@ -22,14 +23,7 @@ import NoticesPage from '../features/notices/NoticesPage.jsx'
 import NoticeFormPage from '../features/notices/NoticeFormPage.jsx'
 
 // 아직 만들지 않은 페이지를 위한 임시 컴포넌트
-function PlaceholderPage({ title }) {
-    return (
-        <section>
-            <h2>{title}</h2>
-            <p>화면 준비 중입니다.</p>
-        </section>
-    )
-}
+
 
 
 function AppRouter() {
@@ -71,28 +65,28 @@ function AppRouter() {
                         <Route
                             path="/routes"
                             element={
-                                <PlaceholderPage title="경로 관리" />
+                                <OperationsPage kind="routes" />
                             }
                         />
 
                         <Route
                             path="/datasets"
                             element={
-                                <PlaceholderPage title="데이터 관리" />
+                                <OperationsPage kind="datasets" />
                             }
                         />
 
                         <Route
                             path="/datasets/success"
                             element={
-                                <PlaceholderPage title="성공한 경로 검색" />
+                                <OperationsPage kind="routes" />
                             }
                         />
 
                         <Route
                             path="/datasets/failure"
                             element={
-                                <PlaceholderPage title="실패한 경로 검색" />
+                                <OperationsPage kind="failures" />
                             }
                         />
 
@@ -131,7 +125,7 @@ function AppRouter() {
                         <Route
                             path="/admins"
                             element={
-                                <PlaceholderPage title="관리자 관리" />
+                                <AdminsPage />
                             }
                         />
                     </Route>

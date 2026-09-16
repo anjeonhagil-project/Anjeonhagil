@@ -1,4 +1,3 @@
-// 수정 필요(Anjeonhagil): 기존 온보딩·설정·비교 페이지 안에 새 컴포넌트를 연결한다. 주석 골격을 구현 전 import하거나 별도 중복 페이지를 등록하지 않는다.
 // 기능: 사용자 모바일 웹앱 M-* 화면 전용 라우팅
 // 범위: auth/onboarding/home/search/route/navigation/favorites/my/support
 // 관리자 A-* 화면은 frontend_admin에서 별도 관리
@@ -18,6 +17,7 @@ import MyPage from '../features/my/MyPage.jsx'
 import OnboardingPage from '../features/onboarding/OnboardingPage.jsx'
 import FavoriteDetailPage from '../features/favorites/FavoriteDetailPage.jsx'
 import RouteComparePage from '../features/routes/RouteComparePage.jsx'
+import RouteHistoryPage from '../features/routes/RouteHistoryPage.jsx'
 import AuthRedirect from './AuthRedirect.jsx'
 
 import ProfileManagePage from '../features/my/ProfileManagePage.jsx'
@@ -48,6 +48,7 @@ function AppRouter() {
                 <Route path="/favorites" element={<FavoritesPage />} />
 
                 <Route path="/my" element={<MyPage />} />
+                <Route path="/my/routes" element={<RouteHistoryPage />} />
                 <Route path="/my/profile" element={<ProfileManagePage />} />
                 <Route path="/my/driving-preferences" element={<DrivingPreferencesPage />}/>
                 <Route path="/my/support" element={<HelpSupportPage />} />

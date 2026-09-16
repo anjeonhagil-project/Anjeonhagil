@@ -4,7 +4,7 @@ function DashboardUsageChart({ data }) {
   const maxValue = Math.max(...data.map((item) => item.value), 1);
 
   return (
-    <div className={styles.chart}>
+    <div className={styles.chart} style={{minWidth:data.length*32}} role="img" aria-label={data.map(item=>`${item.label} ${item.value}건`).join(', ')}>
       {data.map((item) => {
         const height = (item.value / maxValue) * 100;
 

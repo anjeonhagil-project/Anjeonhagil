@@ -1,4 +1,4 @@
-// 기능(Anjeonhagil): 온보딩·마이페이지가 공유하는 Q1~Q3 항목과 클라이언트 검증 규칙이다.
+// 기능(Anjeonhagil): 온보딩·마이페이지가 공유하는 Q1/Q2 항목과 클라이언트 검증 규칙이다.
 export const DRIVING_FREQUENCY_OPTIONS = Object.freeze([
     { value: 'daily', label: '거의 매일' },
     { value: 'weekly', label: '주 1회 이상' },
@@ -16,16 +16,9 @@ export const BURDEN_FACTORS = Object.freeze([
     { code: 'CHILD_ZONE_NEARBY', label: '어린이 보호시설 주변' },
 ])
 
-export const DETOUR_OPTIONS = Object.freeze([
-    { value: 'flexible', minutes: null, label: '상황에 따라 달라요' },
-    { value: '0', minutes: 0, label: '추가 시간은 어려워요' },
-    { value: '5', minutes: 5, label: '최대 5분' },
-    { value: '10', minutes: 10, label: '최대 10분' },
-    { value: '15', minutes: 15, label: '최대 15분' },
-])
 
 export function emptyPreferences() {
-    return { drivingFrequency: '', ranks: Array(BURDEN_FACTORS.length).fill(null), maxDetourMinutes: undefined }
+    return { drivingFrequency: '', ranks: Array(BURDEN_FACTORS.length).fill(null) }
 }
 
 export function normalizePreferences(value) {
@@ -35,7 +28,6 @@ export function normalizePreferences(value) {
         ranks: Array.isArray(value.ranks) && value.ranks.length === BURDEN_FACTORS.length
             ? value.ranks
             : Array(BURDEN_FACTORS.length).fill(null),
-        maxDetourMinutes: value.maxDetourMinutes,
     }
 }
 
@@ -49,6 +41,5 @@ export function validatePreferences(value) {
     if (new Set(selected).size !== selected.length || selected.some((rank, index) => rank !== index + 1)) {
         return '부담 순위는 중복 없이 1순위부터 연속으로 선택해주세요.'
     }
-    if (![null, 0, 5, 10, 15].includes(value.maxDetourMinutes)) return '안전한 길을 위한 추가 시간을 선택해주세요.'
     return ''
 }

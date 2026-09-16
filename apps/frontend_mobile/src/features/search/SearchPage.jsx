@@ -1,4 +1,4 @@
-// 수정 필요(Anjeonhagil): 서비스 영역 오류와 Q3 null 사용자의 DetourToleranceSheet를 연결한다. 최근검색·즐겨찾기 동작은 보존한다.
+// 장소 검색과 최근검색·즐겨찾기를 연결하며, 서울 서비스 영역은 서버에서 검증한다.
 // 기능: M-SRCH-001~004 경로검색 화면 - 출발지/목적지 검색 후 경로 비교로 이동
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -11,7 +11,6 @@ import { getFavorites } from '../favorites/api.js'
 import { loadRecentSearches, addRecentSearch, removeRecentSearch, clearRecentSearches } from './recentSearches.js'
 import styles from './SearchPage.module.css'
 
-// TODO: 서비스 지역(강남구) 판정 - 전처리 팀원의 service_areas 데이터 받으면 "서비스 지역 밖" 배지 추가
 function distanceMeters(a, b) {
     const R = 6371000
     const toRad = (deg) => (deg * Math.PI) / 180
@@ -37,6 +36,7 @@ function SearchPage() {
 
     const initialFields = buildRouteSearchFields(location.state?.destination)
     const [ready, setReady] = useState(false)
+    const [mapError, setMapError] = useState('')
     const [origin, setOrigin] = useState(initialFields.origin)
     const [destination, setDestination] = useState(initialFields.destination)
     const [activeField, setActiveField] = useState('origin')
@@ -51,7 +51,7 @@ function SearchPage() {
         loadKakaoMaps().then((kakao) => {
             if (!cancelled) sdkRef.current = { kakao, places: new kakao.maps.services.Places() }
             if (!cancelled) setReady(true)
-        })
+        }).catch(error => { if (!cancelled) setMapError(error.message) })
         return () => {
             cancelled = true
         }
@@ -142,7 +142,6 @@ function SearchPage() {
                     name: destination.place.placeName,
                     address: destination.place.address,
                 },
-                ...(location.state?.detourMinutes ? { detourMinutes: location.state.detourMinutes } : {}),
             },
         })
     }
@@ -190,6 +189,14 @@ function SearchPage() {
             </div>
 
             <div className={`${styles.content} hide-scrollbar`}>
+            {mapError && <p role="alert">{mapError} 새로고침 후 다시 시도해주세요.</p>}
+            {!location.state?.placeType&&<section style={{padding:'14px 18px',background:'#edf7f5',borderRadius:12,marginBottom:16}}>
+                <strong>경로 비교 예시</strong>
+                <p style={{fontSize:12,color:'#526b70'}}>서울의 검증 구간을 실제로 계산해 볼 수 있어요.</p>
+                <button type="button" style={{padding:'9px 14px',background:'white',border:'1px solid #a9cfc9',borderRadius:8,cursor:'pointer'}} onClick={()=>navigate('/route-compare',{state:{
+                    origin:{lng:127.0331208,lat:37.5110356,name:'예시 출발지'},destination:{lng:127.0380034,lat:37.5011924,name:'예시 도착지'},departureAt:'2026-09-16T08:00:00+09:00'
+                }})}>예시 구간 A</button>
+            </section>}
             {results.length === 0 && !message && (
                 <div className={styles.shortcuts}>
                     <section>

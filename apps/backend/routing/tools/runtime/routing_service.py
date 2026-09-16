@@ -49,7 +49,7 @@ class RouteService:
   for a,cp,tp in graph.trans.get(previous,[]):
    if a==aid:return cp,tp
   return None
- def route(self,starts,ends,target_xy,departure_ts,mode,weights,use_h=True):
+ def route(self,starts,ends,target_xy,departure_ts,mode,weights,use_h=True,deadline=None):
   serial=itertools.count();q=[];best={};parents={};terminal=None;upper=float('inf');states=0
   def cost(aid,lo,hi,ts,cp=0,tp=0):
    dt,_=self.clock.traverse(aid,ts,lo,hi);v=graph.arcs[aid];length=v[2]*(hi-lo)
@@ -79,7 +79,7 @@ class RouteService:
    if g!=best.get(key):continue
    if f>=upper-1e-9:break
    n,prev,hist=key;states+=1
-   if states>600000 or time.monotonic()-began>35:raise RuntimeError('ENGINE_SEARCH_LIMIT')
+   if states>600000 or time.monotonic()-began>35 or (deadline is not None and time.monotonic()>deadline):raise RuntimeError('ENGINE_SEARCH_LIMIT')
    for end in ends:
     aid=end['arc_id'];hi=end['fraction'];v=graph.arcs[aid]
     if n!=v[0]:continue

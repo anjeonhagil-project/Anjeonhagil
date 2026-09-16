@@ -4,28 +4,24 @@ import Button from '../../../components/common/Button/Button.jsx'
 import Input from '../../../components/common/Input/Input.jsx'
 import Header from '../../../components/layout/Header.jsx'
 import styles from './InquiryCreatePage.module.css'
+import {apiClient} from '../../../lib/apiClient.js'
 
 function InquiryCreatePage() {
     const navigate = useNavigate()
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+    const [busy,setBusy]=useState(false)
+    const [error,setError]=useState('')
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
 
         if (!title.trim() || !content.trim()) return
 
-        navigate('/my/support/inquiries', {
-            replace: true,
-            state: {
-                createdInquiry: {
-                    id: Date.now(),
-                    title: title.trim(),
-                    date: new Date().toLocaleDateString('sv-SE').replaceAll('-', '.'),
-                    status: '답변 대기',
-                },
-            },
-        })
+        if(busy)return
+        setBusy(true);setError('')
+        try {await apiClient.post('/inquiries',{title,content,category:'other'});navigate('/my/support/inquiries',{replace:true})}
+        catch(e){setError(e.message)}finally{setBusy(false)}
     }
 
     return (
@@ -33,6 +29,7 @@ function InquiryCreatePage() {
             <Header title="문의 작성" onBack={() => navigate('/my/support/inquiries')} />
 
             <form className={`${styles.form} hide-scrollbar`} onSubmit={handleSubmit}>
+                {error&&<p role="alert">{error}</p>}
                 <Input
                     label="제목"
                     value={title}
@@ -52,7 +49,7 @@ function InquiryCreatePage() {
                 <Button
                     type="submit"
                     fullWidth
-                    disabled={!title.trim() || !content.trim()}
+                    disabled={busy || !title.trim() || !content.trim()}
                 >
                     문의 등록
                 </Button>

@@ -11,6 +11,7 @@ import {
 export default function ProtectedAdminRoute() {
     const [isLoading, setIsLoading] = useState(true)
     const [isAuthorized, setIsAuthorized] = useState(false)
+    const [admin, setAdmin] = useState(null)
 
 
     useEffect(() => {
@@ -26,7 +27,8 @@ export default function ProtectedAdminRoute() {
                 }
 
                 // 2. 실제 관리자 계정인지 백엔드에서 확인
-                await getCurrentAdmin()
+                const response = await getCurrentAdmin()
+                setAdmin(response.data)
 
                 // 관리자 확인 성공
                 setIsAuthorized(true)
@@ -59,5 +61,5 @@ export default function ProtectedAdminRoute() {
 
 
     // 관리자 인증 성공 시 하위 관리자 페이지 표시
-    return <Outlet />
+    return <Outlet context={{admin}} />
 }

@@ -1,83 +1,58 @@
-// 수정 필요(Anjeonhagil): 영역 검사→routingClient→candidateValidation 검산/병합→recommendation.service→routeSnapshot→DB 저장을 연결한다. 지도 표시와 내부 경로 계산을 구분한다.
-// 기능: ROUTE-001~006: 경로요청/Polling/선택/상세/Navigation/reroute 비즈니스 규칙/transaction
-import * as routesRepository from './routes.repository.js'
-const KAKAO_DIRECTIONS_URL = 'https://apis-navi.kakaomobility.com/v1/directions'
-
-// roads[].vertexes([x1,y1,x2,y2,...])를 이어붙여 {lat,lng} 좌표 목록으로 변환
-function toPath(sections) {
-    const path = []
-    for (const section of sections) {
-        for (const road of section.roads) {
-            for (let i = 0; i < road.vertexes.length; i += 2) {
-                path.push({ lat: road.vertexes[i + 1], lng: road.vertexes[i] })
-            }
+// 내부 경로 탐색·검산·모델 확인·DB 저장을 완료한 응답만 화면에 보낸다.
+import * as repository from './routes.repository.js'
+import { supabase } from '../../lib/supabase.js'
+import { searchRoutes, callWorker } from '../../routing-engine/routingClient.js'
+import { validateCandidates } from '../../routing-engine/candidateValidation.js'
+import { routeSnapshot } from './routeSnapshot.js'
+import { scheduleUpdate, reset } from '../preferences/personalization.service.js'
+let calculating=false
+export async function search(userId,input) {
+    const existing=await repository.findSearch(userId,input.searchId)
+    if(existing) {
+        if(existing.origin.lat!==input.origin.lat||existing.origin.lng!==input.origin.lng||existing.destination.lat!==input.destination.lat||existing.destination.lng!==input.destination.lng||Date.parse(existing.departureAt)!==Date.parse(input.departureAt)) throw Object.assign(new Error('검색 식별자가 다른 검색에서 사용되었습니다'),{status:409})
+        return existing
+    }
+    if(calculating) throw Object.assign(new Error('다른 경로를 계산 중입니다. 잠시 후 다시 시도해주세요.'),{status:429,code:'ROUTING_BUSY'})
+    calculating=true
+    const started=Date.now()
+    try {
+        const {data:current,error}=await supabase.from('ag_user_profiles').select('active_profile_version').eq('user_id',userId).maybeSingle()
+        if(error) throw error
+        if(!current) throw Object.assign(new Error('운전 부담 설정을 먼저 완료해주세요'),{status:409,code:'PREFERENCES_REQUIRED'})
+        let {data:profile,error:pe}=await supabase.from('ag_profile_versions').select('*').eq('profile_version',current.active_profile_version).single()
+        if(pe) throw pe
+        const health=await callWorker('/health')
+        if(profile.reason==='learned' && profile.model_version!==health.model.model_version) {
+            const state=await reset(userId)
+            const restored=await supabase.from('ag_profile_versions').select('*').eq('profile_version',state.profileVersion).single()
+            if(restored.error)throw restored.error
+            profile=restored.data
         }
-    }
-    return path
-}
-
-// 카카오모빌리티 자동차 길찾기 API를 호출해 priority(TIME/DISTANCE) 기준 경로 하나를 계산
-async function fetchDirections(origin, destination, priority) {
-    const url = new URL(KAKAO_DIRECTIONS_URL)
-    url.searchParams.set('origin', `${origin.lng},${origin.lat}`)   // (경도, 위도) 순으로 카카오에서 요구
-    url.searchParams.set('destination', `${destination.lng},${destination.lat}`)
-    url.searchParams.set('priority', priority)
-
-    const response = await fetch(url, {
-        headers: { Authorization: `KakaoAK ${process.env.KAKAO_REST_API_KEY}` },
-    })
-
-    if (!response.ok) {
-        const error = new Error('경로 계산 중 오류가 발생했습니다')
-        error.status = 502
+        const result=await searchRoutes({origin:input.origin,destination:input.destination,departure_at:input.departureAt,profile_weights:profile.effective_weights})
+        await validateCandidates(result,profile.effective_weights)
+        const {data:model,error:me}=await supabase.from('ag_model_versions').select('*').eq('model_version',result.model.model_version).maybeSingle()
+        if(me) throw me
+        if(!model||(!model.is_active&&result.recommendation_method!=='survey_fallback')||model.artifact_sha256!==result.model.artifact_sha256||model.scale_version!==result.model.scaler_version) throw Object.assign(new Error('DB와 실행 모델이 일치하지 않습니다. 모델 등록 상태를 확인해주세요.'),{status:503,code:'MODEL_REGISTRY_MISMATCH'})
+        const payload=routeSnapshot(userId,input,profile,result)
+        await repository.saveSearch(userId,payload)
+        return payload.response
+    } catch(error) {
+        await supabase.from('ag_route_failures').insert({user_id:userId,search_id:input.searchId,error_code:error.code||'ROUTE_CALCULATION_FAILED',duration_ms:Math.max(0,Date.now()-started)})
         throw error
-    }
-
-    // 카카오는 HTTP 상태는 200인데 응답 본문 안에서 실패를 알려주는 경우가 있어서 (예: 경로 자체를 못 찾음) result_code도 따로 확인
-    const data = await response.json()
-    const route = data.routes?.[0]
-    if (!route || route.result_code !== 0) {
-        const error = new Error(route?.result_msg || '경로를 찾을 수 없습니다')
-        error.status = 404
-        throw error
-    }
-
-    // 카카오의 원본 응답에서 필요한 것만 뽑아서 (distance, duration, path)로 변환하여 돌려줌
-    return {
-        distance: route.summary.distance,
-        duration: route.summary.duration,
-        path: toPath(route.sections),
-    }
+    } finally {calculating=false}
 }
-
-// 카카오모빌리티 자동차 길찾기 API로 최단시간/최단거리 경로를 동시에 계산
-export async function getDirections({ origin, destination }) {
-    const [shortestTime, shortestDistance] = await Promise.all([
-        fetchDirections(origin, destination, 'TIME'),
-        fetchDirections(origin, destination, 'DISTANCE'),
-    ])
-
-    return { shortestTime, shortestDistance }
+export async function recordExposure(userId,input) {
+    const e=await repository.recordExposure(userId,input)
+    return {exposureId:e.exposure_id,searchId:e.search_id,candidateIds:e.displayed_candidate_ids,recommendedCandidateId:e.recommended_candidate_id,exposedAt:e.exposed_at}
 }
-
-export async function recordExposure(userId, input) {
-    const exposure = await routesRepository.recordExposure(userId, input)
-    return {
-        exposureId: exposure.exposure_id,
-        searchId: exposure.search_id,
-        candidateIds: exposure.displayed_candidate_ids,
-        recommendedCandidateId: exposure.recommended_candidate_id,
-        exposedAt: exposure.exposed_at,
-    }
+export async function recordChoice(userId,input) {
+    const c=await repository.recordChoice(userId,input)
+    scheduleUpdate(userId)
+    return {choiceEventId:c.choice_event_id,exposureId:c.exposure_id,searchId:c.search_id,selectedCandidateId:c.selected_candidate_id,chosenAt:c.chosen_at}
 }
-
-export async function recordChoice(userId, input) {
-    const choice = await routesRepository.recordChoice(userId, input)
-    return {
-        choiceEventId: choice.choice_event_id,
-        exposureId: choice.exposure_id,
-        searchId: choice.search_id,
-        selectedCandidateId: choice.selected_candidate_id,
-        chosenAt: choice.chosen_at,
-    }
+export async function detail(userId,searchId) {
+    const result=await repository.findSearch(userId,searchId)
+    if(!result) throw Object.assign(new Error('검색 결과를 찾을 수 없습니다'),{status:404})
+    return result
 }
+export async function history(userId) {return repository.history(userId)}

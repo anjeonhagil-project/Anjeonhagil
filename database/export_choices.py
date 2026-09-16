@@ -18,7 +18,7 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with connect() as db, db.transaction(), args.output.open('x', encoding='utf-8') as out:
         with db.cursor(name='actual_choices') as cur:
-            cur.execute('SELECT * FROM ag_choice_training_events ORDER BY chosen_at,choice_event_id')
+            cur.execute("SELECT * FROM ag_choice_training_events WHERE sample_origin='service' ORDER BY chosen_at,choice_event_id")
             for row in cur:
                 snapshots = row['snapshots'] or []
                 if len(snapshots) < 2:

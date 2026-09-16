@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     height: calc(var(--layout-max-height) - var(--statusbar-height));
+    min-height: 0;
+    overflow: hidden;
     background: var(--color-bg-white);
     color: var(--color-text);
 }

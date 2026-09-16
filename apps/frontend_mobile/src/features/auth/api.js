@@ -14,5 +14,5 @@ export function getTerms() {
 
 // 약관 동의 저장
 export function agreeToTerms() {
-    return apiClient.put('/users/me/terms', { agreed: true })
+    return apiClient.put('/users/me/terms', { agreed: true }).then(data=>{window.dispatchEvent(new Event('anjeon:profile-updated'));return data})
 }

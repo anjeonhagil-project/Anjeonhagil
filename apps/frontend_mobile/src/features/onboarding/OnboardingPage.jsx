@@ -1,7 +1,7 @@
 // 기능(Anjeonhagil): Q1~Q3 공통 설문을 저장하고 Q4 경로 비교 단계와 완료 상태를 구분한다.
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FiShield } from 'react-icons/fi'
+import RouteChoiceStep from './RouteChoiceStep.jsx'
 import { FaCheck } from 'react-icons/fa6'
 import Header from '../../components/layout/Header.jsx'
 import Button from '../../components/common/Button/Button.jsx'
@@ -53,9 +53,9 @@ function OnboardingPage() {
                 <div className={`${styles.body} hide-scrollbar`}>
                     <section className={styles.introContent} aria-labelledby="onboarding-intro-title">
                         <div className={styles.roadIllustration} aria-hidden="true"><span className={styles.car}>🚙</span></div>
-                        <span className={styles.introBadge}>내게 꼭 맞는 안전경로</span>
+                        <span className={styles.introBadge}>내게 편한 길</span>
                         <h2 id="onboarding-intro-title" className={styles.introTitle}>나에게 맞는<br />편안한 길을 찾아볼까요?</h2>
-                        <p className={styles.introDescription}>운전 빈도와 부담되는 상황을 알려주시면<br />나에게 맞는 안전한 길을 추천해드려요.</p>
+                        <p className={styles.introDescription}>운전 빈도와 부담되는 상황을 알려주시면<br />나에게 맞는 길을 비교해드려요.</p>
                     </section>
                     {submitError && <p className={styles.errorMessage} role="alert">{submitError}</p>}
                     <div className={styles.bottomAction}>
@@ -86,16 +86,7 @@ function OnboardingPage() {
         return (
             <main className={styles.page}>
                 <Header title="운전 부담 설문" onBack={() => setScreen('survey')} />
-                <div className={`${styles.body} hide-scrollbar`}>
-                    <section className={styles.completeContent}>
-                        <div className={styles.completeIcon}><FiShield /></div>
-                        <h2 className={styles.completeTitle}>기본 설문을 저장했어요</h2>
-                        <p className={styles.introDescription}>마지막으로 실제 경로를 비교하면 맞춤 설정이 완료됩니다.</p>
-                    </section>
-                    <div className={styles.bottomAction}>
-                        <Button fullWidth onClick={() => setScreen('survey')}>설문 답변 확인</Button>
-                    </div>
-                </div>
+                <RouteChoiceStep onComplete={() => setScreen('complete')} />
             </main>
         )
     }

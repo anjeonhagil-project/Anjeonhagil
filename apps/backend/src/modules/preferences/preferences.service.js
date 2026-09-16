@@ -1,4 +1,4 @@
-// 기능(Anjeonhagil): Q1~Q3 최신 설문을 저장·조회하고 Q4 완료 상태를 별도로 반환한다.
+// 기능(Anjeonhagil): Q1/Q2 최신 설문을 저장·조회하고 Q4 완료 상태를 별도로 반환한다.
 import * as preferencesRepository from './preferences.repository.js'
 
 function toResponse(preferences) {
@@ -15,7 +15,6 @@ function toResponse(preferences) {
             surveyVersion: preferences.survey_version,
             drivingFrequency: preferences.driving_frequency,
             ranks: preferences.ranks,
-            maxDetourMinutes: preferences.max_detour_minutes,
             updatedAt: preferences.updated_at,
         },
         onboarding: {

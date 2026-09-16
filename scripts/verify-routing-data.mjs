@@ -7,8 +7,10 @@ import { DatabaseSync } from 'node:sqlite'
 
 const root = fileURLToPath(new URL('../apps/backend/routing/', import.meta.url))
 const manifest = JSON.parse(readFileSync(resolve(root, 'service_manifest.json'), 'utf8'))
+const runtime = JSON.parse(readFileSync(resolve(root, 'runtime_manifest.json'), 'utf8'))
+const files = {...Object.fromEntries(Object.entries(manifest.files).filter(([name])=>!name.endsWith('.py'))),...runtime.files}
 const results = []
-for (const [name, expected] of Object.entries(manifest.files)) {
+for (const [name, expected] of Object.entries(files)) {
     const path = resolve(root, name)
     if (!path.startsWith(resolve(root) + sep)) throw new Error(`Invalid path: ${name}`)
     const hash = createHash('sha256')
@@ -23,4 +25,4 @@ for (const [name, expected] of Object.entries(manifest.files)) {
         } finally { db.close() }
     }
 }
-console.log(JSON.stringify({ releaseId: manifest.release_id, hashesVerified: Object.keys(manifest.files).length, databases: results }, null, 2))
+console.log(JSON.stringify({ releaseId: manifest.release_id, hashesVerified: Object.keys(files).length, databases: results }, null, 2))

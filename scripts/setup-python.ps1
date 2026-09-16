@@ -11,7 +11,7 @@ if (-not (Test-Path -LiteralPath $venvPython)) {
 }
 & $venvPython -X utf8 -c "import sys; assert sys.version_info[:2] == (3, 12), 'Existing .venv must use Python 3.12'"
 if ($LASTEXITCODE -ne 0) { throw 'Existing .venv requires manual inspection; it was not removed.' }
-& $venvPython -X utf8 -m pip install -r (Join-Path $projectRoot 'apps\backend\routing\requirements.txt') -r (Join-Path $projectRoot 'database\requirements.txt')
+& $venvPython -X utf8 -m pip install -r (Join-Path $projectRoot 'apps\backend\routing\requirements.txt') -r (Join-Path $projectRoot 'database\requirements.txt') -r (Join-Path $projectRoot 'ml\requirements.txt')
 if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed.' }
 & $venvPython -X utf8 -m pip check
 if ($LASTEXITCODE -ne 0) { throw 'Dependency verification failed.' }

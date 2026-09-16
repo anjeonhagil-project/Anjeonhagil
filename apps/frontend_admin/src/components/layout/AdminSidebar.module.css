@@ -36,9 +36,9 @@
     justify-content: center;
 
     /* Sidebar 전체 폭 기준 중앙 정렬 */
-    width: var(--admin-sidebar-width);
+    width: 100%;
 
-    margin-left: calc(var(--space-7) * -1);
+    margin-left: 0;
     margin-bottom: var(--space-8);
 }
 

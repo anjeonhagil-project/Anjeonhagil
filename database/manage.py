@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 import psycopg
 from psycopg.rows import dict_row
@@ -68,12 +69,40 @@ def preflight(db):
 def status(db):
     tables = db.execute("SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename LIKE 'ag\\_%' ESCAPE '\\' ORDER BY tablename").fetchall()
     out = {'tables': [r['tablename'] for r in tables], 'table_count': len(tables)}
+    core=re.findall(r'CREATE TABLE public\.(\w+)',(ROOT/'database/baseline/01_schema.sql').read_text(encoding='utf-8'))
+    expected=core+out['tables']
+    present=db.execute("SELECT tablename,rowsecurity FROM pg_tables WHERE schemaname='public' AND tablename=ANY(%s)",[expected]).fetchall()
+    out['missing_core_tables']=sorted(set(core)-{r['tablename'] for r in present})
+    out['rls_disabled']=[r['tablename'] for r in present if not r['rowsecurity']]
+    out['browser_table_access']=db.execute("SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname=ANY(%s) AND (has_table_privilege('anon',c.oid,'SELECT,INSERT,UPDATE,DELETE') OR has_table_privilege('authenticated',c.oid,'SELECT,INSERT,UPDATE,DELETE'))",[expected]).fetchall()
+    out['missing_service_read']=db.execute("SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname=ANY(%s) AND NOT has_table_privilege('service_role',c.oid,'SELECT')",[expected]).fetchall()
     if any(r['tablename'] == 'ag_dataset_releases' for r in tables):
         out['releases'] = db.execute('SELECT release_id,status FROM ag_dataset_releases ORDER BY created_at').fetchall()
         out['active_release'] = db.execute('SELECT release_id FROM ag_dataset_active').fetchall()
         out['active_model'] = db.execute('SELECT model_version FROM ag_model_versions WHERE is_active').fetchall()
+        manifest=json.loads((ROOT/'apps/backend/routing/service_manifest.json').read_text(encoding='utf-8'))
+        active=db.execute('SELECT r.* FROM ag_dataset_active a JOIN ag_dataset_releases r USING(release_id)').fetchone()
+        model=db.execute('SELECT model_version,artifact_sha256 FROM ag_model_versions WHERE is_active').fetchone()
+        local_model=ROOT/'ml/bundled/logistic.json'
+        out['local_release_matches']=bool(active and active['status']=='ready' and active['manifest']==manifest)
+        out['local_model_matches']=bool(model and model['artifact_sha256']==hashlib.sha256(local_model.read_bytes()).hexdigest())
         out['unvalidated_constraints'] = db.execute("SELECT conname FROM pg_constraint WHERE conrelid IN (SELECT oid FROM pg_class WHERE relnamespace='public'::regnamespace AND relname LIKE 'ag\\_%' ESCAPE '\\') AND NOT convalidated").fetchall()
     return out
+
+
+def initialize_admin(db, user_id):
+    # 첫 관리자만 로컬 DB 소유자가 지정한다. 이후 권한 관리는 관리자 화면에서 수행한다.
+    from uuid import UUID
+    user_id=str(UUID(user_id))
+    with db.transaction():
+        db.execute('LOCK TABLE admins IN EXCLUSIVE MODE')
+        if db.execute('SELECT 1 FROM admins LIMIT 1').fetchone():
+            raise ValueError('An administrator already exists. Use the administrator screen.')
+        user=db.execute('SELECT id,email FROM users WHERE id=%s AND is_active',[user_id]).fetchone()
+        if not user:
+            raise ValueError('An active, registered service user is required.')
+        db.execute("INSERT INTO admins(id,email,role) VALUES(%s,%s,'super_admin')",[user_id,user['email']])
+        db.execute("INSERT INTO admin_audit_logs(actor_admin_id,target_admin_id,action,after_data) VALUES(%s,%s,'create_admin','{\"role\":\"super_admin\",\"source\":\"initial_setup\"}')",[user_id,user_id])
 
 
 def activate(db):
@@ -81,10 +110,12 @@ def activate(db):
     routing = ROOT / 'apps/backend/routing'
     manifest_bytes = (routing / 'service_manifest.json').read_bytes()
     manifest = json.loads(manifest_bytes)
-    report = json.loads((ROOT / '.test-tools/routing-smoke.json').read_text(encoding='utf-8'))
-    if report.get('passed', 0) < 30 or report.get('manifest_sha256') != hashlib.sha256(manifest_bytes).hexdigest():
+    report = json.loads((ROOT / '.test-tools/service-routing-report.json').read_text(encoding='utf-8'))
+    runtime_bytes=(routing/'runtime_manifest.json').read_bytes()
+    runtime=json.loads(runtime_bytes)
+    if report.get('passed', 0) < 15 or report.get('manifest_sha256') != hashlib.sha256(manifest_bytes).hexdigest() or report.get('runtime_sha256')!=hashlib.sha256(runtime_bytes).hexdigest():
         raise ValueError('A successful smoke test for this exact manifest is required before activation.')
-    for name, expected in manifest['files'].items():
+    for name, expected in {**{k:v for k,v in manifest['files'].items() if not k.endswith('.py')},**runtime['files']}.items():
         file = (routing / name).resolve()
         if not file.is_relative_to(routing.resolve()):
             raise ValueError('Invalid manifest path.')
@@ -101,23 +132,43 @@ def activate(db):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=['preflight', 'apply', 'status', 'activate'])
+    parser.add_argument('command', choices=['preflight', 'apply', 'status', 'activate', 'integrate', 'bootstrap', 'init-admin'])
+    parser.add_argument('--user-id',help='init-admin: UUID of an already registered service user')
     args = parser.parse_args()
     _, project = settings()
     with connect() as db:
         out = {'project': project, 'command': args.command}
+        if args.command == 'init-admin':
+            if not args.user_id: raise ValueError('--user-id is required for init-admin.')
+            initialize_admin(db,args.user_id)
+            out['created']=True
+        if args.command == 'bootstrap':
+            from bootstrap import bootstrap_sql
+            try:
+                db.execute(bootstrap_sql())
+            except Exception:
+                db.execute('ROLLBACK')
+                raise
         if args.command in ('preflight', 'apply'):
             out['preflight'] = preflight(db)
         if args.command == 'apply':
+            if db.execute("SELECT to_regclass('public.ag_q4_sessions') AS name").fetchone()['name']:
+                raise ValueError('Integration schema already exists. Use integrate; applying the old foundation would replace current functions.')
             # SQL 자체의 transaction/호환성 검사에 실패하면 부분 변경을 남기지 않는다.
             try:
                 db.execute(MIGRATION.read_text(encoding='utf-8'))
             except Exception:
                 db.execute('ROLLBACK')
                 raise
+        if args.command == 'integrate':
+            try:
+                db.execute((ROOT/'database/migrations/20260916_service_integration.sql').read_text(encoding='utf-8'))
+            except Exception:
+                db.execute('ROLLBACK')
+                raise
         if args.command == 'activate':
             activate(db)
-        if args.command in ('status', 'apply', 'activate'):
+        if args.command in ('status', 'apply', 'activate', 'integrate', 'bootstrap'):
             out['status'] = status(db)
         print(json.dumps(out, ensure_ascii=False, default=str, indent=2))
 

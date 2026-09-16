@@ -1,4 +1,3 @@
-// 수정 필요(Anjeonhagil): OD·명시적 출발시각·이번 Q3·UUID·노출 순서를 검증하고 미응답을 임의 기본값으로 바꾸지 않는다. 사용자 계산값을 허용하지 않는다.
 // 기능: ROUTE-001~006: 경로요청/Polling/선택/상세/Navigation/reroute 입력 검증 schema
 
 function parseCoordinate(value, label) {
@@ -27,7 +26,7 @@ export function validateDirectionsQuery(query) {
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
-function requireUuid(value, label) {
+export function requireUuid(value, label) {
     if (typeof value !== 'string' || !UUID_PATTERN.test(value)) {
         const error = new Error(`${label} 식별자가 올바르지 않습니다`)
         error.status = 400
@@ -35,6 +34,17 @@ function requireUuid(value, label) {
         throw error
     }
     return value
+}
+
+export function validateSearchInput(body) {
+    const invalid=()=>{throw Object.assign(new Error('출발지·도착지·출발시각을 확인해주세요'),{status:400,code:'INVALID_ROUTE_REQUEST'})}
+    if(!body || typeof body!=='object' || Array.isArray(body) || Object.keys(body).some(k=>!['searchId','origin','destination','departureAt'].includes(k))) invalid()
+    const point=(p)=>{
+        if(!p || typeof p!=='object' || ![p.lat,p.lng].every(v=>typeof v==='number' && Number.isFinite(v)) || Math.abs(p.lat)>90 || Math.abs(p.lng)>180) invalid()
+        return {lat:p.lat,lng:p.lng,...(typeof p.name==='string'?{name:p.name.trim().slice(0,100)}:{})}
+    }
+    if(typeof body.departureAt!=='string'||!/(Z|[+-][0-9]{2}:[0-9]{2})$/.test(body.departureAt)||!Number.isFinite(Date.parse(body.departureAt))) invalid()
+    return {searchId:requireUuid(body.searchId,'검색'),origin:point(body.origin),destination:point(body.destination),departureAt:body.departureAt}
 }
 
 export function validateExposureInput(searchId, body) {

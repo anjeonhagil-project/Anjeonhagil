@@ -1,4 +1,3 @@
-// 수정 필요(Anjeonhagil): 기존 운전 선호 설정 진입에서 개인화 상태/켜기·끄기·초기화에 접근하도록 연결한다. 별도 중복 설정 페이지는 만들지 않는다.
 import { useState } from 'react'
 import { FiChevronRight } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
@@ -13,6 +12,7 @@ import { withdrawMyAccount } from './api.js'
 
 
 const MENU_ITEMS = [
+    {id:'routes',title:'최근 경로',description:'검색한 경로와 실제 선택 기록'},
     {
         id: 'profile',
         title: '프로필 관리',
@@ -87,6 +87,7 @@ function MyPage() {
     }
 
     const handleMenuClick = (menuId) => {
+        if(menuId==='routes')navigate('/my/routes')
         if (menuId === 'profile') {
             if (isEmailLogin) {
                 setIsProfilePasswordOpen(true)

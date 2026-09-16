@@ -1,16 +1,22 @@
-// 수정 필요(Anjeonhagil): 인증 사용자로 검색·노출·선택을 호출하고 클라이언트 user_id/피처/버전을 신뢰하지 않는다. Q4 요청 출처는 서버에서 결정한다.
 // 기능: ROUTE-001~006: 경로요청/Polling/선택/상세/Navigation/reroute HTTP req/res 처리
 import * as routesService from './routes.service.js'
-import { validateChoiceInput, validateDirectionsQuery, validateExposureInput } from './routes.validation.js'
+import { validateChoiceInput, validateSearchInput, validateExposureInput, requireUuid } from './routes.validation.js'
 
 // 최단시간/최단거리 경로 조회
-export async function getDirections(req, res, next) {
+export async function search(req, res, next) {
     try {
-        const params = validateDirectionsQuery(req.query)
-        res.json({ success: true, data: await routesService.getDirections(params) })
+        const params = validateSearchInput(req.body)
+        res.json({ success: true, data: await routesService.search(req.user.id,params) })
     } catch (error) {
         next(error)
     }
+}
+
+export async function detail(req,res,next) {
+    try {res.json({success:true,data:await routesService.detail(req.user.id,requireUuid(req.params.searchId,'검색'))})} catch(error) {next(error)}
+}
+export async function history(req,res,next) {
+    try {res.json({success:true,data:await routesService.history(req.user.id)})} catch(error) {next(error)}
 }
 
 export async function recordExposure(req, res, next) {

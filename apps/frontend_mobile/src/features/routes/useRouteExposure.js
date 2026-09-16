@@ -6,6 +6,7 @@ export function useRouteExposure({ searchId, candidateIds, recommendedCandidateI
     const requestRef = useRef(null)
     const [exposure, setExposure] = useState(null)
     const [error, setError] = useState('')
+    const [attempt,setAttempt]=useState(0)
     const signature = searchId && candidateIds?.length
         ? `${searchId}:${candidateIds.join(',')}:${recommendedCandidateId ?? ''}`
         : ''
@@ -33,11 +34,12 @@ export function useRouteExposure({ searchId, candidateIds, recommendedCandidateI
             .catch((requestError) => !cancelled && setError(requestError.message || '경로 노출을 기록하지 못했습니다.'))
 
         return () => { cancelled = true }
-    }, [enabled, signature])
+    }, [enabled, signature, attempt])
 
     return {
         exposureId: exposure?.exposureId ?? null,
         isRecorded: Boolean(exposure),
         error,
+        retry:()=>setAttempt(v=>v+1),
     }
 }

@@ -1,5 +1,23 @@
-// 구현 예정(Anjeonhagil): Q4와 경로 비교 화면에서 재사용할 후보 카드이다. 새 CSS 계층 없이 기존 화면 스타일부터 재사용한다.
-// 입력: candidate_id, 복수 route_types, 시간·거리·raw6·coverage, 추천 여부와 서버 제공 근거.
-// 표시 값은 routePresentation.js로 통일한다. 부담 지표와 설명을 먼저 이 카드 안에 모아 불필요한 세부 파일을 만들지 않는다.
-// 지도 미리보기와 '이 경로 선택'을 구분하고 선택 처리 중 중복 제출을 막는다. 확정 전에는 선택 이력을 생성하지 않는다.
-// 접근 가능한 버튼/선택 상태를 제공하고 추천을 안전성 보장이나 최적 경로 확정으로 표현하지 않는다.
+// 표시 시간·raw6는 서버 snapshot 그대로 사용한다. 내부 지표와 실제 통과 거리를 구분한다.
+import { BURDEN_FACTORS } from '../preferences/preferenceFields.js'
+import {compareRoute} from './routeComparison.js'
+export const ROUTE_LABELS={PERSONALIZED:'내게 편한 길',SHORTEST_TIME:'최단시간',SHORTEST_DISTANCE:'최단거리'}
+export const distanceLabel=m=>m>=1000?(m/1000).toFixed(2)+' km':Math.round(m)+' m'
+export const durationLabel=s=>s===0?'1분 미만':Math.round(s/60)+'분'
+export function FeatureValues({values}) {
+    return <dl className="route-features">{BURDEN_FACTORS.map((f,i)=><div key={f.code}><dt>{f.label}</dt><dd>{[1,2].includes(i)?values[i].toFixed(1)+' 점수·m':i===5?Math.round(values[i])+' m':values[i].toFixed(1)+' 지표'}</dd></div>)}</dl>
+}
+export default function RouteCandidateCard({candidate,selected,recommended,onSelect,candidates=[],weights=[]}) {
+    const comparison=compareRoute(candidate,candidates,weights)
+    return <article className={'route-card'+(selected?' selected':'')}>
+        <button type="button" aria-pressed={selected} onClick={onSelect}>
+            <span>{candidate.route_types.map(k=>ROUTE_LABELS[k]||k).join(' · ')}</span>
+            {recommended&&<strong className="route-badge">{candidate.model_version==='survey_only_v1'?'설문 기준 추천':'모델 추천'}</strong>}
+            <b>{durationLabel(candidate.display_duration_s)} <small>{distanceLabel(candidate.distance_m)}</small></b>
+        </button>
+        {comparison&&<p className="service-note">최단시간 후보 대비 {comparison.minutes===0?'표시 시간 동일':`${Math.abs(comparison.minutes)}분 ${comparison.minutes>0?'더 소요':'단축'}`} · 거리 {comparison.meters===0?'동일':`${distanceLabel(Math.abs(comparison.meters))} ${comparison.meters>0?'증가':'감소'}`}
+            {comparison.reductions.map(r=><span key={r.index}><br/>{BURDEN_FACTORS[r.index].label} 지표 약 {Math.round(r.percent)}% 감소</span>)}
+        </p>}
+        <details><summary>도로 부담·교통자료 보기</summary><FeatureValues values={candidate.raw_features}/><p>비교 설명은 저장된 도로 지표 차이이며 모델의 추천 이유나 사고 위험 감소율이 아닙니다.</p><p>어린이 시설 반경 100m 내부 통과거리이며 법정 보호구역 전체와 다를 수 있습니다.</p><p>과거 시간대별 자료와 도로 속도 대체값으로 계산한 예상시간입니다.</p></details>
+    </article>
+}

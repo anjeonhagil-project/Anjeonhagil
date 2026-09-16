@@ -1,132 +1,15 @@
-import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { FiChevronRight } from 'react-icons/fi'
-import Button from '../../../components/common/Button/Button.jsx'
+// 실제 등록한 내 문의와 관리자 답변만 표시한다.
+import {useEffect,useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import Header from '../../../components/layout/Header.jsx'
-import styles from './InquiriesPage.module.css'
-
-const INITIAL_INQUIRIES = [
-    {
-        id: 1,
-        title: '경로 안내 중 앱이 종료됩니다',
-        date: '2025.01.12',
-        status: '답변 완료',
-    },
-    {
-        id: 2,
-        title: '안심경로와 일반 경로의 차이점입니다',
-        date: '2025.01.08',
-        status: '답변 대기',
-    },
-    {
-        id: 3,
-        title: '즐겨찾기가 사라졌습니다',
-        date: '2024.12.18',
-        status: '답변 완료',
-    },
-    {
-        id: 4,
-        title: '즐겨찾기가 사라졌습니다',
-        date: '2024.12.18',
-        status: '답변 완료',
-    },
-    {
-        id: 5,
-        title: '즐겨찾기가 사라졌습니다',
-        date: '2024.12.18',
-        status: '답변 완료',
-    },
-    {
-        id: 6,
-        title: '즐겨찾기가 사라졌습니다',
-        date: '2024.12.18',
-        status: '답변 완료',
-    },
-    {
-        id: 7,
-        title: '즐겨찾기가 사라졌습니다',
-        date: '2024.12.18',
-        status: '답변 완료',
-    },
-    {
-        id: 8,
-        title: '즐겨찾기가 사라졌습니다',
-        date: '2024.12.18',
-        status: '답변 완료',
-    },
-    {
-        id: 9,
-        title: '즐겨찾기가 사라졌습니다',
-        date: '2024.12.18',
-        status: '답변 완료',
-    },
-    {
-        id: 10,
-        title: '즐겨찾기가 사라졌습니다',
-        date: '2024.12.18',
-        status: '답변 완료',
-    },
-    {
-        id: 11,
-        title: '즐겨찾기가 사라졌습니다',
-        date: '2024.12.18',
-        status: '답변 완료',
-    },
-]
-
-function InquiriesPage() {
-    const navigate = useNavigate()
-    const location = useLocation()
-
-    const [inquiries] = useState(() => {
-        const createdInquiry = location.state?.createdInquiry
-
-        if (!createdInquiry) return INITIAL_INQUIRIES
-
-        return [createdInquiry, ...INITIAL_INQUIRIES]
-    })
-
-    return (
-        <main className={styles.page}>
-            <Header title="문의" onBack={() => navigate('/my/support')} />
-
-            <section className={`${styles.content} hide-scrollbar`}>
-                <Button
-                    fullWidth
-                    onClick={() => navigate('/my/support/inquiries/write')}
-                >
-                    문의 작성
-                </Button>
-
-                <div className={styles.inquiryList}>
-                    {inquiries.map((inquiry) => (
-                        <button
-                            key={inquiry.id}
-                            type="button"
-                            className={styles.inquiryItem}
-                        >
-                            <span className={styles.inquiryCopy}>
-                                <strong>{inquiry.title}</strong>
-                                <time>{inquiry.date}</time>
-                            </span>
-
-                            <span
-                                className={
-                                    inquiry.status === '답변 완료'
-                                        ? styles.statusAnswered
-                                        : styles.statusWaiting
-                                }
-                            >
-                                {inquiry.status}
-                            </span>
-
-                            <FiChevronRight size={18} aria-hidden="true" />
-                        </button>
-                    ))}
-                </div>
-            </section>
-        </main>
-    )
+import {apiClient} from '../../../lib/apiClient.js'
+import '../../routes/serviceRoutes.css'
+export default function InquiriesPage(){
+    const navigate=useNavigate(),[items,setItems]=useState(null),[error,setError]=useState('')
+    useEffect(()=>{apiClient.get('/inquiries').then(setItems).catch(e=>setError(e.message))},[])
+    return <main className="service-page"><Header title="내 문의" onBack={()=>navigate('/my/support')}/><div className="service-content">
+        <button className="service-primary" onClick={()=>navigate('/my/support/inquiries/write')}>문의 작성</button>
+        {error&&<p role="alert">{error}</p>}{items===null&&!error&&<p>불러오는 중…</p>}{items?.length===0&&<p>아직 작성한 문의가 없습니다.</p>}
+        {items?.map(n=><details className="route-card" style={{padding:16}} key={n.id}><summary>{n.title}<small style={{display:'block',marginTop:8}}>{new Date(n.created_at).toLocaleDateString('ko-KR')} · {n.status==='answered'?'답변 완료':n.status==='in_review'?'확인 중':'접수 완료'}</small></summary><p style={{whiteSpace:'pre-wrap'}}>{n.content}</p>{n.answer_content&&<section className="route-success"><strong>관리자 답변</strong><p style={{whiteSpace:'pre-wrap'}}>{n.answer_content}</p></section>}</details>)}
+    </div></main>
 }
-
-export default InquiriesPage

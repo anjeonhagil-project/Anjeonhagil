@@ -1,6 +1,42 @@
-# 수정 필요(Anjeonhagil): database/export_choices.py의 JSONL을 학습 입력으로 변환한다. 원본 ZIP exporter는 profile_snapshot 컬럼과 출처 위치가 달라 그대로 사용하지 않는다.
-# 입력: ag_searches/candidates/exposures/choices와 당시 profile/model snapshot. 원본 이력은 수정하지 않는다.
-# 동일 exposure에서 실제 표시한 후보만 사용하고 선택한 후보가 그 집합에 있는지 검사한다. 실패/미노출/미선택을 Y로 만들지 않는다.
-# service/onboarding/study 출처를 보존하며 합성 정답은 실제 사용자 성능 평가에서 제외한다.
-# 사용자 분리 후 normalization.py의 train scaler로 learning.py.make_training_pairs를 호출한다. pair마다 user/search/exposure/choice ID를 보존한다.
-# 한 검색의 선택 대 나머지 비교는 총 가중치 1이 되게 한다. 원본에 scaler가 없는 설문 단계 로그는 별도 변환본에 학습 scaler 출처를 기록한다.
+"""Read immutable real-choice JSONL; exclude Q4/study/single-card events and generate reproducible A/B pairs."""
+import hashlib,json,random
+from pathlib import Path
+import pandas as pd
+from features import candidate_vector,FEATURES
+from split import user_split
+
+def load_choices(path):
+    rows=[];seen=set();excluded=0
+    for line in Path(path).read_text(encoding='utf-8-sig').splitlines():
+        if not line.strip():continue
+        record=json.loads(line);choice=record['choice']
+        if choice['sample_origin']!='service' or choice['event_source']!='ACTUAL_USER_CHOICE':
+            excluded+=1;continue
+        event=str(choice['choice_event_id']);search=str(choice['search_id']);user=str(choice['user_id'])
+        if search in seen:raise ValueError('DUPLICATE_SEARCH')
+        seen.add(search)
+        snapshots=record['snapshots'];ids=[str(c['candidate_id']) for c in snapshots]
+        displayed=list(map(str,choice['displayed_candidate_ids']));chosen=str(choice['selected_candidate_id'])
+        if len(ids)!=len(set(ids)) or set(ids)!=set(displayed) or len(displayed)!=len(ids) or chosen not in ids:
+            raise ValueError('EXPOSURE_MISMATCH')
+        if len(ids)<2:excluded+=1;continue
+        if len(ids)>3:raise ValueError('SERVICE_CARD_LIMIT')
+        split=user_split(user)
+        if record['split']!=split:raise ValueError('USER_SPLIT_MISMATCH')
+        vectors={}
+        for c in snapshots:
+            if str(c['search_id'])!=search or str(c['user_id'])!=user or not c.get('displayed') or str(c['exposure_id'])!=str(choice['exposure_id']):
+                raise ValueError('SNAPSHOT_OWNERSHIP_MISMATCH')
+            if c['feature_version']!='static_burden_v5_child_circle_inside' or c['contract_version']!='anjeon_contract_v6_child100':
+                raise ValueError('SNAPSHOT_VERSION_MISMATCH')
+            if c['profile_weights']!=record['profile_weights']:raise ValueError('SNAPSHOT_WEIGHTS_MISMATCH')
+            vectors[str(c['candidate_id'])]=candidate_vector(c,record['profile_weights'])
+        rng=random.Random(int(hashlib.sha256(('pair_v1:'+event).encode()).hexdigest(),16))
+        for other in ids:
+            if other==chosen:continue
+            a,b=(chosen,other) if rng.getrandbits(1) else (other,chosen)
+            x=[u-v for u,v in zip(vectors[a],vectors[b])]
+            rows.append(dict(user_id=user,search_id=search,exposure_id=str(choice['exposure_id']),choice_event_id=event,
+                split=split,a=a,b=b,y=int(a==chosen),sample_weight=1/(len(ids)-1),**dict(zip(FEATURES,x))))
+    if not rows:raise ValueError('NO_ELIGIBLE_REAL_CHOICES')
+    return pd.DataFrame(rows),{'training_source':'ACTUAL_USER_CHOICE','split_unit':'user','excluded_events':excluded}

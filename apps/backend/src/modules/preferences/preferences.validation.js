@@ -1,8 +1,7 @@
-// 기능(Anjeonhagil): Q1 운전 빈도, Q2 6개 부담 순위, Q3 허용시간의 원본 응답만 검증한다.
+// 기능(Anjeonhagil): Q1 운전 빈도와 Q2 6개 부담 순위의 원본 응답만 검증한다.
 import { DRIVING_FREQUENCIES, FACTOR_ORDER } from '../../routing-engine/routingContract.js'
 
-const ALLOWED_FIELDS = ['drivingFrequency', 'ranks', 'maxDetourMinutes']
-const DETOUR_OPTIONS = new Set([null, 0, 5, 10, 15])
+const ALLOWED_FIELDS = ['drivingFrequency', 'ranks']
 
 function badRequest(message, code = 'INVALID_PREFERENCES') {
     const error = new Error(message)
@@ -42,9 +41,5 @@ export function validateDrivingPreferences(req, res, next) {
     if (new Set(selectedRanks).size !== selectedRanks.length || !hasContiguousRanks(body.ranks)) {
         return next(badRequest('선택한 부담 순위는 중복 없이 1순위부터 연속되어야 합니다'))
     }
-    if (!Object.hasOwn(body, 'maxDetourMinutes') || !DETOUR_OPTIONS.has(body.maxDetourMinutes)) {
-        return next(badRequest('우회 허용시간은 상황에 따라, 0분, 5분, 10분, 15분 중 하나여야 합니다'))
-    }
-
     next()
 }

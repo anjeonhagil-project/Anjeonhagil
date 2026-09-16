@@ -1,10 +1,9 @@
-// 기능(Anjeonhagil): 온보딩·마이페이지 공통 Q1 운전빈도·Q2 부담순위·Q3 허용시간 폼이다.
+// 기능(Anjeonhagil): 온보딩·마이페이지 공통 Q1 운전빈도·Q2 부담순위 폼이다.
 import { useEffect, useState } from 'react'
 import Button from '../../components/common/Button/Button.jsx'
 import styles from './PreferenceRankForm.module.css'
 import {
     BURDEN_FACTORS,
-    DETOUR_OPTIONS,
     DRIVING_FREQUENCY_OPTIONS,
     normalizePreferences,
     validatePreferences,
@@ -77,23 +76,7 @@ function PreferenceRankForm({ initialValue, onSubmit, submitLabel = '설문 저�
                 ))}
             </section>
 
-            <section className={styles.section}>
-                <h2>Q3. 더 안전한 길이라면 시간을 얼마나 더 쓸 수 있나요?</h2>
-                <select
-                    aria-label="우회 허용시간"
-                    value={answers.maxDetourMinutes === undefined ? '' : answers.maxDetourMinutes === null ? 'flexible' : String(answers.maxDetourMinutes)}
-                    disabled={disabled}
-                    onChange={(event) => {
-                        const option = DETOUR_OPTIONS.find((item) => item.value === event.target.value)
-                        setAnswers((current) => ({ ...current, maxDetourMinutes: option?.minutes }))
-                    }}
-                >
-                    <option value="" disabled>선택해주세요</option>
-                    {DETOUR_OPTIONS.map((option) => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                    ))}
-                </select>
-            </section>
+
 
             {error && <p className={styles.error} role="alert">{error}</p>}
             <Button type="submit" fullWidth disabled={disabled}>{submitLabel}</Button>
