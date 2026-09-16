@@ -1,0 +1,108 @@
+{
+  "release_id": "anjeon_final_20260915_child100_v3",
+  "scope": "dataset_only",
+  "files_verified": 79,
+  "all_hashes_match": true,
+  "legacy_static_regression": {
+    "package_files_verified": 79,
+    "all_hashes_match": true,
+    "invalid_inputs_rejected": 42,
+    "preserved_paths": 48,
+    "x8_antisymmetry": true,
+    "partial_circle_direction_invariance": {
+      "edge_id": 528,
+      "forward_inside_m": 0.886582617365282,
+      "reverse_inside_m": 0.886582617365282
+    },
+    "legacy_example_response_matches_saved_fixture": true
+  },
+  "current_child_geometry": {
+    "all_passed": true,
+    "road_edges_checked": 385020,
+    "inside_edges": 38181,
+    "facility_unique_locations": 1464,
+    "polygon_sides": 512,
+    "method": "inscribed/circumscribed polygon bounds independent of analytic circle builder",
+    "partial_geometry_checks": 8444,
+    "reverse_checks": 8444,
+    "split_additivity_checks": 8444,
+    "max_geometry_bracket_width_m": 0.6381374582230255,
+    "max_partial_bracket_width_m": 0.12323818303324519,
+    "max_length_field_error_m": 0.0,
+    "arc_direction_rows_checked": 685205,
+    "known_exact_examples": 5
+  },
+  "current_hourly_and_contract": {
+    "astar_dijkstra": [
+      {
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "mode": "time",
+        "cost": 229.39080971609687,
+        "astar_states": 2578,
+        "dijkstra_states": 3847
+      },
+      {
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "mode": "distance",
+        "cost": 1422.031757501335,
+        "astar_states": 319,
+        "dijkstra_states": 4139
+      },
+      {
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "mode": "burden",
+        "cost": 1464.1466041696744,
+        "astar_states": 411,
+        "dijkstra_states": 4029
+      },
+      {
+        "departure_at": "2026-09-20T22:00:00+09:00",
+        "mode": "time",
+        "cost": 218.11382120977973,
+        "astar_states": 2398,
+        "dijkstra_states": 3661
+      },
+      {
+        "departure_at": "2026-09-20T22:00:00+09:00",
+        "mode": "distance",
+        "cost": 1422.031757501335,
+        "astar_states": 319,
+        "dijkstra_states": 4139
+      },
+      {
+        "departure_at": "2026-09-20T22:00:00+09:00",
+        "mode": "burden",
+        "cost": 1464.1466041696744,
+        "astar_states": 411,
+        "dijkstra_states": 4029
+      }
+    ],
+    "hour_boundary_fifo_checks": 303,
+    "rejected": [
+      "mixed departure",
+      "old child feature",
+      "old feature scaler",
+      "static ETA",
+      "timezone missing",
+      "unsupported q3",
+      "reversed fraction"
+    ],
+    "synthetic_hour_boundary": {
+      "distance_m": 1000,
+      "first_300m_kph": 36,
+      "remaining_700m_kph": 72,
+      "duration_s": 65.0,
+      "expected_s": 65
+    },
+    "child_feature_contract": "raw6[5] equals exact path intersection length inside union of facility-centred 100 m circles",
+    "matched_arcs_rules_checked": 53516,
+    "q3_zero_feasible": true,
+    "x8_hourly_antisymmetric": true,
+    "final_hourly_reference_matches": 48,
+    "child_feature_changed_cases": 40,
+    "all_passed": true
+  },
+  "execution_context": "Fresh isolated dataset extraction, no sibling service, no parent release manifest; Python dependencies installed in test environment.",
+  "tested_dataset_archive_sha256": "884d7e45b047bc6f817b6008897ec03c0903c3f4fde87c2c468fe05a834ebf5e",
+  "note": "Final packaging adds this report and explanatory documentation; numerical code and data are unchanged."
+}

@@ -1,0 +1,9 @@
+{
+  "python": "3.12.14",
+  "node": "24.19.0",
+  "worker_idle_rss_kib": 1665976,
+  "worker_idle_rss_gib": 1.5887985229492188,
+  "snapshot": "graph loaded; idle serving process",
+  "live_supabase_used": false,
+  "frontend_build": "passed"
+}

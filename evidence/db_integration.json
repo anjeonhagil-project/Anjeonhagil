@@ -1,0 +1,98 @@
+{
+  "http_evaluate_checks": 3,
+  "database": "PGlite PostgreSQL WASM; new schema and actual OD10 subset; not hosted Supabase",
+  "counts": {
+    "ag_searches": 1,
+    "ag_candidates": 3,
+    "ag_candidate_segments": 88,
+    "ag_exposures": 1,
+    "ag_choices": 1
+  },
+  "rejected": [
+    {
+      "name": "HTTP evaluate old child version",
+      "message": "feature_version mismatch"
+    },
+    {
+      "name": "HTTP evaluate missing feature version",
+      "message": "feature_version mismatch"
+    },
+    {
+      "name": "non-contiguous ranks",
+      "message": "RANKS_MUST_BE_CONTIGUOUS"
+    },
+    {
+      "name": "version missing",
+      "message": "CALCULATION_VERSION_MISMATCH"
+    },
+    {
+      "name": "version mixed",
+      "message": "CALCULATION_VERSION_MISMATCH"
+    },
+    {
+      "name": "cross-user profile",
+      "message": "PROFILE_SNAPSHOT_MISMATCH"
+    },
+    {
+      "name": "candidate version mixed",
+      "message": "CANDIDATE_VERSION_MISMATCH"
+    },
+    {
+      "name": "candidate profile mixed",
+      "message": "CANDIDATE_PROFILE_TIME_MISMATCH"
+    },
+    {
+      "name": "q3 exceeded",
+      "message": "Q3_EXCEEDED"
+    },
+    {
+      "name": "feature order swapped",
+      "message": "FEATURE_ORDER_MISMATCH"
+    },
+    {
+      "name": "foreign arc",
+      "message": "ARC_NOT_IN_ACTIVE_GRAPH"
+    },
+    {
+      "name": "distance mismatch",
+      "message": "SEGMENT_DISTANCE_MISMATCH"
+    },
+    {
+      "name": "display mismatch",
+      "message": "DISPLAY_TIME_MISMATCH"
+    },
+    {
+      "name": "child old whole-edge feature",
+      "message": "CHILD_FEATURE_GEOMETRY_MISMATCH"
+    },
+    {
+      "name": "child quality mismatch",
+      "message": "CHILD_QUALITY_GEOMETRY_MISMATCH"
+    },
+    {
+      "name": "child quality missing",
+      "message": "CHILD_QUALITY_GEOMETRY_MISMATCH"
+    },
+    {
+      "name": "cross-user exposure",
+      "message": "SEARCH_OWNERSHIP_MISMATCH"
+    },
+    {
+      "name": "unshown selection",
+      "message": "CHOICE_NOT_EXPOSED"
+    },
+    {
+      "name": "replace choice",
+      "message": "CHOICE_ALREADY_RECORDED"
+    },
+    {
+      "name": "client cannot forge label",
+      "message": "permission denied for function ag_record_choice"
+    }
+  ],
+  "searchId": "2a9bd84b-dc5b-4566-ad21-1d8c48b97bc8",
+  "choice_idempotent": true,
+  "worker_result_to_node_to_sql": true,
+  "live_http_worker": true,
+  "production_credentials_used": false
+}

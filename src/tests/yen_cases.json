@@ -1,0 +1,145 @@
+{
+  "seed": 20260916,
+  "k": 10,
+  "selection_attempts": 10137,
+  "arc_count": 676245,
+  "selection_basis": "도로망 투영 좌표의 직선거리",
+  "route_existence_checked": false,
+  "cases": [
+    {
+      "case_id": "01-01",
+      "band": "매우 짧은 거리",
+      "band_min_m": 50,
+      "band_max_m": 200,
+      "source": 11721694307,
+      "target": 4183907760,
+      "straight_distance_m": 86.30202232327605
+    },
+    {
+      "case_id": "01-02",
+      "band": "매우 짧은 거리",
+      "band_min_m": 50,
+      "band_max_m": 200,
+      "source": 7760193474,
+      "target": 8430505945,
+      "straight_distance_m": 199.20749369979265
+    },
+    {
+      "case_id": "01-03",
+      "band": "매우 짧은 거리",
+      "band_min_m": 50,
+      "band_max_m": 200,
+      "source": 9445581601,
+      "target": 2474868485,
+      "straight_distance_m": 193.30380416637826
+    },
+    {
+      "case_id": "02-01",
+      "band": "짧은 거리",
+      "band_min_m": 500,
+      "band_max_m": 2000,
+      "source": 9481381143,
+      "target": 8488298311,
+      "straight_distance_m": 1867.9796919716798
+    },
+    {
+      "case_id": "02-02",
+      "band": "짧은 거리",
+      "band_min_m": 500,
+      "band_max_m": 2000,
+      "source": 3836302506,
+      "target": 13352574359,
+      "straight_distance_m": 1693.8722110172907
+    },
+    {
+      "case_id": "02-03",
+      "band": "짧은 거리",
+      "band_min_m": 500,
+      "band_max_m": 2000,
+      "source": 4309827847,
+      "target": 2289555803,
+      "straight_distance_m": 1740.472028553721
+    },
+    {
+      "case_id": "03-01",
+      "band": "중거리",
+      "band_min_m": 3000,
+      "band_max_m": 7000,
+      "source": 5273390444,
+      "target": 9932120771,
+      "straight_distance_m": 5136.749350328554
+    },
+    {
+      "case_id": "03-02",
+      "band": "중거리",
+      "band_min_m": 3000,
+      "band_max_m": 7000,
+      "source": 3843314350,
+      "target": 13016709477,
+      "straight_distance_m": 5802.810429712257
+    },
+    {
+      "case_id": "03-03",
+      "band": "중거리",
+      "band_min_m": 3000,
+      "band_max_m": 7000,
+      "source": 13345282183,
+      "target": 9880582231,
+      "straight_distance_m": 5922.07346395529
+    },
+    {
+      "case_id": "04-01",
+      "band": "장거리",
+      "band_min_m": 10000,
+      "band_max_m": 20000,
+      "source": 10839467692,
+      "target": 3844428066,
+      "straight_distance_m": 11329.457381940196
+    },
+    {
+      "case_id": "04-02",
+      "band": "장거리",
+      "band_min_m": 10000,
+      "band_max_m": 20000,
+      "source": 8370698230,
+      "target": 3870730238,
+      "straight_distance_m": 18816.214530024637
+    },
+    {
+      "case_id": "04-03",
+      "band": "장거리",
+      "band_min_m": 10000,
+      "band_max_m": 20000,
+      "source": 11059719419,
+      "target": 8486641987,
+      "straight_distance_m": 10440.546919163773
+    },
+    {
+      "case_id": "05-01",
+      "band": "약 30킬로미터",
+      "band_min_m": 25000,
+      "band_max_m": 35000,
+      "source": 11777769922,
+      "target": 13619739803,
+      "straight_distance_m": 25976.480006653775
+    },
+    {
+      "case_id": "05-02",
+      "band": "약 30킬로미터",
+      "band_min_m": 25000,
+      "band_max_m": 35000,
+      "source": 6677953587,
+      "target": 13472469619,
+      "straight_distance_m": 25458.624312628755
+    },
+    {
+      "case_id": "05-03",
+      "band": "약 30킬로미터",
+      "band_min_m": 25000,
+      "band_max_m": 35000,
+      "source": 1808903799,
+      "target": 8459830192,
+      "straight_distance_m": 27523.971567475746
+    }
+  ]
+}

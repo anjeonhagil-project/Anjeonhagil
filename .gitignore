@@ -27,6 +27,7 @@ data-pipeline/data/processed/*
 *.dbf
 *.prj
 
+
 # ML artifacts
 ml/artifacts/*
 !ml/artifacts/.gitkeep
@@ -49,3 +50,7 @@ Thumbs.db
 /docs/Anjeonhagil_REVIEW.md
 /docs/Anjeonhagil_IMPLEMENTATION.md
 /docs/FILE_STRUCTURE_AND_CHANGES.md
+
+
+
+/data/

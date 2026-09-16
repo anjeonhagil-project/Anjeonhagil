@@ -1,0 +1,439 @@
+{
+  "source_archive": "Anjeonhagil_FINAL_20260915.zip",
+  "source_release": "anjeon_final_20260915_hourly_v1",
+  "archive_sha256": "b817767643c325cb14e85b432ca2096f4da844a5944205aff27d9c5fc7a86b73",
+  "fixed_paths": [
+    {
+      "case": 1,
+      "distance_m": 4382.537727974977,
+      "raw6_preserved": true,
+      "static_s": 717.0781848894665,
+      "weekday_s": 746.4355139732361,
+      "weekend_s": 735.2192554473877,
+      "covered_ratio": 0.14883066012350865
+    },
+    {
+      "case": 2,
+      "distance_m": 5166.2892973009275,
+      "raw6_preserved": true,
+      "static_s": 541.50191886808,
+      "weekday_s": 815.4707591533661,
+      "weekend_s": 705.7333059310913,
+      "covered_ratio": 0.8184629884197079
+    },
+    {
+      "case": 3,
+      "distance_m": 4754.763998752218,
+      "raw6_preserved": true,
+      "static_s": 616.0507895471708,
+      "weekday_s": 758.9809303283691,
+      "weekend_s": 697.5720613002777,
+      "covered_ratio": 0.4537763249475451
+    },
+    {
+      "case": 4,
+      "distance_m": 4917.4590662126175,
+      "raw6_preserved": true,
+      "static_s": 693.034518602132,
+      "weekday_s": 785.7167031764984,
+      "weekend_s": 739.5556213855743,
+      "covered_ratio": 0.2907521161549454
+    },
+    {
+      "case": 5,
+      "distance_m": 10337.089504136691,
+      "raw6_preserved": true,
+      "static_s": 1791.8504814891444,
+      "weekday_s": 1649.1695368289948,
+      "weekend_s": 1672.7944431304932,
+      "covered_ratio": 0.5135786403345843
+    },
+    {
+      "case": 6,
+      "distance_m": 12473.349735275733,
+      "raw6_preserved": true,
+      "static_s": 1388.0817092335544,
+      "weekday_s": 1995.6119861602783,
+      "weekend_s": 1926.2460272312164,
+      "covered_ratio": 0.7844031987205999
+    },
+    {
+      "case": 7,
+      "distance_m": 11404.55671629955,
+      "raw6_preserved": true,
+      "static_s": 1501.8197599713785,
+      "weekday_s": 1618.4535732269287,
+      "weekend_s": 1567.8013863563538,
+      "covered_ratio": 0.6559123161431101
+    },
+    {
+      "case": 8,
+      "distance_m": 10738.360162417453,
+      "raw6_preserved": true,
+      "static_s": 1536.2586460632133,
+      "weekday_s": 1655.646430015564,
+      "weekend_s": 1619.2866351604462,
+      "covered_ratio": 0.681711968070489
+    },
+    {
+      "case": 9,
+      "distance_m": 3687.0194214642156,
+      "raw6_preserved": true,
+      "static_s": 522.7817466676827,
+      "weekday_s": 668.9176251888275,
+      "weekend_s": 638.628924369812,
+      "covered_ratio": 0.48511666811939
+    },
+    {
+      "case": 10,
+      "distance_m": 4023.691419753538,
+      "raw6_preserved": true,
+      "static_s": 488.88445565841505,
+      "weekday_s": 694.8152146339417,
+      "weekend_s": 675.2313902378082,
+      "covered_ratio": 0.75915883289118
+    },
+    {
+      "case": 11,
+      "distance_m": 3969.862537291,
+      "raw6_preserved": true,
+      "static_s": 505.8459549564281,
+      "weekday_s": 731.0492513179779,
+      "weekend_s": 622.153927564621,
+      "covered_ratio": 0.6645388570316456
+    },
+    {
+      "case": 12,
+      "distance_m": 3969.862537291,
+      "raw6_preserved": true,
+      "static_s": 505.8459549564281,
+      "weekday_s": 731.0492513179779,
+      "weekend_s": 622.153927564621,
+      "covered_ratio": 0.6645388570316456
+    },
+    {
+      "case": 13,
+      "distance_m": 3523.6364630887524,
+      "raw6_preserved": true,
+      "static_s": 544.6281196643033,
+      "weekday_s": 611.8300490379333,
+      "weekend_s": 599.9972302913666,
+      "covered_ratio": 0.3401003445601281
+    },
+    {
+      "case": 14,
+      "distance_m": 3573.7189708886644,
+      "raw6_preserved": true,
+      "static_s": 397.7305064954675,
+      "weekday_s": 538.1888597011566,
+      "weekend_s": 534.279764175415,
+      "covered_ratio": 0.7674161763572949
+    },
+    {
+      "case": 15,
+      "distance_m": 3534.4831106329248,
+      "raw6_preserved": true,
+      "static_s": 425.48850554146776,
+      "weekday_s": 598.9823727607727,
+      "weekend_s": 564.5058083534241,
+      "covered_ratio": 0.744529878453382
+    },
+    {
+      "case": 16,
+      "distance_m": 3534.4831106329248,
+      "raw6_preserved": true,
+      "static_s": 425.48850554146776,
+      "weekday_s": 598.9823727607727,
+      "weekend_s": 564.5058083534241,
+      "covered_ratio": 0.744529878453382
+    },
+    {
+      "case": 17,
+      "distance_m": 4812.238625051002,
+      "raw6_preserved": true,
+      "static_s": 803.1381093779522,
+      "weekday_s": 885.2213451862335,
+      "weekend_s": 829.237601518631,
+      "covered_ratio": 0.1447328942006262
+    },
+    {
+      "case": 18,
+      "distance_m": 5200.467432304152,
+      "raw6_preserved": true,
+      "static_s": 665.2883616684329,
+      "weekday_s": 1009.4356353282928,
+      "weekend_s": 843.6271178722382,
+      "covered_ratio": 0.6820061200450095
+    },
+    {
+      "case": 19,
+      "distance_m": 5200.467432304152,
+      "raw6_preserved": true,
+      "static_s": 665.2883616684329,
+      "weekday_s": 1009.4356353282928,
+      "weekend_s": 843.6271178722382,
+      "covered_ratio": 0.6820061200450095
+    },
+    {
+      "case": 20,
+      "distance_m": 5182.7743163591485,
+      "raw6_preserved": true,
+      "static_s": 780.4757725106859,
+      "weekday_s": 904.557891368866,
+      "weekend_s": 815.7656819820404,
+      "covered_ratio": 0.20164558753644302
+    },
+    {
+      "case": 21,
+      "distance_m": 4399.969068368567,
+      "raw6_preserved": true,
+      "static_s": 623.0244691240449,
+      "weekday_s": 750.6730749607086,
+      "weekend_s": 684.3338551521301,
+      "covered_ratio": 0.4261567714064086
+    },
+    {
+      "case": 22,
+      "distance_m": 4798.016782908886,
+      "raw6_preserved": true,
+      "static_s": 574.7099999772096,
+      "weekday_s": 847.9230623245239,
+      "weekend_s": 680.1077978610992,
+      "covered_ratio": 0.7368214613852297
+    },
+    {
+      "case": 23,
+      "distance_m": 4782.6326586779,
+      "raw6_preserved": true,
+      "static_s": 572.8639050694908,
+      "weekday_s": 781.7525126934052,
+      "weekend_s": 656.0396223068237,
+      "covered_ratio": 0.7326517889933772
+    },
+    {
+      "case": 24,
+      "distance_m": 4564.27790838674,
+      "raw6_preserved": true,
+      "static_s": 620.8066052173823,
+      "weekday_s": 755.8736577033997,
+      "weekend_s": 706.2864754199982,
+      "covered_ratio": 0.48663394438998314
+    },
+    {
+      "case": 25,
+      "distance_m": 1636.2054943948463,
+      "raw6_preserved": true,
+      "static_s": 218.00422653909462,
+      "weekday_s": 250.69212222099304,
+      "weekend_s": 253.0558886528015,
+      "covered_ratio": 0.7376586007685151
+    },
+    {
+      "case": 26,
+      "distance_m": 1636.2054943948463,
+      "raw6_preserved": true,
+      "static_s": 218.00422653909462,
+      "weekday_s": 250.69212222099304,
+      "weekend_s": 253.0558886528015,
+      "covered_ratio": 0.7376586007685151
+    },
+    {
+      "case": 27,
+      "distance_m": 1636.2054943948463,
+      "raw6_preserved": true,
+      "static_s": 218.00422653909462,
+      "weekday_s": 250.69212222099304,
+      "weekend_s": 253.0558886528015,
+      "covered_ratio": 0.7376586007685151
+    },
+    {
+      "case": 28,
+      "distance_m": 1636.2054943948463,
+      "raw6_preserved": true,
+      "static_s": 218.00422653909462,
+      "weekday_s": 250.69212222099304,
+      "weekend_s": 253.0558886528015,
+      "covered_ratio": 0.7376586007685151
+    },
+    {
+      "case": 29,
+      "distance_m": 5834.444744503551,
+      "raw6_preserved": true,
+      "static_s": 770.576457774777,
+      "weekday_s": 1116.7324662208557,
+      "weekend_s": 847.0521669387817,
+      "covered_ratio": 0.5284399775217941
+    },
+    {
+      "case": 30,
+      "distance_m": 6319.385441123775,
+      "raw6_preserved": true,
+      "static_s": 747.6531835777523,
+      "weekday_s": 1282.6819167137146,
+      "weekend_s": 922.268363237381,
+      "covered_ratio": 0.7892762375644706
+    },
+    {
+      "case": 31,
+      "distance_m": 6196.108605794201,
+      "raw6_preserved": true,
+      "static_s": 753.2744787039246,
+      "weekday_s": 1204.265125989914,
+      "weekend_s": 890.0910482406616,
+      "covered_ratio": 0.6953745909973358
+    },
+    {
+      "case": 32,
+      "distance_m": 5925.067685762089,
+      "raw6_preserved": true,
+      "static_s": 740.3926477026461,
+      "weekday_s": 1127.5295190811157,
+      "weekend_s": 858.3510835170746,
+      "covered_ratio": 0.6126684496146454
+    },
+    {
+      "case": 33,
+      "distance_m": 4008.634089036538,
+      "raw6_preserved": true,
+      "static_s": 595.0428567583211,
+      "weekday_s": 675.1315679550171,
+      "weekend_s": 669.7537982463837,
+      "covered_ratio": 0.5849505311214884
+    },
+    {
+      "case": 34,
+      "distance_m": 4505.907146872462,
+      "raw6_preserved": true,
+      "static_s": 564.38920086966,
+      "weekday_s": 715.5663731098175,
+      "weekend_s": 733.5716388225555,
+      "covered_ratio": 0.799504788731148
+    },
+    {
+      "case": 35,
+      "distance_m": 4875.370412885964,
+      "raw6_preserved": true,
+      "static_s": 644.583066732285,
+      "weekday_s": 810.9201147556305,
+      "weekend_s": 831.8611369132996,
+      "covered_ratio": 0.4510155052235898
+    },
+    {
+      "case": 36,
+      "distance_m": 4158.93536969306,
+      "raw6_preserved": true,
+      "static_s": 660.5785468685372,
+      "weekday_s": 742.4648978710175,
+      "weekend_s": 730.2801411151886,
+      "covered_ratio": 0.41378378167652496
+    },
+    {
+      "case": 37,
+      "distance_m": 1422.031757501335,
+      "raw6_preserved": true,
+      "static_s": 222.82286882518866,
+      "weekday_s": 242.78623747825623,
+      "weekend_s": 231.5092489719391,
+      "covered_ratio": 0.12906327019141778
+    },
+    {
+      "case": 38,
+      "distance_m": 1428.8464635191986,
+      "raw6_preserved": true,
+      "static_s": 209.42744131502883,
+      "weekday_s": 229.39081025123596,
+      "weekend_s": 218.11382174491882,
+      "covered_ratio": 0.12844771892925322
+    },
+    {
+      "case": 39,
+      "distance_m": 1589.0926453408235,
+      "raw6_preserved": true,
+      "static_s": 231.28648978716234,
+      "weekday_s": 251.2498586177826,
+      "weekend_s": 239.97287011146545,
+      "covered_ratio": 0.11549488286745427
+    },
+    {
+      "case": 40,
+      "distance_m": 1589.0926453408235,
+      "raw6_preserved": true,
+      "static_s": 231.28648978716234,
+      "weekday_s": 251.2498586177826,
+      "weekend_s": 239.97287011146545,
+      "covered_ratio": 0.11549488286745427
+    },
+    {
+      "case": 41,
+      "distance_m": 5676.088755266739,
+      "raw6_preserved": true,
+      "static_s": 883.1342578535697,
+      "weekday_s": 1033.184494972229,
+      "weekend_s": 951.333170413971,
+      "covered_ratio": 0.39819808774347826
+    },
+    {
+      "case": 42,
+      "distance_m": 6293.2842378936875,
+      "raw6_preserved": true,
+      "static_s": 832.3833968954219,
+      "weekday_s": 1368.7699358463287,
+      "weekend_s": 967.0255768299103,
+      "covered_ratio": 0.6568500178340926
+    },
+    {
+      "case": 43,
+      "distance_m": 6331.664259814053,
+      "raw6_preserved": true,
+      "static_s": 928.888532568879,
+      "weekday_s": 1276.8800237178802,
+      "weekend_s": 1099.412205696106,
+      "covered_ratio": 0.5043629812131577
+    },
+    {
+      "case": 44,
+      "distance_m": 6273.892728134311,
+      "raw6_preserved": true,
+      "static_s": 1092.2871356228154,
+      "weekday_s": 1172.5098614692688,
+      "weekend_s": 1139.1680972576141,
+      "covered_ratio": 0.1871398334138007
+    },
+    {
+      "case": 45,
+      "distance_m": 1856.7984371236648,
+      "raw6_preserved": true,
+      "static_s": 217.22000241483425,
+      "weekday_s": 307.8247711658478,
+      "weekend_s": 281.837411403656,
+      "covered_ratio": 0.7722321380515726
+    },
+    {
+      "case": 46,
+      "distance_m": 1862.377772885268,
+      "raw6_preserved": true,
+      "static_s": 206.4430430626278,
+      "weekday_s": 305.9359631538391,
+      "weekend_s": 278.74213218688965,
+      "covered_ratio": 0.8745863345129343
+    },
+    {
+      "case": 47,
+      "distance_m": 1862.377772885268,
+      "raw6_preserved": true,
+      "static_s": 206.4430430626278,
+      "weekday_s": 305.9359631538391,
+      "weekend_s": 278.74213218688965,
+      "covered_ratio": 0.8745863345129343
+    },
+    {
+      "case": 48,
+      "distance_m": 1879.2703226306369,
+      "raw6_preserved": true,
+      "static_s": 238.3355801169696,
+      "weekday_s": 316.71216559410095,
+      "weekend_s": 295.57635617256165,
+      "covered_ratio": 0.6716918288906484
+    }
+  ]
+}

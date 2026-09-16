@@ -1,0 +1,16 @@
+{
+  "all_passed": true,
+  "road_edges_checked": 385020,
+  "inside_edges": 38181,
+  "facility_unique_locations": 1464,
+  "polygon_sides": 512,
+  "method": "inscribed/circumscribed polygon bounds independent of analytic circle builder",
+  "partial_geometry_checks": 8444,
+  "reverse_checks": 8444,
+  "split_additivity_checks": 8444,
+  "max_geometry_bracket_width_m": 0.6381374582230255,
+  "max_partial_bracket_width_m": 0.12323818303324519,
+  "max_length_field_error_m": 0.0,
+  "arc_direction_rows_checked": 685205,
+  "known_exact_examples": 5
+}

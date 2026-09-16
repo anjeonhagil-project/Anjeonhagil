@@ -1,0 +1,686 @@
+{
+  "feature_version": "static_burden_v5_child_circle_inside",
+  "cases": 48,
+  "od_groups": 12,
+  "cases_changed": 40,
+  "old_total_m": 21408.538198204587,
+  "new_total_m": 16423.624033431817,
+  "total_reduction_m": 4984.91416477277,
+  "max_reduction_m": 366.4530646324299,
+  "child_only_winner_changed_od_groups": 0,
+  "interpretation": "Old counted full traversed length of any nearby edge; new counts only path length inside union of 100 m circles. First five features and distance remain unchanged. This is a fixed-candidate impact check, not model accuracy.",
+  "rows": [
+    {
+      "case": 1,
+      "old_edge_nearby_m": 748.3337690319839,
+      "new_circle_inside_m": 662.1726557222566,
+      "reduction_m": 86.16111330972728,
+      "distance_m": 4382.537727974977,
+      "first_five": [
+        1,
+        1062.5357168474545,
+        1031.436222082475,
+        1,
+        5
+      ]
+    },
+    {
+      "case": 2,
+      "old_edge_nearby_m": 372.0484410959335,
+      "new_circle_inside_m": 276.87188152308903,
+      "reduction_m": 95.1765595728445,
+      "distance_m": 5166.2892973009275,
+      "first_five": [
+        2,
+        3240.910843286139,
+        992.8189818227222,
+        2,
+        2
+      ]
+    },
+    {
+      "case": 3,
+      "old_edge_nearby_m": 1026.629706042467,
+      "new_circle_inside_m": 868.209191118823,
+      "reduction_m": 158.42051492364396,
+      "distance_m": 4754.763998752218,
+      "first_five": [
+        1,
+        1423.72426063561,
+        59.19313264651547,
+        0,
+        1
+      ]
+    },
+    {
+      "case": 4,
+      "old_edge_nearby_m": 468.54544574885,
+      "new_circle_inside_m": 417.8789177883983,
+      "reduction_m": 50.666527960451674,
+      "distance_m": 4917.4590662126175,
+      "first_five": [
+        1,
+        703.2364462489113,
+        232.54905425317645,
+        0,
+        1
+      ]
+    },
+    {
+      "case": 5,
+      "old_edge_nearby_m": 643.3667843625473,
+      "new_circle_inside_m": 451.95934186297245,
+      "reduction_m": 191.4074424995748,
+      "distance_m": 10337.089504136691,
+      "first_five": [
+        1,
+        603.6041187822793,
+        4930.56064439463,
+        0,
+        5
+      ]
+    },
+    {
+      "case": 6,
+      "old_edge_nearby_m": 1480.9150470095544,
+      "new_circle_inside_m": 1114.4619823771245,
+      "reduction_m": 366.4530646324299,
+      "distance_m": 12473.349735275733,
+      "first_five": [
+        5,
+        7309.480104881256,
+        2034.6077430099003,
+        2,
+        6
+      ]
+    },
+    {
+      "case": 7,
+      "old_edge_nearby_m": 1263.3608512348662,
+      "new_circle_inside_m": 909.3329773514798,
+      "reduction_m": 354.0278738833864,
+      "distance_m": 11404.55671629955,
+      "first_five": [
+        3,
+        3505.7317755314584,
+        766.2724616463652,
+        2,
+        8
+      ]
+    },
+    {
+      "case": 8,
+      "old_edge_nearby_m": 1136.2252967180984,
+      "new_circle_inside_m": 835.4173537574917,
+      "reduction_m": 300.80794296060674,
+      "distance_m": 10738.360162417453,
+      "first_five": [
+        1,
+        2767.6749800173843,
+        1365.8457110407548,
+        1,
+        13
+      ]
+    },
+    {
+      "case": 9,
+      "old_edge_nearby_m": 466.5360809320274,
+      "new_circle_inside_m": 381.378239237966,
+      "reduction_m": 85.1578416940614,
+      "distance_m": 3687.0194214642156,
+      "first_five": [
+        1,
+        1140.1853989192882,
+        974.4378645509472,
+        2,
+        8
+      ]
+    },
+    {
+      "case": 10,
+      "old_edge_nearby_m": 458.9579332001155,
+      "new_circle_inside_m": 333.56878768909,
+      "reduction_m": 125.3891455110255,
+      "distance_m": 4023.691419753538,
+      "first_five": [
+        0,
+        1878.1290667368942,
+        374.1231150185959,
+        1,
+        3
+      ]
+    },
+    {
+      "case": 11,
+      "old_edge_nearby_m": 0.0,
+      "new_circle_inside_m": 0.0,
+      "reduction_m": 0.0,
+      "distance_m": 3969.862537291,
+      "first_five": [
+        1,
+        1689.3919830890666,
+        279.41822814376275,
+        2,
+        5
+      ]
+    },
+    {
+      "case": 12,
+      "old_edge_nearby_m": 0.0,
+      "new_circle_inside_m": 0.0,
+      "reduction_m": 0.0,
+      "distance_m": 3969.862537291,
+      "first_five": [
+        1,
+        1689.3919830890666,
+        279.41822814376275,
+        2,
+        5
+      ]
+    },
+    {
+      "case": 13,
+      "old_edge_nearby_m": 680.8424720066765,
+      "new_circle_inside_m": 505.15619336333674,
+      "reduction_m": 175.6862786433398,
+      "distance_m": 3523.6364630887524,
+      "first_five": [
+        0,
+        708.9086493656155,
+        1052.909582178761,
+        0,
+        0
+      ]
+    },
+    {
+      "case": 14,
+      "old_edge_nearby_m": 117.90671406533662,
+      "new_circle_inside_m": 109.02542500665649,
+      "reduction_m": 8.881289058680125,
+      "distance_m": 3573.7189708886644,
+      "first_five": [
+        4,
+        1767.3690289500269,
+        105.81972144731985,
+        0,
+        1
+      ]
+    },
+    {
+      "case": 15,
+      "old_edge_nearby_m": 530.7200343228725,
+      "new_circle_inside_m": 403.53833890582536,
+      "reduction_m": 127.18169541704714,
+      "distance_m": 3534.4831106329248,
+      "first_five": [
+        2,
+        1656.8603289552714,
+        110.38122636119104,
+        0,
+        0
+      ]
+    },
+    {
+      "case": 16,
+      "old_edge_nearby_m": 530.7200343228725,
+      "new_circle_inside_m": 403.53833890582536,
+      "reduction_m": 127.18169541704714,
+      "distance_m": 3534.4831106329248,
+      "first_five": [
+        2,
+        1656.8603289552714,
+        110.38122636119104,
+        0,
+        0
+      ]
+    },
+    {
+      "case": 17,
+      "old_edge_nearby_m": 463.9548283129663,
+      "new_circle_inside_m": 408.63921989348233,
+      "reduction_m": 55.315608419483965,
+      "distance_m": 4812.238625051002,
+      "first_five": [
+        0,
+        354.29837662262014,
+        1505.9018874472217,
+        0,
+        3
+      ]
+    },
+    {
+      "case": 18,
+      "old_edge_nearby_m": 136.7985053409877,
+      "new_circle_inside_m": 128.8608001585883,
+      "reduction_m": 7.937705182399412,
+      "distance_m": 5200.467432304152,
+      "first_five": [
+        2,
+        2416.439420973909,
+        453.93221151198935,
+        1,
+        4
+      ]
+    },
+    {
+      "case": 19,
+      "old_edge_nearby_m": 136.7985053409877,
+      "new_circle_inside_m": 128.8608001585883,
+      "reduction_m": 7.937705182399412,
+      "distance_m": 5200.467432304152,
+      "first_five": [
+        2,
+        2416.439420973909,
+        453.93221151198935,
+        1,
+        4
+      ]
+    },
+    {
+      "case": 20,
+      "old_edge_nearby_m": 473.46694890202167,
+      "new_circle_inside_m": 396.1962273422522,
+      "reduction_m": 77.27072155976947,
+      "distance_m": 5182.7743163591485,
+      "first_five": [
+        0,
+        662.7804240089555,
+        768.0391813564256,
+        0,
+        2
+      ]
+    },
+    {
+      "case": 21,
+      "old_edge_nearby_m": 500.9362845694785,
+      "new_circle_inside_m": 458.0985767173296,
+      "reduction_m": 42.837707852148924,
+      "distance_m": 4399.969068368567,
+      "first_five": [
+        2,
+        1335.0609812052214,
+        812.5747969900731,
+        0,
+        3
+      ]
+    },
+    {
+      "case": 22,
+      "old_edge_nearby_m": 198.02718176545406,
+      "new_circle_inside_m": 131.23640180060468,
+      "reduction_m": 66.79077996484938,
+      "distance_m": 4798.016782908886,
+      "first_five": [
+        2,
+        2563.3387504566745,
+        98.10517518585624,
+        0,
+        3
+      ]
+    },
+    {
+      "case": 23,
+      "old_edge_nearby_m": 198.02718176545406,
+      "new_circle_inside_m": 131.23640180060468,
+      "reduction_m": 66.79077996484938,
+      "distance_m": 4782.6326586779,
+      "first_five": [
+        2,
+        2313.53040190933,
+        98.10517518585624,
+        0,
+        3
+      ]
+    },
+    {
+      "case": 24,
+      "old_edge_nearby_m": 281.5419771794062,
+      "new_circle_inside_m": 257.2893803287555,
+      "reduction_m": 24.25259685065072,
+      "distance_m": 4564.27790838674,
+      "first_five": [
+        1,
+        1463.0115219901381,
+        538.4538121066944,
+        0,
+        2
+      ]
+    },
+    {
+      "case": 25,
+      "old_edge_nearby_m": 0.0,
+      "new_circle_inside_m": 0.0,
+      "reduction_m": 0.0,
+      "distance_m": 1636.2054943948463,
+      "first_five": [
+        1,
+        651.1550323802843,
+        166.94771481713877,
+        0,
+        2
+      ]
+    },
+    {
+      "case": 26,
+      "old_edge_nearby_m": 0.0,
+      "new_circle_inside_m": 0.0,
+      "reduction_m": 0.0,
+      "distance_m": 1636.2054943948463,
+      "first_five": [
+        1,
+        651.1550323802843,
+        166.94771481713877,
+        0,
+        2
+      ]
+    },
+    {
+      "case": 27,
+      "old_edge_nearby_m": 0.0,
+      "new_circle_inside_m": 0.0,
+      "reduction_m": 0.0,
+      "distance_m": 1636.2054943948463,
+      "first_five": [
+        1,
+        651.1550323802843,
+        166.94771481713877,
+        0,
+        2
+      ]
+    },
+    {
+      "case": 28,
+      "old_edge_nearby_m": 0.0,
+      "new_circle_inside_m": 0.0,
+      "reduction_m": 0.0,
+      "distance_m": 1636.2054943948463,
+      "first_five": [
+        1,
+        651.1550323802843,
+        166.94771481713877,
+        0,
+        2
+      ]
+    },
+    {
+      "case": 29,
+      "old_edge_nearby_m": 609.1252403603698,
+      "new_circle_inside_m": 348.05983553707796,
+      "reduction_m": 261.0654048232919,
+      "distance_m": 5834.444744503551,
+      "first_five": [
+        1,
+        2377.9725660027048,
+        780.8654995800456,
+        0,
+        12
+      ]
+    },
+    {
+      "case": 30,
+      "old_edge_nearby_m": 803.5869899151808,
+      "new_circle_inside_m": 488.68258946291627,
+      "reduction_m": 314.9044004522645,
+      "distance_m": 6319.385441123775,
+      "first_five": [
+        1,
+        3444.8159194856157,
+        504.81980851753144,
+        0,
+        12
+      ]
+    },
+    {
+      "case": 31,
+      "old_edge_nearby_m": 609.1252403603698,
+      "new_circle_inside_m": 348.05983553707796,
+      "reduction_m": 261.0654048232919,
+      "distance_m": 6196.108605794201,
+      "first_five": [
+        2,
+        3400.0942631206703,
+        360.39174019956135,
+        1,
+        15
+      ]
+    },
+    {
+      "case": 32,
+      "old_edge_nearby_m": 609.1252403603698,
+      "new_circle_inside_m": 348.05983553707796,
+      "reduction_m": 261.0654048232919,
+      "distance_m": 5925.067685762089,
+      "first_five": [
+        1,
+        2750.9461315174203,
+        453.20340469459927,
+        1,
+        12
+      ]
+    },
+    {
+      "case": 33,
+      "old_edge_nearby_m": 417.16921690202975,
+      "new_circle_inside_m": 296.10271564852,
+      "reduction_m": 121.06650125350973,
+      "distance_m": 4008.634089036538,
+      "first_five": [
+        2,
+        1106.5263040829752,
+        1019.4366963325875,
+        2,
+        10
+      ]
+    },
+    {
+      "case": 34,
+      "old_edge_nearby_m": 417.16921690202975,
+      "new_circle_inside_m": 296.10271564852,
+      "reduction_m": 121.06650125350973,
+      "distance_m": 4505.907146872462,
+      "first_five": [
+        5,
+        1474.9122208598674,
+        945.6857207797315,
+        2,
+        6
+      ]
+    },
+    {
+      "case": 35,
+      "old_edge_nearby_m": 562.1824815689408,
+      "new_circle_inside_m": 456.4722087127399,
+      "reduction_m": 105.7102728562009,
+      "distance_m": 4875.370412885964,
+      "first_five": [
+        5,
+        1466.9341094035553,
+        606.7272202922251,
+        2,
+        0
+      ]
+    },
+    {
+      "case": 36,
+      "old_edge_nearby_m": 442.6659691494541,
+      "new_circle_inside_m": 362.9413816662597,
+      "reduction_m": 79.7245874831944,
+      "distance_m": 4158.93536969306,
+      "first_five": [
+        1,
+        615.944991139454,
+        1178.1029113614566,
+        2,
+        10
+      ]
+    },
+    {
+      "case": 37,
+      "old_edge_nearby_m": 225.1629031176327,
+      "new_circle_inside_m": 188.8747638292946,
+      "reduction_m": 36.2881392883381,
+      "distance_m": 1422.031757501335,
+      "first_five": [
+        0,
+        220.20604911059073,
+        433.40092307851114,
+        0,
+        4
+      ]
+    },
+    {
+      "case": 38,
+      "old_edge_nearby_m": 219.4766035356347,
+      "new_circle_inside_m": 195.21801557372703,
+      "reduction_m": 24.258587961907665,
+      "distance_m": 1428.8464635191986,
+      "first_five": [
+        0,
+        302.42005413901404,
+        327.6827696246345,
+        0,
+        4
+      ]
+    },
+    {
+      "case": 39,
+      "old_edge_nearby_m": 0.0,
+      "new_circle_inside_m": 0.0,
+      "reduction_m": 0.0,
+      "distance_m": 1589.0926453408235,
+      "first_five": [
+        0,
+        403.166818032667,
+        226.4998106875106,
+        0,
+        3
+      ]
+    },
+    {
+      "case": 40,
+      "old_edge_nearby_m": 0.0,
+      "new_circle_inside_m": 0.0,
+      "reduction_m": 0.0,
+      "distance_m": 1589.0926453408235,
+      "first_five": [
+        0,
+        403.166818032667,
+        226.4998106875106,
+        0,
+        3
+      ]
+    },
+    {
+      "case": 41,
+      "old_edge_nearby_m": 919.8025940574063,
+      "new_circle_inside_m": 698.1176035311665,
+      "reduction_m": 221.68499052623974,
+      "distance_m": 5676.088755266739,
+      "first_five": [
+        1,
+        2223.283905090229,
+        1855.3001983717909,
+        4,
+        12
+      ]
+    },
+    {
+      "case": 42,
+      "old_edge_nearby_m": 985.8044529977809,
+      "new_circle_inside_m": 809.6898890548347,
+      "reduction_m": 176.11456394294623,
+      "distance_m": 6293.2842378936875,
+      "first_five": [
+        1,
+        4124.323846854052,
+        1586.0429633864335,
+        4,
+        9
+      ]
+    },
+    {
+      "case": 43,
+      "old_edge_nearby_m": 985.8044529977809,
+      "new_circle_inside_m": 809.6898890548347,
+      "reduction_m": 176.11456394294623,
+      "distance_m": 6331.664259814053,
+      "first_five": [
+        1,
+        2440.53671112149,
+        1118.7833729627423,
+        5,
+        17
+      ]
+    },
+    {
+      "case": 44,
+      "old_edge_nearby_m": 728.4679162531637,
+      "new_circle_inside_m": 689.0214059232916,
+      "reduction_m": 39.446510329872126,
+      "distance_m": 6273.892728134311,
+      "first_five": [
+        0,
+        595.6211571311027,
+        1712.6509950047516,
+        4,
+        14
+      ]
+    },
+    {
+      "case": 45,
+      "old_edge_nearby_m": 146.25796590373142,
+      "new_circle_inside_m": 98.56141870301077,
+      "reduction_m": 47.696547200720644,
+      "distance_m": 1856.7984371236648,
+      "first_five": [
+        0,
+        780.995850337701,
+        293.9990618219481,
+        2,
+        7
+      ]
+    },
+    {
+      "case": 46,
+      "old_edge_nearby_m": 146.25796590373142,
+      "new_circle_inside_m": 98.56141870301077,
+      "reduction_m": 47.696547200720644,
+      "distance_m": 1862.377772885268,
+      "first_five": [
+        0,
+        862.3481213522949,
+        198.69735244993507,
+        0,
+        0
+      ]
+    },
+    {
+      "case": 47,
+      "old_edge_nearby_m": 146.25796590373142,
+      "new_circle_inside_m": 98.56141870301077,
+      "reduction_m": 47.696547200720644,
+      "distance_m": 1862.377772885268,
+      "first_five": [
+        0,
+        862.3481213522949,
+        198.69735244993507,
+        0,
+        0
+      ]
+    },
+    {
+      "case": 48,
+      "old_edge_nearby_m": 120.43575874429149,
+      "new_circle_inside_m": 79.91965979490551,
+      "reduction_m": 40.51609894938598,
+      "distance_m": 1879.2703226306369,
+      "first_five": [
+        0,
+        644.0896651968561,
+        242.69131742144714,
+        0,
+        1
+      ]
+    }
+  ]
+}

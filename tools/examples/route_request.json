@@ -1,0 +1,99 @@
+{
+  "contract_version": "anjeon_contract_v4",
+  "dataset_version": "seoul_static_20260915_review2",
+  "feature_version": "static_burden_v4",
+  "segments": [
+    {
+      "arc_id": 582586
+    },
+    {
+      "arc_id": 370280
+    },
+    {
+      "arc_id": 370282
+    },
+    {
+      "arc_id": 370284
+    },
+    {
+      "arc_id": 370303
+    },
+    {
+      "arc_id": 98424
+    },
+    {
+      "arc_id": 98426
+    },
+    {
+      "arc_id": 98428
+    },
+    {
+      "arc_id": 512841
+    },
+    {
+      "arc_id": 512839
+    },
+    {
+      "arc_id": 370931
+    },
+    {
+      "arc_id": 370929
+    },
+    {
+      "arc_id": 125075
+    },
+    {
+      "arc_id": 125073
+    },
+    {
+      "arc_id": 125071
+    },
+    {
+      "arc_id": 341881
+    },
+    {
+      "arc_id": 341879
+    },
+    {
+      "arc_id": 124993
+    },
+    {
+      "arc_id": 125061
+    },
+    {
+      "arc_id": 125059
+    },
+    {
+      "arc_id": 125057
+    },
+    {
+      "arc_id": 125055
+    },
+    {
+      "arc_id": 91118
+    },
+    {
+      "arc_id": 91120
+    },
+    {
+      "arc_id": 91122
+    },
+    {
+      "arc_id": 91124
+    },
+    {
+      "arc_id": 91126
+    },
+    {
+      "arc_id": 91128
+    },
+    {
+      "arc_id": 632722
+    },
+    {
+      "arc_id": 633606
+    }
+  ],
+  "eta_version": "internal_static_v2_provenance",
+  "routing_policy_version": "review_exclusion_v1"
+}

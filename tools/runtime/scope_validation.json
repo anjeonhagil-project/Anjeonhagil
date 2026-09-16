@@ -1,0 +1,11 @@
+{
+  "package_version": "team_data_20260915_v2_scope",
+  "data_and_rules_unchanged": true,
+  "invalid_inputs_rejected": 42,
+  "preserved_paths": 48,
+  "example_response_current": true,
+  "sensitivity_reexecuted_from_separate_cwd": true,
+  "full_rebuild_rerun": false,
+  "rebuild_reason": "numerical data unchanged; previous core rebuild evidence preserved",
+  "documentation_checks": "32 unique tasks, old status paragraph replaced, internal anchors checked; visual rendering not rechecked"
+}

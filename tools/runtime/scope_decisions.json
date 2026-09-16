@@ -1,0 +1,237 @@
+{
+  "package_version": "team_data_20260915_v2_scope",
+  "counts": {
+    "original_complete": 12,
+    "scoped_deliverable_closed": 10,
+    "remaining": 10
+  },
+  "user_process_evidence": "QGIS; OSM input; Seoul boundary and 1km buffer; EPSG:5186; facility address geocoding then EPSG:5186 and 100m proximity",
+  "numerical_data_changed": false,
+  "hourly_eta_implemented": false,
+  "items": [
+    {
+      "id": "T01",
+      "title": "원본 파일 식별·해시 보존",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T02",
+      "title": "좌표계·범위·원경계/버퍼 대조",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T03",
+      "title": "전체 원본 출처·기준일·갱신·사용조건 계약",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "제작 이력·입력·갱신 방침 정리됨. 모든 자료의 사용조건 확인은 미완료"
+    },
+    {
+      "id": "T04",
+      "title": "edge·node·방향 기초 검사",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T05",
+      "title": "정적 접근·장벽 규칙 및 연결 영향",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T06",
+      "title": "회전 보류 목록과 공개 이력 조사",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T07",
+      "title": "12 OD 거리 A* 비교 및 경로 재생",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T08",
+      "title": "보류 relation 291건 판단·해소",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "보류 restriction 291개 해소 미완료. 현 지원 범위·보류 정책 유지"
+    },
+    {
+      "id": "T09",
+      "title": "시간·차량 규칙과 참조 평가기",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T10",
+      "title": "시간 의존 그래프·Q3·스냅·부분구간 통합 검증",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "시간대별 탐색·Q3·방향 스냅·부분구간 통합 필요"
+    },
+    {
+      "id": "T11",
+      "title": "컬럼·결측·원본 속성 조사",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T12",
+      "title": "높이·중량 등 제한 단위 파싱",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T13",
+      "title": "차로·폭·속도 정제와 출처/추정 분리",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "현재 원문·추정·미상·제외 정책 고정; 외부 실측 확인은 추가 근거 시 갱신"
+    },
+    {
+      "id": "T14",
+      "title": "시설 중복·지오코딩 이력·근접 집계 최종 검증",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "QGIS 제작 이력 및 현 시설 좌표·100m 계산 고정; 원주소 서비스 이력은 T03 잔여"
+    },
+    {
+      "id": "T15",
+      "title": "서울 TAAS 취득·기간·단위·중복·매칭",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "TAAS 원문·포인트·근접 집계 보조자료 고정; 개별 도로 귀속 확정은 미완료"
+    },
+    {
+      "id": "T16",
+      "title": "전체 결측 처리·추정 비율·순위 민감도",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "48개 고정 후보의 진단 종료; 최종 모델·시간·Q3 순위 검증은 통합 잔여"
+    },
+    {
+      "id": "T17",
+      "title": "6개 피처 의미·순서 기준 대조",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T18",
+      "title": "보조 피처 계산 및 단위별 저장",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T19",
+      "title": "6개 경로 집계·부분구간·연속조작 계산",
+      "status": "original_complete",
+      "original_task_complete": true,
+      "closure_or_remaining": "기존 명시 범위의 검증 완료 유지"
+    },
+    {
+      "id": "T20",
+      "title": "분포·결측·이상값·실제 사례 검증",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "분포·수치 검사 존재. 실제 내비 차이와 통행 가능성 확인 필요"
+    },
+    {
+      "id": "T21",
+      "title": "내부시간·표시 ETA·Q3 계약 구현",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "정적 내부시간 계약 존재. TOPIS 적용 및 Q3·표시시간 통합 필요"
+    },
+    {
+      "id": "T22",
+      "title": "X8/Y·스케일·분할·실제/합성 구분 검증",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "X8/Y·버전·노출·scale·mock 구분 계약 종료; 실제 사람 로그 분할 검증 잔여"
+    },
+    {
+      "id": "T23",
+      "title": "카카오 매칭·coverage·fallback 연결",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "카카오 geometry의 OSM 매칭·coverage·fallback 검증 필요"
+    },
+    {
+      "id": "T24",
+      "title": "최신 DB 실구조와 FINAL 대조",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "최신 팀 DB DDL 대조 필요"
+    },
+    {
+      "id": "T25",
+      "title": "도로·버전·설문·후보·노출·선택 스키마",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "부록 B 논리 저장 설계 종료; 최신 DDL 적용·FK 검증 잔여"
+    },
+    {
+      "id": "T26",
+      "title": "개인 프로필·이력·모델 버전·복구 구조",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "프로필·모델·이력·복구 논리 계약 종료; 실제 DB·API 구현 검증 잔여"
+    },
+    {
+      "id": "T27",
+      "title": "데이터 보존 migration·rollback 검증",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "실제 DB migration·rollback 검증 필요"
+    },
+    {
+      "id": "T28",
+      "title": "적재 파일·코드·저장 위치 확정",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "파일·경로·적재 순서·버전 전환 인수 안내 종료; 대상 DB 적재 코드 검증 잔여"
+    },
+    {
+      "id": "T29",
+      "title": "적재 후 FK·좌표·수치·건수 대조",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "적재 후 FK·좌표·건수·수치 왕복 대조 필요"
+    },
+    {
+      "id": "T30",
+      "title": "API·화면·모델까지 선택 로그 연결 검증",
+      "status": "remaining",
+      "original_task_complete": false,
+      "closure_or_remaining": "API·화면·선택·모델 실제 연결 확인 필요"
+    },
+    {
+      "id": "T31",
+      "title": "공통 명세·책임·버전 계약 정리",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "명세·책임·버전·인수 판정 문서 종료; 팀 실제 준수 확인 잔여"
+    },
+    {
+      "id": "T32",
+      "title": "원본부터 재실행·배포·인수 확인",
+      "status": "scoped_deliverable_closed",
+      "original_task_complete": false,
+      "closure_or_remaining": "제공 입력 재생성·핵심 DB 해시 인계 종료; 최초 취득과 팀 서비스 인수는 범위 밖/잔여"
+    }
+  ]
+}

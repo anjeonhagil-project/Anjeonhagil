@@ -1,0 +1,6067 @@
+{
+  "request": {
+    "origin": {
+      "lng": 127.03312080000002,
+      "lat": 37.51103560000001
+    },
+    "destination": {
+      "lng": 127.03800340000002,
+      "lat": 37.501192399999994
+    },
+    "departure_at": "2026-09-15T08:00:00+09:00",
+    "ranks": [
+      2,
+      0,
+      1,
+      0,
+      0,
+      3
+    ],
+    "max_detour_minutes": 5
+  },
+  "response": {
+    "contract_version": "anjeon_contract_v6_child100",
+    "dataset_version": "seoul_static_20260915_review2",
+    "feature_version": "static_burden_v5_child_circle_inside",
+    "eta_version": "internal_hourly_topis_v1",
+    "routing_policy_version": "review_exclusion_v1",
+    "departure_at": "2026-09-15T08:00:00+09:00",
+    "minimum_internal_duration_s": 229.39081025123596,
+    "max_detour_minutes": 5,
+    "internal_time_limit_s": 529.390810251236,
+    "origin_snap": {
+      "edge_id": 125978,
+      "distance_m": 2.533120346817545e-10,
+      "lng": 127.03312080000002,
+      "lat": 37.51103560000001,
+      "heading_applied": false,
+      "direction_assumption": "all_allowed_directions_on_nearest_edge"
+    },
+    "destination_snap": {
+      "edge_id": 316803,
+      "distance_m": 0.0,
+      "lng": 127.03800340000002,
+      "lat": 37.501192399999994,
+      "heading_applied": false,
+      "direction_assumption": "all_allowed_directions_on_nearest_edge"
+    },
+    "profile_weights": [
+      0.3333333333333333,
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.16666666666666666
+    ],
+    "shortestTime": {
+      "contract_version": "anjeon_contract_v6_child100",
+      "dataset_version": "seoul_static_20260915_review2",
+      "feature_version": "static_burden_v5_child_circle_inside",
+      "eta_version": "internal_hourly_topis_v1",
+      "routing_policy_version": "review_exclusion_v1",
+      "factor_order": [
+        "COMPLEX_INTERSECTION",
+        "MERGE_BRANCH",
+        "NARROW_ROAD",
+        "UNFAMILIAR_TURN",
+        "CONSECUTIVE_ACTION",
+        "CHILD_ZONE_NEARBY"
+      ],
+      "units": [
+        "count",
+        "score*m",
+        "score*m",
+        "count",
+        "count",
+        "m"
+      ],
+      "raw_features": [
+        0,
+        302.42005413901404,
+        327.6827696246345,
+        0,
+        4,
+        195.21801557372703
+      ],
+      "distance_m": 1428.8464635191986,
+      "internal_duration_s": 229.39081025123596,
+      "time_source": "INTERNAL_HOURLY",
+      "quality": {
+        "eta_source_lengths_m": {
+          "explicit_highway_prior": 1428.8464635191986
+        },
+        "child_circle_inside_m": 195.21801557372703,
+        "child_circle_method": "facility_100m_euclidean_union_v1",
+        "all_six_ready": true,
+        "narrow_estimated_length_m": 1428.8464635191986,
+        "merge_estimated_length_m": 1391.3167254303128,
+        "unknown_narrow_length_m": 0.0,
+        "unknown_merge_length_m": 0.0,
+        "recorded_static_constraints_checked": true,
+        "external_review_turns": [],
+        "routing_policy_version": "review_exclusion_v1",
+        "routing_acceptance": "NOT_ASSESSED",
+        "production_route_approved": false,
+        "child_feature_method": "facility_point_100m_circle_union_intersection_length_v2",
+        "legacy_child_nearby_edge_length_m": 219.4766035356347
+      },
+      "departure_at": "2026-09-15T08:00:00+09:00",
+      "arrival_at": "2026-09-15T08:03:49.390810+09:00",
+      "hourly_speed_coverage": {
+        "total_distance_m": 1428.8464635191986,
+        "topis_profile_distance_m": 183.53206893917147,
+        "topis_profile_ratio": 0.12844771892925322,
+        "fallback_distance_m": 1245.314394580027,
+        "fallback_ratio": 0.8715522810707468,
+        "source_distance_m": {
+          "FALLBACK_EXPLICIT_HIGHWAY_PRIOR": 1245.314394580027,
+          "TOPIS_HISTORICAL": 183.53206893917147
+        },
+        "fallback_reason_distance_m": {
+          "NO_SOURCE_GEOMETRY_NEARBY": 686.1965514223198,
+          "ROAD_NAME_MISMATCH": 175.33954190773613,
+          "DIRECTION_OR_GEOMETRY_MISMATCH": 377.0228956917963,
+          "OSM_ROAD_NAME_MISSING": 6.755405558174521
+        },
+        "historical_estimate": true,
+        "live_traffic": false,
+        "holiday_separated": false,
+        "profile_period": "2026-08-01/2026-08-24"
+      },
+      "speed_segments": [
+        {
+          "arc_id": 582586,
+          "distance_m": 16.111274365152983,
+          "duration_s": 5.800058771455074,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 10.0
+        },
+        {
+          "arc_id": 370280,
+          "distance_m": 111.87187205428881,
+          "duration_s": 20.136936969771988,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 370282,
+          "distance_m": 53.206490075786654,
+          "duration_s": 9.577168213641597,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 370284,
+          "distance_m": 4.850485350670898,
+          "duration_s": 0.8730873631207616,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 370303,
+          "distance_m": 81.57181204235931,
+          "duration_s": 14.682926167624677,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "ROAD_NAME_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 98424,
+          "distance_m": 92.99399733266257,
+          "duration_s": 19.71023788034061,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029600",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 16.985
+        },
+        {
+          "arc_id": 98426,
+          "distance_m": 59.76373907579765,
+          "duration_s": 12.667027416713074,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029600",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 16.985
+        },
+        {
+          "arc_id": 98428,
+          "distance_m": 70.6328810364083,
+          "duration_s": 7.265096335173426,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 512841,
+          "distance_m": 54.39147197186336,
+          "duration_s": 5.5945514028202314,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 512839,
+          "distance_m": 87.57053262667803,
+          "duration_s": 9.007254784458313,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 512837,
+          "distance_m": 69.47614325427693,
+          "duration_s": 7.146117591868484,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 512835,
+          "distance_m": 94.95186680256961,
+          "duration_s": 9.766477728264302,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 370908,
+          "distance_m": 81.19084125919689,
+          "duration_s": 14.61435142665544,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "ROAD_NAME_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125069,
+          "distance_m": 148.90032997802854,
+          "duration_s": 26.802059396045138,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125067,
+          "distance_m": 70.57627355760616,
+          "duration_s": 12.703729240369109,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125065,
+          "distance_m": 87.08616056617876,
+          "duration_s": 15.675508901912178,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 91094,
+          "distance_m": 53.82300286877033,
+          "duration_s": 7.7505124131029275,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91118,
+          "distance_m": 36.49911402460245,
+          "duration_s": 5.2558724195427535,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91120,
+          "distance_m": 36.302350493389376,
+          "duration_s": 5.227538471048071,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91122,
+          "distance_m": 39.03722311401272,
+          "duration_s": 5.621360128417832,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91124,
+          "distance_m": 27.931974973832148,
+          "duration_s": 4.022204396231829,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91126,
+          "distance_m": 3.610988036888931,
+          "duration_s": 0.5199822773120061,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "ROAD_NAME_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91128,
+          "distance_m": 8.965900569290985,
+          "duration_s": 1.291089681977902,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "ROAD_NAME_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 632722,
+          "distance_m": 30.774332530711238,
+          "duration_s": 6.463687112634799,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220025200",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 17.14
+        },
+        {
+          "arc_id": 633606,
+          "distance_m": 6.755405558174521,
+          "duration_s": 1.2159730004714138,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "OSM_ROAD_NAME_MISSING",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        }
+      ],
+      "static_reference_duration_s": 209.42744131502883,
+      "segments": [
+        {
+          "arc_id": 582586,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370280,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370282,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370284,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370303,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 98424,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 98426,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 98428,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 512841,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 512839,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 512837,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 512835,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370908,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125069,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125067,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125065,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91094,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91118,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91120,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91122,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91124,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91126,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91128,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632722,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 633606,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        }
+      ],
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.03312080000002,
+            37.51103560000001
+          ],
+          [
+            127.03318350000002,
+            37.5108993
+          ],
+          [
+            127.03363440000003,
+            37.5099575
+          ],
+          [
+            127.0338456,
+            37.509508600000004
+          ],
+          [
+            127.03386390000003,
+            37.509467400000005
+          ],
+          [
+            127.03300010000001,
+            37.5092092
+          ],
+          [
+            127.03336750000001,
+            37.508424100000006
+          ],
+          [
+            127.03361810000001,
+            37.507923999999996
+          ],
+          [
+            127.0338945,
+            37.5073269
+          ],
+          [
+            127.0341205,
+            37.5068711
+          ],
+          [
+            127.03446380000001,
+            37.506131
+          ],
+          [
+            127.0347354,
+            37.5055436
+          ],
+          [
+            127.0351014,
+            37.5047393
+          ],
+          [
+            127.03596130000001,
+            37.50499590000001
+          ],
+          [
+            127.03653930000002,
+            37.5037358
+          ],
+          [
+            127.0368239,
+            37.50314170000001
+          ],
+          [
+            127.037175,
+            37.50240860000001
+          ],
+          [
+            127.03772670000001,
+            37.5026135
+          ],
+          [
+            127.037869,
+            37.502304800000005
+          ],
+          [
+            127.03802270000001,
+            37.50200150000001
+          ],
+          [
+            127.0381909,
+            37.5016763
+          ],
+          [
+            127.03831510000002,
+            37.50144490000001
+          ],
+          [
+            127.0383312,
+            37.501415
+          ],
+          [
+            127.03837100000001,
+            37.5013407
+          ],
+          [
+            127.03804510000002,
+            37.5012434
+          ],
+          [
+            127.03800340000002,
+            37.501192399999994
+          ]
+        ]
+      },
+      "path": [
+        {
+          "lng": 127.03312080000002,
+          "lat": 37.51103560000001
+        },
+        {
+          "lng": 127.03318350000002,
+          "lat": 37.5108993
+        },
+        {
+          "lng": 127.03363440000003,
+          "lat": 37.5099575
+        },
+        {
+          "lng": 127.0338456,
+          "lat": 37.509508600000004
+        },
+        {
+          "lng": 127.03386390000003,
+          "lat": 37.509467400000005
+        },
+        {
+          "lng": 127.03300010000001,
+          "lat": 37.5092092
+        },
+        {
+          "lng": 127.03336750000001,
+          "lat": 37.508424100000006
+        },
+        {
+          "lng": 127.03361810000001,
+          "lat": 37.507923999999996
+        },
+        {
+          "lng": 127.0338945,
+          "lat": 37.5073269
+        },
+        {
+          "lng": 127.0341205,
+          "lat": 37.5068711
+        },
+        {
+          "lng": 127.03446380000001,
+          "lat": 37.506131
+        },
+        {
+          "lng": 127.0347354,
+          "lat": 37.5055436
+        },
+        {
+          "lng": 127.0351014,
+          "lat": 37.5047393
+        },
+        {
+          "lng": 127.03596130000001,
+          "lat": 37.50499590000001
+        },
+        {
+          "lng": 127.03653930000002,
+          "lat": 37.5037358
+        },
+        {
+          "lng": 127.0368239,
+          "lat": 37.50314170000001
+        },
+        {
+          "lng": 127.037175,
+          "lat": 37.50240860000001
+        },
+        {
+          "lng": 127.03772670000001,
+          "lat": 37.5026135
+        },
+        {
+          "lng": 127.037869,
+          "lat": 37.502304800000005
+        },
+        {
+          "lng": 127.03802270000001,
+          "lat": 37.50200150000001
+        },
+        {
+          "lng": 127.0381909,
+          "lat": 37.5016763
+        },
+        {
+          "lng": 127.03831510000002,
+          "lat": 37.50144490000001
+        },
+        {
+          "lng": 127.0383312,
+          "lat": 37.501415
+        },
+        {
+          "lng": 127.03837100000001,
+          "lat": 37.5013407
+        },
+        {
+          "lng": 127.03804510000002,
+          "lat": 37.5012434
+        },
+        {
+          "lng": 127.03800340000002,
+          "lat": 37.501192399999994
+        }
+      ],
+      "distance": 1428.8464635191986,
+      "duration": 229.39081025123596,
+      "search_diagnostic": {
+        "objective": "time",
+        "objective_cost": 229.39080971609687,
+        "expanded_states": 2578
+      },
+      "burden_score": 0.19637772074127174,
+      "q3_eligible": true,
+      "profile_weights": [
+        0.3333333333333333,
+        0.0,
+        0.5,
+        0.0,
+        0.0,
+        0.16666666666666666
+      ],
+      "ranking_method": "survey_weighted_raw6_v1",
+      "ranking_scale": [
+        10.0,
+        1000.0,
+        1000.0,
+        10.0,
+        10.0,
+        1000.0
+      ]
+    },
+    "shortestDistance": {
+      "contract_version": "anjeon_contract_v6_child100",
+      "dataset_version": "seoul_static_20260915_review2",
+      "feature_version": "static_burden_v5_child_circle_inside",
+      "eta_version": "internal_hourly_topis_v1",
+      "routing_policy_version": "review_exclusion_v1",
+      "factor_order": [
+        "COMPLEX_INTERSECTION",
+        "MERGE_BRANCH",
+        "NARROW_ROAD",
+        "UNFAMILIAR_TURN",
+        "CONSECUTIVE_ACTION",
+        "CHILD_ZONE_NEARBY"
+      ],
+      "units": [
+        "count",
+        "score*m",
+        "score*m",
+        "count",
+        "count",
+        "m"
+      ],
+      "raw_features": [
+        0,
+        220.20604911059073,
+        433.40092307851114,
+        0,
+        4,
+        188.8747638292946
+      ],
+      "distance_m": 1422.031757501335,
+      "internal_duration_s": 242.78623747825623,
+      "time_source": "INTERNAL_HOURLY",
+      "quality": {
+        "eta_source_lengths_m": {
+          "explicit_highway_prior": 1422.031757501335
+        },
+        "child_circle_inside_m": 188.8747638292946,
+        "child_circle_method": "facility_100m_euclidean_union_v1",
+        "all_six_ready": true,
+        "narrow_estimated_length_m": 1422.031757501335,
+        "merge_estimated_length_m": 1384.5020194124493,
+        "unknown_narrow_length_m": 0.0,
+        "unknown_merge_length_m": 0.0,
+        "recorded_static_constraints_checked": true,
+        "external_review_turns": [],
+        "routing_policy_version": "review_exclusion_v1",
+        "routing_acceptance": "NOT_ASSESSED",
+        "production_route_approved": false,
+        "child_feature_method": "facility_point_100m_circle_union_intersection_length_v2",
+        "legacy_child_nearby_edge_length_m": 225.1629031176327
+      },
+      "departure_at": "2026-09-15T08:00:00+09:00",
+      "arrival_at": "2026-09-15T08:04:02.786237+09:00",
+      "hourly_speed_coverage": {
+        "total_distance_m": 1422.0317575013348,
+        "topis_profile_distance_m": 183.53206893917147,
+        "topis_profile_ratio": 0.12906327019141778,
+        "fallback_distance_m": 1238.4996885621633,
+        "fallback_ratio": 0.8709367298085822,
+        "source_distance_m": {
+          "FALLBACK_EXPLICIT_HIGHWAY_PRIOR": 1238.4996885621633,
+          "TOPIS_HISTORICAL": 183.53206893917147
+        },
+        "fallback_reason_distance_m": {
+          "NO_SOURCE_GEOMETRY_NEARBY": 876.7787584185639,
+          "ROAD_NAME_MISMATCH": 142.37063895047493,
+          "DIRECTION_OR_GEOMETRY_MISMATCH": 212.59488563494972,
+          "OSM_ROAD_NAME_MISSING": 6.755405558174521
+        },
+        "historical_estimate": true,
+        "live_traffic": false,
+        "holiday_separated": false,
+        "profile_period": "2026-08-01/2026-08-24"
+      },
+      "speed_segments": [
+        {
+          "arc_id": 582586,
+          "distance_m": 16.111274365152983,
+          "duration_s": 5.800058771455074,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 10.0
+        },
+        {
+          "arc_id": 370280,
+          "distance_m": 111.87187205428881,
+          "duration_s": 20.136936969771988,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 370282,
+          "distance_m": 53.206490075786654,
+          "duration_s": 9.577168213641597,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 370284,
+          "distance_m": 4.850485350670898,
+          "duration_s": 0.8730873631207616,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 370303,
+          "distance_m": 81.57181204235931,
+          "duration_s": 14.682926167624677,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "ROAD_NAME_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 98424,
+          "distance_m": 92.99399733266257,
+          "duration_s": 19.71023788034061,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029600",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 16.985
+        },
+        {
+          "arc_id": 98426,
+          "distance_m": 59.76373907579765,
+          "duration_s": 12.667027416713074,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029600",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 16.985
+        },
+        {
+          "arc_id": 98428,
+          "distance_m": 70.6328810364083,
+          "duration_s": 7.265096335173426,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 512841,
+          "distance_m": 54.39147197186336,
+          "duration_s": 5.5945514028202314,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 512839,
+          "distance_m": 87.57053262667803,
+          "duration_s": 9.007254784458313,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 370931,
+          "distance_m": 48.2219383019357,
+          "duration_s": 8.679948894348426,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "ROAD_NAME_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 370929,
+          "distance_m": 30.939988815108027,
+          "duration_s": 5.569197986719445,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125075,
+          "distance_m": 20.456609320236904,
+          "duration_s": 3.6821896776426426,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125073,
+          "distance_m": 73.7256698358208,
+          "duration_s": 13.270620570447743,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125071,
+          "distance_m": 70.55402602068548,
+          "duration_s": 12.699724683723387,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 341881,
+          "distance_m": 35.58543498097676,
+          "duration_s": 6.405378296575816,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 341879,
+          "distance_m": 17.864708542323097,
+          "duration_s": 3.2156475376181577,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 124993,
+          "distance_m": 146.47830179983168,
+          "duration_s": 26.3660943239697,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125061,
+          "distance_m": 41.83510849715037,
+          "duration_s": 7.530319529487068,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125059,
+          "distance_m": 36.849492820650646,
+          "duration_s": 6.6329087077171165,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125057,
+          "distance_m": 36.367012642127726,
+          "duration_s": 6.54606227558299,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 125055,
+          "distance_m": 40.3116206919164,
+          "duration_s": 7.256091724544953,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 91118,
+          "distance_m": 36.49911402460245,
+          "duration_s": 5.2558724195427535,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91120,
+          "distance_m": 36.302350493389376,
+          "duration_s": 5.227538471048071,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91122,
+          "distance_m": 39.03722311401272,
+          "duration_s": 5.621360128417832,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91124,
+          "distance_m": 27.931974973832148,
+          "duration_s": 4.022204396231829,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91126,
+          "distance_m": 3.610988036888931,
+          "duration_s": 0.5199822773120061,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "ROAD_NAME_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 91128,
+          "distance_m": 8.965900569290985,
+          "duration_s": 1.291089681977902,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "ROAD_NAME_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.0
+        },
+        {
+          "arc_id": 632722,
+          "distance_m": 30.774332530711238,
+          "duration_s": 6.463687112634799,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220025200",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 17.14
+        },
+        {
+          "arc_id": 633606,
+          "distance_m": 6.755405558174521,
+          "duration_s": 1.2159730004714138,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "OSM_ROAD_NAME_MISSING",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        }
+      ],
+      "static_reference_duration_s": 222.82286882518866,
+      "segments": [
+        {
+          "arc_id": 582586,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370280,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370282,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370284,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370303,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 98424,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 98426,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 98428,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 512841,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 512839,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370931,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370929,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125075,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125073,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125071,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 341881,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 341879,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 124993,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125061,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125059,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125057,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 125055,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91118,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91120,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91122,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91124,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91126,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 91128,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632722,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 633606,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        }
+      ],
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.03312080000002,
+            37.51103560000001
+          ],
+          [
+            127.03318350000002,
+            37.5108993
+          ],
+          [
+            127.03363440000003,
+            37.5099575
+          ],
+          [
+            127.0338456,
+            37.509508600000004
+          ],
+          [
+            127.03386390000003,
+            37.509467400000005
+          ],
+          [
+            127.03300010000001,
+            37.5092092
+          ],
+          [
+            127.03336750000001,
+            37.508424100000006
+          ],
+          [
+            127.03361810000001,
+            37.507923999999996
+          ],
+          [
+            127.0338945,
+            37.5073269
+          ],
+          [
+            127.0341205,
+            37.5068711
+          ],
+          [
+            127.03446380000001,
+            37.506131
+          ],
+          [
+            127.0349716,
+            37.5062895
+          ],
+          [
+            127.03530090000001,
+            37.5063838
+          ],
+          [
+            127.03538470000001,
+            37.506212000000005
+          ],
+          [
+            127.03567740000001,
+            37.50559
+          ],
+          [
+            127.03596130000001,
+            37.50499590000001
+          ],
+          [
+            127.0363406,
+            37.5051031
+          ],
+          [
+            127.03652960000001,
+            37.50516
+          ],
+          [
+            127.03711210000002,
+            37.50392450000001
+          ],
+          [
+            127.03729420000002,
+            37.50357660000001
+          ],
+          [
+            127.0374374,
+            37.50326480000001
+          ],
+          [
+            127.03757460000003,
+            37.50295590000001
+          ],
+          [
+            127.03772670000001,
+            37.5026135
+          ],
+          [
+            127.037869,
+            37.502304800000005
+          ],
+          [
+            127.03802270000001,
+            37.50200150000001
+          ],
+          [
+            127.0381909,
+            37.5016763
+          ],
+          [
+            127.03831510000002,
+            37.50144490000001
+          ],
+          [
+            127.0383312,
+            37.501415
+          ],
+          [
+            127.03837100000001,
+            37.5013407
+          ],
+          [
+            127.03804510000002,
+            37.5012434
+          ],
+          [
+            127.03800340000002,
+            37.501192399999994
+          ]
+        ]
+      },
+      "path": [
+        {
+          "lng": 127.03312080000002,
+          "lat": 37.51103560000001
+        },
+        {
+          "lng": 127.03318350000002,
+          "lat": 37.5108993
+        },
+        {
+          "lng": 127.03363440000003,
+          "lat": 37.5099575
+        },
+        {
+          "lng": 127.0338456,
+          "lat": 37.509508600000004
+        },
+        {
+          "lng": 127.03386390000003,
+          "lat": 37.509467400000005
+        },
+        {
+          "lng": 127.03300010000001,
+          "lat": 37.5092092
+        },
+        {
+          "lng": 127.03336750000001,
+          "lat": 37.508424100000006
+        },
+        {
+          "lng": 127.03361810000001,
+          "lat": 37.507923999999996
+        },
+        {
+          "lng": 127.0338945,
+          "lat": 37.5073269
+        },
+        {
+          "lng": 127.0341205,
+          "lat": 37.5068711
+        },
+        {
+          "lng": 127.03446380000001,
+          "lat": 37.506131
+        },
+        {
+          "lng": 127.0349716,
+          "lat": 37.5062895
+        },
+        {
+          "lng": 127.03530090000001,
+          "lat": 37.5063838
+        },
+        {
+          "lng": 127.03538470000001,
+          "lat": 37.506212000000005
+        },
+        {
+          "lng": 127.03567740000001,
+          "lat": 37.50559
+        },
+        {
+          "lng": 127.03596130000001,
+          "lat": 37.50499590000001
+        },
+        {
+          "lng": 127.0363406,
+          "lat": 37.5051031
+        },
+        {
+          "lng": 127.03652960000001,
+          "lat": 37.50516
+        },
+        {
+          "lng": 127.03711210000002,
+          "lat": 37.50392450000001
+        },
+        {
+          "lng": 127.03729420000002,
+          "lat": 37.50357660000001
+        },
+        {
+          "lng": 127.0374374,
+          "lat": 37.50326480000001
+        },
+        {
+          "lng": 127.03757460000003,
+          "lat": 37.50295590000001
+        },
+        {
+          "lng": 127.03772670000001,
+          "lat": 37.5026135
+        },
+        {
+          "lng": 127.037869,
+          "lat": 37.502304800000005
+        },
+        {
+          "lng": 127.03802270000001,
+          "lat": 37.50200150000001
+        },
+        {
+          "lng": 127.0381909,
+          "lat": 37.5016763
+        },
+        {
+          "lng": 127.03831510000002,
+          "lat": 37.50144490000001
+        },
+        {
+          "lng": 127.0383312,
+          "lat": 37.501415
+        },
+        {
+          "lng": 127.03837100000001,
+          "lat": 37.5013407
+        },
+        {
+          "lng": 127.03804510000002,
+          "lat": 37.5012434
+        },
+        {
+          "lng": 127.03800340000002,
+          "lat": 37.501192399999994
+        }
+      ],
+      "distance": 1422.031757501335,
+      "duration": 242.78623747825623,
+      "search_diagnostic": {
+        "objective": "distance",
+        "objective_cost": 1422.031757501335,
+        "expanded_states": 319
+      },
+      "burden_score": 0.248179588844138,
+      "q3_eligible": true,
+      "profile_weights": [
+        0.3333333333333333,
+        0.0,
+        0.5,
+        0.0,
+        0.0,
+        0.16666666666666666
+      ],
+      "ranking_method": "survey_weighted_raw6_v1",
+      "ranking_scale": [
+        10.0,
+        1000.0,
+        1000.0,
+        10.0,
+        10.0,
+        1000.0
+      ]
+    },
+    "safe": {
+      "contract_version": "anjeon_contract_v6_child100",
+      "dataset_version": "seoul_static_20260915_review2",
+      "feature_version": "static_burden_v5_child_circle_inside",
+      "eta_version": "internal_hourly_topis_v1",
+      "routing_policy_version": "review_exclusion_v1",
+      "factor_order": [
+        "COMPLEX_INTERSECTION",
+        "MERGE_BRANCH",
+        "NARROW_ROAD",
+        "UNFAMILIAR_TURN",
+        "CONSECUTIVE_ACTION",
+        "CHILD_ZONE_NEARBY"
+      ],
+      "units": [
+        "count",
+        "score*m",
+        "score*m",
+        "count",
+        "count",
+        "m"
+      ],
+      "raw_features": [
+        0,
+        1027.793616133417,
+        137.68296932441953,
+        0,
+        2,
+        247.25865806455894
+      ],
+      "distance_m": 1898.9795840656936,
+      "internal_duration_s": 311.390168428421,
+      "time_source": "INTERNAL_HOURLY",
+      "quality": {
+        "eta_source_lengths_m": {
+          "explicit_highway_prior": 1898.9795840656936
+        },
+        "child_circle_inside_m": 247.25865806455894,
+        "child_circle_method": "facility_100m_euclidean_union_v1",
+        "all_six_ready": true,
+        "narrow_estimated_length_m": 1898.9795840656936,
+        "merge_estimated_length_m": 1467.0059972157148,
+        "unknown_narrow_length_m": 0.0,
+        "unknown_merge_length_m": 0.0,
+        "recorded_static_constraints_checked": true,
+        "external_review_turns": [],
+        "routing_policy_version": "review_exclusion_v1",
+        "routing_acceptance": "NOT_ASSESSED",
+        "production_route_approved": false,
+        "child_feature_method": "facility_point_100m_circle_union_intersection_length_v2",
+        "legacy_child_nearby_edge_length_m": 304.189143468067
+      },
+      "departure_at": "2026-09-15T08:00:00+09:00",
+      "arrival_at": "2026-09-15T08:05:11.390168+09:00",
+      "hourly_speed_coverage": {
+        "total_distance_m": 1898.9795840656943,
+        "topis_profile_distance_m": 1403.5591518207334,
+        "topis_profile_ratio": 0.7391122914632545,
+        "fallback_distance_m": 495.4204322449609,
+        "fallback_ratio": 0.2608877085367454,
+        "source_distance_m": {
+          "FALLBACK_EXPLICIT_HIGHWAY_PRIOR": 495.4204322449608,
+          "TOPIS_HISTORICAL": 1403.5591518207334
+        },
+        "fallback_reason_distance_m": {
+          "NO_SOURCE_GEOMETRY_NEARBY": 219.7214416696973,
+          "OSM_ROAD_NAME_MISSING": 21.624721142788935,
+          "ROAD_NAME_MISMATCH": 40.775181394527344,
+          "DIRECTION_OR_GEOMETRY_MISMATCH": 213.29908803794717
+        },
+        "historical_estimate": true,
+        "live_traffic": false,
+        "holiday_separated": false,
+        "profile_period": "2026-08-01/2026-08-24"
+      },
+      "speed_segments": [
+        {
+          "arc_id": 582586,
+          "distance_m": 16.111274365152983,
+          "duration_s": 5.800058771455074,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 10.0
+        },
+        {
+          "arc_id": 252012,
+          "distance_m": 32.90435656952019,
+          "duration_s": 5.9227841825136345,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 252014,
+          "distance_m": 34.69056011731084,
+          "duration_s": 6.244300821115951,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 370353,
+          "distance_m": 14.869315584614414,
+          "duration_s": 2.6764768052305947,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "OSM_ROAD_NAME_MISSING",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 252042,
+          "distance_m": 102.404720153503,
+          "duration_s": 18.432849627630542,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 252044,
+          "distance_m": 33.610530464210285,
+          "duration_s": 6.049895483557852,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 252046,
+          "distance_m": 40.775181394527344,
+          "duration_s": 7.339532651014922,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "ROAD_NAME_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        },
+        {
+          "arc_id": 92302,
+          "distance_m": 127.39871145582637,
+          "duration_s": 17.954016881619687,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029800",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.545
+        },
+        {
+          "arc_id": 92304,
+          "distance_m": 5.112503472031154,
+          "duration_s": 0.720493736516428,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029800",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.545
+        },
+        {
+          "arc_id": 92306,
+          "distance_m": 39.59793113505386,
+          "duration_s": 5.5804483102835745,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029800",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.545
+        },
+        {
+          "arc_id": 92308,
+          "distance_m": 113.23876321536783,
+          "duration_s": 15.958486888836333,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029800",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.545
+        },
+        {
+          "arc_id": 92310,
+          "distance_m": 91.9460542713641,
+          "duration_s": 12.957752803950314,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029800",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.545
+        },
+        {
+          "arc_id": 92312,
+          "distance_m": 42.75983142081466,
+          "duration_s": 6.026047880795959,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220029800",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 25.545
+        },
+        {
+          "arc_id": 92314,
+          "distance_m": 132.02170107138838,
+          "duration_s": 21.137563880675923,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220027400",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 22.485
+        },
+        {
+          "arc_id": 92316,
+          "distance_m": 113.68017245277596,
+          "duration_s": 18.200961566822034,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220027400",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 22.485
+        },
+        {
+          "arc_id": 92318,
+          "distance_m": 109.5730576963558,
+          "duration_s": 17.543384821297796,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220027400",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 22.485
+        },
+        {
+          "arc_id": 92320,
+          "distance_m": 34.051295371476456,
+          "duration_s": 5.45184182065,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220027400",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 22.485
+        },
+        {
+          "arc_id": 92322,
+          "distance_m": 39.152438343891134,
+          "duration_s": 6.268569181143345,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220027400",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 22.485
+        },
+        {
+          "arc_id": 92324,
+          "distance_m": 41.37544030093232,
+          "duration_s": 6.624486772664281,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220027400",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 22.485
+        },
+        {
+          "arc_id": 92326,
+          "distance_m": 130.98463759425852,
+          "duration_s": 20.971523030434987,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220027400",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 22.485
+        },
+        {
+          "arc_id": 92328,
+          "distance_m": 128.41619817655604,
+          "duration_s": 13.208523241017193,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 92330,
+          "distance_m": 34.960925804518496,
+          "duration_s": 3.595980939893331,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 92332,
+          "distance_m": 7.37039678426506,
+          "duration_s": 0.7580979549529776,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 632706,
+          "distance_m": 8.448691373610853,
+          "duration_s": 0.8690082555714019,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 632708,
+          "distance_m": 10.20249819404037,
+          "duration_s": 1.0493998142441525,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 632710,
+          "distance_m": 23.90037770495637,
+          "duration_s": 2.4583245639383695,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 35.0
+        },
+        {
+          "arc_id": 632712,
+          "distance_m": 87.31719861264664,
+          "duration_s": 18.339668320042467,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220025200",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 17.14
+        },
+        {
+          "arc_id": 632714,
+          "distance_m": 115.79752183837515,
+          "duration_s": 24.321533174921267,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220025200",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 17.14
+        },
+        {
+          "arc_id": 632716,
+          "distance_m": 14.753528283190038,
+          "duration_s": 3.098757399036414,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220025200",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 17.14
+        },
+        {
+          "arc_id": 632718,
+          "distance_m": 64.76674469041744,
+          "duration_s": 13.603283598920816,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220025200",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 17.14
+        },
+        {
+          "arc_id": 632720,
+          "distance_m": 69.25728806385618,
+          "duration_s": 14.546454902560225,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220025200",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 17.14
+        },
+        {
+          "arc_id": 632722,
+          "distance_m": 30.774332530711238,
+          "duration_s": 6.463687112634799,
+          "source": "TOPIS_HISTORICAL",
+          "reason": "PROFILE_AVAILABLE",
+          "topis_link_id": "1220025200",
+          "n_days": 16,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 17.14
+        },
+        {
+          "arc_id": 633606,
+          "distance_m": 6.755405558174521,
+          "duration_s": 1.2159730004714138,
+          "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+          "reason": "OSM_ROAD_NAME_MISSING",
+          "topis_link_id": null,
+          "n_days": 0,
+          "weekend": 0,
+          "hour": 8,
+          "speed_kph": 20.0
+        }
+      ],
+      "static_reference_duration_s": 219.98729029988283,
+      "segments": [
+        {
+          "arc_id": 582586,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 252012,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 252014,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 370353,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 252042,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 252044,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 252046,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92302,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92304,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92306,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92308,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92310,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92312,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92314,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92316,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92318,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92320,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92322,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92324,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92326,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92328,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92330,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 92332,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632706,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632708,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632710,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632712,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632714,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632716,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632718,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632720,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 632722,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        },
+        {
+          "arc_id": 633606,
+          "start_fraction": 0.0,
+          "end_fraction": 1.0
+        }
+      ],
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            127.03312080000002,
+            37.51103560000001
+          ],
+          [
+            127.03318350000002,
+            37.5108993
+          ],
+          [
+            127.03352980000001,
+            37.511007899999996
+          ],
+          [
+            127.03389740000001,
+            37.511117199999994
+          ],
+          [
+            127.0338413,
+            37.5112435
+          ],
+          [
+            127.0349259,
+            37.5115673
+          ],
+          [
+            127.03528280000002,
+            37.51167160000001
+          ],
+          [
+            127.03571510000002,
+            37.5117996
+          ],
+          [
+            127.03638280000001,
+            37.510782400000004
+          ],
+          [
+            127.0364153,
+            37.51074429999999
+          ],
+          [
+            127.03666720000001,
+            37.510449300000005
+          ],
+          [
+            127.03745250000003,
+            37.5096433
+          ],
+          [
+            127.0380822,
+            37.50898400000001
+          ],
+          [
+            127.03837390000002,
+            37.5086767
+          ],
+          [
+            127.03930190000003,
+            37.507744800000005
+          ],
+          [
+            127.0401037,
+            37.506944100000005
+          ],
+          [
+            127.04085210000002,
+            37.506157200000004
+          ],
+          [
+            127.04108850000003,
+            37.505914999999995
+          ],
+          [
+            127.04129890000002,
+            37.50560460000001
+          ],
+          [
+            127.0414555,
+            37.5052533
+          ],
+          [
+            127.04188120000002,
+            37.504122900000006
+          ],
+          [
+            127.0423533,
+            37.50302870000001
+          ],
+          [
+            127.0424818,
+            37.5027308
+          ],
+          [
+            127.04250890000002,
+            37.502668
+          ],
+          [
+            127.0424203,
+            37.50263950000001
+          ],
+          [
+            127.04231330000002,
+            37.50260510000001
+          ],
+          [
+            127.0420627,
+            37.50252440000001
+          ],
+          [
+            127.04114710000002,
+            37.50222970000001
+          ],
+          [
+            127.03992830000003,
+            37.501848
+          ],
+          [
+            127.03977300000001,
+            37.501799399999996
+          ],
+          [
+            127.03909859999999,
+            37.50157170000001
+          ],
+          [
+            127.03837100000001,
+            37.5013407
+          ],
+          [
+            127.03804510000002,
+            37.5012434
+          ],
+          [
+            127.03800340000002,
+            37.501192399999994
+          ]
+        ]
+      },
+      "path": [
+        {
+          "lng": 127.03312080000002,
+          "lat": 37.51103560000001
+        },
+        {
+          "lng": 127.03318350000002,
+          "lat": 37.5108993
+        },
+        {
+          "lng": 127.03352980000001,
+          "lat": 37.511007899999996
+        },
+        {
+          "lng": 127.03389740000001,
+          "lat": 37.511117199999994
+        },
+        {
+          "lng": 127.0338413,
+          "lat": 37.5112435
+        },
+        {
+          "lng": 127.0349259,
+          "lat": 37.5115673
+        },
+        {
+          "lng": 127.03528280000002,
+          "lat": 37.51167160000001
+        },
+        {
+          "lng": 127.03571510000002,
+          "lat": 37.5117996
+        },
+        {
+          "lng": 127.03638280000001,
+          "lat": 37.510782400000004
+        },
+        {
+          "lng": 127.0364153,
+          "lat": 37.51074429999999
+        },
+        {
+          "lng": 127.03666720000001,
+          "lat": 37.510449300000005
+        },
+        {
+          "lng": 127.03745250000003,
+          "lat": 37.5096433
+        },
+        {
+          "lng": 127.0380822,
+          "lat": 37.50898400000001
+        },
+        {
+          "lng": 127.03837390000002,
+          "lat": 37.5086767
+        },
+        {
+          "lng": 127.03930190000003,
+          "lat": 37.507744800000005
+        },
+        {
+          "lng": 127.0401037,
+          "lat": 37.506944100000005
+        },
+        {
+          "lng": 127.04085210000002,
+          "lat": 37.506157200000004
+        },
+        {
+          "lng": 127.04108850000003,
+          "lat": 37.505914999999995
+        },
+        {
+          "lng": 127.04129890000002,
+          "lat": 37.50560460000001
+        },
+        {
+          "lng": 127.0414555,
+          "lat": 37.5052533
+        },
+        {
+          "lng": 127.04188120000002,
+          "lat": 37.504122900000006
+        },
+        {
+          "lng": 127.0423533,
+          "lat": 37.50302870000001
+        },
+        {
+          "lng": 127.0424818,
+          "lat": 37.5027308
+        },
+        {
+          "lng": 127.04250890000002,
+          "lat": 37.502668
+        },
+        {
+          "lng": 127.0424203,
+          "lat": 37.50263950000001
+        },
+        {
+          "lng": 127.04231330000002,
+          "lat": 37.50260510000001
+        },
+        {
+          "lng": 127.0420627,
+          "lat": 37.50252440000001
+        },
+        {
+          "lng": 127.04114710000002,
+          "lat": 37.50222970000001
+        },
+        {
+          "lng": 127.03992830000003,
+          "lat": 37.501848
+        },
+        {
+          "lng": 127.03977300000001,
+          "lat": 37.501799399999996
+        },
+        {
+          "lng": 127.03909859999999,
+          "lat": 37.50157170000001
+        },
+        {
+          "lng": 127.03837100000001,
+          "lat": 37.5013407
+        },
+        {
+          "lng": 127.03804510000002,
+          "lat": 37.5012434
+        },
+        {
+          "lng": 127.03800340000002,
+          "lat": 37.501192399999994
+        }
+      ],
+      "distance": 1898.9795840656936,
+      "duration": 311.390168428421,
+      "search_diagnostic": {
+        "objective": "burden",
+        "objective_cost": 2587.394430687792,
+        "expanded_states": 651
+      },
+      "burden_score": 0.11005126100630293,
+      "q3_eligible": true,
+      "profile_weights": [
+        0.3333333333333333,
+        0.0,
+        0.5,
+        0.0,
+        0.0,
+        0.16666666666666666
+      ],
+      "ranking_method": "survey_weighted_raw6_v1",
+      "ranking_scale": [
+        10.0,
+        1000.0,
+        1000.0,
+        10.0,
+        10.0,
+        1000.0
+      ]
+    },
+    "candidate_pool": [
+      {
+        "contract_version": "anjeon_contract_v6_child100",
+        "dataset_version": "seoul_static_20260915_review2",
+        "feature_version": "static_burden_v5_child_circle_inside",
+        "eta_version": "internal_hourly_topis_v1",
+        "routing_policy_version": "review_exclusion_v1",
+        "factor_order": [
+          "COMPLEX_INTERSECTION",
+          "MERGE_BRANCH",
+          "NARROW_ROAD",
+          "UNFAMILIAR_TURN",
+          "CONSECUTIVE_ACTION",
+          "CHILD_ZONE_NEARBY"
+        ],
+        "units": [
+          "count",
+          "score*m",
+          "score*m",
+          "count",
+          "count",
+          "m"
+        ],
+        "raw_features": [
+          0,
+          302.42005413901404,
+          327.6827696246345,
+          0,
+          4,
+          195.21801557372703
+        ],
+        "distance_m": 1428.8464635191986,
+        "internal_duration_s": 229.39081025123596,
+        "time_source": "INTERNAL_HOURLY",
+        "quality": {
+          "eta_source_lengths_m": {
+            "explicit_highway_prior": 1428.8464635191986
+          },
+          "child_circle_inside_m": 195.21801557372703,
+          "child_circle_method": "facility_100m_euclidean_union_v1",
+          "all_six_ready": true,
+          "narrow_estimated_length_m": 1428.8464635191986,
+          "merge_estimated_length_m": 1391.3167254303128,
+          "unknown_narrow_length_m": 0.0,
+          "unknown_merge_length_m": 0.0,
+          "recorded_static_constraints_checked": true,
+          "external_review_turns": [],
+          "routing_policy_version": "review_exclusion_v1",
+          "routing_acceptance": "NOT_ASSESSED",
+          "production_route_approved": false,
+          "child_feature_method": "facility_point_100m_circle_union_intersection_length_v2",
+          "legacy_child_nearby_edge_length_m": 219.4766035356347
+        },
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "arrival_at": "2026-09-15T08:03:49.390810+09:00",
+        "hourly_speed_coverage": {
+          "total_distance_m": 1428.8464635191986,
+          "topis_profile_distance_m": 183.53206893917147,
+          "topis_profile_ratio": 0.12844771892925322,
+          "fallback_distance_m": 1245.314394580027,
+          "fallback_ratio": 0.8715522810707468,
+          "source_distance_m": {
+            "FALLBACK_EXPLICIT_HIGHWAY_PRIOR": 1245.314394580027,
+            "TOPIS_HISTORICAL": 183.53206893917147
+          },
+          "fallback_reason_distance_m": {
+            "NO_SOURCE_GEOMETRY_NEARBY": 686.1965514223198,
+            "ROAD_NAME_MISMATCH": 175.33954190773613,
+            "DIRECTION_OR_GEOMETRY_MISMATCH": 377.0228956917963,
+            "OSM_ROAD_NAME_MISSING": 6.755405558174521
+          },
+          "historical_estimate": true,
+          "live_traffic": false,
+          "holiday_separated": false,
+          "profile_period": "2026-08-01/2026-08-24"
+        },
+        "speed_segments": [
+          {
+            "arc_id": 582586,
+            "distance_m": 16.111274365152983,
+            "duration_s": 5.800058771455074,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 10.0
+          },
+          {
+            "arc_id": 370280,
+            "distance_m": 111.87187205428881,
+            "duration_s": 20.136936969771988,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370282,
+            "distance_m": 53.206490075786654,
+            "duration_s": 9.577168213641597,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370284,
+            "distance_m": 4.850485350670898,
+            "duration_s": 0.8730873631207616,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370303,
+            "distance_m": 81.57181204235931,
+            "duration_s": 14.682926167624677,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 98424,
+            "distance_m": 92.99399733266257,
+            "duration_s": 19.71023788034061,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029600",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 16.985
+          },
+          {
+            "arc_id": 98426,
+            "distance_m": 59.76373907579765,
+            "duration_s": 12.667027416713074,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029600",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 16.985
+          },
+          {
+            "arc_id": 98428,
+            "distance_m": 70.6328810364083,
+            "duration_s": 7.265096335173426,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512841,
+            "distance_m": 54.39147197186336,
+            "duration_s": 5.5945514028202314,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512839,
+            "distance_m": 87.57053262667803,
+            "duration_s": 9.007254784458313,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512837,
+            "distance_m": 69.47614325427693,
+            "duration_s": 7.146117591868484,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512835,
+            "distance_m": 94.95186680256961,
+            "duration_s": 9.766477728264302,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 370908,
+            "distance_m": 81.19084125919689,
+            "duration_s": 14.61435142665544,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125069,
+            "distance_m": 148.90032997802854,
+            "duration_s": 26.802059396045138,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125067,
+            "distance_m": 70.57627355760616,
+            "duration_s": 12.703729240369109,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125065,
+            "distance_m": 87.08616056617876,
+            "duration_s": 15.675508901912178,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 91094,
+            "distance_m": 53.82300286877033,
+            "duration_s": 7.7505124131029275,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91118,
+            "distance_m": 36.49911402460245,
+            "duration_s": 5.2558724195427535,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91120,
+            "distance_m": 36.302350493389376,
+            "duration_s": 5.227538471048071,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91122,
+            "distance_m": 39.03722311401272,
+            "duration_s": 5.621360128417832,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91124,
+            "distance_m": 27.931974973832148,
+            "duration_s": 4.022204396231829,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91126,
+            "distance_m": 3.610988036888931,
+            "duration_s": 0.5199822773120061,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91128,
+            "distance_m": 8.965900569290985,
+            "duration_s": 1.291089681977902,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 632722,
+            "distance_m": 30.774332530711238,
+            "duration_s": 6.463687112634799,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220025200",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 17.14
+          },
+          {
+            "arc_id": 633606,
+            "distance_m": 6.755405558174521,
+            "duration_s": 1.2159730004714138,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "OSM_ROAD_NAME_MISSING",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          }
+        ],
+        "static_reference_duration_s": 209.42744131502883,
+        "segments": [
+          {
+            "arc_id": 582586,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370280,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370282,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370284,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370303,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 98424,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 98426,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 98428,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512841,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512839,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512837,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512835,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370908,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125069,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125067,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125065,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91094,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91118,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91120,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91122,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91124,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91126,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91128,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632722,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 633606,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          }
+        ],
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              127.03312080000002,
+              37.51103560000001
+            ],
+            [
+              127.03318350000002,
+              37.5108993
+            ],
+            [
+              127.03363440000003,
+              37.5099575
+            ],
+            [
+              127.0338456,
+              37.509508600000004
+            ],
+            [
+              127.03386390000003,
+              37.509467400000005
+            ],
+            [
+              127.03300010000001,
+              37.5092092
+            ],
+            [
+              127.03336750000001,
+              37.508424100000006
+            ],
+            [
+              127.03361810000001,
+              37.507923999999996
+            ],
+            [
+              127.0338945,
+              37.5073269
+            ],
+            [
+              127.0341205,
+              37.5068711
+            ],
+            [
+              127.03446380000001,
+              37.506131
+            ],
+            [
+              127.0347354,
+              37.5055436
+            ],
+            [
+              127.0351014,
+              37.5047393
+            ],
+            [
+              127.03596130000001,
+              37.50499590000001
+            ],
+            [
+              127.03653930000002,
+              37.5037358
+            ],
+            [
+              127.0368239,
+              37.50314170000001
+            ],
+            [
+              127.037175,
+              37.50240860000001
+            ],
+            [
+              127.03772670000001,
+              37.5026135
+            ],
+            [
+              127.037869,
+              37.502304800000005
+            ],
+            [
+              127.03802270000001,
+              37.50200150000001
+            ],
+            [
+              127.0381909,
+              37.5016763
+            ],
+            [
+              127.03831510000002,
+              37.50144490000001
+            ],
+            [
+              127.0383312,
+              37.501415
+            ],
+            [
+              127.03837100000001,
+              37.5013407
+            ],
+            [
+              127.03804510000002,
+              37.5012434
+            ],
+            [
+              127.03800340000002,
+              37.501192399999994
+            ]
+          ]
+        },
+        "path": [
+          {
+            "lng": 127.03312080000002,
+            "lat": 37.51103560000001
+          },
+          {
+            "lng": 127.03318350000002,
+            "lat": 37.5108993
+          },
+          {
+            "lng": 127.03363440000003,
+            "lat": 37.5099575
+          },
+          {
+            "lng": 127.0338456,
+            "lat": 37.509508600000004
+          },
+          {
+            "lng": 127.03386390000003,
+            "lat": 37.509467400000005
+          },
+          {
+            "lng": 127.03300010000001,
+            "lat": 37.5092092
+          },
+          {
+            "lng": 127.03336750000001,
+            "lat": 37.508424100000006
+          },
+          {
+            "lng": 127.03361810000001,
+            "lat": 37.507923999999996
+          },
+          {
+            "lng": 127.0338945,
+            "lat": 37.5073269
+          },
+          {
+            "lng": 127.0341205,
+            "lat": 37.5068711
+          },
+          {
+            "lng": 127.03446380000001,
+            "lat": 37.506131
+          },
+          {
+            "lng": 127.0347354,
+            "lat": 37.5055436
+          },
+          {
+            "lng": 127.0351014,
+            "lat": 37.5047393
+          },
+          {
+            "lng": 127.03596130000001,
+            "lat": 37.50499590000001
+          },
+          {
+            "lng": 127.03653930000002,
+            "lat": 37.5037358
+          },
+          {
+            "lng": 127.0368239,
+            "lat": 37.50314170000001
+          },
+          {
+            "lng": 127.037175,
+            "lat": 37.50240860000001
+          },
+          {
+            "lng": 127.03772670000001,
+            "lat": 37.5026135
+          },
+          {
+            "lng": 127.037869,
+            "lat": 37.502304800000005
+          },
+          {
+            "lng": 127.03802270000001,
+            "lat": 37.50200150000001
+          },
+          {
+            "lng": 127.0381909,
+            "lat": 37.5016763
+          },
+          {
+            "lng": 127.03831510000002,
+            "lat": 37.50144490000001
+          },
+          {
+            "lng": 127.0383312,
+            "lat": 37.501415
+          },
+          {
+            "lng": 127.03837100000001,
+            "lat": 37.5013407
+          },
+          {
+            "lng": 127.03804510000002,
+            "lat": 37.5012434
+          },
+          {
+            "lng": 127.03800340000002,
+            "lat": 37.501192399999994
+          }
+        ],
+        "distance": 1428.8464635191986,
+        "duration": 229.39081025123596,
+        "search_diagnostic": {
+          "objective": "time",
+          "objective_cost": 229.39080971609687,
+          "expanded_states": 2578
+        },
+        "burden_score": 0.19637772074127174,
+        "q3_eligible": true,
+        "profile_weights": [
+          0.3333333333333333,
+          0.0,
+          0.5,
+          0.0,
+          0.0,
+          0.16666666666666666
+        ],
+        "ranking_method": "survey_weighted_raw6_v1",
+        "ranking_scale": [
+          10.0,
+          1000.0,
+          1000.0,
+          10.0,
+          10.0,
+          1000.0
+        ]
+      },
+      {
+        "contract_version": "anjeon_contract_v6_child100",
+        "dataset_version": "seoul_static_20260915_review2",
+        "feature_version": "static_burden_v5_child_circle_inside",
+        "eta_version": "internal_hourly_topis_v1",
+        "routing_policy_version": "review_exclusion_v1",
+        "factor_order": [
+          "COMPLEX_INTERSECTION",
+          "MERGE_BRANCH",
+          "NARROW_ROAD",
+          "UNFAMILIAR_TURN",
+          "CONSECUTIVE_ACTION",
+          "CHILD_ZONE_NEARBY"
+        ],
+        "units": [
+          "count",
+          "score*m",
+          "score*m",
+          "count",
+          "count",
+          "m"
+        ],
+        "raw_features": [
+          0,
+          220.20604911059073,
+          433.40092307851114,
+          0,
+          4,
+          188.8747638292946
+        ],
+        "distance_m": 1422.031757501335,
+        "internal_duration_s": 242.78623747825623,
+        "time_source": "INTERNAL_HOURLY",
+        "quality": {
+          "eta_source_lengths_m": {
+            "explicit_highway_prior": 1422.031757501335
+          },
+          "child_circle_inside_m": 188.8747638292946,
+          "child_circle_method": "facility_100m_euclidean_union_v1",
+          "all_six_ready": true,
+          "narrow_estimated_length_m": 1422.031757501335,
+          "merge_estimated_length_m": 1384.5020194124493,
+          "unknown_narrow_length_m": 0.0,
+          "unknown_merge_length_m": 0.0,
+          "recorded_static_constraints_checked": true,
+          "external_review_turns": [],
+          "routing_policy_version": "review_exclusion_v1",
+          "routing_acceptance": "NOT_ASSESSED",
+          "production_route_approved": false,
+          "child_feature_method": "facility_point_100m_circle_union_intersection_length_v2",
+          "legacy_child_nearby_edge_length_m": 225.1629031176327
+        },
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "arrival_at": "2026-09-15T08:04:02.786237+09:00",
+        "hourly_speed_coverage": {
+          "total_distance_m": 1422.0317575013348,
+          "topis_profile_distance_m": 183.53206893917147,
+          "topis_profile_ratio": 0.12906327019141778,
+          "fallback_distance_m": 1238.4996885621633,
+          "fallback_ratio": 0.8709367298085822,
+          "source_distance_m": {
+            "FALLBACK_EXPLICIT_HIGHWAY_PRIOR": 1238.4996885621633,
+            "TOPIS_HISTORICAL": 183.53206893917147
+          },
+          "fallback_reason_distance_m": {
+            "NO_SOURCE_GEOMETRY_NEARBY": 876.7787584185639,
+            "ROAD_NAME_MISMATCH": 142.37063895047493,
+            "DIRECTION_OR_GEOMETRY_MISMATCH": 212.59488563494972,
+            "OSM_ROAD_NAME_MISSING": 6.755405558174521
+          },
+          "historical_estimate": true,
+          "live_traffic": false,
+          "holiday_separated": false,
+          "profile_period": "2026-08-01/2026-08-24"
+        },
+        "speed_segments": [
+          {
+            "arc_id": 582586,
+            "distance_m": 16.111274365152983,
+            "duration_s": 5.800058771455074,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 10.0
+          },
+          {
+            "arc_id": 370280,
+            "distance_m": 111.87187205428881,
+            "duration_s": 20.136936969771988,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370282,
+            "distance_m": 53.206490075786654,
+            "duration_s": 9.577168213641597,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370284,
+            "distance_m": 4.850485350670898,
+            "duration_s": 0.8730873631207616,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370303,
+            "distance_m": 81.57181204235931,
+            "duration_s": 14.682926167624677,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 98424,
+            "distance_m": 92.99399733266257,
+            "duration_s": 19.71023788034061,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029600",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 16.985
+          },
+          {
+            "arc_id": 98426,
+            "distance_m": 59.76373907579765,
+            "duration_s": 12.667027416713074,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029600",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 16.985
+          },
+          {
+            "arc_id": 98428,
+            "distance_m": 70.6328810364083,
+            "duration_s": 7.265096335173426,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512841,
+            "distance_m": 54.39147197186336,
+            "duration_s": 5.5945514028202314,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512839,
+            "distance_m": 87.57053262667803,
+            "duration_s": 9.007254784458313,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 370931,
+            "distance_m": 48.2219383019357,
+            "duration_s": 8.679948894348426,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370929,
+            "distance_m": 30.939988815108027,
+            "duration_s": 5.569197986719445,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125075,
+            "distance_m": 20.456609320236904,
+            "duration_s": 3.6821896776426426,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125073,
+            "distance_m": 73.7256698358208,
+            "duration_s": 13.270620570447743,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125071,
+            "distance_m": 70.55402602068548,
+            "duration_s": 12.699724683723387,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 341881,
+            "distance_m": 35.58543498097676,
+            "duration_s": 6.405378296575816,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 341879,
+            "distance_m": 17.864708542323097,
+            "duration_s": 3.2156475376181577,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 124993,
+            "distance_m": 146.47830179983168,
+            "duration_s": 26.3660943239697,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125061,
+            "distance_m": 41.83510849715037,
+            "duration_s": 7.530319529487068,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125059,
+            "distance_m": 36.849492820650646,
+            "duration_s": 6.6329087077171165,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125057,
+            "distance_m": 36.367012642127726,
+            "duration_s": 6.54606227558299,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 125055,
+            "distance_m": 40.3116206919164,
+            "duration_s": 7.256091724544953,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 91118,
+            "distance_m": 36.49911402460245,
+            "duration_s": 5.2558724195427535,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91120,
+            "distance_m": 36.302350493389376,
+            "duration_s": 5.227538471048071,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91122,
+            "distance_m": 39.03722311401272,
+            "duration_s": 5.621360128417832,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91124,
+            "distance_m": 27.931974973832148,
+            "duration_s": 4.022204396231829,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91126,
+            "distance_m": 3.610988036888931,
+            "duration_s": 0.5199822773120061,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91128,
+            "distance_m": 8.965900569290985,
+            "duration_s": 1.291089681977902,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 632722,
+            "distance_m": 30.774332530711238,
+            "duration_s": 6.463687112634799,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220025200",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 17.14
+          },
+          {
+            "arc_id": 633606,
+            "distance_m": 6.755405558174521,
+            "duration_s": 1.2159730004714138,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "OSM_ROAD_NAME_MISSING",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          }
+        ],
+        "static_reference_duration_s": 222.82286882518866,
+        "segments": [
+          {
+            "arc_id": 582586,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370280,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370282,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370284,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370303,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 98424,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 98426,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 98428,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512841,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512839,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370931,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370929,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125075,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125073,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125071,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 341881,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 341879,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 124993,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125061,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125059,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125057,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 125055,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91118,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91120,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91122,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91124,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91126,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91128,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632722,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 633606,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          }
+        ],
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              127.03312080000002,
+              37.51103560000001
+            ],
+            [
+              127.03318350000002,
+              37.5108993
+            ],
+            [
+              127.03363440000003,
+              37.5099575
+            ],
+            [
+              127.0338456,
+              37.509508600000004
+            ],
+            [
+              127.03386390000003,
+              37.509467400000005
+            ],
+            [
+              127.03300010000001,
+              37.5092092
+            ],
+            [
+              127.03336750000001,
+              37.508424100000006
+            ],
+            [
+              127.03361810000001,
+              37.507923999999996
+            ],
+            [
+              127.0338945,
+              37.5073269
+            ],
+            [
+              127.0341205,
+              37.5068711
+            ],
+            [
+              127.03446380000001,
+              37.506131
+            ],
+            [
+              127.0349716,
+              37.5062895
+            ],
+            [
+              127.03530090000001,
+              37.5063838
+            ],
+            [
+              127.03538470000001,
+              37.506212000000005
+            ],
+            [
+              127.03567740000001,
+              37.50559
+            ],
+            [
+              127.03596130000001,
+              37.50499590000001
+            ],
+            [
+              127.0363406,
+              37.5051031
+            ],
+            [
+              127.03652960000001,
+              37.50516
+            ],
+            [
+              127.03711210000002,
+              37.50392450000001
+            ],
+            [
+              127.03729420000002,
+              37.50357660000001
+            ],
+            [
+              127.0374374,
+              37.50326480000001
+            ],
+            [
+              127.03757460000003,
+              37.50295590000001
+            ],
+            [
+              127.03772670000001,
+              37.5026135
+            ],
+            [
+              127.037869,
+              37.502304800000005
+            ],
+            [
+              127.03802270000001,
+              37.50200150000001
+            ],
+            [
+              127.0381909,
+              37.5016763
+            ],
+            [
+              127.03831510000002,
+              37.50144490000001
+            ],
+            [
+              127.0383312,
+              37.501415
+            ],
+            [
+              127.03837100000001,
+              37.5013407
+            ],
+            [
+              127.03804510000002,
+              37.5012434
+            ],
+            [
+              127.03800340000002,
+              37.501192399999994
+            ]
+          ]
+        },
+        "path": [
+          {
+            "lng": 127.03312080000002,
+            "lat": 37.51103560000001
+          },
+          {
+            "lng": 127.03318350000002,
+            "lat": 37.5108993
+          },
+          {
+            "lng": 127.03363440000003,
+            "lat": 37.5099575
+          },
+          {
+            "lng": 127.0338456,
+            "lat": 37.509508600000004
+          },
+          {
+            "lng": 127.03386390000003,
+            "lat": 37.509467400000005
+          },
+          {
+            "lng": 127.03300010000001,
+            "lat": 37.5092092
+          },
+          {
+            "lng": 127.03336750000001,
+            "lat": 37.508424100000006
+          },
+          {
+            "lng": 127.03361810000001,
+            "lat": 37.507923999999996
+          },
+          {
+            "lng": 127.0338945,
+            "lat": 37.5073269
+          },
+          {
+            "lng": 127.0341205,
+            "lat": 37.5068711
+          },
+          {
+            "lng": 127.03446380000001,
+            "lat": 37.506131
+          },
+          {
+            "lng": 127.0349716,
+            "lat": 37.5062895
+          },
+          {
+            "lng": 127.03530090000001,
+            "lat": 37.5063838
+          },
+          {
+            "lng": 127.03538470000001,
+            "lat": 37.506212000000005
+          },
+          {
+            "lng": 127.03567740000001,
+            "lat": 37.50559
+          },
+          {
+            "lng": 127.03596130000001,
+            "lat": 37.50499590000001
+          },
+          {
+            "lng": 127.0363406,
+            "lat": 37.5051031
+          },
+          {
+            "lng": 127.03652960000001,
+            "lat": 37.50516
+          },
+          {
+            "lng": 127.03711210000002,
+            "lat": 37.50392450000001
+          },
+          {
+            "lng": 127.03729420000002,
+            "lat": 37.50357660000001
+          },
+          {
+            "lng": 127.0374374,
+            "lat": 37.50326480000001
+          },
+          {
+            "lng": 127.03757460000003,
+            "lat": 37.50295590000001
+          },
+          {
+            "lng": 127.03772670000001,
+            "lat": 37.5026135
+          },
+          {
+            "lng": 127.037869,
+            "lat": 37.502304800000005
+          },
+          {
+            "lng": 127.03802270000001,
+            "lat": 37.50200150000001
+          },
+          {
+            "lng": 127.0381909,
+            "lat": 37.5016763
+          },
+          {
+            "lng": 127.03831510000002,
+            "lat": 37.50144490000001
+          },
+          {
+            "lng": 127.0383312,
+            "lat": 37.501415
+          },
+          {
+            "lng": 127.03837100000001,
+            "lat": 37.5013407
+          },
+          {
+            "lng": 127.03804510000002,
+            "lat": 37.5012434
+          },
+          {
+            "lng": 127.03800340000002,
+            "lat": 37.501192399999994
+          }
+        ],
+        "distance": 1422.031757501335,
+        "duration": 242.78623747825623,
+        "search_diagnostic": {
+          "objective": "distance",
+          "objective_cost": 1422.031757501335,
+          "expanded_states": 319
+        },
+        "burden_score": 0.248179588844138,
+        "q3_eligible": true,
+        "profile_weights": [
+          0.3333333333333333,
+          0.0,
+          0.5,
+          0.0,
+          0.0,
+          0.16666666666666666
+        ],
+        "ranking_method": "survey_weighted_raw6_v1",
+        "ranking_scale": [
+          10.0,
+          1000.0,
+          1000.0,
+          10.0,
+          10.0,
+          1000.0
+        ]
+      },
+      {
+        "contract_version": "anjeon_contract_v6_child100",
+        "dataset_version": "seoul_static_20260915_review2",
+        "feature_version": "static_burden_v5_child_circle_inside",
+        "eta_version": "internal_hourly_topis_v1",
+        "routing_policy_version": "review_exclusion_v1",
+        "factor_order": [
+          "COMPLEX_INTERSECTION",
+          "MERGE_BRANCH",
+          "NARROW_ROAD",
+          "UNFAMILIAR_TURN",
+          "CONSECUTIVE_ACTION",
+          "CHILD_ZONE_NEARBY"
+        ],
+        "units": [
+          "count",
+          "score*m",
+          "score*m",
+          "count",
+          "count",
+          "m"
+        ],
+        "raw_features": [
+          0,
+          403.166818032667,
+          226.4998106875106,
+          0,
+          3,
+          0.0
+        ],
+        "distance_m": 1589.0926453408235,
+        "internal_duration_s": 251.2498586177826,
+        "time_source": "INTERNAL_HOURLY",
+        "quality": {
+          "eta_source_lengths_m": {
+            "explicit_highway_prior": 1589.0926453408235
+          },
+          "child_circle_inside_m": 0.0,
+          "child_circle_method": "facility_100m_euclidean_union_v1",
+          "all_six_ready": true,
+          "narrow_estimated_length_m": 1589.0926453408235,
+          "merge_estimated_length_m": 1551.5629072519378,
+          "unknown_narrow_length_m": 0.0,
+          "unknown_merge_length_m": 0.0,
+          "recorded_static_constraints_checked": true,
+          "external_review_turns": [],
+          "routing_policy_version": "review_exclusion_v1",
+          "routing_acceptance": "NOT_ASSESSED",
+          "production_route_approved": false,
+          "child_feature_method": "facility_point_100m_circle_union_intersection_length_v2",
+          "legacy_child_nearby_edge_length_m": 0.0
+        },
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "arrival_at": "2026-09-15T08:04:11.249859+09:00",
+        "hourly_speed_coverage": {
+          "total_distance_m": 1589.0926453408235,
+          "topis_profile_distance_m": 183.53206893917147,
+          "topis_profile_ratio": 0.11549488286745427,
+          "fallback_distance_m": 1405.560576401652,
+          "fallback_ratio": 0.8845051171325458,
+          "source_distance_m": {
+            "FALLBACK_EXPLICIT_HIGHWAY_PRIOR": 1405.560576401652,
+            "TOPIS_HISTORICAL": 183.53206893917147
+          },
+          "fallback_reason_distance_m": {
+            "NO_SOURCE_GEOMETRY_NEARBY": 507.5777551623803,
+            "ROAD_NAME_MISMATCH": 232.93993241168394,
+            "DIRECTION_OR_GEOMETRY_MISMATCH": 658.2874832694127,
+            "OSM_ROAD_NAME_MISSING": 6.755405558174521
+          },
+          "historical_estimate": true,
+          "live_traffic": false,
+          "holiday_separated": false,
+          "profile_period": "2026-08-01/2026-08-24"
+        },
+        "speed_segments": [
+          {
+            "arc_id": 582586,
+            "distance_m": 16.111274365152983,
+            "duration_s": 5.800058771455074,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 10.0
+          },
+          {
+            "arc_id": 370280,
+            "distance_m": 111.87187205428881,
+            "duration_s": 20.136936969771988,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370282,
+            "distance_m": 53.206490075786654,
+            "duration_s": 9.577168213641597,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370284,
+            "distance_m": 4.850485350670898,
+            "duration_s": 0.8730873631207616,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370303,
+            "distance_m": 81.57181204235931,
+            "duration_s": 14.682926167624677,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 98424,
+            "distance_m": 92.99399733266257,
+            "duration_s": 19.71023788034061,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029600",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 16.985
+          },
+          {
+            "arc_id": 98426,
+            "distance_m": 59.76373907579765,
+            "duration_s": 12.667027416713074,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029600",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 16.985
+          },
+          {
+            "arc_id": 98428,
+            "distance_m": 70.6328810364083,
+            "duration_s": 7.265096335173426,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512841,
+            "distance_m": 54.39147197186336,
+            "duration_s": 5.5945514028202314,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512839,
+            "distance_m": 87.57053262667803,
+            "duration_s": 9.007254784458313,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512837,
+            "distance_m": 69.47614325427693,
+            "duration_s": 7.146117591868484,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512835,
+            "distance_m": 94.95186680256961,
+            "duration_s": 9.766477728264302,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512833,
+            "distance_m": 150.37642746573744,
+            "duration_s": 15.467289682190136,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 512831,
+            "distance_m": 51.11710032156847,
+            "duration_s": 5.257758890218472,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 582626,
+            "distance_m": 79.77105979031057,
+            "duration_s": 28.717581524511807,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 10.0
+          },
+          {
+            "arc_id": 371140,
+            "distance_m": 6.277764516351538,
+            "duration_s": 1.1299976129432767,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 371142,
+            "distance_m": 43.083270951502165,
+            "duration_s": 7.754988771270389,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 371144,
+            "distance_m": 56.2555922285982,
+            "duration_s": 10.126006601147676,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 91130,
+            "distance_m": 22.327340145422063,
+            "duration_s": 3.2151369809407773,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91132,
+            "distance_m": 57.29591549434782,
+            "duration_s": 8.250611831186086,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 633358,
+            "distance_m": 81.4953162687969,
+            "duration_s": 11.735325542706754,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91094,
+            "distance_m": 53.82300286877033,
+            "duration_s": 7.7505124131029275,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91118,
+            "distance_m": 36.49911402460245,
+            "duration_s": 5.2558724195427535,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91120,
+            "distance_m": 36.302350493389376,
+            "duration_s": 5.227538471048071,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91122,
+            "distance_m": 39.03722311401272,
+            "duration_s": 5.621360128417832,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91124,
+            "distance_m": 27.931974973832148,
+            "duration_s": 4.022204396231829,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91126,
+            "distance_m": 3.610988036888931,
+            "duration_s": 0.5199822773120061,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 91128,
+            "distance_m": 8.965900569290985,
+            "duration_s": 1.291089681977902,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.0
+          },
+          {
+            "arc_id": 632722,
+            "distance_m": 30.774332530711238,
+            "duration_s": 6.463687112634799,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220025200",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 17.14
+          },
+          {
+            "arc_id": 633606,
+            "distance_m": 6.755405558174521,
+            "duration_s": 1.2159730004714138,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "OSM_ROAD_NAME_MISSING",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          }
+        ],
+        "static_reference_duration_s": 231.28648978716234,
+        "segments": [
+          {
+            "arc_id": 582586,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370280,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370282,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370284,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370303,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 98424,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 98426,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 98428,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512841,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512839,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512837,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512835,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512833,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 512831,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 582626,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 371140,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 371142,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 371144,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91130,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91132,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 633358,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91094,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91118,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91120,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91122,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91124,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91126,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 91128,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632722,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 633606,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          }
+        ],
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              127.03312080000002,
+              37.51103560000001
+            ],
+            [
+              127.03318350000002,
+              37.5108993
+            ],
+            [
+              127.03363440000003,
+              37.5099575
+            ],
+            [
+              127.0338456,
+              37.509508600000004
+            ],
+            [
+              127.03386390000003,
+              37.509467400000005
+            ],
+            [
+              127.03300010000001,
+              37.5092092
+            ],
+            [
+              127.03336750000001,
+              37.508424100000006
+            ],
+            [
+              127.03361810000001,
+              37.507923999999996
+            ],
+            [
+              127.0338945,
+              37.5073269
+            ],
+            [
+              127.0341205,
+              37.5068711
+            ],
+            [
+              127.03446380000001,
+              37.506131
+            ],
+            [
+              127.0347354,
+              37.5055436
+            ],
+            [
+              127.0351014,
+              37.5047393
+            ],
+            [
+              127.03571090000003,
+              37.5034744
+            ],
+            [
+              127.0359037,
+              37.5030402
+            ],
+            [
+              127.03505890000002,
+              37.50278800000001
+            ],
+            [
+              127.03508369999999,
+              37.502735
+            ],
+            [
+              127.03525400000002,
+              37.50237130000001
+            ],
+            [
+              127.03547090000002,
+              37.5018948
+            ],
+            [
+              127.0357051,
+              37.50197
+            ],
+            [
+              127.03631320000001,
+              37.5021483
+            ],
+            [
+              127.037175,
+              37.50240860000001
+            ],
+            [
+              127.03772670000001,
+              37.5026135
+            ],
+            [
+              127.037869,
+              37.502304800000005
+            ],
+            [
+              127.03802270000001,
+              37.50200150000001
+            ],
+            [
+              127.0381909,
+              37.5016763
+            ],
+            [
+              127.03831510000002,
+              37.50144490000001
+            ],
+            [
+              127.0383312,
+              37.501415
+            ],
+            [
+              127.03837100000001,
+              37.5013407
+            ],
+            [
+              127.03804510000002,
+              37.5012434
+            ],
+            [
+              127.03800340000002,
+              37.501192399999994
+            ]
+          ]
+        },
+        "path": [
+          {
+            "lng": 127.03312080000002,
+            "lat": 37.51103560000001
+          },
+          {
+            "lng": 127.03318350000002,
+            "lat": 37.5108993
+          },
+          {
+            "lng": 127.03363440000003,
+            "lat": 37.5099575
+          },
+          {
+            "lng": 127.0338456,
+            "lat": 37.509508600000004
+          },
+          {
+            "lng": 127.03386390000003,
+            "lat": 37.509467400000005
+          },
+          {
+            "lng": 127.03300010000001,
+            "lat": 37.5092092
+          },
+          {
+            "lng": 127.03336750000001,
+            "lat": 37.508424100000006
+          },
+          {
+            "lng": 127.03361810000001,
+            "lat": 37.507923999999996
+          },
+          {
+            "lng": 127.0338945,
+            "lat": 37.5073269
+          },
+          {
+            "lng": 127.0341205,
+            "lat": 37.5068711
+          },
+          {
+            "lng": 127.03446380000001,
+            "lat": 37.506131
+          },
+          {
+            "lng": 127.0347354,
+            "lat": 37.5055436
+          },
+          {
+            "lng": 127.0351014,
+            "lat": 37.5047393
+          },
+          {
+            "lng": 127.03571090000003,
+            "lat": 37.5034744
+          },
+          {
+            "lng": 127.0359037,
+            "lat": 37.5030402
+          },
+          {
+            "lng": 127.03505890000002,
+            "lat": 37.50278800000001
+          },
+          {
+            "lng": 127.03508369999999,
+            "lat": 37.502735
+          },
+          {
+            "lng": 127.03525400000002,
+            "lat": 37.50237130000001
+          },
+          {
+            "lng": 127.03547090000002,
+            "lat": 37.5018948
+          },
+          {
+            "lng": 127.0357051,
+            "lat": 37.50197
+          },
+          {
+            "lng": 127.03631320000001,
+            "lat": 37.5021483
+          },
+          {
+            "lng": 127.037175,
+            "lat": 37.50240860000001
+          },
+          {
+            "lng": 127.03772670000001,
+            "lat": 37.5026135
+          },
+          {
+            "lng": 127.037869,
+            "lat": 37.502304800000005
+          },
+          {
+            "lng": 127.03802270000001,
+            "lat": 37.50200150000001
+          },
+          {
+            "lng": 127.0381909,
+            "lat": 37.5016763
+          },
+          {
+            "lng": 127.03831510000002,
+            "lat": 37.50144490000001
+          },
+          {
+            "lng": 127.0383312,
+            "lat": 37.501415
+          },
+          {
+            "lng": 127.03837100000001,
+            "lat": 37.5013407
+          },
+          {
+            "lng": 127.03804510000002,
+            "lat": 37.5012434
+          },
+          {
+            "lng": 127.03800340000002,
+            "lat": 37.501192399999994
+          }
+        ],
+        "distance": 1589.0926453408235,
+        "duration": 251.2498586177826,
+        "search_diagnostic": {
+          "objective": "burden",
+          "objective_cost": 2155.3421720595993,
+          "expanded_states": 634
+        },
+        "burden_score": 0.1132499053437553,
+        "q3_eligible": true,
+        "profile_weights": [
+          0.3333333333333333,
+          0.0,
+          0.5,
+          0.0,
+          0.0,
+          0.16666666666666666
+        ],
+        "ranking_method": "survey_weighted_raw6_v1",
+        "ranking_scale": [
+          10.0,
+          1000.0,
+          1000.0,
+          10.0,
+          10.0,
+          1000.0
+        ]
+      },
+      {
+        "contract_version": "anjeon_contract_v6_child100",
+        "dataset_version": "seoul_static_20260915_review2",
+        "feature_version": "static_burden_v5_child_circle_inside",
+        "eta_version": "internal_hourly_topis_v1",
+        "routing_policy_version": "review_exclusion_v1",
+        "factor_order": [
+          "COMPLEX_INTERSECTION",
+          "MERGE_BRANCH",
+          "NARROW_ROAD",
+          "UNFAMILIAR_TURN",
+          "CONSECUTIVE_ACTION",
+          "CHILD_ZONE_NEARBY"
+        ],
+        "units": [
+          "count",
+          "score*m",
+          "score*m",
+          "count",
+          "count",
+          "m"
+        ],
+        "raw_features": [
+          0,
+          1027.793616133417,
+          137.68296932441953,
+          0,
+          2,
+          247.25865806455894
+        ],
+        "distance_m": 1898.9795840656936,
+        "internal_duration_s": 311.390168428421,
+        "time_source": "INTERNAL_HOURLY",
+        "quality": {
+          "eta_source_lengths_m": {
+            "explicit_highway_prior": 1898.9795840656936
+          },
+          "child_circle_inside_m": 247.25865806455894,
+          "child_circle_method": "facility_100m_euclidean_union_v1",
+          "all_six_ready": true,
+          "narrow_estimated_length_m": 1898.9795840656936,
+          "merge_estimated_length_m": 1467.0059972157148,
+          "unknown_narrow_length_m": 0.0,
+          "unknown_merge_length_m": 0.0,
+          "recorded_static_constraints_checked": true,
+          "external_review_turns": [],
+          "routing_policy_version": "review_exclusion_v1",
+          "routing_acceptance": "NOT_ASSESSED",
+          "production_route_approved": false,
+          "child_feature_method": "facility_point_100m_circle_union_intersection_length_v2",
+          "legacy_child_nearby_edge_length_m": 304.189143468067
+        },
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "arrival_at": "2026-09-15T08:05:11.390168+09:00",
+        "hourly_speed_coverage": {
+          "total_distance_m": 1898.9795840656943,
+          "topis_profile_distance_m": 1403.5591518207334,
+          "topis_profile_ratio": 0.7391122914632545,
+          "fallback_distance_m": 495.4204322449609,
+          "fallback_ratio": 0.2608877085367454,
+          "source_distance_m": {
+            "FALLBACK_EXPLICIT_HIGHWAY_PRIOR": 495.4204322449608,
+            "TOPIS_HISTORICAL": 1403.5591518207334
+          },
+          "fallback_reason_distance_m": {
+            "NO_SOURCE_GEOMETRY_NEARBY": 219.7214416696973,
+            "OSM_ROAD_NAME_MISSING": 21.624721142788935,
+            "ROAD_NAME_MISMATCH": 40.775181394527344,
+            "DIRECTION_OR_GEOMETRY_MISMATCH": 213.29908803794717
+          },
+          "historical_estimate": true,
+          "live_traffic": false,
+          "holiday_separated": false,
+          "profile_period": "2026-08-01/2026-08-24"
+        },
+        "speed_segments": [
+          {
+            "arc_id": 582586,
+            "distance_m": 16.111274365152983,
+            "duration_s": 5.800058771455074,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 10.0
+          },
+          {
+            "arc_id": 252012,
+            "distance_m": 32.90435656952019,
+            "duration_s": 5.9227841825136345,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 252014,
+            "distance_m": 34.69056011731084,
+            "duration_s": 6.244300821115951,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 370353,
+            "distance_m": 14.869315584614414,
+            "duration_s": 2.6764768052305947,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "OSM_ROAD_NAME_MISSING",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 252042,
+            "distance_m": 102.404720153503,
+            "duration_s": 18.432849627630542,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 252044,
+            "distance_m": 33.610530464210285,
+            "duration_s": 6.049895483557852,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "NO_SOURCE_GEOMETRY_NEARBY",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 252046,
+            "distance_m": 40.775181394527344,
+            "duration_s": 7.339532651014922,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "ROAD_NAME_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          },
+          {
+            "arc_id": 92302,
+            "distance_m": 127.39871145582637,
+            "duration_s": 17.954016881619687,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029800",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.545
+          },
+          {
+            "arc_id": 92304,
+            "distance_m": 5.112503472031154,
+            "duration_s": 0.720493736516428,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029800",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.545
+          },
+          {
+            "arc_id": 92306,
+            "distance_m": 39.59793113505386,
+            "duration_s": 5.5804483102835745,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029800",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.545
+          },
+          {
+            "arc_id": 92308,
+            "distance_m": 113.23876321536783,
+            "duration_s": 15.958486888836333,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029800",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.545
+          },
+          {
+            "arc_id": 92310,
+            "distance_m": 91.9460542713641,
+            "duration_s": 12.957752803950314,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029800",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.545
+          },
+          {
+            "arc_id": 92312,
+            "distance_m": 42.75983142081466,
+            "duration_s": 6.026047880795959,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220029800",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 25.545
+          },
+          {
+            "arc_id": 92314,
+            "distance_m": 132.02170107138838,
+            "duration_s": 21.137563880675923,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220027400",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 22.485
+          },
+          {
+            "arc_id": 92316,
+            "distance_m": 113.68017245277596,
+            "duration_s": 18.200961566822034,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220027400",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 22.485
+          },
+          {
+            "arc_id": 92318,
+            "distance_m": 109.5730576963558,
+            "duration_s": 17.543384821297796,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220027400",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 22.485
+          },
+          {
+            "arc_id": 92320,
+            "distance_m": 34.051295371476456,
+            "duration_s": 5.45184182065,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220027400",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 22.485
+          },
+          {
+            "arc_id": 92322,
+            "distance_m": 39.152438343891134,
+            "duration_s": 6.268569181143345,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220027400",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 22.485
+          },
+          {
+            "arc_id": 92324,
+            "distance_m": 41.37544030093232,
+            "duration_s": 6.624486772664281,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220027400",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 22.485
+          },
+          {
+            "arc_id": 92326,
+            "distance_m": 130.98463759425852,
+            "duration_s": 20.971523030434987,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220027400",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 22.485
+          },
+          {
+            "arc_id": 92328,
+            "distance_m": 128.41619817655604,
+            "duration_s": 13.208523241017193,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 92330,
+            "distance_m": 34.960925804518496,
+            "duration_s": 3.595980939893331,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 92332,
+            "distance_m": 7.37039678426506,
+            "duration_s": 0.7580979549529776,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 632706,
+            "distance_m": 8.448691373610853,
+            "duration_s": 0.8690082555714019,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 632708,
+            "distance_m": 10.20249819404037,
+            "duration_s": 1.0493998142441525,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 632710,
+            "distance_m": 23.90037770495637,
+            "duration_s": 2.4583245639383695,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "DIRECTION_OR_GEOMETRY_MISMATCH",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 35.0
+          },
+          {
+            "arc_id": 632712,
+            "distance_m": 87.31719861264664,
+            "duration_s": 18.339668320042467,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220025200",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 17.14
+          },
+          {
+            "arc_id": 632714,
+            "distance_m": 115.79752183837515,
+            "duration_s": 24.321533174921267,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220025200",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 17.14
+          },
+          {
+            "arc_id": 632716,
+            "distance_m": 14.753528283190038,
+            "duration_s": 3.098757399036414,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220025200",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 17.14
+          },
+          {
+            "arc_id": 632718,
+            "distance_m": 64.76674469041744,
+            "duration_s": 13.603283598920816,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220025200",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 17.14
+          },
+          {
+            "arc_id": 632720,
+            "distance_m": 69.25728806385618,
+            "duration_s": 14.546454902560225,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220025200",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 17.14
+          },
+          {
+            "arc_id": 632722,
+            "distance_m": 30.774332530711238,
+            "duration_s": 6.463687112634799,
+            "source": "TOPIS_HISTORICAL",
+            "reason": "PROFILE_AVAILABLE",
+            "topis_link_id": "1220025200",
+            "n_days": 16,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 17.14
+          },
+          {
+            "arc_id": 633606,
+            "distance_m": 6.755405558174521,
+            "duration_s": 1.2159730004714138,
+            "source": "FALLBACK_EXPLICIT_HIGHWAY_PRIOR",
+            "reason": "OSM_ROAD_NAME_MISSING",
+            "topis_link_id": null,
+            "n_days": 0,
+            "weekend": 0,
+            "hour": 8,
+            "speed_kph": 20.0
+          }
+        ],
+        "static_reference_duration_s": 219.98729029988283,
+        "segments": [
+          {
+            "arc_id": 582586,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 252012,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 252014,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 370353,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 252042,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 252044,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 252046,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92302,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92304,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92306,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92308,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92310,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92312,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92314,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92316,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92318,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92320,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92322,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92324,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92326,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92328,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92330,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 92332,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632706,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632708,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632710,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632712,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632714,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632716,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632718,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632720,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 632722,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "arc_id": 633606,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          }
+        ],
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              127.03312080000002,
+              37.51103560000001
+            ],
+            [
+              127.03318350000002,
+              37.5108993
+            ],
+            [
+              127.03352980000001,
+              37.511007899999996
+            ],
+            [
+              127.03389740000001,
+              37.511117199999994
+            ],
+            [
+              127.0338413,
+              37.5112435
+            ],
+            [
+              127.0349259,
+              37.5115673
+            ],
+            [
+              127.03528280000002,
+              37.51167160000001
+            ],
+            [
+              127.03571510000002,
+              37.5117996
+            ],
+            [
+              127.03638280000001,
+              37.510782400000004
+            ],
+            [
+              127.0364153,
+              37.51074429999999
+            ],
+            [
+              127.03666720000001,
+              37.510449300000005
+            ],
+            [
+              127.03745250000003,
+              37.5096433
+            ],
+            [
+              127.0380822,
+              37.50898400000001
+            ],
+            [
+              127.03837390000002,
+              37.5086767
+            ],
+            [
+              127.03930190000003,
+              37.507744800000005
+            ],
+            [
+              127.0401037,
+              37.506944100000005
+            ],
+            [
+              127.04085210000002,
+              37.506157200000004
+            ],
+            [
+              127.04108850000003,
+              37.505914999999995
+            ],
+            [
+              127.04129890000002,
+              37.50560460000001
+            ],
+            [
+              127.0414555,
+              37.5052533
+            ],
+            [
+              127.04188120000002,
+              37.504122900000006
+            ],
+            [
+              127.0423533,
+              37.50302870000001
+            ],
+            [
+              127.0424818,
+              37.5027308
+            ],
+            [
+              127.04250890000002,
+              37.502668
+            ],
+            [
+              127.0424203,
+              37.50263950000001
+            ],
+            [
+              127.04231330000002,
+              37.50260510000001
+            ],
+            [
+              127.0420627,
+              37.50252440000001
+            ],
+            [
+              127.04114710000002,
+              37.50222970000001
+            ],
+            [
+              127.03992830000003,
+              37.501848
+            ],
+            [
+              127.03977300000001,
+              37.501799399999996
+            ],
+            [
+              127.03909859999999,
+              37.50157170000001
+            ],
+            [
+              127.03837100000001,
+              37.5013407
+            ],
+            [
+              127.03804510000002,
+              37.5012434
+            ],
+            [
+              127.03800340000002,
+              37.501192399999994
+            ]
+          ]
+        },
+        "path": [
+          {
+            "lng": 127.03312080000002,
+            "lat": 37.51103560000001
+          },
+          {
+            "lng": 127.03318350000002,
+            "lat": 37.5108993
+          },
+          {
+            "lng": 127.03352980000001,
+            "lat": 37.511007899999996
+          },
+          {
+            "lng": 127.03389740000001,
+            "lat": 37.511117199999994
+          },
+          {
+            "lng": 127.0338413,
+            "lat": 37.5112435
+          },
+          {
+            "lng": 127.0349259,
+            "lat": 37.5115673
+          },
+          {
+            "lng": 127.03528280000002,
+            "lat": 37.51167160000001
+          },
+          {
+            "lng": 127.03571510000002,
+            "lat": 37.5117996
+          },
+          {
+            "lng": 127.03638280000001,
+            "lat": 37.510782400000004
+          },
+          {
+            "lng": 127.0364153,
+            "lat": 37.51074429999999
+          },
+          {
+            "lng": 127.03666720000001,
+            "lat": 37.510449300000005
+          },
+          {
+            "lng": 127.03745250000003,
+            "lat": 37.5096433
+          },
+          {
+            "lng": 127.0380822,
+            "lat": 37.50898400000001
+          },
+          {
+            "lng": 127.03837390000002,
+            "lat": 37.5086767
+          },
+          {
+            "lng": 127.03930190000003,
+            "lat": 37.507744800000005
+          },
+          {
+            "lng": 127.0401037,
+            "lat": 37.506944100000005
+          },
+          {
+            "lng": 127.04085210000002,
+            "lat": 37.506157200000004
+          },
+          {
+            "lng": 127.04108850000003,
+            "lat": 37.505914999999995
+          },
+          {
+            "lng": 127.04129890000002,
+            "lat": 37.50560460000001
+          },
+          {
+            "lng": 127.0414555,
+            "lat": 37.5052533
+          },
+          {
+            "lng": 127.04188120000002,
+            "lat": 37.504122900000006
+          },
+          {
+            "lng": 127.0423533,
+            "lat": 37.50302870000001
+          },
+          {
+            "lng": 127.0424818,
+            "lat": 37.5027308
+          },
+          {
+            "lng": 127.04250890000002,
+            "lat": 37.502668
+          },
+          {
+            "lng": 127.0424203,
+            "lat": 37.50263950000001
+          },
+          {
+            "lng": 127.04231330000002,
+            "lat": 37.50260510000001
+          },
+          {
+            "lng": 127.0420627,
+            "lat": 37.50252440000001
+          },
+          {
+            "lng": 127.04114710000002,
+            "lat": 37.50222970000001
+          },
+          {
+            "lng": 127.03992830000003,
+            "lat": 37.501848
+          },
+          {
+            "lng": 127.03977300000001,
+            "lat": 37.501799399999996
+          },
+          {
+            "lng": 127.03909859999999,
+            "lat": 37.50157170000001
+          },
+          {
+            "lng": 127.03837100000001,
+            "lat": 37.5013407
+          },
+          {
+            "lng": 127.03804510000002,
+            "lat": 37.5012434
+          },
+          {
+            "lng": 127.03800340000002,
+            "lat": 37.501192399999994
+          }
+        ],
+        "distance": 1898.9795840656936,
+        "duration": 311.390168428421,
+        "search_diagnostic": {
+          "objective": "burden",
+          "objective_cost": 2587.394430687792,
+          "expanded_states": 651
+        },
+        "burden_score": 0.11005126100630293,
+        "q3_eligible": true,
+        "profile_weights": [
+          0.3333333333333333,
+          0.0,
+          0.5,
+          0.0,
+          0.0,
+          0.16666666666666666
+        ],
+        "ranking_method": "survey_weighted_raw6_v1",
+        "ranking_scale": [
+          10.0,
+          1000.0,
+          1000.0,
+          10.0,
+          10.0,
+          1000.0
+        ]
+      }
+    ],
+    "excluded_by_q3_count": 0,
+    "candidate_generation_failures": [],
+    "candidate_scope": "minimum-time search is time-dependent; safe/distance are best among generated Q3-feasible candidates",
+    "engine": "OSM_ASTAR_HOURLY_V1"
+  }
+}

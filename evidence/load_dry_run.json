@@ -1,0 +1,37 @@
+{
+  "release_id": "anjeon_final_20260915_child100_v3",
+  "dry_run": {
+    "ag_nodes": {
+      "rows": 338351,
+      "logical_rows_sha256": "a7682ccf5c86d76cbab7bf0f9f208a3bba41085d76b25b9d29374c34f65f170f"
+    },
+    "ag_edges": {
+      "rows": 385020,
+      "logical_rows_sha256": "290ecbce1bfc4461ca5ba0c1808f043c0dce2961e70a0b652951b216368dba27"
+    },
+    "ag_arcs": {
+      "rows": 685205,
+      "logical_rows_sha256": "bf678a9aadd0f1cb847da3ebe1f2a22c0e2130548915371f4e8dfa9a9db5a838"
+    },
+    "ag_topis_links": {
+      "rows": 5075,
+      "logical_rows_sha256": "99492d00b084db4d727516d61c318db614b93b8feaadf30309fe67efe7d3bbea"
+    },
+    "ag_hourly_profiles": {
+      "rows": 243600,
+      "logical_rows_sha256": "8a5f3efb69d5e95e78acf3a6e8bc5ad04831c647fe81cedacd4d60347bfcf6c4"
+    },
+    "ag_arc_speed_mapping": {
+      "rows": 685205,
+      "logical_rows_sha256": "1386b40760d03351909ec57273e42f3191196eae4665176e56d91fcf5942e299"
+    },
+    "ag_transitions": {
+      "rows": 968755,
+      "logical_rows_sha256": "b27c10ea48bf8a0fcf0a167162a872e9111063894dc7f1d09757fa694b6f5f44"
+    },
+    "ag_restrictions": {
+      "rows": 3065,
+      "logical_rows_sha256": "e8c41ca650585e5a83e77723ac2f81c4bd91313215f6f4ac815296d8120b2ef3"
+    }
+  }
+}

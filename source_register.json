@@ -1,0 +1,144 @@
+{
+  "sources": [
+    {
+      "path": "unified_handoff_v1/inputs/roads.gpkg",
+      "role": "user-designated Seoul physical edge input",
+      "scope": "Seoul and buffer; 385020 physical edges",
+      "crs": "EPSG:5186",
+      "source_date": null,
+      "date_status": "not inferred from release filename",
+      "identity": "edge_id + osm_way_id + way_seq; PBF checked",
+      "sha256": "d25cd28ea8dd0e1eec28d2c6bd9c6bde25785c7ff00f24a92d71c814cc508052",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "project_lineage": "User confirmed QGIS workflow: OSM + Seoul boundary + 1 km buffer, EPSG:5186; final provided inputs accepted as project boundary.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "unified_handoff_v1/inputs/osm_buffer.osm.pbf",
+      "role": "raw OSM extract corroboration",
+      "source_date": null,
+      "authority": "user supplied snapshot; OSM external completeness not certified",
+      "license_reference": "https://www.openstreetmap.org/copyright",
+      "sha256": "09014f7a10db99fddbf1e26f056d2b1ca74e402ab2cadcb091d72bbd38a4e564",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "unified_handoff_v1/inputs/osm_tags.json",
+      "role": "raw selected ways/nodes/restriction relations",
+      "verified_against_pbf": true,
+      "sha256": "d8eb8c153d6d9f62c5294b50964b3472e7a95489793dd2bd94ff9ab400b233d1",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "unified_handoff_v1/inputs/child_facilities.geojson",
+      "role": "provided final facility geocode points",
+      "source_date": "2026-06-30 per record",
+      "crs": "EPSG:4326",
+      "radius_m": 100,
+      "legal_boundary": false,
+      "geocode_source": "Kakao per record; geocoder original response history not bundled",
+      "sha256": "c8911f67689139679d90387770b7c0676ba6ef9705a4e4ae327f1337c8aa8a81",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "project_lineage": "User confirmed address-to-coordinate conversion, EPSG:5186, facility point 100 m buffer and join; legal boundary not inferred.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "unified_handoff_v1/inputs/taas_source.csv",
+      "role": "provided Seoul TAAS 2025 source records",
+      "event_year": 2025,
+      "acquired_at": null,
+      "terms_status": "full usage terms not independently re-verified",
+      "sha256": "5d77c070cd0457e7f0de6d2ff00f6d8cc7f8222705f7e75ea5fb6b40d4ad1936",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "unified_handoff_v1/inputs/taas_points.gpkg",
+      "role": "provided projected TAAS point input",
+      "crs": "EPSG:5186",
+      "edge_attribution": "not_inferred",
+      "sha256": "f22de063d2726677dff7dacd8865492953987b2402c66859efdf991bd112ea69",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "unified_handoff_v1/inputs/seoul_boundary.gpkg",
+      "role": "provided project boundary reference",
+      "crs": "EPSG:5186",
+      "officially_authenticated": false,
+      "sha256": "fbb352cdd576a14e4cf49f5e5d1044278f7dd924f7f8cd687a1e1836d2778fe8",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "project_lineage": "User confirmed QGIS workflow: OSM + Seoul boundary + 1 km buffer, EPSG:5186; final provided inputs accepted as project boundary.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "unified_handoff_v1/inputs/seoul_buffer.gpkg",
+      "role": "provided routing context buffer reference",
+      "crs": "EPSG:5186",
+      "sha256": "3eb2cd27d59f5fdfce937c4bb62a14539aab350edcd6193edcc149461ebb058f",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "project_lineage": "User confirmed QGIS workflow: OSM + Seoul boundary + 1 km buffer, EPSG:5186; final provided inputs accepted as project boundary.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "unified_handoff_v1/inputs/topis_202608.xlsx",
+      "role": "TOPIS observed source-link hourly speeds",
+      "observation_period": "2026-08",
+      "source_url": "https://topis.seoul.go.kr/refRoom/openRefRoom_1.do",
+      "retrieval_provenance": "provided checkpoint round19 source; SHA preserved",
+      "serving_adopted": true,
+      "sha256": "5588281e1039690e038316d9828302b43da8bd978c8eeadb2fb22d1eae384dfb",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "serving_scope": "53,516 direction-verified OSM arcs; historical training-period profiles only",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "unified_handoff_v1/evidence",
+      "role": "frozen reviewed attribute evidence; NOT raw observation",
+      "items": "8 corroborated speed/lane records, 14 accepted polygon proxy edges, address width candidate references, quality holds, time defaults",
+      "upstream_recreation_limit": "full original polygon/address acquisition and matching process is outside core build; reviewed evidence included explicitly",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "path": "additional/hd_source",
+      "role": "selected original SHP/SHX/DBF/PRJ/CPG bytes from provided SEC003/004/005 archives",
+      "dates": "2023 with some 2024 updates; row dates retained",
+      "crs": "EPSG:5179 transformed to 5186; original PRJ retained",
+      "metadata_issue": "SEC004 CPG says UTF-8 but actual DBF needs cp949; already damaged remarks preserved",
+      "release_freeze_date": "2026-09-15",
+      "update_policy": "No automatic update in this release. Correct confirmed critical errors only under a NEW release ID; preserve source bytes and prior snapshots.",
+      "distribution_policy": "Team project package with source attribution. Do not label unknown upstream terms as verified or infer permission from public URL alone."
+    },
+    {
+      "url": "https://topisgeo.eseoul.go.kr:8443/geoserver/wfs?service=WFS&request=GetFeature&version=2.0.0&typeNames=utopis%3AVW_MAP_TRAFFIC4&outputFormat=application%2Fjson&count=10000&srsName=EPSG%3A4326",
+      "parent_page": "https://topis.seoul.go.kr/",
+      "discovered_from": "https://topis.seoul.go.kr/js/map/layer.js",
+      "retrieved_at": "2026-09-15T01:27:06.925300+00:00",
+      "http_date": "Tue, 15 Sep 2026 01:27:05 GMT",
+      "sha256": "883668d9f5bbcd59da7b55dc7abd32a22215f2c5e1c7e4f1a2984bc072ae4ce8",
+      "features": 5128,
+      "usage": "geometry identification only; live SPD is not adopted as a historical profile",
+      "path": "evidence/topis_links_live.geojson",
+      "role": "official TOPIS directed WFS geometry used for matching only; live SPD values not used",
+      "license_status": "public endpoint verified; endpoint-specific unrestricted redistribution license not independently established",
+      "update_policy": "frozen 2026-09-15 snapshot"
+    }
+  ],
+  "missing_metadata_policy": "unknown stays null; user-provided artifacts are not asserted current official source truth",
+  "release_id": "anjeon_final_20260915_child100_v3",
+  "T03_scope": "Source register, dates including explicit nulls, uses/exclusions, attribution and freeze/update policy completed. Universal upstream acquisition and all redistribution permissions are not certified.",
+  "current_register": true
+}

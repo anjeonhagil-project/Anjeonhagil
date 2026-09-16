@@ -1,0 +1,28 @@
+{
+  "package_version": "team_data_20260915_v2_scope",
+  "based_on": "Anjeonhagil_REVIEW2",
+  "versions": {
+    "contract_version": "anjeon_contract_v4",
+    "dataset_version": "seoul_static_20260915_review2",
+    "feature_version": "static_burden_v4",
+    "eta_version": "internal_static_v2_provenance",
+    "routing_policy_version": "review_exclusion_v1"
+  },
+  "data_changed": false,
+  "rule_files_changed": false,
+  "runtime_change": "relocated paths and consolidated rule loading; numerical behavior is regression-checked",
+  "original_zip_sha256": "6a3225809a4636eae9c4228b1f103f9e22d5a92fc44afea4cbb8de2b10f5f8ec",
+  "operational_path_mapping": {
+    "unified_handoff_v1/inputs/roads.gpkg": "data/roads.gpkg",
+    "checkpoint_work/round36/feature_policy.sqlite": "data/feature_policy.sqlite",
+    "unified_handoff_v1/data/routing.sqlite": "data/routing.sqlite",
+    "unified_handoff_v1/data/transitions.sqlite": "data/transitions.sqlite",
+    "unified_handoff_v1/data/child_circle.sqlite": "data/child_circle.sqlite",
+    "unified_handoff_v1/data/child_circles_100m.geojson": "data/child_circles_100m.geojson",
+    "unified_handoff_v1/data/features.sqlite": "data/support/features.sqlite",
+    "unified_handoff_v1/data/graph.sqlite": "data/support/graph.sqlite"
+  },
+  "source_archive_sha256": "fd1f7df7ad59ec091bcdaf2f4bf82f17c376dfaa57ae5bc16f832bc82aa74392",
+  "scope_revision": "README and scope records updated; audit added; runtime numerical behavior unchanged",
+  "previous_package_version": "team_data_20260915_v1"
+}

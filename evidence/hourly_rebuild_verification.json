@@ -1,0 +1,6 @@
+{
+  "hash_match": true,
+  "sha256": "9afca69667a8e7f222190e905a023b04d9c25d6671d8f6d565f5165a550eb183",
+  "inputs": "preserved TOPIS geometries + profiles + six fixed core DB",
+  "command": "python dataset/tools/build_hourly.py --output /new/path/hourly_speed.sqlite"
+}

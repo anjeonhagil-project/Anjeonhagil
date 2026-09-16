@@ -1,0 +1,208 @@
+{
+  "package_version": "team_data_20260915_v1",
+  "data_and_display_files_preserved": [
+    {
+      "old": "unified_handoff_v1/inputs/roads.gpkg",
+      "current": "data/roads.gpkg",
+      "same_bytes": true
+    },
+    {
+      "old": "checkpoint_work/round36/feature_policy.sqlite",
+      "current": "data/feature_policy.sqlite",
+      "same_bytes": true
+    },
+    {
+      "old": "unified_handoff_v1/data/routing.sqlite",
+      "current": "data/routing.sqlite",
+      "same_bytes": true
+    },
+    {
+      "old": "unified_handoff_v1/data/transitions.sqlite",
+      "current": "data/transitions.sqlite",
+      "same_bytes": true
+    },
+    {
+      "old": "unified_handoff_v1/data/child_circle.sqlite",
+      "current": "data/child_circle.sqlite",
+      "same_bytes": true
+    },
+    {
+      "old": "unified_handoff_v1/data/child_circles_100m.geojson",
+      "current": "data/child_circles_100m.geojson",
+      "same_bytes": true
+    },
+    {
+      "old": "unified_handoff_v1/data/features.sqlite",
+      "current": "data/support/features.sqlite",
+      "same_bytes": true
+    },
+    {
+      "old": "unified_handoff_v1/data/graph.sqlite",
+      "current": "data/support/graph.sqlite",
+      "same_bytes": true
+    }
+  ],
+  "rule_files_identical": true,
+  "relocated_runtime": {
+    "fixed_paths_identical": 48,
+    "invalid_inputs_rejected": 42,
+    "test_origin": "relocated original contract_checks.py executed successfully"
+  },
+  "astar_distance_example": {
+    "scope": "STATIC_REFERENCE_DISTANCE_NOT_FULL_Q3_SERVICE",
+    "source_node": 4181764361,
+    "target_node": 8556743355,
+    "astar_dijkstra_cost_equal": true,
+    "astar_states": 320,
+    "dijkstra_states": 4140,
+    "arc_ids": [
+      582586,
+      370280,
+      370282,
+      370284,
+      370303,
+      98424,
+      98426,
+      98428,
+      512841,
+      512839,
+      370931,
+      370929,
+      125075,
+      125073,
+      125071,
+      341881,
+      341879,
+      124993,
+      125061,
+      125059,
+      125057,
+      125055,
+      91118,
+      91120,
+      91122,
+      91124,
+      91126,
+      91128,
+      632722,
+      633606
+    ],
+    "result": {
+      "contract_version": "anjeon_contract_v4",
+      "dataset_version": "seoul_static_20260915_review2",
+      "feature_version": "static_burden_v4",
+      "eta_version": "internal_static_v2_provenance",
+      "routing_policy_version": "review_exclusion_v1",
+      "factor_order": [
+        "COMPLEX_INTERSECTION",
+        "MERGE_BRANCH",
+        "NARROW_ROAD",
+        "UNFAMILIAR_TURN",
+        "CONSECUTIVE_ACTION",
+        "CHILD_ZONE_NEARBY"
+      ],
+      "units": [
+        "count",
+        "score*m",
+        "score*m",
+        "count",
+        "count",
+        "m"
+      ],
+      "raw_features": [
+        0,
+        220.20604911059073,
+        433.40092307851114,
+        0,
+        4,
+        225.1629031176327
+      ],
+      "distance_m": 1422.031757501335,
+      "internal_duration_s": 222.82286882518866,
+      "time_source": "INTERNAL_STATIC",
+      "quality": {
+        "eta_source_lengths_m": {
+          "explicit_highway_prior": 1422.031757501335
+        },
+        "child_circle_inside_m": 188.8747638292946,
+        "child_circle_method": "facility_100m_euclidean_union_v1",
+        "all_six_ready": true,
+        "narrow_estimated_length_m": 1422.031757501335,
+        "merge_estimated_length_m": 1384.5020194124493,
+        "unknown_narrow_length_m": 0.0,
+        "unknown_merge_length_m": 0.0,
+        "recorded_static_constraints_checked": true,
+        "external_review_turns": [],
+        "routing_policy_version": "review_exclusion_v1",
+        "routing_acceptance": "NOT_ASSESSED",
+        "production_route_approved": false
+      }
+    }
+  },
+  "x8_example": {
+    "expected": [
+      -1,
+      -0.2,
+      0.3333333333333333,
+      0,
+      1,
+      0,
+      0,
+      0.16666666666666666
+    ],
+    "actual": [
+      -1.0,
+      -0.2,
+      0.3333333333333333,
+      -0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.16666666666666663
+    ],
+    "Y": 1,
+    "origin": "SYNTHETIC_EXPLANATION_ONLY"
+  },
+  "rebuild": {
+    "python": "3.12.14",
+    "sqlite": "3.53.1",
+    "started_without_core_databases": true,
+    "core_databases": 6,
+    "all_core_hashes_equal": true,
+    "mismatches": [],
+    "include_additional": false,
+    "raw_sources": "this package only",
+    "source_archive_sha256": "fd1f7df7ad59ec091bcdaf2f4bf82f17c376dfaa57ae5bc16f832bc82aa74392",
+    "hashes": {
+      "checkpoint_work/round36/feature_policy.sqlite": "8ea2af4de0a45dd94d50e62de66cc8e0b4e52d234e4d44218220f1829c2e8e84",
+      "unified_handoff_v1/data/child_circle.sqlite": "e4c4c930cc3e77b23d720c8b47ed5e8d02bc90ac4f5a5444b03caf88cb49021d",
+      "unified_handoff_v1/data/features.sqlite": "8baaae44493137503607d8297c9db90f3a617cb30a848193fe0dd32d593a81a7",
+      "unified_handoff_v1/data/graph.sqlite": "efcb9a53b591eef753a704db09b10bc431dc17e73f73bc0f579728c2b1a30970",
+      "unified_handoff_v1/data/routing.sqlite": "3315de28cecba41b1b6247b48829a68e17de64a0e9314c83cb95a8a35731f460",
+      "unified_handoff_v1/data/transitions.sqlite": "d2a59b5958e0d9d3d9971c0d0660ee0de332dee94b4228a6803ec257b79fe5b7"
+    }
+  },
+  "limits": [
+    "No new live navigation validation",
+    "No service DB/API integration",
+    "Additional HD/TOPIS outputs preserved; this packaging run rebuilt core databases only"
+  ],
+  "documentation_static_checks": {
+    "html_sections": 19,
+    "tables": 65,
+    "documented_distinct_actual_columns": 119,
+    "missing_columns": [],
+    "internal_anchors_resolve": true,
+    "external_runtime_assets": false,
+    "python_syntax": "ok",
+    "visual_browser_review": "unavailable due to cloud browser local URL policy; static structure checked"
+  },
+  "example_response_versions": {
+    "contract_version": "anjeon_contract_v4",
+    "dataset_version": "seoul_static_20260915_review2",
+    "feature_version": "static_burden_v4",
+    "eta_version": "internal_static_v2_provenance",
+    "routing_policy_version": "review_exclusion_v1"
+  },
+  "example_response_generated_from_current_calculator": true
+}

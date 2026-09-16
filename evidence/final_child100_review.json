@@ -1,0 +1,195 @@
+{
+  "reviewed_at": "2026-09-15",
+  "release_id": "anjeon_final_20260915_child100_v3",
+  "previous_release_id": "anjeon_final_20260915_child100_v2",
+  "team_project_dataset_accepted": true,
+  "real_world_navigation_certified": false,
+  "versions": {
+    "contract_version": "anjeon_contract_v6_child100",
+    "dataset_version": "seoul_static_20260915_review2",
+    "feature_version": "static_burden_v5_child_circle_inside",
+    "eta_version": "internal_hourly_topis_v1",
+    "routing_policy_version": "review_exclusion_v1"
+  },
+  "comparison_final_to_child100": {
+    "old_files": 370,
+    "child_files": 374,
+    "dataset_files": 74,
+    "unchanged": 347,
+    "changed": [
+      "README.html",
+      "dataset/README.html",
+      "dataset/evidence/db_integration.json",
+      "dataset/evidence/db_test_seed.json",
+      "dataset/evidence/hourly_validation.json",
+      "dataset/evidence/load_dry_run.json",
+      "dataset/evidence/node_service_response.json",
+      "dataset/evidence/od10_hourly_service.json",
+      "dataset/evidence/postgres_columns.json",
+      "dataset/final_release.json",
+      "dataset/package_manifest.json",
+      "dataset/service_manifest.json",
+      "dataset/source_register.json",
+      "dataset/tools/check_release.py",
+      "dataset/tools/examples/hourly_request.json",
+      "dataset/tools/load_database.py",
+      "dataset/tools/runtime/learning.py",
+      "dataset/tools/runtime/routing_service.py",
+      "dataset/tools/validate_hourly.py",
+      "release_manifest.json",
+      "service/apps/backend/src/modules/routes/routes.service.js",
+      "service/database/final/01_additive_schema.sql",
+      "service/tests/final/integration.mjs"
+    ],
+    "added": [
+      "dataset/evidence/child100_direction_invariance.json",
+      "dataset/evidence/child100_feature_impact.json",
+      "dataset/tools/runtime/child_feature.py",
+      "dataset/tools/runtime/current_feature_contract.json"
+    ],
+    "removed": [],
+    "data_files": {
+      "dataset/data/child_circle.sqlite": "unchanged",
+      "dataset/data/child_circles_100m.geojson": "unchanged",
+      "dataset/data/feature_policy.sqlite": "unchanged",
+      "dataset/data/hourly_speed.sqlite": "unchanged",
+      "dataset/data/roads.gpkg": "unchanged",
+      "dataset/data/routing.sqlite": "unchanged",
+      "dataset/data/support/features.sqlite": "unchanged",
+      "dataset/data/support/graph.sqlite": "unchanged",
+      "dataset/data/transitions.sqlite": "unchanged"
+    },
+    "dataset_matches_full": true
+  },
+  "v2_to_v3_data_hashes_unchanged": {
+    "data/hourly_speed.sqlite": true,
+    "data/transitions.sqlite": true,
+    "data/child_circles_100m.geojson": true,
+    "data/child_circle.sqlite": true,
+    "data/roads.gpkg": true,
+    "data/routing.sqlite": true,
+    "data/feature_policy.sqlite": true,
+    "data/support/graph.sqlite": true,
+    "data/support/features.sqlite": true
+  },
+  "source_archive_unchanged": true,
+  "child100_fixed_path_values_preserved": 48,
+  "child100_live_candidate_values_preserved": [
+    "safe",
+    "shortestTime",
+    "shortestDistance"
+  ],
+  "spatial_validation": {
+    "all_passed": true,
+    "road_edges_checked": 385020,
+    "inside_edges": 38181,
+    "facility_unique_locations": 1464,
+    "polygon_sides": 512,
+    "method": "inscribed/circumscribed polygon bounds independent of analytic circle builder",
+    "partial_geometry_checks": 8444,
+    "reverse_checks": 8444,
+    "split_additivity_checks": 8444,
+    "max_geometry_bracket_width_m": 0.6381374582230255,
+    "max_partial_bracket_width_m": 0.12323818303324519,
+    "max_length_field_error_m": 0.0,
+    "arc_direction_rows_checked": 685205,
+    "known_exact_examples": 5
+  },
+  "hourly_regression": {
+    "astar_dijkstra": [
+      {
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "mode": "time",
+        "cost": 229.39080971609687,
+        "astar_states": 2578,
+        "dijkstra_states": 3847
+      },
+      {
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "mode": "distance",
+        "cost": 1422.031757501335,
+        "astar_states": 319,
+        "dijkstra_states": 4139
+      },
+      {
+        "departure_at": "2026-09-15T08:00:00+09:00",
+        "mode": "burden",
+        "cost": 1464.1466041696744,
+        "astar_states": 411,
+        "dijkstra_states": 4029
+      },
+      {
+        "departure_at": "2026-09-20T22:00:00+09:00",
+        "mode": "time",
+        "cost": 218.11382120977973,
+        "astar_states": 2398,
+        "dijkstra_states": 3661
+      },
+      {
+        "departure_at": "2026-09-20T22:00:00+09:00",
+        "mode": "distance",
+        "cost": 1422.031757501335,
+        "astar_states": 319,
+        "dijkstra_states": 4139
+      },
+      {
+        "departure_at": "2026-09-20T22:00:00+09:00",
+        "mode": "burden",
+        "cost": 1464.1466041696744,
+        "astar_states": 411,
+        "dijkstra_states": 4029
+      }
+    ],
+    "hour_boundary_fifo_checks": 303,
+    "rejected": [
+      "mixed departure",
+      "old child feature",
+      "old feature scaler",
+      "static ETA",
+      "timezone missing",
+      "unsupported q3",
+      "reversed fraction"
+    ],
+    "synthetic_hour_boundary": {
+      "distance_m": 1000,
+      "first_300m_kph": 36,
+      "remaining_700m_kph": 72,
+      "duration_s": 65.0,
+      "expected_s": 65
+    },
+    "child_feature_contract": "raw6[5] equals exact path intersection length inside union of facility-centred 100 m circles",
+    "matched_arcs_rules_checked": 53516,
+    "q3_zero_feasible": true,
+    "x8_hourly_antisymmetric": true,
+    "final_hourly_reference_matches": 48,
+    "child_feature_changed_cases": 40,
+    "all_passed": true
+  },
+  "db_rejections": 18,
+  "http_version_rejections": 2,
+  "live_http_to_node_to_sql": true,
+  "load_tables": 8,
+  "load_total_rows": 3314276,
+  "fixes": [
+    "dataset-only README paths, standalone manifest gate and included DB SQL",
+    "current validation compared against legacy evaluator and frozen FINAL hourly evidence",
+    "DB rechecks sixth feature and quality using stored interval/route intersection",
+    "HTTP evaluate validates the same five versions as Python API",
+    "legacy/current feature explanations and public entrypoints clarified"
+  ],
+  "unchanged_limits": [
+    "OD10 map/navigation route mismatch and actual turn/entrance legality unresolved",
+    "TOPIS matching passes rule checks but has no independently labelled accuracy benchmark",
+    "historical partial-coverage speeds, not live traffic; no separate public holiday model",
+    "hosted Supabase deployment and actual trained model/browser acceptance remain integration work"
+  ],
+  "dataset_standalone_verified": true,
+  "dataset_standalone_evidence": "evidence/dataset_standalone_acceptance.json",
+  "final_to_child100_od10_preference_candidate": {
+    "final_distance_m": 1589.0926453408235,
+    "final_internal_duration_s": 251.2498586177826,
+    "child100_distance_m": 1898.9795840656936,
+    "child100_internal_duration_s": 311.390168428421,
+    "interpretation": "Candidate generation/ranking can change when the child feature changes; distance closeness to external navigation is not proof of the same path or legal traversability."
+  }
+}

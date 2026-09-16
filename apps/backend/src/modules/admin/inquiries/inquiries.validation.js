@@ -43,7 +43,8 @@ export function validateInquiryId(
         const inquiryId =
             req.params.inquiryId
         
-        const uuidPattern = /^[0-9a-fA-F]{8}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/i
+        // UUID 버전은 세 번째 묶음, variant는 네 번째 묶음에 있다.
+        const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
         if (
             !inquiryId ||

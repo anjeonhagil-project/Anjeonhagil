@@ -1,0 +1,189 @@
+{
+  "source_links_total": 5075,
+  "source_identity_accepted": 5045,
+  "identity_status": {
+    "ACCEPTED": 5045,
+    "SOURCE_EXTENT_CHANGED|SOURCE_ENDPOINT_NAMES_CHANGED": 2,
+    "SOURCE_ENDPOINT_NAMES_CHANGED": 26,
+    "SOURCE_ROAD_NAME_CHANGED": 2
+  },
+  "arc_counts": {
+    "ROAD_NAME_MISMATCH": 37878,
+    "NO_SOURCE_GEOMETRY_NEARBY": 362673,
+    "DIRECTION_OR_GEOMETRY_MISMATCH": 20295,
+    "ARC_TOO_SHORT_FOR_DIRECTION": 1650,
+    "MATCHED_GEOMETRY_NAME_DIRECTION": 53516,
+    "OSM_ROAD_NAME_MISSING": 200233,
+    "OUTSIDE_SUPPORTED_GRAPH": 8960
+  },
+  "arc_length_m_by_reason": {
+    "ROAD_NAME_MISMATCH": 1300078.710643223,
+    "NO_SOURCE_GEOMETRY_NEARBY": 10974260.882836325,
+    "DIRECTION_OR_GEOMETRY_MISMATCH": 722126.063787564,
+    "ARC_TOO_SHORT_FOR_DIRECTION": 3412.0132779765,
+    "MATCHED_GEOMETRY_NAME_DIRECTION": 2123535.008834111,
+    "OSM_ROAD_NAME_MISSING": 4276679.052861443,
+    "OUTSIDE_SUPPORTED_GRAPH": 392515.83429459826
+  },
+  "supported_arc_length_m": 19400091.732240982,
+  "matched_arc_length_m": 2123535.0088341064,
+  "matched_directional_length_ratio": 0.10946004988754805,
+  "matched_source_links": 4601,
+  "sample": [
+    {
+      "arc_id": 522,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 5.631375310534429,
+      "max_angle_deg": 6.113538113771072
+    },
+    {
+      "arc_id": 524,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 4.805765795020683,
+      "max_angle_deg": 2.0629802888774305
+    },
+    {
+      "arc_id": 526,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 5.495651538402336,
+      "max_angle_deg": 6.035436314116459
+    },
+    {
+      "arc_id": 528,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 6.1822241290393,
+      "max_angle_deg": 15.59338972543642
+    },
+    {
+      "arc_id": 530,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 1.928589105249408,
+      "max_angle_deg": 6.268219465459647
+    },
+    {
+      "arc_id": 532,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 2.127132317652431,
+      "max_angle_deg": 6.2338023469508705
+    },
+    {
+      "arc_id": 534,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 3.8681739808444853,
+      "max_angle_deg": 15.329024439564847
+    },
+    {
+      "arc_id": 536,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 2.3888163345440336,
+      "max_angle_deg": 3.1747066560828405
+    },
+    {
+      "arc_id": 538,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 2.3888163345440336,
+      "max_angle_deg": 0.8208978294920718
+    },
+    {
+      "arc_id": 540,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 1.1527910525521436,
+      "max_angle_deg": 0.37395546682175673
+    },
+    {
+      "arc_id": 542,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 1.8649545411170385,
+      "max_angle_deg": 1.2083957550346578
+    },
+    {
+      "arc_id": 544,
+      "topis_link_id": "1000015600",
+      "road_name": "창경궁로",
+      "max_distance_m": 3.6740798289418355,
+      "max_angle_deg": 0.4671153695815469
+    },
+    {
+      "arc_id": 546,
+      "topis_link_id": "1000017800",
+      "road_name": "창경궁로",
+      "max_distance_m": 2.310784232661849,
+      "max_angle_deg": 0.3610659194582484
+    },
+    {
+      "arc_id": 548,
+      "topis_link_id": "1000017800",
+      "road_name": "창경궁로",
+      "max_distance_m": 5.875458014225798,
+      "max_angle_deg": 4.511591706099138
+    },
+    {
+      "arc_id": 550,
+      "topis_link_id": "1000017800",
+      "road_name": "창경궁로",
+      "max_distance_m": 5.875458014225798,
+      "max_angle_deg": 2.304728766080429
+    },
+    {
+      "arc_id": 552,
+      "topis_link_id": "1000017800",
+      "road_name": "창경궁로",
+      "max_distance_m": 3.4312603831334916,
+      "max_angle_deg": 3.518308267107531
+    },
+    {
+      "arc_id": 898,
+      "topis_link_id": "1030011700",
+      "road_name": "고산자로",
+      "max_distance_m": 1.150729956105186,
+      "max_angle_deg": 1.740961487966624
+    },
+    {
+      "arc_id": 900,
+      "topis_link_id": "1030011700",
+      "road_name": "고산자로",
+      "max_distance_m": 7.447906170988176,
+      "max_angle_deg": 2.661724118971928
+    },
+    {
+      "arc_id": 902,
+      "topis_link_id": "1030011700",
+      "road_name": "고산자로",
+      "max_distance_m": 7.447906170988176,
+      "max_angle_deg": 0.3021514063697945
+    },
+    {
+      "arc_id": 904,
+      "topis_link_id": "1030011700",
+      "road_name": "고산자로",
+      "max_distance_m": 6.561388469988898,
+      "max_angle_deg": 0.18276293577853353
+    }
+  ],
+  "parameters": {
+    "max_distance_m": 12,
+    "mean_distance_m": 8,
+    "max_angle_deg": 25,
+    "ambiguity_mean_distance_margin_m": 3,
+    "min_arc_length_m": 3,
+    "source_projection_coverage_min": 0.8,
+    "source_length_tolerance_max_m_or_ratio": [
+      20,
+      0.15
+    ],
+    "name_match": "exact after whitespace/punctuation normalization",
+    "source_direction": "ordered WFS geometry; source from/to labels must agree with historical metadata",
+    "sampling_spacing_max_m": 10
+  }
+}

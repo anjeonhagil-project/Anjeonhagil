@@ -1,0 +1,15 @@
+{
+  "edge_id": 130,
+  "forward_arc": 260,
+  "reverse_arc": 261,
+  "forward_fraction": [
+    0.9177514882824418,
+    1.0
+  ],
+  "reverse_fraction": [
+    0.0,
+    0.0822485117175582
+  ],
+  "inside_m_each": 1.1234217981450603,
+  "positive_and_equal": true
+}

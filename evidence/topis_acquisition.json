@@ -1,0 +1,10 @@
+{
+  "url": "https://topisgeo.eseoul.go.kr:8443/geoserver/wfs?service=WFS&request=GetFeature&version=2.0.0&typeNames=utopis%3AVW_MAP_TRAFFIC4&outputFormat=application%2Fjson&count=10000&srsName=EPSG%3A4326",
+  "parent_page": "https://topis.seoul.go.kr/",
+  "discovered_from": "https://topis.seoul.go.kr/js/map/layer.js",
+  "retrieved_at": "2026-09-15T01:27:06.925300+00:00",
+  "http_date": "Tue, 15 Sep 2026 01:27:05 GMT",
+  "sha256": "883668d9f5bbcd59da7b55dc7abd32a22215f2c5e1c7e4f1a2984bc072ae4ce8",
+  "features": 5128,
+  "usage": "geometry identification only; live SPD is not adopted as a historical profile"
+}

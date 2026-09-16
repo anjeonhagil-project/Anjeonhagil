@@ -1,0 +1,51 @@
+{
+  "contract_version": "anjeon_contract_v4",
+  "dataset_version": "seoul_static_20260915_review2",
+  "feature_version": "static_burden_v4",
+  "eta_version": "internal_static_v2_provenance",
+  "routing_policy_version": "review_exclusion_v1",
+  "factor_order": [
+    "COMPLEX_INTERSECTION",
+    "MERGE_BRANCH",
+    "NARROW_ROAD",
+    "UNFAMILIAR_TURN",
+    "CONSECUTIVE_ACTION",
+    "CHILD_ZONE_NEARBY"
+  ],
+  "units": [
+    "count",
+    "score*m",
+    "score*m",
+    "count",
+    "count",
+    "m"
+  ],
+  "raw_features": [
+    0,
+    220.20604911059073,
+    433.40092307851114,
+    0,
+    4,
+    225.1629031176327
+  ],
+  "distance_m": 1422.031757501335,
+  "internal_duration_s": 222.82286882518866,
+  "time_source": "INTERNAL_STATIC",
+  "quality": {
+    "eta_source_lengths_m": {
+      "explicit_highway_prior": 1422.031757501335
+    },
+    "child_circle_inside_m": 188.8747638292946,
+    "child_circle_method": "facility_100m_euclidean_union_v1",
+    "all_six_ready": true,
+    "narrow_estimated_length_m": 1422.031757501335,
+    "merge_estimated_length_m": 1384.5020194124493,
+    "unknown_narrow_length_m": 0.0,
+    "unknown_merge_length_m": 0.0,
+    "recorded_static_constraints_checked": true,
+    "external_review_turns": [],
+    "routing_policy_version": "review_exclusion_v1",
+    "routing_acceptance": "NOT_ASSESSED",
+    "production_route_approved": false
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "all_original_data_files_unchanged": true,
+  "files": [
+    "transitions.sqlite",
+    "child_circles_100m.geojson",
+    "child_circle.sqlite",
+    "roads.gpkg",
+    "routing.sqlite",
+    "feature_policy.sqlite",
+    "support/graph.sqlite",
+    "support/features.sqlite"
+  ]
+}

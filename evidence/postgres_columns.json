@@ -1,0 +1,824 @@
+[
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "arc_id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "topis_link_id",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "matched",
+    "data_type": "boolean",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "reason",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "max_distance_m",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "mean_distance_m",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "max_angle_deg",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "source_fraction_start",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_arc_speed_mapping",
+    "column_name": "source_fraction_end",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "arc_id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "edge_id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "from_node",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "to_node",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "length_m",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "static_eligible",
+    "data_type": "boolean",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "merge_score",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "merge_basis",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "merge_estimated",
+    "data_type": "boolean",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "fallback_kph",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_arcs",
+    "column_name": "fallback_basis",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidate_segments",
+    "column_name": "candidate_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidate_segments",
+    "column_name": "seq",
+    "data_type": "integer",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidate_segments",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidate_segments",
+    "column_name": "arc_id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidate_segments",
+    "column_name": "start_fraction",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidate_segments",
+    "column_name": "end_fraction",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "candidate_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "search_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "route_types",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "segments",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "distance_m",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "internal_duration_s",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "display_duration_s",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "display_duration_source",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "raw6",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "geometry_geojson",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "hourly_coverage",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "quality",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_candidates",
+    "column_name": "snapshot",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_choices",
+    "column_name": "choice_event_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_choices",
+    "column_name": "exposure_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_choices",
+    "column_name": "search_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_choices",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_choices",
+    "column_name": "selected_candidate_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_choices",
+    "column_name": "chosen_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_choices",
+    "column_name": "event_source",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_choices",
+    "column_name": "sample_origin",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_active",
+    "column_name": "singleton",
+    "data_type": "boolean",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_active",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_active",
+    "column_name": "activated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "dataset_version",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "contract_version",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "feature_version",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "eta_version",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "routing_policy_version",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "manifest",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "expected_counts",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "status",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_dataset_releases",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "edge_id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "osm_way_id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "length_m",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "road_name",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "highway",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "narrow_score",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "narrow_basis",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "narrow_estimated",
+    "data_type": "boolean",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "child_nearby",
+    "data_type": "boolean",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "child_inside_length_m",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "child_inside_intervals",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "geometry_geojson",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_edges",
+    "column_name": "attributes",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_exposures",
+    "column_name": "exposure_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_exposures",
+    "column_name": "search_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_exposures",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_exposures",
+    "column_name": "displayed_candidate_ids",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_exposures",
+    "column_name": "exposed_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_hourly_profiles",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_hourly_profiles",
+    "column_name": "topis_link_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_hourly_profiles",
+    "column_name": "weekend",
+    "data_type": "smallint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_hourly_profiles",
+    "column_name": "hour",
+    "data_type": "smallint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_hourly_profiles",
+    "column_name": "n_days",
+    "data_type": "integer",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_hourly_profiles",
+    "column_name": "median_kph",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_hourly_profiles",
+    "column_name": "p10_kph",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_hourly_profiles",
+    "column_name": "p90_kph",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_nodes",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_nodes",
+    "column_name": "node_id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_nodes",
+    "column_name": "x_5186",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_nodes",
+    "column_name": "y_5186",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_nodes",
+    "column_name": "longitude",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_nodes",
+    "column_name": "latitude",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preference_history",
+    "column_name": "profile_version",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preference_history",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preference_history",
+    "column_name": "snapshot",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preference_history",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preferences",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preferences",
+    "column_name": "driving_frequency",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preferences",
+    "column_name": "ranks",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preferences",
+    "column_name": "max_detour_minutes",
+    "data_type": "smallint",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_preferences",
+    "column_name": "profile_weights",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preferences",
+    "column_name": "profile_version",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_preferences",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_restrictions",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_restrictions",
+    "column_name": "relation_id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_restrictions",
+    "column_name": "kind",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_restrictions",
+    "column_name": "arc_ids",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "search_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "departure_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "origin",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "destination",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "max_detour_minutes",
+    "data_type": "smallint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "minimum_internal_duration_s",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "profile_snapshot",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "versions",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_searches",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_topis_links",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_topis_links",
+    "column_name": "topis_link_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_topis_links",
+    "column_name": "road_name",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_topis_links",
+    "column_name": "from_to",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_topis_links",
+    "column_name": "source_length_m",
+    "data_type": "double precision",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_topis_links",
+    "column_name": "identity_status",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_topis_links",
+    "column_name": "geometry_geojson",
+    "data_type": "jsonb",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "ag_transitions",
+    "column_name": "release_id",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_transitions",
+    "column_name": "from_arc",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_transitions",
+    "column_name": "to_arc",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_transitions",
+    "column_name": "via_node",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_transitions",
+    "column_name": "complex_proxy",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_transitions",
+    "column_name": "unfamiliar_proxy",
+    "data_type": "double precision",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_transitions",
+    "column_name": "is_allowed",
+    "data_type": "boolean",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "ag_transitions",
+    "column_name": "attributes",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  }
+]
