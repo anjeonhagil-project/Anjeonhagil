@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 기존 절대점수를 Q1~Q3 순위 계약으로 바꾸고 Q4 완료 판정을 onboarding.service.js로 통일한다. 설문 저장만으로 전체 완료를 반환하지 않는다.
 // 기능: PREF-001~002: 운전부담 설정 조회/Upsert 비즈니스 규칙/transaction
 import * as preferencesRepository from './preferences.repository.js'
 

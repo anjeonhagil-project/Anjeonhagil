@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 기존 인증을 유지해 Q1~Q3·Q4 사례/진행·개인화 조회/켜기/끄기/초기화 endpoint를 같은 모듈에 연결한다.
 // 기능: PREF-001~002: 운전부담 설정 조회/Upsert endpoint URL/middleware 연결
 import { Router } from 'express'
 import { authenticate } from '../../middleware/authenticate.js'

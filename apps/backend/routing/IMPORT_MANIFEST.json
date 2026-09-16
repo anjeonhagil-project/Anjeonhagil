@@ -1,0 +1,175 @@
+{
+  "source_archive": "Anjeonhagil_FINAL_CHILD100_20260915 (1).zip",
+  "source_prefix": "Anjeonhagil_FINAL/dataset/",
+  "files": [
+    {
+      "path": "data/roads.gpkg",
+      "source_sha256": "d25cd28ea8dd0e1eec28d2c6bd9c6bde25785c7ff00f24a92d71c814cc508052",
+      "local_sha256": "d25cd28ea8dd0e1eec28d2c6bd9c6bde25785c7ff00f24a92d71c814cc508052",
+      "modified": false
+    },
+    {
+      "path": "data/routing.sqlite",
+      "source_sha256": "3315de28cecba41b1b6247b48829a68e17de64a0e9314c83cb95a8a35731f460",
+      "local_sha256": "3315de28cecba41b1b6247b48829a68e17de64a0e9314c83cb95a8a35731f460",
+      "modified": false
+    },
+    {
+      "path": "data/transitions.sqlite",
+      "source_sha256": "d2a59b5958e0d9d3d9971c0d0660ee0de332dee94b4228a6803ec257b79fe5b7",
+      "local_sha256": "d2a59b5958e0d9d3d9971c0d0660ee0de332dee94b4228a6803ec257b79fe5b7",
+      "modified": false
+    },
+    {
+      "path": "data/feature_policy.sqlite",
+      "source_sha256": "8ea2af4de0a45dd94d50e62de66cc8e0b4e52d234e4d44218220f1829c2e8e84",
+      "local_sha256": "8ea2af4de0a45dd94d50e62de66cc8e0b4e52d234e4d44218220f1829c2e8e84",
+      "modified": false
+    },
+    {
+      "path": "data/hourly_speed.sqlite",
+      "source_sha256": "9afca69667a8e7f222190e905a023b04d9c25d6671d8f6d565f5165a550eb183",
+      "local_sha256": "9afca69667a8e7f222190e905a023b04d9c25d6671d8f6d565f5165a550eb183",
+      "modified": false
+    },
+    {
+      "path": "data/child_circle.sqlite",
+      "source_sha256": "e4c4c930cc3e77b23d720c8b47ed5e8d02bc90ac4f5a5444b03caf88cb49021d",
+      "local_sha256": "e4c4c930cc3e77b23d720c8b47ed5e8d02bc90ac4f5a5444b03caf88cb49021d",
+      "modified": false
+    },
+    {
+      "path": "data/support/features.sqlite",
+      "source_sha256": "8baaae44493137503607d8297c9db90f3a617cb30a848193fe0dd32d593a81a7",
+      "local_sha256": "8baaae44493137503607d8297c9db90f3a617cb30a848193fe0dd32d593a81a7",
+      "modified": false
+    },
+    {
+      "path": "data/support/graph.sqlite",
+      "source_sha256": "efcb9a53b591eef753a704db09b10bc431dc17e73f73bc0f579728c2b1a30970",
+      "local_sha256": "efcb9a53b591eef753a704db09b10bc431dc17e73f73bc0f579728c2b1a30970",
+      "modified": false
+    },
+    {
+      "path": "tools/serve.py",
+      "source_sha256": "7d44f34e4c2d21ad36945c60034c54bdd119c862ff30d6fb4f0db9f4fb16e74e",
+      "local_sha256": "7d44f34e4c2d21ad36945c60034c54bdd119c862ff30d6fb4f0db9f4fb16e74e",
+      "modified": false
+    },
+    {
+      "path": "tools/api.py",
+      "source_sha256": "c9e92a70ed62bb8736904e1675aaf6dc266034ad56f6ea0e101e8e0f973c18b0",
+      "local_sha256": "9bd7a1adec5cd0e02926c62b3a21f0e028bc8a763c24ca3f8431b61a3eff9864",
+      "modified": true
+    },
+    {
+      "path": "tools/calculate.py",
+      "source_sha256": "b98bc1ff0c4d7aba3b4120b333ab75e7cab36df138c7cfbfeebab7696e6f34b9",
+      "local_sha256": "b98bc1ff0c4d7aba3b4120b333ab75e7cab36df138c7cfbfeebab7696e6f34b9",
+      "modified": false
+    },
+    {
+      "path": "tools/examples/hourly_request.json",
+      "source_sha256": "5dac512a32888e9a118de950992e8b19df5ff733cbb553efdae45641adbf0cdd",
+      "local_sha256": "5dac512a32888e9a118de950992e8b19df5ff733cbb553efdae45641adbf0cdd",
+      "modified": false
+    },
+    {
+      "path": "tools/examples/hourly_search.json",
+      "source_sha256": "c82ec6880f829cd0cfeda3d77558f354cc200dff3a455adfa555f6d38e8dfca0",
+      "local_sha256": "c82ec6880f829cd0cfeda3d77558f354cc200dff3a455adfa555f6d38e8dfca0",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/child_feature.py",
+      "source_sha256": "9362fe346a2a648955d4be64f8a35126073cc334c376392cfbace808bc7e82ec",
+      "local_sha256": "9362fe346a2a648955d4be64f8a35126073cc334c376392cfbace808bc7e82ec",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/features.py",
+      "source_sha256": "5370c9f0108ac51591af9d9343314951d99d211d2c72150b9ee3ec925bde5b94",
+      "local_sha256": "5370c9f0108ac51591af9d9343314951d99d211d2c72150b9ee3ec925bde5b94",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/hourly.py",
+      "source_sha256": "d3b880b73f4d63d5da7c5ec247c7ce1343bacb1aaf36ae48a46faa397747323f",
+      "local_sha256": "d3b880b73f4d63d5da7c5ec247c7ce1343bacb1aaf36ae48a46faa397747323f",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/interface.py",
+      "source_sha256": "cfa45a1c05fae81099ad174d78dbc3f739971ca7fa17e720f856ad2cb669623a",
+      "local_sha256": "cfa45a1c05fae81099ad174d78dbc3f739971ca7fa17e720f856ad2cb669623a",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/learning.py",
+      "source_sha256": "63975439f02c516689c16bd579730d18684a630c815c1cf1dfe31a0daeef3ad9",
+      "local_sha256": "63975439f02c516689c16bd579730d18684a630c815c1cf1dfe31a0daeef3ad9",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/routing_service.py",
+      "source_sha256": "0225923688d27df5f4d853f2e1369978b69bc29d1a4c3031edbf1df1f220e4e8",
+      "local_sha256": "0225923688d27df5f4d853f2e1369978b69bc29d1a4c3031edbf1df1f220e4e8",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/runtime.py",
+      "source_sha256": "d458877278a8336732b8f51950c10c0a731089829208776e59fbbf8e059313a1",
+      "local_sha256": "d458877278a8336732b8f51950c10c0a731089829208776e59fbbf8e059313a1",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/search_engine.py",
+      "source_sha256": "3e9f8e02d10be9f85fc2e80f66fbc16f6d31f17f10290b3675450a4ea77868af",
+      "local_sha256": "1c1fdcaac812083468d986765e3308117063242c03886dc1c633ac96d1af076d",
+      "modified": true
+    },
+    {
+      "path": "tools/runtime/current_feature_contract.json",
+      "source_sha256": "c77ae02f38ebd00d6a1a2b302a357fdbeb3328a1b6fdf69c532e14ab7a8753f7",
+      "local_sha256": "c77ae02f38ebd00d6a1a2b302a357fdbeb3328a1b6fdf69c532e14ab7a8753f7",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/data_manifest.json",
+      "source_sha256": "72fa3e5b8c839f41ea39ac5ec275909b41147ae289c6261b8c6f38783a76a56c",
+      "local_sha256": "72fa3e5b8c839f41ea39ac5ec275909b41147ae289c6261b8c6f38783a76a56c",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/routing_policy.json",
+      "source_sha256": "ef63759f0cce7205de42c2028d7babc54f51361b20e6b6e3df798b25223bbda7",
+      "local_sha256": "ef63759f0cce7205de42c2028d7babc54f51361b20e6b6e3df798b25223bbda7",
+      "modified": false
+    },
+    {
+      "path": "tools/runtime/rules.json",
+      "source_sha256": "f7cafc8bf0bc321c3ca5d7a8cf5fbf13aada546d2bb33a91d10b297ec5dc920d",
+      "local_sha256": "f7cafc8bf0bc321c3ca5d7a8cf5fbf13aada546d2bb33a91d10b297ec5dc920d",
+      "modified": false
+    },
+    {
+      "path": "final_release.json",
+      "source_sha256": "4bf178c368623209d037b8fa713bd57c5cb4fe9dda053faf48584e3de7d28535",
+      "local_sha256": "4bf178c368623209d037b8fa713bd57c5cb4fe9dda053faf48584e3de7d28535",
+      "modified": false
+    },
+    {
+      "path": "data/seoul_boundary.gpkg",
+      "source_path": "source_materials.zip!rebuild_source/unified_handoff_v1/inputs/seoul_boundary.gpkg",
+      "source_sha256": "fbb352cdd576a14e4cf49f5e5d1044278f7dd924f7f8cd687a1e1836d2778fe8",
+      "local_sha256": "fbb352cdd576a14e4cf49f5e5d1044278f7dd924f7f8cd687a1e1836d2778fe8",
+      "modified": false
+    },
+    {
+      "path": "source_register.json",
+      "source_sha256": "d0d12817efdd861547d1ee637f963c1117d02db553b1d86ac7944ecaed26e4fa",
+      "local_sha256": "d0d12817efdd861547d1ee637f963c1117d02db553b1d86ac7944ecaed26e4fa",
+      "modified": false
+    }
+  ]
+}

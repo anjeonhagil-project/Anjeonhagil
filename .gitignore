@@ -1,3 +1,4 @@
+# 수정 필요(Anjeonhagil): 계산 데이터와 임시 DB 테스트 의존성은 Git에 포함하지 않고 전달 ZIP으로 복원한다.
 # Secret
 .env
 .env.*
@@ -39,3 +40,12 @@ ml/artifacts/*
 .DS_Store
 Thumbs.db
 .vscode/settings.json
+
+# Anjeonhagil: 계산 데이터는 로컬에만 유지하고 ZIP에서 복원한다.
+/apps/backend/routing/data/
+/.test-tools/
+
+# Anjeonhagil 중간 검토 문서: 최종 공유본은 docs/ANJEON_CHANGES.md
+/docs/Anjeonhagil_REVIEW.md
+/docs/Anjeonhagil_IMPLEMENTATION.md
+/docs/FILE_STRUCTURE_AND_CHANGES.md

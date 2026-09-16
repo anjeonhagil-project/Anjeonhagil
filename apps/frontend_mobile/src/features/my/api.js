@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 운전 선호·개인화 요청은 preferences/api.js로 위임하고 기존 프로필/탈퇴 API는 유지한다.
 // # 기능: my feature에서 사용하는 Express API 함수 모음
 
 

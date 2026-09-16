@@ -1,0 +1,76 @@
+{
+  "feature_version": "static_burden_v4",
+  "decision": "TEAM_DEVELOPMENT_BASELINE_FROZEN",
+  "production_deployed": false,
+  "factor_order": [
+    "COMPLEX_INTERSECTION",
+    "MERGE_BRANCH",
+    "NARROW_ROAD",
+    "UNFAMILIAR_TURN",
+    "CONSECUTIVE_ACTION",
+    "CHILD_ZONE_NEARBY"
+  ],
+  "units": [
+    "count",
+    "score*m",
+    "score*m",
+    "count",
+    "count",
+    "m"
+  ],
+  "parameters": {
+    "complex_degree": 5,
+    "directional_lanes": 3,
+    "unfamiliar_angle": 100,
+    "action_angle": 45,
+    "consecutive_distance_m": 100,
+    "width_high_m": 3.5,
+    "width_medium_m": 5.5,
+    "child_facility_distance_m": 100
+  },
+  "narrow_meaning": "static spatial constraint / small-road exposure proxy; not measured effective width or probability",
+  "narrow_priority": [
+    "valid OSM width",
+    "stable polygon cross section with unique address candidate",
+    "valid lane counts with direction",
+    "road subtype",
+    "road function fallback"
+  ],
+  "unknown_policy": "raw remains NULL; supported class may receive explicit product prior; unsupported/held remains NULL",
+  "merge_unknown_policy": "motorway/trunk/primary/secondary=0.5; tertiary/local/service=0; link=1; not proof of lane count",
+  "operating_scope": "ordinary motorcar; static exclusions retained; unsupported time/vehicle/relation/physical holds excluded; no automatic legal clearance",
+  "eta_policy": "usable OSM parsed speed * 0.7, then corroborated external speed * 0.7, else explicit highway prior; unverified standard mapping candidates never used",
+  "numeric_ready_is_route_permission": false,
+  "training_requires": "same feature/scaler version + real displayed candidate set and choice + routing constraint eligibility",
+  "parameter_evidence": "engineering defaults frozen for this release, not validated universal driver burden cutoffs",
+  "contract_version": "anjeon_contract_v4",
+  "dataset_version": "seoul_static_20260915_review2",
+  "lane_bands": {
+    "L1": [
+      1,
+      2
+    ],
+    "L2_3": [
+      2,
+      4
+    ],
+    "L4_5": [
+      4,
+      6
+    ],
+    "L6_PLUS": [
+      6,
+      null
+    ],
+    "UNKNOWN": null
+  },
+  "lane_band_interval": "lower inclusive, upper exclusive",
+  "lane_scope": "OSM way/carriageway; both directions only when that way represents both; never double one-way lanes",
+  "lane_fallback": "two-way 1:1; other 1 or 2-3:0.5; 4+:0; unknown alley/living:1,local:0.5,major:0; contradictory/conditional:NULL",
+  "routing_policy_version": "review_exclusion_v1",
+  "narrow_fastroad_rule": "After raw/geometry width and semantics holds: motorway/trunk + explicit OSM total>=2 + oneway forward/reverse -> narrow_score 0; estimated proxy",
+  "review_transition_policy": "Reject known unresolved transitions at evaluation and exclude them during candidate search; not a legal prohibition record",
+  "eta_version": "internal_static_v2_provenance",
+  "child_geometry": "facility points in EPSG:5186; Euclidean distance <=100 m; not legal boundary",
+  "child_aggregation": "whole nearby edge * actual traversal fraction; exact inside-circle traversal supplied separately as diagnostic"
+}

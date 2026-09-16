@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): frequency, ranks[6]의 연속 순위/0, Q3 null/0/5/10/15, Q4 사례/노출/선택 ID, 개인화 boolean을 검증한다. 계산 피처는 입력받지 않는다.
 // 기능: PREF-001~002: 운전부담 설정 조회/Upsert 입력 검증 schema
 const SCORE_FIELDS = [
     'intersectionScore',

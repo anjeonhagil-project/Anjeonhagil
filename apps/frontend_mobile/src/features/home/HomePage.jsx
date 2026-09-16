@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 안전 보장 대신 내게 편한 경로 비교 문구로 정리. 새로운 설문 미완료 안내 연결.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { IoHeart, IoHeartOutline } from 'react-icons/io5'

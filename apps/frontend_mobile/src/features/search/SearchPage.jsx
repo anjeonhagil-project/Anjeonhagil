@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 서비스 영역 오류와 Q3 null 사용자의 DetourToleranceSheet를 연결한다. 최근검색·즐겨찾기 동작은 보존한다.
 // 기능: M-SRCH-001~004 경로검색 화면 - 출발지/목적지 검색 후 경로 비교로 이동
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'

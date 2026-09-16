@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): getMe에서 새 설문 존재와 ag_onboarding_progress.completed_at을 함께 조회한다. 새 SQL은 Q4 완료 시 users.onboarding을 갱신하지만 구 설문 사용자 여부도 확인한다.
 // 기능: USER-001~004: 가입 완료/내정보/프로필수정/탈퇴 비즈니스 규칙/transaction
 import * as usersRepository from './users.repository.js'
 

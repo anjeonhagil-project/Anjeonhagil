@@ -1,0 +1,43 @@
+{
+  "version": "review_exclusion_v1",
+  "source_restrictions_modified": false,
+  "legal_permission_confirmed": false,
+  "transitions": [
+    {
+      "arc_ids": [
+        370279,
+        98420
+      ],
+      "status": "REVIEW_HOLD",
+      "reason": "P1 Naver right then U-turn; full legal sign mapping unconfirmed",
+      "evidence": [
+        "p1_navigation.txt",
+        "nearby_signs.json"
+      ]
+    },
+    {
+      "arc_ids": [
+        512833,
+        125007
+      ],
+      "status": "REVIEW_HOLD",
+      "reason": "P2 approach direction not fully verified; nearby sign index/direction decoding incomplete",
+      "evidence": [
+        "p2_navigation.txt",
+        "nearby_signs.json"
+      ]
+    },
+    {
+      "arc_ids": [
+        252074,
+        125083
+      ],
+      "status": "REVIEW_HOLD",
+      "reason": "P3 crossing panorama shows median at Jan2026 imagery; Naver detour; retain exclusion pending latest explicit permission evidence",
+      "evidence": [
+        "p3_panorama_clear.jpg",
+        "p3_navigation.txt"
+      ]
+    }
+  ]
+}

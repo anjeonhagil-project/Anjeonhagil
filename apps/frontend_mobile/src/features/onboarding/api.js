@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): Q1~Q3는 preferences/api.js로 위임하고 Q4 사례/진행 API를 연결한다. 노출·선택은 routes API와 같은 계약을 사용한다.
 // 기능: M-ONB 설문 조회/저장 API
 import { apiClient } from '../../lib/apiClient.js'
 

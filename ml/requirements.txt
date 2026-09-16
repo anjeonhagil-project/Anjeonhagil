@@ -1,1 +1,2 @@
+# 수정 필요(Anjeonhagil): ML 구현 시 scikit-learn/XGBoost 및 서빙 의존성 버전을 고정한다. 라우팅 requirements와 분리한다. 계산/DB용 .venv 준비는 scripts/setup-python.ps1을 사용한다.
 # # 기능: scikit-learn/XGBoost/LightGBM 등 ML 의존성 고정

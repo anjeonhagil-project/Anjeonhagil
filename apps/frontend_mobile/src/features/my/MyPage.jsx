@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 기존 운전 선호 설정 진입에서 개인화 상태/켜기·끄기·초기화에 접근하도록 연결한다. 별도 중복 설정 페이지는 만들지 않는다.
 import { useState } from 'react'
 import { FiChevronRight } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'

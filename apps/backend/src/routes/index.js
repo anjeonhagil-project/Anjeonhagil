@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 기존 preferences 라우터에 Q4·개인화 API를 연결하고 새 검색·노출·선택 API의 인증/활성회원 검사를 유지한다.
 // 기능: 모든 자체 endpoint를 `/api` 아래 연결
 // 주의: `/api/v1`은 현재 FINAL에서 사용하지 않음
 import { Router } from 'express'

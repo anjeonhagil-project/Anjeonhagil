@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): ../preferences/PreferenceRankForm과 PersonalizationSettings를 재사용한다. 초기값 조회·미저장 상태·새 설문 버전 저장을 처리한다.
 import { useState, useEffect } from 'react'
 // import { FiChevronRight } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'

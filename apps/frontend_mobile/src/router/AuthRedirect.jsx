@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): Q1~Q3와 Q4 전체 완료를 서버 상태로 판정한다. 기존 약관·위치권한·소셜 재인증 흐름은 유지한다.
 // 기능: 로그인 성공 시 약관동의/위치권한/onboarding 완료 여부에 따라 자동 이동
 import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'

@@ -1,3 +1,6 @@
+<!-- 아래 내용은 기존 baseline 기준이다. 현재 추가 구조와 연결은 ANJEON_CHANGES.md를 참조한다. -->
+> 이 문서는 기존 baseline 22개 테이블의 이력이다. Anjeonhagil에서 추가한 13개 테이블과 연결은 [변경 및 팀 개발 안내](ANJEON_CHANGES.md)를 기준으로 한다.
+
 # 안전하길 ERD — FINAL v8
 
 > 기준: `database/baseline/01_schema.sql` FINAL v8  

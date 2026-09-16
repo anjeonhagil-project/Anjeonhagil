@@ -1,0 +1,47 @@
+{
+  "release_id": "anjeon_final_20260915_child100_v3",
+  "contract_version": "anjeon_contract_v6_child100",
+  "feature_version": "static_burden_v5_child_circle_inside",
+  "factor_order": [
+    "COMPLEX_INTERSECTION",
+    "MERGE_BRANCH",
+    "NARROW_ROAD",
+    "UNFAMILIAR_TURN",
+    "CONSECUTIVE_ACTION",
+    "CHILD_ZONE_NEARBY"
+  ],
+  "units": [
+    "count",
+    "score*m",
+    "score*m",
+    "count",
+    "count",
+    "m"
+  ],
+  "child_zone_rule": {
+    "geometry": "union of Euclidean circles of radius 100 m around retained facility points in EPSG:5186",
+    "route_value": "sum of intersections between ordered route segment fractions and per-edge inside-circle intervals",
+    "duplicate_rule": "overlapping circles are unioned; same length counted once",
+    "touch_rule": "boundary point only contributes 0 m",
+    "reverse_arc": "convert arc fractions to original edge direction before interval intersection",
+    "legacy_edge_nearby": "quality only; excluded from raw6 and A* burden"
+  },
+  "legacy_static_files": [
+    "interface.py",
+    "rules.json",
+    "fixture_outputs.json",
+    "validation_report.json"
+  ],
+  "current_entrypoints": [
+    "tools/api.py",
+    "tools/calculate.py",
+    "tools/serve.py"
+  ],
+  "internal_implementation_files": [
+    "child_feature.py",
+    "routing_service.py",
+    "learning.py"
+  ],
+  "path_base": "dataset_root",
+  "internal_adapter_note": "child_feature.py wraps the preserved legacy evaluator; consumers must use the current public API and versions."
+}

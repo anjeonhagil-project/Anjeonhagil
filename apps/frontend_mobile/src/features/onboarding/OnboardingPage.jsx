@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): ../preferences/PreferenceRankForm으로 Q1~Q3를 공유하고 RouteChoiceStep으로 Q4 2~3회 진행을 복구한다. 서버의 전체 완료 상태를 확인한 뒤 이동한다.
 // 기능: M-ONB 온보딩 설문 시작/4문항/완료 화면
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'

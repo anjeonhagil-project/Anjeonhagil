@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 세션 복구를 유지하고 서버의 새 설문/Q4 완료 상태를 구분해 제공한다. 저장 직후 기존 onboarding boolean만으로 완료를 추정하지 않는다.
 // 기능: Supabase session + 서비스 users/me 상태를 조합하는 auth hook
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient.js'

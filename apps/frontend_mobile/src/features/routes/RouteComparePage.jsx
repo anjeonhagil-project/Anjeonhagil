@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): useRouteSearch/useRouteExposure와 공통 RouteMap/RouteCandidateCard를 연결한다. 미리보기·실제 노출·최종 선택을 구분하고 서버 snapshot 값을 표시한다.
 // 기능: M-ROUTE-004 경로 비교 화면 - 안심/최단시간/최단거리 경로 비교
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'

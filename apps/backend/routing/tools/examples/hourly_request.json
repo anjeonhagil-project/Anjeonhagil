@@ -1,0 +1,160 @@
+{
+  "contract_version": "anjeon_contract_v6_child100",
+  "dataset_version": "seoul_static_20260915_review2",
+  "feature_version": "static_burden_v5_child_circle_inside",
+  "eta_version": "internal_hourly_topis_v1",
+  "routing_policy_version": "review_exclusion_v1",
+  "departure_at": "2026-09-15T08:00:00+09:00",
+  "segments": [
+    {
+      "arc_id": 582586,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 370280,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 370282,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 370284,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 370303,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 98424,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 98426,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 98428,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 512841,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 512839,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 370931,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 370929,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 125075,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 125073,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 125071,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 341881,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 341879,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 124993,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 125061,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 125059,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 125057,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 125055,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 91118,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 91120,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 91122,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 91124,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 91126,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 91128,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 632722,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    },
+    {
+      "arc_id": 633606,
+      "start_fraction": 0.0,
+      "end_fraction": 1.0
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): ag_save_preferences/ag_start_onboarding/ag_reset_profile RPC와 프로필 조회를 연결한다. Q4는 ag_onboarding_progress와 ag_searches의 사례 컬럼 및 실제 선택을 조회한다.
 // 기능: PREF-001~002: 운전부담 설정 조회/Upsert DB query 전담
 import { supabase } from '../../lib/supabase.js'
 

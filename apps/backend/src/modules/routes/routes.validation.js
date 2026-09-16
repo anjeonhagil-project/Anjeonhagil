@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): OD·명시적 출발시각·이번 Q3·UUID·노출 순서를 검증하고 미응답을 임의 기본값으로 바꾸지 않는다. 사용자 계산값을 허용하지 않는다.
 // 기능: ROUTE-001~006: 경로요청/Polling/선택/상세/Navigation/reroute 입력 검증 schema
 
 function parseCoordinate(value, label) {

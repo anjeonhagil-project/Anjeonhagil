@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 경로·데이터 화면 구현 시 기존 PlaceholderPage를 교체한다. 여러 모델/갱신 작업 전용 페이지를 미리 늘리지 않는다.
 // # 기능: 관리자 화면 A-* 전용 라우팅
 // # 예: /login, /dashboard, /members, /datasets, /notices, /inquiries, /routes, /admins
 

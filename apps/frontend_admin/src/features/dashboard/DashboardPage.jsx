@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 현재 예시 통계를 실제 ag_searches/ag_choices 기반 API 집계로 교체한다. 아직 구현하지 않은 학습 성능/작업 상태를 완료 값으로 표시하지 않는다.
 import DashboardStatCard from "./components/DashboardStatCard.jsx"
 import styles from "./DashboardPage.module.css"
 import { useState } from "react"

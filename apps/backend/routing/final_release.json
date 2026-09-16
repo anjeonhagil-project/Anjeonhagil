@@ -1,0 +1,16 @@
+{
+  "release_id": "anjeon_final_20260915_child100_v3",
+  "versions": {
+    "contract_version": "anjeon_contract_v6_child100",
+    "dataset_version": "seoul_static_20260915_review2",
+    "feature_version": "static_burden_v5_child_circle_inside",
+    "eta_version": "internal_hourly_topis_v1",
+    "routing_policy_version": "review_exclusion_v1"
+  },
+  "freeze_date": "2026-09-15",
+  "scope": "team project final: raw6[5] is exact path length inside facility-centred 100 m circle union; historical hourly time and explicit fallback",
+  "live_traffic": false,
+  "supersedes": "anjeon_final_20260915_child100_v2",
+  "feature_contract_file": "tools/runtime/current_feature_contract.json",
+  "review_revision": "v3: independent child100 regression, standalone dataset paths, version and DB child-feature guards; data and calculation values unchanged from child100 v2"
+}

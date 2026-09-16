@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 영역 검사→routingClient→candidateValidation 검산/병합→recommendation.service→routeSnapshot→DB 저장을 연결한다. 지도 표시와 내부 경로 계산을 구분한다.
 // 기능: ROUTE-001~006: 경로요청/Polling/선택/상세/Navigation/reroute 비즈니스 규칙/transaction
 const KAKAO_DIRECTIONS_URL = 'https://apis-navi.kakaomobility.com/v1/directions'
 
