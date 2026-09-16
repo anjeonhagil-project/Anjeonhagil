@@ -1,37 +1,49 @@
-// 수정 필요(Anjeonhagil): 기존 절대점수를 Q1~Q3 순위 계약으로 바꾸고 Q4 완료 판정을 onboarding.service.js로 통일한다. 설문 저장만으로 전체 완료를 반환하지 않는다.
-// 기능: PREF-001~002: 운전부담 설정 조회/Upsert 비즈니스 규칙/transaction
+// 기능(Anjeonhagil): Q1~Q3 최신 설문을 저장·조회하고 Q4 완료 상태를 별도로 반환한다.
 import * as preferencesRepository from './preferences.repository.js'
 
 function toResponse(preferences) {
-    if (!preferences) return null
+    if (!preferences) {
+        return {
+            preferences: null,
+            onboarding: { surveyCompleted: false, routeChoicesCompleted: false, completedAt: null },
+        }
+    }
 
+    const progress = preferences.onboarding
     return {
-        userId: preferences.user_id,
-        intersectionScore: preferences.intersection_score,
-        pedestrianZoneScore: preferences.pedestrian_zone_score,
-        narrowRoadScore: preferences.narrow_road_score,
-        turnConflictScore: preferences.turn_conflict_score,
+        preferences: {
+            surveyVersion: preferences.survey_version,
+            drivingFrequency: preferences.driving_frequency,
+            ranks: preferences.ranks,
+            maxDetourMinutes: preferences.max_detour_minutes,
+            updatedAt: preferences.updated_at,
+        },
+        onboarding: {
+            surveyCompleted: true,
+            routeChoicesCompleted: Boolean(progress?.completed_at),
+            completedAt: progress?.completed_at ?? null,
+            caseSetVersion: progress?.case_set_version ?? null,
+            requiredCaseIds: progress?.required_case_ids ?? [],
+            usesCurrentSurvey: progress?.survey_version === preferences.survey_version,
+        },
     }
 }
 
-// 설문 미완료 사용자는 null로 반환해 프론트에서 시작 화면을 보여줄 수 있게 함
 export async function getDrivingPreferences(userId) {
-    const preferences = await preferencesRepository.findByUserId(userId)
-    return toResponse(preferences)
+    return toResponse(await preferencesRepository.findByUserId(userId))
 }
 
-// Q1~Q4 모두 저장돼야만 users.onboarding을 완료 상태로 변경
 export async function saveDrivingPreferences(userId, answers) {
-    const preferences = await preferencesRepository.completeOnboarding(userId, answers)
-
-    if (!preferences) {
+    const saved = await preferencesRepository.save(userId, answers)
+    if (!saved?.survey_version || !saved?.profile_version) {
         const error = new Error('운전 부담 설정을 저장하지 못했습니다')
         error.status = 500
+        error.code = 'PREFERENCES_SAVE_FAILED'
         throw error
     }
 
     return {
-        ...toResponse(preferences),
-        onboarding: true,
+        ...toResponse(await preferencesRepository.findByUserId(userId)),
+        profileVersion: saved.profile_version,
     }
 }

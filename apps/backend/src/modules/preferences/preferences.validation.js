@@ -1,19 +1,21 @@
-// 수정 필요(Anjeonhagil): frequency, ranks[6]의 연속 순위/0, Q3 null/0/5/10/15, Q4 사례/노출/선택 ID, 개인화 boolean을 검증한다. 계산 피처는 입력받지 않는다.
-// 기능: PREF-001~002: 운전부담 설정 조회/Upsert 입력 검증 schema
-const SCORE_FIELDS = [
-    'intersectionScore',
-    'pedestrianZoneScore',
-    'narrowRoadScore',
-    'turnConflictScore',
-]
+// 기능(Anjeonhagil): Q1 운전 빈도, Q2 6개 부담 순위, Q3 허용시간의 원본 응답만 검증한다.
+import { DRIVING_FREQUENCIES, FACTOR_ORDER } from '../../routing-engine/routingContract.js'
 
-function badRequest(message) {
+const ALLOWED_FIELDS = ['drivingFrequency', 'ranks', 'maxDetourMinutes']
+const DETOUR_OPTIONS = new Set([null, 0, 5, 10, 15])
+
+function badRequest(message, code = 'INVALID_PREFERENCES') {
     const error = new Error(message)
     error.status = 400
+    error.code = code
     return error
 }
 
-// Q5는 삭제됐으므로 네 개의 원점수만 허용
+function hasContiguousRanks(ranks) {
+    const selected = ranks.filter((rank) => rank > 0).sort((a, b) => a - b)
+    return selected.every((rank, index) => rank === index + 1)
+}
+
 export function validateDrivingPreferences(req, res, next) {
     const body = req.body
 
@@ -21,16 +23,27 @@ export function validateDrivingPreferences(req, res, next) {
         return next(badRequest('운전 부담 설문 답변을 입력해주세요'))
     }
 
-    const unknownFields = Object.keys(body).filter((field) => !SCORE_FIELDS.includes(field))
+    const unknownFields = Object.keys(body).filter((field) => !ALLOWED_FIELDS.includes(field))
     if (unknownFields.length > 0) {
         return next(badRequest(`허용되지 않는 항목입니다: ${unknownFields.join(', ')}`))
     }
 
-    for (const field of SCORE_FIELDS) {
-        const score = body[field]
-        if (!Number.isInteger(score) || score < 1 || score > 5) {
-            return next(badRequest(`${field}는 1부터 5 사이의 정수여야 합니다`))
-        }
+    if (!DRIVING_FREQUENCIES.includes(body.drivingFrequency)) {
+        return next(badRequest('운전 빈도 응답이 올바르지 않습니다'))
+    }
+    if (!Array.isArray(body.ranks) || body.ranks.length !== FACTOR_ORDER.length) {
+        return next(badRequest(`부담 순위는 ${FACTOR_ORDER.length}개 항목이어야 합니다`))
+    }
+    if (body.ranks.some((rank) => !Number.isInteger(rank) || rank < 0 || rank > FACTOR_ORDER.length)) {
+        return next(badRequest('부담 순위는 0부터 6 사이의 정수여야 합니다'))
+    }
+
+    const selectedRanks = body.ranks.filter((rank) => rank > 0)
+    if (new Set(selectedRanks).size !== selectedRanks.length || !hasContiguousRanks(body.ranks)) {
+        return next(badRequest('선택한 부담 순위는 중복 없이 1순위부터 연속되어야 합니다'))
+    }
+    if (!Object.hasOwn(body, 'maxDetourMinutes') || !DETOUR_OPTIONS.has(body.maxDetourMinutes)) {
+        return next(badRequest('우회 허용시간은 상황에 따라, 0분, 5분, 10분, 15분 중 하나여야 합니다'))
     }
 
     next()

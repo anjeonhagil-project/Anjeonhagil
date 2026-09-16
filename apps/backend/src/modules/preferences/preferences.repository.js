@@ -1,53 +1,48 @@
-// 수정 필요(Anjeonhagil): ag_save_preferences/ag_start_onboarding/ag_reset_profile RPC와 프로필 조회를 연결한다. Q4는 ag_onboarding_progress와 ag_searches의 사례 컬럼 및 실제 선택을 조회한다.
-// 기능: PREF-001~002: 운전부담 설정 조회/Upsert DB query 전담
+// 기능(Anjeonhagil): 최신 설문·온보딩 진행 조회와 ag_save_preferences RPC 호출을 전담한다.
 import { supabase } from '../../lib/supabase.js'
 
-const PREFERENCE_COLUMNS = [
-    'user_id',
-    'intersection_score',
-    'pedestrian_zone_score',
-    'narrow_road_score',
-    'turn_conflict_score',
-].join(', ')
-
-// Q5 화면은 삭제됐지만 기존 DB 컬럼은 NOT NULL이다.
-// 사용자에게 묻지 않는 항목은 중립값(보통)으로만 저장하고 개인화 계산에는 사용하지 않는다.
-const LEGACY_STRUCTURE_SCORE = 3
-
-// 로그인 사용자 한 명의 설문만 조회
 export async function findByUserId(userId) {
-    const { data, error } = await supabase
-        .from('driving_preferences')
-        .select(PREFERENCE_COLUMNS)
+    const { data: current, error: currentError } = await supabase
+        .from('ag_preferences')
+        .select('survey_version, updated_at')
         .eq('user_id', userId)
         .maybeSingle()
 
-    if (error) throw error
-    return data
+    if (currentError) throw currentError
+    if (!current) return null
+
+    const [historyResult, onboardingResult] = await Promise.all([
+        supabase
+            .from('ag_preference_history')
+            .select('survey_version, driving_frequency, ranks, survey_weights, max_detour_minutes, created_at')
+            .eq('user_id', userId)
+            .eq('survey_version', current.survey_version)
+            .single(),
+        supabase
+            .from('ag_onboarding_progress')
+            .select('survey_version, case_set_version, required_case_ids, completed_at, created_at')
+            .eq('user_id', userId)
+            .maybeSingle(),
+    ])
+
+    if (historyResult.error) throw historyResult.error
+    if (onboardingResult.error) throw onboardingResult.error
+
+    return {
+        ...historyResult.data,
+        updated_at: current.updated_at,
+        onboarding: onboardingResult.data,
+    }
 }
 
-// 기존 테이블에 Q1~Q4 점수를 바로 upsert하고 온보딩 완료 상태를 갱신
-export async function completeOnboarding(userId, answers) {
-    const { data, error } = await supabase
-        .from('driving_preferences')
-        .upsert({
-            user_id: userId,
-            intersection_score: answers.intersectionScore,
-            pedestrian_zone_score: answers.pedestrianZoneScore,
-            narrow_road_score: answers.narrowRoadScore,
-            turn_conflict_score: answers.turnConflictScore,
-            structure_score: LEGACY_STRUCTURE_SCORE,
-        }, { onConflict: 'user_id' })
-        .select(PREFERENCE_COLUMNS)
-        .single()
+export async function save(userId, answers) {
+    const { data, error } = await supabase.rpc('ag_save_preferences', {
+        p_user: userId,
+        p_frequency: answers.drivingFrequency,
+        p_ranks: answers.ranks,
+        p_q3: answers.maxDetourMinutes,
+    })
 
     if (error) throw error
-
-    const { error: userError } = await supabase
-        .from('users')
-        .update({ onboarding: true })
-        .eq('id', userId)
-
-    if (userError) throw userError
     return data
 }

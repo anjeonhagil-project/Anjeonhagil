@@ -3,17 +3,18 @@
 
 
 import { apiClient } from '../../lib/apiClient.js'
+import { getPreferences, savePreferences } from '../preferences/api.js'
 
 export function updateMyProfile({ nickname }) {
     return apiClient.patch('/users/me', { nickname })
 }
 
 export function getDrivingPreferences() {
-    return apiClient.get('/driving-preferences')
+    return getPreferences()
 }
 
 export function updateDrivingPreferences(answers) {
-    return apiClient.put('/driving-preferences', answers)
+    return savePreferences(answers)
 }
 
 export function withdrawMyAccount() {

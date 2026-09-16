@@ -1,5 +1,39 @@
-// 구현 예정(Anjeonhagil): 화면에 실제 표시한 후보 목록·순서·추천 후보를 exposure_id와 함께 서버에 기록한다.
-// 입력: 저장된 search_id, 실제 표시된 candidate_id 순서, recommended_candidate_id. 출력: 저장 완료한 exposure_id.
-// React 재렌더/StrictMode/네트워크 재시도에는 같은 이벤트 ID를 사용한다. 후보 집합·순서가 바뀌면 새 노출을 기록한다.
-// 렌더 전 수신만 한 후보, 숨겨진 후보는 노출로 간주하지 않는다. 저장 실패 시 최종 선택 요청 전에 재시도한다.
-// 상세 미리보기는 최종 선택이 아니다. 최종 선택은 노출된 후보 중 사용자가 확정한 하나만 기록한다.
+// 기능(Anjeonhagil): 실제 표시한 후보 순서를 한 번 기록하고 선택 전 노출 ID를 제공한다.
+import { useEffect, useRef, useState } from 'react'
+import { recordRouteExposure } from './api.js'
+
+export function useRouteExposure({ searchId, candidateIds, recommendedCandidateId = null, enabled = true }) {
+    const requestRef = useRef(null)
+    const [exposure, setExposure] = useState(null)
+    const [error, setError] = useState('')
+    const signature = searchId && candidateIds?.length
+        ? `${searchId}:${candidateIds.join(',')}:${recommendedCandidateId ?? ''}`
+        : ''
+
+    useEffect(() => {
+        if (!enabled || !signature) return undefined
+        if (!requestRef.current || requestRef.current.signature !== signature) {
+            requestRef.current = { signature, exposureId: crypto.randomUUID() }
+        }
+
+        let cancelled = false
+        const request = requestRef.current
+        setExposure(null)
+        setError('')
+        recordRouteExposure(searchId, {
+            exposureId: request.exposureId,
+            candidateIds,
+            recommendedCandidateId,
+        })
+            .then((result) => !cancelled && setExposure(result))
+            .catch((requestError) => !cancelled && setError(requestError.message || '경로 노출을 기록하지 못했습니다.'))
+
+        return () => { cancelled = true }
+    }, [enabled, signature])
+
+    return {
+        exposureId: exposure?.exposureId ?? null,
+        isRecorded: Boolean(exposure),
+        error,
+    }
+}

@@ -12,3 +12,11 @@ export function getDirections({ origin, destination }) {
     })
     return apiClient.get(`/routes/directions?${params.toString()}`)
 }
+
+export function recordRouteExposure(searchId, input) {
+    return apiClient.post(`/routes/searches/${searchId}/exposures`, input)
+}
+
+export function recordRouteChoice(exposureId, input) {
+    return apiClient.post(`/routes/exposures/${exposureId}/choices`, input)
+}

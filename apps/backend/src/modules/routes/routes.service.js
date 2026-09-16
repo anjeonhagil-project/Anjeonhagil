@@ -1,5 +1,6 @@
 // 수정 필요(Anjeonhagil): 영역 검사→routingClient→candidateValidation 검산/병합→recommendation.service→routeSnapshot→DB 저장을 연결한다. 지도 표시와 내부 경로 계산을 구분한다.
 // 기능: ROUTE-001~006: 경로요청/Polling/선택/상세/Navigation/reroute 비즈니스 규칙/transaction
+import * as routesRepository from './routes.repository.js'
 const KAKAO_DIRECTIONS_URL = 'https://apis-navi.kakaomobility.com/v1/directions'
 
 // roads[].vertexes([x1,y1,x2,y2,...])를 이어붙여 {lat,lng} 좌표 목록으로 변환
@@ -57,4 +58,26 @@ export async function getDirections({ origin, destination }) {
     ])
 
     return { shortestTime, shortestDistance }
+}
+
+export async function recordExposure(userId, input) {
+    const exposure = await routesRepository.recordExposure(userId, input)
+    return {
+        exposureId: exposure.exposure_id,
+        searchId: exposure.search_id,
+        candidateIds: exposure.displayed_candidate_ids,
+        recommendedCandidateId: exposure.recommended_candidate_id,
+        exposedAt: exposure.exposed_at,
+    }
+}
+
+export async function recordChoice(userId, input) {
+    const choice = await routesRepository.recordChoice(userId, input)
+    return {
+        choiceEventId: choice.choice_event_id,
+        exposureId: choice.exposure_id,
+        searchId: choice.search_id,
+        selectedCandidateId: choice.selected_candidate_id,
+        chosenAt: choice.chosen_at,
+    }
 }
