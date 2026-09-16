@@ -41,7 +41,8 @@ export function normalizePreferences(value) {
 
 export function validatePreferences(value) {
     if (!DRIVING_FREQUENCY_OPTIONS.some((option) => option.value === value.drivingFrequency)) return '운전 빈도를 선택해주세요.'
-    if (!Array.isArray(value.ranks) || value.ranks.some((rank) => rank === null || rank === undefined)) {
+    if (!Array.isArray(value.ranks) || value.ranks.length !== BURDEN_FACTORS.length
+        || value.ranks.some((rank) => !Number.isInteger(rank) || rank < 0 || rank > BURDEN_FACTORS.length)) {
         return '모든 부담 항목의 순위 또는 상관없음을 선택해주세요.'
     }
     const selected = value.ranks.filter((rank) => rank > 0).sort((a, b) => a - b)

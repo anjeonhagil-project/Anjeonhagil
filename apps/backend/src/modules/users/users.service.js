@@ -4,10 +4,7 @@ import * as usersRepository from './users.repository.js'
 
 // 내 정보 조회
 export async function getMe(userId) {
-    const [user, onboardingState] = await Promise.all([
-        usersRepository.findById(userId),
-        usersRepository.findOnboardingState(userId),
-    ])
+    const user = await usersRepository.findById(userId)
 
     if (!user.is_active) {
         const err = new Error('비활성화된 계정입니다')
@@ -15,11 +12,7 @@ export async function getMe(userId) {
         throw err
     }
 
-    return {
-        ...user,
-        onboarding: onboardingState.surveyCompleted && onboardingState.routeChoicesCompleted,
-        onboardingState,
-    }
+    return user
 }
 
 const REQUIRED_TERMS = ['service', 'privacy', 'location']

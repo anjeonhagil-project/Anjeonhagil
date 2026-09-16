@@ -14,7 +14,6 @@ export async function getMe(req, res, next) {
                 nickname: user.nickname,
                 signupProvider: user.signup_provider,
                 onboarding: user.onboarding,
-                onboardingState: user.onboardingState,
                 isActive: user.is_active,
             },
         })

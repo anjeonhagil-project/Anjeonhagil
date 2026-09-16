@@ -11,7 +11,11 @@ export function useRouteExposure({ searchId, candidateIds, recommendedCandidateI
         : ''
 
     useEffect(() => {
-        if (!enabled || !signature) return undefined
+        if (!enabled || !signature) {
+            setExposure(null)
+            setError('')
+            return undefined
+        }
         if (!requestRef.current || requestRef.current.signature !== signature) {
             requestRef.current = { signature, exposureId: crypto.randomUUID() }
         }

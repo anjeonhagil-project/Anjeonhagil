@@ -95,28 +95,3 @@ export async function restoreUser(userId) {
     if (error) throw error
     return data
 }
-
-// 새 설문 존재와 Q4 완료 기록을 함께 조회해 구 users.onboarding 값만으로 완료를 판단하지 않는다.
-export async function findOnboardingState(userId) {
-    const [preferencesResult, progressResult] = await Promise.all([
-        supabase
-            .from('ag_preferences')
-            .select('survey_version')
-            .eq('user_id', userId)
-            .maybeSingle(),
-        supabase
-            .from('ag_onboarding_progress')
-            .select('completed_at')
-            .eq('user_id', userId)
-            .maybeSingle(),
-    ])
-
-    if (preferencesResult.error) throw preferencesResult.error
-    if (progressResult.error) throw progressResult.error
-
-    return {
-        surveyCompleted: Boolean(preferencesResult.data),
-        routeChoicesCompleted: Boolean(progressResult.data?.completed_at),
-        completedAt: progressResult.data?.completed_at ?? null,
-    }
-}
