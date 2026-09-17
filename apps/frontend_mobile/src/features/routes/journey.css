@@ -9,6 +9,21 @@
 .compare-footer .route-success{padding:0;background:none}.compare-footer .route-success h2{font-size:14px;margin:0 0 4px}.compare-footer .route-success p{font-size:12px;color:#617574;margin:0 0 8px}.compare-footer .route-success button{width:100%;background:#087f8c;color:white;border:0;padding:14px;margin:0}
 .compare-panel.collapsed{max-height:45%}.compare-panel .route-card.selected{background:#f4fbf9;border-color:#07817c}.compare-panel .route-card b{font-size:28px;line-height:1.2;letter-spacing:-.7px}.compare-panel .route-card small{letter-spacing:0;color:#536c6e}.compare-panel .route-badge{float:none;display:inline-block;margin:6px 0 0 8px}
 .compare-layout>.service-error{margin:16px;flex-shrink:0}.compare-layout>.route-loading{margin:auto}
+.route-cancel {
+    margin-top: 12px;
+    padding: 10px 16px;
+    border: 1px solid #087f8c;
+    border-radius: 10px;
+    background: white;
+    color: #087f8c;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.route-cancel:hover {
+    background: #edf7f5;
+}
 @media(max-height:550px) and (max-width:899px){.compare-map{min-height:100px}.compare-panel{max-height:68%}.compare-footer{padding-top:8px;padding-bottom:8px}.compare-toggle{min-height:36px;padding:6px 18px}}
 @media(max-width:360px){.compare-details{padding-inline:12px}.compare-footer{padding-inline:12px}.compare-panel>.route-endpoints{padding-inline:12px}.compare-panel .route-card b{font-size:25px}}
 @media(prefers-reduced-motion:reduce){.route-spinner{animation:none}}

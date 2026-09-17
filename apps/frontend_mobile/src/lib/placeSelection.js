@@ -15,6 +15,33 @@ export function hasSelectedLocation(place) {
         && Number.isFinite(place.longitude) && Math.abs(place.longitude) <= 180)
 }
 
+// 일반 장소 → 이름 + 주소 + 좌표가 있어야 경로 검색 가능
+
+export function toCurrentLocation(position) {
+    return {
+        placeName: '현재 위치',
+        address: '',
+        latitude: position.lat,
+        longitude: position.lng,
+        source: 'current-location',
+        accuracy: position.accuracy,
+    }
+}
+
+// 현재 위치 → 주소가 없어도 GPS 좌표만 정상이면 경로 검색 가능
+
+export function hasRouteLocation(place) {
+    const hasCoordinates = Number.isFinite(place?.latitude)
+        && Math.abs(place.latitude) <= 90
+        && Number.isFinite(place?.longitude)
+        && Math.abs(place.longitude) <= 180
+
+    return hasCoordinates && (
+        hasSelectedLocation(place)
+        || place?.source === 'current-location'
+    )
+}
+
 export function buildSafeRouteSearchState(destination) {
     return { destination }
 }
