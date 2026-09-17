@@ -1,21 +1,152 @@
 /* Responsive route comparison: fixed action, independent details scroll, collapsible mobile sheet. */
-.compare-layout{padding:0;gap:0;position:relative;overflow:hidden;display:flex;min-width:0}
-.compare-map{flex:1;min-height:160px}.compare-map>section{border-radius:0!important}
-.compare-panel{display:flex;flex-direction:column;min-width:0;min-height:0;max-height:60%;flex-shrink:0;background:#fff;border-radius:20px 20px 0 0;box-shadow:0 -4px 20px #123f4610;z-index:1}
-.compare-toggle{border:0;background:transparent;color:#617574;padding:10px 18px;min-height:44px;font:inherit;font-size:12px;cursor:pointer}.compare-toggle span{float:right;font-size:20px}
-.compare-panel>.route-endpoints{padding:0 18px 12px;font-size:14px;line-height:1.5;overflow-wrap:anywhere;color:#123f46}
-.compare-details{padding:0 18px 18px;overflow:auto;overscroll-behavior:contain;min-height:0;display:flex;flex-direction:column;gap:12px}.compare-details[hidden]{display:none}
-.compare-footer{padding:12px 18px max(12px,env(safe-area-inset-bottom));border-top:1px solid #e1ece9;flex-shrink:0;background:white}.compare-footer>.service-primary{width:100%;min-height:48px}
-.compare-footer .route-success{padding:0;background:none}.compare-footer .route-success h2{font-size:14px;margin:0 0 4px}.compare-footer .route-success p{font-size:12px;color:#617574;margin:0 0 8px}.compare-footer .route-success button{width:100%;background:#087f8c;color:white;border:0;padding:14px;margin:0}
-.compare-panel.collapsed{max-height:45%}.compare-panel .route-card.selected{background:#f4fbf9;border-color:#07817c}.compare-panel .route-card b{font-size:28px;line-height:1.2;letter-spacing:-.7px}.compare-panel .route-card small{letter-spacing:0;color:#536c6e}.compare-panel .route-badge{float:none;display:inline-block;margin:6px 0 0 8px}
-.compare-layout>.service-error{margin:16px;flex-shrink:0}.compare-layout>.route-loading{margin:auto}
+.compare-layout {
+    padding: 0;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    min-width: 0
+}
+
+.compare-map {
+    flex: 1;
+    min-height: 160px
+}
+
+.compare-map>section {
+    border-radius: 0 !important
+}
+
+.compare-panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    max-height: 60%;
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 20px #123f4610;
+    z-index: 1
+}
+
+.compare-toggle {
+    border: 0;
+    background: transparent;
+    color: #617574;
+    padding: 10px 18px;
+    min-height: 44px;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer
+}
+
+.compare-toggle span {
+    float: right;
+    font-size: 20px
+}
+
+.compare-panel>.route-endpoints {
+    padding: 0 18px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    color: #123f46
+}
+
+.compare-details {
+    padding: 0 18px 18px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.compare-details[hidden] {
+    display: none
+}
+
+.compare-footer {
+    padding: 12px 18px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid #e1ece9;
+    flex-shrink: 0;
+    background: white
+}
+
+.compare-footer>.service-primary {
+    width: 100%;
+    min-height: 48px
+}
+
+.compare-footer .route-success {
+    padding: 0;
+    background: none
+}
+
+.compare-footer .route-success h2 {
+    font-size: 14px;
+    margin: 0 0 4px
+}
+
+.compare-footer .route-success p {
+    font-size: 12px;
+    color: #617574;
+    margin: 0 0 8px
+}
+
+.compare-footer .route-success button {
+    width: 100%;
+    background: #087f8c;
+    color: white;
+    border: 0;
+    padding: 14px;
+    margin: 0
+}
+
+.compare-panel.collapsed {
+    max-height: 45%
+}
+
+.compare-panel .route-card.selected {
+    background: #f4fbf9;
+    border-color: #07817c
+}
+
+.compare-panel .route-card b {
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -.7px
+}
+
+.compare-panel .route-card small {
+    letter-spacing: 0;
+    color: #536c6e
+}
+
+.compare-panel .route-badge {
+    float: none;
+    display: inline-block;
+    margin: 6px 0 0 8px
+}
+
+.compare-layout>.service-error {
+    margin: 16px;
+    flex-shrink: 0
+}
+
+.compare-layout>.route-loading {
+    margin: auto
+}
+
 .route-cancel {
     margin-top: 12px;
     padding: 10px 16px;
-    border: 1px solid #087f8c;
+    border: 1px solid var(--color-border-gray);
     border-radius: 10px;
     background: white;
-    color: #087f8c;
+    color: var(--color-primary-600);
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -24,8 +155,78 @@
 .route-cancel:hover {
     background: #edf7f5;
 }
-@media(max-height:550px) and (max-width:899px){.compare-map{min-height:100px}.compare-panel{max-height:68%}.compare-footer{padding-top:8px;padding-bottom:8px}.compare-toggle{min-height:36px;padding:6px 18px}}
-@media(max-width:360px){.compare-details{padding-inline:12px}.compare-footer{padding-inline:12px}.compare-panel>.route-endpoints{padding-inline:12px}.compare-panel .route-card b{font-size:25px}}
-@media(prefers-reduced-motion:reduce){.route-spinner{animation:none}}
-.compare-footer>p{margin:0 0 8px;font-size:12px;line-height:1.4;color:#35575a}
-.burden-timeline{padding-left:22px}.burden-timeline li{margin:10px 0}.burden-timeline button{font:inherit;text-align:left;border:1px solid #d7e4e2;border-radius:8px;background:#f7fbfa;color:#234e52;padding:10px;line-height:1.5}.burden-timeline small{display:block;margin-top:4px}
+
+@media(max-height:550px) and (max-width:899px) {
+    .compare-map {
+        min-height: 100px
+    }
+
+    .compare-panel {
+        max-height: 68%
+    }
+
+    .compare-footer {
+        padding-top: 8px;
+        padding-bottom: 8px
+    }
+
+    .compare-toggle {
+        min-height: 36px;
+        padding: 6px 18px
+    }
+}
+
+@media(max-width:360px) {
+    .compare-details {
+        padding-inline: 12px
+    }
+
+    .compare-footer {
+        padding-inline: 12px
+    }
+
+    .compare-panel>.route-endpoints {
+        padding-inline: 12px
+    }
+
+    .compare-panel .route-card b {
+        font-size: 25px
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    .route-spinner {
+        animation: none
+    }
+}
+
+.compare-footer>p {
+    margin: 0 0 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #35575a
+}
+
+.burden-timeline {
+    padding-left: 22px
+}
+
+.burden-timeline li {
+    margin: 10px 0
+}
+
+.burden-timeline button {
+    font: inherit;
+    text-align: left;
+    border: 1px solid #d7e4e2;
+    border-radius: 8px;
+    background: #f7fbfa;
+    color: #234e52;
+    padding: 10px;
+    line-height: 1.5
+}
+
+.burden-timeline small {
+    display: block;
+    margin-top: 4px
+}

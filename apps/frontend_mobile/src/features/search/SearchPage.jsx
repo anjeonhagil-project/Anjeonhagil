@@ -220,13 +220,6 @@ function SearchPage() {
 
             <div className={`${styles.content} hide-scrollbar`}>
             {mapError && <p role="alert">{mapError} 새로고침 후 다시 시도해주세요.</p>}
-            {!location.state?.placeType&&<section style={{padding:'14px 18px',background:'#edf7f5',borderRadius:12,marginBottom:16}}>
-                <strong>경로 비교 예시</strong>
-                <p style={{fontSize:12,color:'#526b70'}}>서울의 검증 구간을 실제로 계산해 볼 수 있어요.</p>
-                <button type="button" style={{padding:'9px 14px',background:'white',border:'1px solid #a9cfc9',borderRadius:8,cursor:'pointer'}} onClick={()=>navigate('/route-compare',{state:{
-                    origin:{lng:127.0331208,lat:37.5110356,name:'예시 출발지'},destination:{lng:127.0380034,lat:37.5011924,name:'예시 도착지'},departureAt:'2026-09-16T08:00:00+09:00'
-                }})}>예시 구간 A</button>
-            </section>}
             {results.length === 0 && !message && (
                 <div className={styles.shortcuts}>
                     <section>
@@ -279,6 +272,15 @@ function SearchPage() {
                             </ul>
                         </section>
                     )}
+                    {!location.state?.placeType && <section className={styles.exampleCard}>
+                        <strong>경로 비교 예시</strong>
+                        <p className={styles.exampleDesc}>서울의 검증 구간을 실제로 계산해 볼 수 있어요.</p>
+                        <button type="button" className={styles.exampleBtn} onClick={() => navigate('/route-compare', {
+                            state: {
+                                origin: { lng: 127.0331208, lat: 37.5110356, name: '예시 출발지' }, destination: { lng: 127.0380034, lat: 37.5011924, name: '예시 도착지' }, departureAt: '2026-09-16T08:00:00+09:00'
+                            }
+                        })}>예시 구간 A</button>
+                    </section>} 
                 </div>
             )}
 

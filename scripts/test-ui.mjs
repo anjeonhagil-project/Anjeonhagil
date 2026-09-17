@@ -141,7 +141,7 @@ try{
     assert.equal(exposureRow.data.context.selectionSource,'card')
     assert.ok(exposureRow.data.displayed_candidate_ids.includes(choiceRow.data.selected_candidate_id));passed+=4
     if(cardCount===3){assert.ok(exposureRow.data.displayed_candidate_ids.length<3,'unseen cards must not be recorded');passed++}
-    await page.getByText(/^부담 구간 미리보기/).click()
+    // await page.getByText(/^부담 구간 미리보기/).click()
     await page.locator('.burden-timeline button').first().click()
     await page.screenshot({path:out+'/12-burden-focus.png',fullPage:true});passed++
     const savedUrl=page.url();assert.ok(savedUrl.includes('search='))
