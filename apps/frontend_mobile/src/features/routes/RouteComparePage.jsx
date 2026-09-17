@@ -114,7 +114,7 @@ export default function RouteComparePage() {
                 {error && <section role="alert" className="service-error">{error}<button onClick={() => { if (result && !loading) { choose(); return } promiseRef.current = null; setAttempt(v => v + 1) }}>{result && !loading ? '선택 저장 다시 시도' : '다시 시도'}</button></section>}
 
                 {result && !loading && <>
-                    <div className="compare-map"><RouteMap originSnap={result.originSnap} destinationSnap={result.destinationSnap} focusEvent={focusEvent} candidates={result.candidates} selectedId={selected} onSelect={chosen ? undefined : id => select(id, 'map')} origin={result.origin} destination={result.destination} height="100%" /></div>
+                    <div className="compare-map"><RouteMap originSnap={result.originSnap} destinationSnap={result.destinationSnap} focusEvent={focusEvent} candidates={result.candidates} selectedId={selected} onSelect={chosen ? undefined : id => select(id, 'map')} origin={result.origin} destination={result.destination} size="fill" /></div>
                     <section className={'compare-panel' + (expanded ? '' : ' collapsed')}>
                         <button className="compare-toggle" aria-expanded={expanded} onClick={() => setExpanded(v => !v)}>{expanded ? '▼ 경로 정보 접기' : '▲ 경로 정보 펼치기'}</button>
                         

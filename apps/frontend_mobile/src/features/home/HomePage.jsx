@@ -9,6 +9,7 @@ import { createFavorite, deleteFavorite, getFavorites } from '../favorites/api.j
 import { buildFavoriteLocationResult, createFavoriteMarkerImage, findFavoriteForPlace, toFavoriteMarkerLocations } from '../favorites/favoriteContract.js'
 import { PLACE_TYPE_LABELS } from '../favorites/favoriteName.js'
 import styles from './HomePage.module.css'
+import markerStyles from '../../components/map/MapMarkers.module.css'
 
 const DEFAULT_CENTER = { lat: 37.4979, lng: 127.0276 }
 
@@ -109,15 +110,7 @@ function HomePage() {
 
         const dot = document.createElement('span')
         dot.setAttribute('aria-label', '현위치')
-        dot.style.cssText = `
-            display: block;
-            width: 18px;
-            height: 18px;
-            background: #1476e8;
-            border: 4px solid white;
-            border-radius: 50%;
-            box-shadow: 0 0 0 8px #1476e830;
-        `
+        dot.className = markerStyles.currentDot
 
         const currentLocationMarker = new kakao.maps.CustomOverlay({
             map,
