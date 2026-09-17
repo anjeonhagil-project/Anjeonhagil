@@ -1,7 +1,149 @@
+import collections
 import heapq
 import itertools
+import time
 
 import search_engine as engine
+
+# 짧은 경로는 기존 방식이 더 빠르므로,
+# 최초 경로가 200 Arc 이상일 때만 강한 휴리스틱을 만든다.
+REVERSE_HEURISTIC_MIN_ARCS = 200
+
+# 같은 도로 그래프에서는 역방향 연결 구조를 재사용한다.
+_REVERSE_GRAPH_CACHE = {}
+
+
+def get_reverse_graph(profile):
+    """도로를 목적지 방향에서 거꾸로 탐색할 구조를 만든다."""
+    costs = engine.base[profile]
+
+    cache_key = (
+        profile,
+        id(engine.arcs),
+        id(costs),
+    )
+
+    cached = _REVERSE_GRAPH_CACHE.get(cache_key)
+
+    if cached is not None:
+        return cached
+
+    reverse_graph = collections.defaultdict(list)
+
+    for arc_id, arc in engine.arcs.items():
+        from_node = arc[0]
+        to_node = arc[1]
+
+        reverse_graph[to_node].append(
+            (
+                from_node,
+                costs[arc_id],
+            )
+        )
+
+    _REVERSE_GRAPH_CACHE[cache_key] = reverse_graph
+    return reverse_graph
+
+
+def build_reverse_lower_bounds(
+    target,
+    profile,
+    deadline=None,
+):
+    """
+    각 노드에서 목적지까지의 최소 도로 비용을 계산한다.
+
+    회전 제한과 Yen 차단 조건을 무시한 값이므로
+    실제 비용보다 클 수 없고 A* 휴리스틱으로 안전하다.
+    """
+    reverse_graph = get_reverse_graph(profile)
+
+    distances = {target: 0.0}
+    queue = [(0.0, target)]
+    processed = 0
+
+    while queue:
+        current_distance, node = heapq.heappop(queue)
+
+        if current_distance != distances.get(node):
+            continue
+
+        processed += 1
+
+        if (
+            deadline is not None
+            and processed % 2048 == 0
+            and time.monotonic() >= deadline
+        ):
+            raise RuntimeError("yen_time_limit")
+
+        for previous_node, arc_cost in reverse_graph.get(
+            node,
+            (),
+        ):
+            next_distance = (
+                current_distance + arc_cost
+            )
+
+            if next_distance >= distances.get(
+                previous_node,
+                float("inf"),
+            ):
+                continue
+
+            distances[previous_node] = next_distance
+
+            heapq.heappush(
+                queue,
+                (
+                    next_distance,
+                    previous_node,
+                ),
+            )
+
+    return distances
+
+
+def has_available_first_move(
+    state,
+    blocked_states,
+    blocked_moves,
+):
+    """분기점에서 실제로 가능한 첫 이동이 있는지 확인한다."""
+    node, previous_arc, history = state
+
+    if previous_arc == -1:
+        choices = (
+            (arc_id, 0, 0)
+            for arc_id in engine.outs[node]
+        )
+    else:
+        choices = engine.trans.get(previous_arc, ())
+
+    for arc_id, _, _ in choices:
+        if (state, arc_id) in blocked_moves:
+            continue
+
+        next_history = engine.rules.advance(
+            history,
+            arc_id,
+        )
+
+        if next_history is None:
+            continue
+
+        next_state = (
+            engine.arcs[arc_id][1],
+            arc_id,
+            next_history,
+        )
+
+        if next_state in blocked_states:
+            continue
+
+        return True
+
+    return False
 
 def build_goal_entry_check(target):
     """목적지 진입이 확실히 차단됐는지 검사하는 함수를 만든다."""
@@ -148,6 +290,7 @@ def yen_k_shortest(
     k,
     profile="distance",
     use_h=True,
+    time_limit_seconds=None,
 ):
     """
     고정 비용의 확장 상태 그래프에서 K개 경로를 구한다.
@@ -167,6 +310,23 @@ def yen_k_shortest(
 
     if source == target:
         raise ValueError("source and target must differ")
+
+    if (
+        time_limit_seconds is not None
+        and (
+            type(time_limit_seconds) not in (int, float)
+            or time_limit_seconds <= 0
+        )
+    ):
+        raise ValueError(
+            "time_limit_seconds는 양수여야 합니다."
+        )
+
+    deadline = (
+        time.monotonic() + time_limit_seconds
+        if time_limit_seconds is not None
+        else None
+    )
 
     # 목적지 진입 조건은 이번 후보 생성에서 한 번만 준비한다.
     can_enter_goal = build_goal_entry_check(target)

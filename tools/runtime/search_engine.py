@@ -49,6 +49,8 @@ def search(
     blocked_states=None,
     blocked_moves=None,
     return_state_path=False,
+    heuristic_distances=None,
+    deadline=None,
 ):
     if (
         type(s) != int
@@ -116,6 +118,19 @@ def search(
     if start_state in blocked_states:
         raise RuntimeError("no_route_in_supported_graph")
 
+    if (
+    deadline is not None
+    and time.monotonic() >= deadline
+    ):
+        raise RuntimeError("yen_time_limit")
+
+    if (
+        use_h
+        and heuristic_distances is not None
+        and start_state[0] not in heuristic_distances
+    ):
+        raise RuntimeError("no_route_in_supported_graph")
+    
     costs = base[name]
     weights = profiles[name]
 
@@ -135,6 +150,14 @@ def search(
 
         expanded_states += 1
 
+        # 매 상태마다 시간을 읽는 비용을 줄이기 위해
+        # 256개 상태마다 제한 시간을 확인한다.
+        if (
+            deadline is not None
+            and expanded_states % 256 == 0
+            and time.monotonic() >= deadline
+        ):
+            raise RuntimeError("yen_time_limit")
         if expanded_states > 1_000_000:
             raise RuntimeError("search_state_cap")
 
@@ -222,11 +245,24 @@ def search(
             best[next_state] = next_cost
             parent[next_state] = (state, arc_id)
 
-            heuristic = (
-                math.dist(xy[next_node], xy[t]) * mins[name]
-                if use_h
-                else 0.0
-            )
+            if not use_h:
+                heuristic = 0.0
+
+            elif heuristic_distances is not None:
+                heuristic = heuristic_distances.get(
+                    next_node
+                )
+
+                # 제한을 무시한 도로망에서도 목적지에 도달하지
+                # 못하는 노드는 실제 탐색에서도 도달할 수 없다.
+                if heuristic is None:
+                    continue
+
+            else:
+                heuristic = (
+                    math.dist(xy[next_node], xy[t])
+                    * mins[name]
+                )
 
             serial += 1
 
