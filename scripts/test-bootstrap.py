@@ -22,7 +22,7 @@ with connect() as db:
         db.execute(f'CREATE SCHEMA {schema}; CREATE SCHEMA {auth_schema}')
         db.execute(f"CREATE TABLE {auth_schema}.users(id uuid PRIMARY KEY,email text,raw_user_meta_data jsonb DEFAULT '{{}}',raw_app_meta_data jsonb DEFAULT '{{}}',email_confirmed_at timestamptz)")
         db.execute(sql)
-        assert db.execute('SELECT count(*) n FROM pg_tables WHERE schemaname=%s',[schema]).fetchone()['n']==40
+        assert db.execute('SELECT count(*) n FROM pg_tables WHERE schemaname=%s',[schema]).fetchone()['n']==42
         passed+=1
         assert db.execute('SELECT count(*) n FROM pg_tables WHERE schemaname=%s AND NOT rowsecurity',[schema]).fetchone()['n']==0
         passed+=1
@@ -56,4 +56,4 @@ with connect() as db:
         db.execute('ROLLBACK')
     assert db.execute('SELECT count(*) n FROM pg_namespace WHERE nspname IN (%s,%s)',[schema,auth_schema]).fetchone()['n']==0
     passed+=1
-print(json.dumps({'passed':passed,'scope':'40-table fresh bootstrap, PostGIS, RLS, auth trigger, preferences, model, Q4 profile, durable queue, refusal, rollback'}))
+print(json.dumps({'passed':passed,'scope':'42-table fresh bootstrap, PostGIS, RLS, auth trigger, preferences, model, Q4 revisions/trial estimates, durable queue, refusal, rollback'}))

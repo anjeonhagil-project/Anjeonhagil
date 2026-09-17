@@ -17,6 +17,7 @@ try {
     await db.exec(q4Migration);await db.exec(q4Migration);passed++
     const flowMigration=read('database/migrations/20260917_service_flow.sql')
     await db.exec(flowMigration);await db.exec(flowMigration);passed++
+    await db.exec(read('database/migrations/20260917_q4_training_prep.sql'))
     const user=randomUUID(),other=randomUUID()
     for(const id of [user,other]) await db.query("INSERT INTO auth.users(id,email,raw_app_meta_data) VALUES($1,$2,'{\"provider\":\"google\"}')",[id,'test-'+id+'@example.test'])
     const pref=(await db.query("SELECT ag_save_preferences($1,'daily','[2,0,1,0,0,3]',NULL) p",[user])).rows[0].p
@@ -30,7 +31,7 @@ try {
     const storeQ4='INSERT INTO ag_q4_profiles(session_id,policy_version,user_id,survey_version,interpretation) VALUES($1,\'test\',$2,$3,$4)'
     await reject(storeQ4,[q4.session_id,user,pref.survey_version,JSON.stringify(initial)],/COMPLETE_SESSION/)
     await reject("SELECT ag_answer_q4($1,$2,0,'A')",[other,q4.session_id],/STALE/)
-    await reject("SELECT ag_answer_q4($1,$2,0,NULL)",[user,q4.session_id],/null value/)
+    await reject("SELECT ag_answer_q4($1,$2,0,NULL)",[user,q4.session_id],/INVALID_Q4_ANSWER/)
     for(let i=0;i<4;i++) {
         const r=(await db.query('SELECT ag_answer_q4($1,$2,$3,$4) r',[user,q4.session_id,i,i===2?'UNSURE':'A'])).rows[0].r
         assert.equal(r.completed,i===3);passed++
@@ -110,7 +111,7 @@ try {
     assert.equal(await applyJob(staleModelJob),null);passed++
     await db.query('UPDATE ag_model_versions SET is_active=true WHERE model_version=$1',[payload.search.model_version])
     const restarted=(await db.query('SELECT ag_restart_q4($1) v',[user])).rows[0].v
-    assert.notEqual(restarted,pref.survey_version)
+    assert.equal(restarted,pref.survey_version)
     assert.equal((await db.query('SELECT ag_restart_q4($1) v',[user])).rows[0].v,restarted)
     assert.equal((await db.query('SELECT count(*)::int n FROM ag_q4_responses WHERE session_id=$1',[q4.session_id])).rows[0].n,4)
     assert.deepEqual((await db.query('SELECT response_snapshot FROM ag_searches WHERE search_id=$1',[input.searchId])).rows[0].response_snapshot,payload.response);passed+=4

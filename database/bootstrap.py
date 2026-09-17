@@ -20,6 +20,7 @@ END $$;
     files = [ROOT/'baseline'/name for name in ('01_schema.sql','02_indexes.sql','03_triggers.sql','04_maintenance.sql','05_security.sql')]
     files += [ROOT/'migrations/20260916_anjeonhagil_foundation.sql', ROOT/'migrations/20260916_service_integration.sql', ROOT/'migrations/20260917_q4_personalization.sql']
     files += [ROOT/'migrations/20260917_service_flow.sql']
+    files += [ROOT/'migrations/20260917_q4_training_prep.sql']
     # 파일별 BEGIN/COMMIT만 제거한다. PL/pgSQL BEGIN 및 실제 SQL은 그대로 유지한다.
     chunks = [re.sub(r'(?im)^\s*(?:BEGIN|COMMIT);\s*$', '', file.read_text(encoding='utf-8')) for file in files]
     # baseline의 기존 서비스 CRUD 권한만 명시한다. ag_* 쓰기는 해당 migration의 RPC 권한을 유지한다.
