@@ -180,7 +180,7 @@ function HomePage() {
                     }
                     setMessage('')
                     setSelected({
-                        placeName: data[0].road_address?.building_name || '선택한 위치', address,
+                        placeName: data[0].road_address?.building_name || address, address,
                         latitude: latLng.getLat(), longitude: latLng.getLng(),
                     })
                 })
