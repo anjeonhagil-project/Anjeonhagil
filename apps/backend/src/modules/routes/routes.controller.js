@@ -4,12 +4,15 @@ import { validateChoiceInput, validateSearchInput, validateExposureInput, requir
 
 // 최단시간/최단거리 경로 조회
 export async function search(req, res, next) {
+    const controller=new AbortController()
+    const closed=()=>{if(!res.writableEnded)controller.abort()}
+    res.on('close',closed)
     try {
         const params = validateSearchInput(req.body)
-        res.json({ success: true, data: await routesService.search(req.user.id,params) })
+        res.json({ success: true, data: await routesService.search(req.user.id,params,{signal:controller.signal}) })
     } catch (error) {
-        next(error)
-    }
+        if(!controller.signal.aborted)next(error)
+    } finally {res.off('close',closed)}
 }
 
 export async function detail(req,res,next) {
@@ -17,6 +20,9 @@ export async function detail(req,res,next) {
 }
 export async function history(req,res,next) {
     try {res.json({success:true,data:await routesService.history(req.user.id)})} catch(error) {next(error)}
+}
+export async function burden(req,res,next) {
+    try {res.json({success:true,data:await routesService.burden(req.user.id,requireUuid(req.params.searchId,'검색'),requireUuid(req.params.candidateId,'후보'))})} catch(error) {next(error)}
 }
 
 // Only the authenticated user's saved selection is used; no client supplied arcs.

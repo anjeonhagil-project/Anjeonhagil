@@ -15,6 +15,8 @@ try {
     await db.exec(foundation);await db.exec(integration);await db.exec(integration);passed++
     const q4Migration=read('database/migrations/20260917_q4_personalization.sql')
     await db.exec(q4Migration);await db.exec(q4Migration);passed++
+    const flowMigration=read('database/migrations/20260917_service_flow.sql')
+    await db.exec(flowMigration);await db.exec(flowMigration);passed++
     const user=randomUUID(),other=randomUUID()
     for(const id of [user,other]) await db.query("INSERT INTO auth.users(id,email,raw_app_meta_data) VALUES($1,$2,'{\"provider\":\"google\"}')",[id,'test-'+id+'@example.test'])
     const pref=(await db.query("SELECT ag_save_preferences($1,'daily','[2,0,1,0,0,3]',NULL) p",[user])).rows[0].p
@@ -59,15 +61,54 @@ try {
     await reject('SELECT ag_record_choice($1,$2,$3,$4)',[user,exposure,randomUUID(),randomUUID()],/NOT_EXPOSED/)
     for(let i=0;i<2;i++) await db.query('SELECT ag_record_choice($1,$2,$3,$4)',[user,exposure,randomUUID(),recommended])
     assert.equal((await db.query('SELECT count(*)::int n FROM ag_choices')).rows[0].n,1);passed++
+    const visible=randomUUID(),context={policy:'visible_cards_v2',selectionSource:'card',selectionChanges:1,autoSelected:false}
+    const exposeV2='SELECT ag_record_exposure_v2($1,$2,$3,$4,$5,$6) e'
+    const args=[user,input.searchId,visible,JSON.stringify([recommended]),recommended,JSON.stringify(context)]
+    assert.deepEqual((await db.query(exposeV2,args)).rows[0].e.context,context);passed++
+    await db.query(exposeV2,args);passed++
+    await reject(exposeV2,[...args.slice(0,5),JSON.stringify({...context,selectionChanges:2})],/CONFLICT/)
+    await reject(exposeV2,[other,...args.slice(1)],/OWNERSHIP/)
+    await reject('UPDATE ag_exposures SET context=\'{}\' WHERE exposure_id=$1',[visible],/IMMUTABLE/)
+    const claim=(await db.query('SELECT ag_claim_personalization() q')).rows[0].q
+    assert.equal(claim.revision,1);assert.equal(claim.user_id,user);passed+=2
+    assert.equal((await db.query('SELECT ag_claim_personalization() q')).rows[0].q,null);passed++
+    assert.equal((await db.query('SELECT ag_finish_personalization($1,$2,$3,NULL) done',[user,randomUUID(),claim.revision])).rows[0].done,false);passed++
+    // A terminated worker leaves a lease. Expiry allows recovery, old token cannot finish it.
+    await db.query("UPDATE ag_personalization_queue SET lease_until=now()-interval '1 second' WHERE user_id=$1",[user])
+    const recovery=(await db.query('SELECT ag_claim_personalization() q')).rows[0].q
+    assert.notEqual(recovery.lease_token,claim.lease_token);passed++
+    assert.equal((await db.query('SELECT ag_finish_personalization($1,$2,$3,NULL) done',[user,claim.lease_token,claim.revision])).rows[0].done,false);passed++
+    // New evidence arriving during work remains pending after old revision completes.
+    await db.query('UPDATE ag_personalization_queue SET revision=revision+1 WHERE user_id=$1',[user])
+    await db.query('SELECT ag_finish_personalization($1,$2,$3,NULL)',[user,recovery.lease_token,recovery.revision])
+    const next=(await db.query('SELECT ag_claim_personalization() q')).rows[0].q
+    assert.equal(next.revision,2);passed++
+    await db.query('SELECT ag_finish_personalization($1,$2,$3,$4)',[user,next.lease_token,next.revision,'TRANSIENT'])
+    assert.equal((await db.query('SELECT ag_claim_personalization() q')).rows[0].q,null);passed++
     await reject('UPDATE ag_candidates SET distance_m=1 WHERE candidate_id=$1',[recommended],/IMMUTABLE/)
     await db.exec('SET ROLE anon')
     await reject('SELECT * FROM ag_q4_sessions',[],/permission denied/)
     await reject('SELECT * FROM ag_q4_profiles',[],/permission denied/)
     await reject('SELECT * FROM ag_searches',[],/permission denied/)
+    await reject('SELECT * FROM ag_personalization_queue',[],/permission denied/)
+    await reject('SELECT ag_claim_personalization()',[],/permission denied/)
     await db.exec('RESET ROLE')
     await db.exec('SET ROLE service_role')
     assert.equal((await db.query('SELECT ag_set_q4_enabled($1,false) v',[user])).rows[0].v,false)
     await db.exec('RESET ROLE');passed++
+    const jobFor=async profileVersion=>(await db.query("INSERT INTO ag_profile_update_jobs(user_id,input_profile_version,model_version,history_cutoff,sample_search_count,status) VALUES($1,$2,$3,clock_timestamp(),4,'running') RETURNING job_id",[user,profileVersion,payload.search.model_version])).rows[0].job_id
+    const applyJob=async id=>(await db.query("SELECT ag_apply_profile_update($1,'[0.5,0,0.3,0,0,0.2]',1,0.9,'{\"policy\":\"test\"}') v",[id])).rows[0].v
+    const staleJob=await jobFor(pref.profile_version)
+    await db.query('SELECT ag_reset_profile($1,false)',[user])
+    assert.equal(await applyJob(staleJob),null);passed++
+    await db.query('SELECT ag_reset_profile($1,true)',[user])
+    const current=(await db.query('SELECT active_profile_version FROM ag_user_profiles WHERE user_id=$1',[user])).rows[0].active_profile_version
+    const acceptedJob=await jobFor(current),acceptedVersion=await applyJob(acceptedJob)
+    assert.ok(acceptedVersion);assert.equal(await applyJob(acceptedJob),acceptedVersion);passed+=2
+    const staleModelJob=await jobFor(acceptedVersion)
+    await db.query('UPDATE ag_model_versions SET is_active=false WHERE model_version=$1',[payload.search.model_version])
+    assert.equal(await applyJob(staleModelJob),null);passed++
+    await db.query('UPDATE ag_model_versions SET is_active=true WHERE model_version=$1',[payload.search.model_version])
     const restarted=(await db.query('SELECT ag_restart_q4($1) v',[user])).rows[0].v
     assert.notEqual(restarted,pref.survey_version)
     assert.equal((await db.query('SELECT ag_restart_q4($1) v',[user])).rows[0].v,restarted)

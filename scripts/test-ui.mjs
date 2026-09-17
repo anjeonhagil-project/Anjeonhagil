@@ -40,6 +40,12 @@ try{
     userId=created.data.user.id
     browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true})
     const context=await browser.newContext({viewport:{width:1280,height:1000},locale:'ko-KR'})
+    const testApi=process.argv.find(v=>v.startsWith('--api-url='))?.slice(10)
+    if(testApi)await context.route(url=>['localhost','127.0.0.1'].includes(url.hostname)&&url.pathname.startsWith('/api/'),async route=>{
+        const url=new URL(route.request().url())
+        const response=await route.fetch({url:testApi.replace(/\/$/,'')+url.pathname.slice(4)+url.search})
+        await route.fulfill({response})
+    })
     page=await context.newPage();page.setDefaultTimeout(30000)
     // Deterministic foreground GPS callbacks exercise production hook and cleanup.
     await page.addInitScript(()=>{
@@ -116,13 +122,28 @@ try{
     await page.getByRole('button',{name:'예시 구간 A',exact:true}).click()
     await page.locator('.route-card').first().waitFor({timeout:60000})
     const choose=page.getByRole('button',{name:'이 경로 선택하기',exact:true})
-    await choose.waitFor();await page.waitForFunction(()=>[...document.querySelectorAll('button')].some(b=>b.textContent==='이 경로 선택하기'&&!b.disabled))
+    await choose.waitFor();assert.equal(await choose.isDisabled(),true);passed++
+    await page.locator('.route-card>button').first().click()
+    await page.waitForFunction(()=>[...document.querySelectorAll('button')].some(b=>b.textContent==='이 경로 선택하기'&&!b.disabled))
     cardCount=await page.locator('.route-card').count();assert.ok(cardCount>=1&&cardCount<=3);passed++
     assert.equal(await page.locator('.route-badge').count(),1);passed++
     if(cardCount>1){assert.equal(await page.locator('.route-card').getByText(/^최단시간 후보 대비/).count(),cardCount-1);passed++}
     await page.waitForFunction(()=>Boolean(window.kakao?.maps?.Map),{timeout:30000});passed++
     await page.screenshot({path:out+'/03-route-comparison.png',fullPage:true})
     await choose.click();await page.getByText('경로 선택을 저장했어요',{exact:true}).waitFor();passed++
+    const searchId=new URL(page.url()).searchParams.get('search')
+    const choiceRow=await admin.from('ag_choices').select('exposure_id,selected_candidate_id').eq('user_id',userId).eq('search_id',searchId).single()
+    assert.ifError(choiceRow.error)
+    const exposureRow=await admin.from('ag_exposures').select('displayed_candidate_ids,context').eq('exposure_id',choiceRow.data.exposure_id).single()
+    assert.ifError(exposureRow.error)
+    assert.equal(exposureRow.data.context.policy,'visible_cards_v2')
+    assert.equal(exposureRow.data.context.autoSelected,false)
+    assert.equal(exposureRow.data.context.selectionSource,'card')
+    assert.ok(exposureRow.data.displayed_candidate_ids.includes(choiceRow.data.selected_candidate_id));passed+=4
+    if(cardCount===3){assert.ok(exposureRow.data.displayed_candidate_ids.length<3,'unseen cards must not be recorded');passed++}
+    await page.getByText(/^부담 구간 미리보기/).click()
+    await page.locator('.burden-timeline button').first().click()
+    await page.screenshot({path:out+'/12-burden-focus.png',fullPage:true});passed++
     const savedUrl=page.url();assert.ok(savedUrl.includes('search='))
     await page.reload();await page.getByText('경로 선택을 저장했어요',{exact:true}).waitFor();passed++
     await page.setViewportSize({width:390,height:844});await page.screenshot({path:out+'/04-mobile-selected-route.png',fullPage:true})

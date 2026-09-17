@@ -3,18 +3,20 @@
 # 상관없음 항목은 0 고정, 나머지 비음수·합 1 유지. 과거 보정/최근 검증/미래 평가를 나누고 무조건 변경하지 않는다.
 
 import math
+import json
+from pathlib import Path
 from datetime import datetime
 import numpy as np
 from scipy.optimize import minimize
 
 # 발표용 실험 정책. 실제 사용자에 최적화된 상수가 아니며 모든 갱신 evidence에 보존한다.
-POLICY={'version':'behavior_pilot_20260916','half_life_days':14,'blend_k':10,'minimum_searches':10,
-        'maximum_searches':20,'regularization':0.05,'minimum_validation_improvement':0.001}
+POLICY=json.loads((Path(__file__).resolve().parents[1]/'personalization_policy.json').read_text())
 
 def adapt(model, request):
     survey=np.array(request['survey_weights'],dtype=float)
     current=np.array(request['current_weights'],dtype=float)
-    if len(survey)!=6 or len(current)!=6 or np.any(survey<0) or not np.isfinite(survey).all() or not np.isfinite(current).all():raise ValueError('INVALID_PROFILE')
+    if survey.shape!=(6,) or current.shape!=(6,) or np.any(survey<0) or np.any(current<0) or not np.isfinite(survey).all() or not np.isfinite(current).all():raise ValueError('INVALID_PROFILE')
+    if not all(math.isclose(float(w.sum()),1.,abs_tol=1e-8) or np.all(w==0) for w in (survey,current)) or np.any(current[survey==0]!=0):raise ValueError('INVALID_PROFILE')
     selected=np.flatnonzero(survey>0)
     evidence={'policy':POLICY,'alpha':0.,'n_eff':0.,'behavior_weights':None,'real_user_validated':False}
     def hold(reason):return {'accepted':False,'reason':reason,'evidence':evidence}
@@ -35,12 +37,17 @@ def adapt(model, request):
         rows.append({'age':age,'x':differences,'weight':.5**(age/POLICY['half_life_days'])})
     rows.sort(key=lambda r:r['age'])
     recent=[r for r in rows if r['age']<=7]
-    rows=(recent if len(recent)>=10 else rows)[:20]
-    evidence.update(search_count=len(rows),window_days=7 if len(recent)>=10 else 30)
+    rows=(recent if len(recent)>=POLICY['window_switch_searches'] else rows)[:POLICY['maximum_searches']]
+    evidence.update(search_count=len(rows),window_days=7 if len(recent)>=POLICY['window_switch_searches'] else 30)
     if len(rows)<POLICY['minimum_searches']:return hold('INSUFFICIENT_ACTUAL_CHOICES')
     # 오래된 80%로 적합하고 최근 20%는 개선 여부 판정에만 사용한다.
     validation=rows[:max(2,math.ceil(len(rows)*.2))];training=rows[len(validation):]
+    evidence.update(training_searches=len(training),validation_searches=len(validation))
+    if len(training)<2 or len(validation)<2:return hold('INSUFFICIENT_VALIDATION_CHOICES')
     beta=np.array(model.spec['coefficients'])/np.array(model.spec['scales'])
+    informative=lambda data:any(np.ptp(r['x'][:,2+selected]*beta[2+selected],axis=1).max()>1e-10 for r in data)
+    if not informative(training):return hold('NO_PREFERENCE_VARIATION')
+    if not informative(validation):return hold('INSUFFICIENT_VALIDATION_VARIATION')
     def losses(weights, data):
         weights8=np.r_[1.,1.,weights]
         return np.array([np.logaddexp(0,-(r['x']*weights8@beta)).mean() for r in data])

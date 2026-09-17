@@ -27,12 +27,30 @@ with (OUT/'service-worker-test.log').open('w',encoding='utf8') as log:
         assert health['model']['training_source']=='SYNTHETIC_TEAM_DATA'
         query=json.loads((ROOT/'apps/backend/routing/tools/examples/hourly_search.json').read_text())
         query.pop('max_detour_minutes')
+        # Disconnect an in-flight search. The single worker must become available quickly.
+        body=json.dumps(query).encode()
+        with socket.create_connection(('127.0.0.1',port)) as client:
+            client.sendall((f'POST /search HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer {token}\r\nContent-Type: application/json\r\nContent-Length: {len(body)}\r\nConnection: close\r\n\r\n').encode()+body)
+            time.sleep(.5)
+        cancelled_at=time.monotonic()
+        assert request('/health')[0]==200
+        cancellation_seconds=time.monotonic()-cancelled_at
+        assert cancellation_seconds<3,('Cancellation did not release worker',cancellation_seconds)
         status,result=request('/search',query)
         assert status==200,result
         assert 1<=len(result['candidates'])<=3
         assert result['profile_weights']==[2/6,0,3/6,0,0,1/6]
-        checks=5
+        checks=7
         for c in result['candidates']:
+            status,explanation=request('/burden',{**health['versions'],'segments':c['segments'],'raw_features':c['raw_features']})
+            assert status==200,explanation
+            events=explanation['events']
+            sums=[sum(e['value'] for e in events if e['factor_index']==i) for i in range(6)]
+            assert all(math.isclose(a,b,rel_tol=1e-8,abs_tol=1e-6) for a,b in zip(sums,c['raw_features']))
+            assert all(0<=e['start_m']<=e['end_m']<=c['distance_m']+1e-5 for e in events)
+            assert all(0<e['start_m']-e['previous_action_m']<=100 for e in events if e['factor_index']==4)
+            assert all(e['geometry']['coordinates'] for e in events)
+            checks+=4
             status,guide=request('/guidance',{**health['versions'],'segments':c['segments']})
             assert status==200,guide
             assert guide['geometry']==c['geometry'], 'Guidance must preserve selected path exactly'
@@ -58,7 +76,7 @@ with (OUT/'service-worker-test.log').open('w',encoding='utf8') as log:
         artifact={'test_only':True,'request':query,'response':result}
         (OUT/'service-routing-fixture.json').write_text(json.dumps(artifact,ensure_ascii=False,indent=2),encoding='utf8')
         import hashlib
-        report={'passed':checks,'candidate_count':len(result['candidates']),'diagnostics':result['diagnostics'],'model':health['model'],'versions':health['versions'],
+        report={'passed':checks,'cancellation_seconds':cancellation_seconds,'candidate_count':len(result['candidates']),'diagnostics':result['diagnostics'],'model':health['model'],'versions':health['versions'],
                 'manifest_sha256':hashlib.sha256((ROOT/'apps/backend/routing/service_manifest.json').read_bytes()).hexdigest(),
                 'runtime_sha256':hashlib.sha256((ROOT/'apps/backend/routing/runtime_manifest.json').read_bytes()).hexdigest()}
         (OUT/'service-routing-report.json').write_text(json.dumps(report,indent=2),encoding='utf8')

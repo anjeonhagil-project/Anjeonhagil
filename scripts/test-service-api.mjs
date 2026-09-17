@@ -48,8 +48,21 @@ try{
     const fixture=JSON.parse(readFileSync('apps/backend/routing/tools/examples/hourly_search.json'))
     const input={searchId:randomUUID(),origin:fixture.origin,destination:fixture.destination,departureAt:'2026-09-16T08:00:00+09:00'}
     await call('/routes/searches',user.token,'POST',{...input,raw_features:[0,0,0,0,0,0]},400)
+    const cancelled=new AbortController(),timer=setTimeout(()=>cancelled.abort(),500)
+    try {
+        await assert.rejects(fetch(base+'/routes/searches',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+user.token},body:JSON.stringify(input),signal:cancelled.signal}),e=>e.name==='AbortError');passed++
+    } finally {clearTimeout(timer)}
+    await new Promise(r=>setTimeout(r,1000))
+    const cancelledSearch=await admin.from('ag_searches').select('search_id').eq('search_id',input.searchId)
+    assert.ifError(cancelledSearch.error);assert.equal(cancelledSearch.data.length,0);passed++
+    // Reuse the same identifier after cancellation; no late result may be selected or saved.
     const result=await call('/routes/searches',user.token,'POST',input)
     assert.ok(result.candidates.length>=1&&result.candidates.length<=3);passed++
+    const burdenPath='/routes/searches/'+result.searchId+'/candidates/'+result.candidates[0].candidate_id+'/burden'
+    await call(burdenPath,other.token,'GET',undefined,404)
+    const explanation=await call(burdenPath,user.token)
+    assert.ok(explanation.totals.every((v,i)=>Math.abs(v-result.candidates[0].raw_features[i])<1e-6));passed++
+    await call('/routes/searches/'+result.searchId+'/candidates/'+randomUUID()+'/burden',user.token,'GET',undefined,404)
     const recovered=await call('/routes/searches/'+result.searchId,user.token)
     assert.deepEqual(recovered.candidates,result.candidates);passed++
     assert.equal(result.q4.sessionId,q4.session_id);assert.equal(result.q4.policy.version,'q4_tiebreak_20260917')
@@ -62,7 +75,7 @@ try{
     await call('/routes/searches/'+result.searchId,other.token,'GET',undefined,404)
     await call('/routes/searches/'+result.searchId+'/guidance',other.token,'GET',undefined,404)
     await call('/routes/searches/'+result.searchId+'/guidance',user.token,'GET',undefined,409)
-    const exposureId=randomUUID(),exposure={exposureId,candidateIds:result.candidates.map(c=>c.candidate_id),recommendedCandidateId:result.recommendedCandidateId}
+    const exposureId=randomUUID(),exposure={exposureId,candidateIds:result.candidates.map(c=>c.candidate_id),recommendedCandidateId:result.recommendedCandidateId,context:{policy:'visible_cards_v2',selectionSource:'card',selectionChanges:0}}
     await call('/routes/searches/'+result.searchId+'/exposures',user.token,'POST',exposure,201)
     await call('/routes/searches/'+result.searchId+'/exposures',user.token,'POST',exposure,201)
     const choice={choiceEventId:randomUUID(),selectedCandidateId:result.recommendedCandidateId}

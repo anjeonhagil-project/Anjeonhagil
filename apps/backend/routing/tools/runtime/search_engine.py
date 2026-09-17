@@ -144,6 +144,8 @@ def search(
     expanded_states = 0
 
     while queue:
+        from cancellation import check
+        if expanded_states % 256 == 0:check()
         _, _, current_cost, state = heapq.heappop(queue)
 
         if current_cost != best.get(state):

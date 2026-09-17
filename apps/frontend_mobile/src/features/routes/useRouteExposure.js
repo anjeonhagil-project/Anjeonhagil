@@ -1,45 +1,36 @@
-// 기능(Anjeonhagil): 실제 표시한 후보 순서를 한 번 기록하고 선택 전 노출 ID를 제공한다.
-import { useEffect, useRef, useState } from 'react'
-import { recordRouteExposure } from './api.js'
-
-export function useRouteExposure({ searchId, candidateIds, recommendedCandidateId = null, enabled = true }) {
-    const requestRef = useRef(null)
-    const [exposure, setExposure] = useState(null)
-    const [error, setError] = useState('')
-    const [attempt,setAttempt]=useState(0)
-    const signature = searchId && candidateIds?.length
-        ? `${searchId}:${candidateIds.join(',')}:${recommendedCandidateId ?? ''}`
-        : ''
-
-    useEffect(() => {
-        if (!enabled || !signature) {
-            setExposure(null)
-            setError('')
-            return undefined
-        }
-        if (!requestRef.current || requestRef.current.signature !== signature) {
-            requestRef.current = { signature, exposureId: crypto.randomUUID() }
-        }
-
-        let cancelled = false
-        const request = requestRef.current
-        setExposure(null)
-        setError('')
-        recordRouteExposure(searchId, {
-            exposureId: request.exposureId,
-            candidateIds,
-            recommendedCandidateId,
-        })
-            .then((result) => !cancelled && setExposure(result))
-            .catch((requestError) => !cancelled && setError(requestError.message || '경로 노출을 기록하지 못했습니다.'))
-
-        return () => { cancelled = true }
-    }, [enabled, signature, attempt])
-
-    return {
-        exposureId: exposure?.exposureId ?? null,
-        isRecorded: Boolean(exposure),
-        error,
-        retry:()=>setAttempt(v=>v+1),
-    }
+import {useEffect,useRef,useState} from 'react'
+import {recordRouteExposure} from './api.js'
+// 표시된 카드만 수집한다. 요청 실패 시 동일 이벤트 ID로 재시도한다.
+export function useRouteExposure({searchId,candidateIds=[],recommendedCandidateId=null,enabled=true}) {
+ const nodes=useRef(new Map()),seen=useRef(new Set()),requests=useRef(new Map())
+ const [revision,setRevision]=useState(0),[error,setError]=useState('')
+ const signature=candidateIds.join(',')
+ useEffect(()=>{seen.current.clear();requests.current.clear();setRevision(v=>v+1)},[searchId])
+ useEffect(()=>{
+  if(!enabled)return
+  const visibleNodes=new Set()
+  const inspect=()=>{
+   if(document.visibilityState!=='visible')return
+   let changed=false
+   for(const [id,node] of nodes.current){
+    if(visibleNodes.has(node)&&node.checkVisibility?.()!==false&&!seen.current.has(id)){seen.current.add(id);changed=true}
+   }
+   if(changed)setRevision(v=>v+1)
+  }
+  const observer=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting&&e.intersectionRatio>=.5)visibleNodes.add(e.target);else visibleNodes.delete(e.target)}inspect()},{threshold:[0,.5,1]})
+  nodes.current.forEach(n=>observer.observe(n));document.addEventListener('visibilitychange',inspect);inspect()
+  return ()=>{observer.disconnect();document.removeEventListener('visibilitychange',inspect)}
+ },[searchId,signature,enabled])
+ function register(id,node){if(node)nodes.current.set(id,node);else nodes.current.delete(id)}
+ async function record(context={selectionSource:null,selectionChanges:0}){
+  const ids=candidateIds.filter(id=>seen.current.has(id))
+  if(!ids.length)throw new Error('선택할 경로 카드를 먼저 확인해주세요.')
+  const key=JSON.stringify([searchId,ids,context])
+  if(!requests.current.has(key))requests.current.set(key,{exposureId:crypto.randomUUID()})
+  const r=requests.current.get(key)
+  if(!r.promise)r.promise=recordRouteExposure(searchId,{exposureId:r.exposureId,candidateIds:ids,recommendedCandidateId:ids.includes(recommendedCandidateId)?recommendedCandidateId:null,context:{policy:'visible_cards_v2',...context}}).catch(e=>{r.promise=null;setError(e.message);throw e})
+  const result=await r.promise;setError('');return result
+ }
+ useEffect(()=>{if(enabled&&searchId&&seen.current.size)record().catch(()=>{})},[searchId,revision,enabled])
+ return {register,hasSeen:id=>seen.current.has(id),record,error,retry:()=>setRevision(v=>v+1)}
 }

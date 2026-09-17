@@ -37,7 +37,7 @@ export const apiClient = {
     // 조회용 GET 요청 (예: GET /users/me)
     get: (path) => request(path),
     // 생성용 POST 요청, body를 JSON으로 직렬화해서 전송
-    post: (path, body) => request(path, { method: 'POST', body: JSON.stringify(body) }),
+    post: (path, body, options = {}) => request(path, { ...options, method: 'POST', body: JSON.stringify(body) }),
     // 전체 교체/Upsert용 PUT 요청
     put: (path, body) => request(path, { method: 'PUT', body: JSON.stringify(body) }),
     // 부분 수정용 PATCH 요청 (예: 닉네임 수정)

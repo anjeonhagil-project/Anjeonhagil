@@ -188,7 +188,9 @@ CREATE OR REPLACE VIEW public.ag_choice_training_events WITH (security_invoker=t
 SELECT ch.*,s.sample_origin,e.displayed_candidate_ids,e.exposed_at,s.departure_at,s.profile_snapshot,s.versions,
        s.profile_snapshot->'effective_weights' AS profile_weights,
        (SELECT jsonb_agg(c.snapshot ORDER BY j.ord) FROM jsonb_array_elements_text(e.displayed_candidate_ids) WITH ORDINALITY j(id,ord)
-        JOIN ag_candidates c ON c.candidate_id=j.id::uuid AND c.search_id=s.search_id) AS snapshots
+        JOIN ag_candidates c ON c.candidate_id=j.id::uuid AND c.search_id=s.search_id) AS snapshots,
+       COALESCE(to_jsonb(e)->'context','{"policy":"legacy_rendered_v1"}'::jsonb) AS exposure_context,
+       s.response_snapshot->>'recommendedCandidateId' AS original_recommended_candidate_id
 FROM ag_choices ch JOIN ag_exposures e USING(exposure_id) JOIN ag_searches s ON s.search_id=ch.search_id
 WHERE ch.event_source='ACTUAL_USER_CHOICE' AND s.sample_origin='service';
 REVOKE ALL ON public.ag_choice_training_events FROM PUBLIC,anon,authenticated;

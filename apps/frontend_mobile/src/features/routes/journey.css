@@ -12,3 +12,5 @@
 @media(max-height:550px) and (max-width:899px){.compare-map{min-height:100px}.compare-panel{max-height:68%}.compare-footer{padding-top:8px;padding-bottom:8px}.compare-toggle{min-height:36px;padding:6px 18px}}
 @media(max-width:360px){.compare-details{padding-inline:12px}.compare-footer{padding-inline:12px}.compare-panel>.route-endpoints{padding-inline:12px}.compare-panel .route-card b{font-size:25px}}
 @media(prefers-reduced-motion:reduce){.route-spinner{animation:none}}
+.compare-footer>p{margin:0 0 8px;font-size:12px;line-height:1.4;color:#35575a}
+.burden-timeline{padding-left:22px}.burden-timeline li{margin:10px 0}.burden-timeline button{font:inherit;text-align:left;border:1px solid #d7e4e2;border-radius:8px;background:#f7fbfa;color:#234e52;padding:10px;line-height:1.5}.burden-timeline small{display:block;margin-top:4px}

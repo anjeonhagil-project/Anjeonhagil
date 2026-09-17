@@ -3,6 +3,7 @@ import {useCallback,useEffect,useMemo,useRef,useState} from 'react'
 import {useNavigate,useSearchParams} from 'react-router-dom'
 import {apiClient} from '../../lib/apiClient.js'
 import RouteMap from '../../components/map/RouteMap.jsx'
+import BurdenTimeline from '../routes/BurdenTimeline.jsx'
 import useGeolocation from '../../hooks/useGeolocation.js'
 import {advanceGps,buildTrack,pointAt,validFix} from './navigationMath.js'
 import './navigation.css'
@@ -13,6 +14,7 @@ export default function NavigationPage(){
     const [data,setData]=useState(null),[error,setError]=useState(''),[retry,setRetry]=useState(0)
     const [mode,setMode]=useState('ready'),[progress,setProgress]=useState(0),[playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1),[gps,setGps]=useState({}),[voice,setVoice]=useState(false),[follow,setFollow]=useState(true),[clock,setClock]=useState(Date.now()),[exitOpen,setExitOpen]=useState(false)
     const spoken=useRef(new Set()),dialog=useRef(null)
+    const [focusEvent,setFocusEvent]=useState(null)
     useEffect(()=>{let active=true;setData(null);setError('');setMode('ready');setGps({});setProgress(0)
         if(!searchId){setError('선택한 경로가 없습니다. 먼저 경로를 선택해주세요.');return}
         apiClient.get('/routes/searches/'+encodeURIComponent(searchId)+'/guidance').then(d=>{if(active){buildTrack(d.geometry,d.steps);setData(d)}}).catch(e=>active&&setError(e.message))
@@ -65,11 +67,12 @@ export default function NavigationPage(){
         <header className="navigation-header"><button onClick={()=>mode==='ready'||done?leave():setExitOpen(true)} aria-label="안내 나가기">←</button><strong>안전하길 <span>경로 안내</span></strong><span className="navigation-tag">{isDemo?'시뮬레이션':mode==='gps'?'GPS 안내':'안내 준비'}</span></header>
         {error?<section className="navigation-empty" role="alert"><h1>안내를 준비하지 못했어요</h1><p>{error}</p><button onClick={()=>setRetry(n=>n+1)}>다시 시도</button><button onClick={()=>navigate('/search')}>경로 검색</button></section>:!data?<section className="navigation-empty" role="status">선택한 도로의 안내를 준비하고 있어요…</section>:<>
             <section className="navigation-stage">
-                <RouteMap candidates={candidates} selectedId={data.candidate.candidate_id} origin={data.origin} destination={data.destination} height="100%" position={position} progress={current} follow={follow} onPan={()=>setFollow(false)}/>
+                <RouteMap focusEvent={focusEvent} candidates={candidates} selectedId={data.candidate.candidate_id} origin={data.origin} destination={data.destination} height="100%" position={position} progress={current} follow={follow} onPan={()=>setFollow(false)}/>
                 <div className="navigation-instruction" aria-live="polite"><b aria-hidden="true">{done?'⚑':icons[next?.kind]||'↑'}</b><div><strong>{done?(isDemo?'시뮬레이션을 완료했어요':'경로 끝 지점에 도착했어요'):mode==='ready'?'선택한 경로로 출발하세요':tracking||isDemo?`${meters(Math.max(0,(next?.at||0)-current))} 앞`:'위치 확인 중'}</strong><p>{done?'목적지까지 남은 접근 구간과 주변을 확인하세요.':mode==='ready'?data.destination.name||'목적지':tracking||isDemo?next?.instruction:'정확한 위치가 확인되면 안내합니다.'}</p></div></div>
                 <div className="navigation-map-tools"><button aria-pressed={follow} onClick={()=>setFollow(v=>!v)}>{follow?'위치 따라가기 켜짐':'내 위치 따라가기'}</button><button aria-pressed={voice} disabled={!('speechSynthesis' in window)} onClick={()=>setVoice(v=>!v)}>{voice?'음성 켜짐':'음성 꺼짐'}</button></div>
             </section>
             <section className="navigation-panel">
+                {mode==='ready'&&<BurdenTimeline candidate={data.candidate} onFocus={e=>{setFollow(false);setFocusEvent(e)}}/>}
                 <div className="navigation-summary"><div><strong>{meters(remaining)}</strong><span>경로 잔여 거리</span></div><div><strong>약 {eta}분</strong><span>과거 교통자료 기준</span></div></div>
                 <progress aria-label="경로 진행률" max={track.total} value={current}/>
                 {mode==='gps'&&(gpsError||stale||gps.status!=='tracking')&&!done&&<p role="status" className="navigation-warning">{gpsError|| (stale?'정확한 GPS 위치를 기다리고 있어요. 화면을 켜 둔 상태로 사용해주세요.':gps.status==='offroute'?'선택 경로에서 벗어났어요. 안전한 곳에서 다시 검색해주세요.':'위치와 진행 방향을 확인하고 있어요.')}</p>}

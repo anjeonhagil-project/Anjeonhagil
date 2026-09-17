@@ -32,7 +32,7 @@ for(const file of ['ml/bundled/logistic.json','ml/bundled/xgboost.json','apps/ba
 if(process.argv.includes('--db')){
     const result=spawnSync(python,['-X','utf8','database/manage.py','status'],{cwd:root,encoding:'utf8',windowsHide:true,env:{...process.env,PYTHONUTF8:'1'}})
     let s;try{s=JSON.parse(result.stdout).status}catch{}
-    check(result.status===0&&s?.table_count===17&&s?.tables?.includes('ag_q4_profiles')&&s?.active_release?.length===1&&s?.active_model?.length===1&&s?.unvalidated_constraints?.length===0&&s?.rls_disabled?.length===0&&s?.local_release_matches&&s?.local_model_matches,'원격 DB: 17개 서비스 테이블·Q4 프로필·활성 데이터/모델 해시 일치·제약·RLS')
+    check(result.status===0&&s?.table_count===18&&s?.tables?.includes('ag_q4_profiles')&&s?.tables?.includes('ag_personalization_queue')&&s?.active_release?.length===1&&s?.active_model?.length===1&&s?.unvalidated_constraints?.length===0&&s?.rls_disabled?.length===0&&s?.local_release_matches&&s?.local_model_matches,'원격 DB: 18개 서비스 테이블·Q4 프로필·개인화 대기열·활성 데이터/모델 해시 일치·제약·RLS')
     check(s?.missing_core_tables?.length===0&&s?.browser_table_access?.length===0&&s?.missing_service_read?.length===0,'기존 22개 테이블·서버 조회 권한·브라우저 직접 접근 차단')
 }
 console.log(failures?`${failures}개 항목을 준비한 뒤 다시 검사하세요. 비밀 설정은 .env.example을 참고하세요.`:'실행 준비 검사 통과. 카카오 허용 도메인과 소셜 로그인 설정은 공급자 콘솔에서도 확인하세요.')

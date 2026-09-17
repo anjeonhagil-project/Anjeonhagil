@@ -28,7 +28,7 @@ def main():
                 split = 'train' if bucket < 6 else 'validation' if bucket < 8 else 'test'
                 for snapshot in snapshots:
                     snapshot.update(exposure_id=str(row['exposure_id']), displayed=True, departure_at=row['departure_at'].isoformat())
-                keys = ['choice_event_id', 'search_id', 'user_id', 'exposure_id', 'selected_candidate_id', 'chosen_at', 'event_source', 'sample_origin', 'exposed_at', 'displayed_candidate_ids']
+                keys = ['choice_event_id', 'search_id', 'user_id', 'exposure_id', 'selected_candidate_id', 'chosen_at', 'event_source', 'sample_origin', 'exposed_at', 'displayed_candidate_ids','exposure_context','original_recommended_candidate_id']
                 record = {'split': split, 'split_version': 'user_sha256_60_20_20_v1', 'profile_weights': row['profile_weights'], 'q4_context':row['q4_context'], 'snapshots': snapshots, 'choice': {key: row[key] for key in keys}}
                 out.write(json.dumps(record, ensure_ascii=False, default=str, allow_nan=False) + '\n')
                 counts[split] += 1

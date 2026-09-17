@@ -11,8 +11,8 @@ export const BURDEN_FACTORS = Object.freeze([
     { code: 'COMPLEX_INTERSECTION', label: '복잡한 교차로' },
     { code: 'MERGE_BRANCH', label: '합류·분기 구간' },
     { code: 'NARROW_ROAD', label: '좁은 도로·골목길' },
-    { code: 'UNFAMILIAR_TURN', label: '익숙하지 않은 회전 구간' },
-    { code: 'CONSECUTIVE_ACTION', label: '연속 차로 변경·회전' },
+    { code: 'UNFAMILIAR_TURN', label: '크게 꺾이는 회전 구간' },
+    { code: 'CONSECUTIVE_ACTION', label: '짧은 간격의 연속 회전·합류' },
     { code: 'CHILD_ZONE_NEARBY', label: '어린이 보호시설 주변' },
 ])
 

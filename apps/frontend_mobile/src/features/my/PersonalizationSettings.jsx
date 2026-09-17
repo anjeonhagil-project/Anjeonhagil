@@ -7,6 +7,7 @@ import {useNavigate} from 'react-router-dom'
 import '../routes/serviceRoutes.css'
 const reasons={INSUFFICIENT_ACTUAL_CHOICES:'실제 경로 선택 이력이 아직 부족합니다.',AT_LEAST_TWO_PREFERENCES_REQUIRED:'부담 항목을 두 개 이상 선택하면 보정할 수 있습니다.',NO_VALID_IMPROVEMENT:'최근 검증에서 개선이 없어 현재 설정을 유지합니다.',VALIDATION_IMPROVED:'최근 검증에서 개선된 가중치를 적용했습니다.',STALE_PROFILE_OR_MODEL_OR_DISABLED:'설정 변경을 감지해 이전 갱신을 보류했습니다.'}
 export default function PersonalizationSettings(){
+    Object.assign(reasons,{NO_PREFERENCE_VARIATION:'비교한 경로에서 선호를 구분할 부담 차이가 부족합니다.',INSUFFICIENT_VALIDATION_CHOICES:'보정과 검증에 나누어 쓸 선택 이력이 부족합니다.',INSUFFICIENT_VALIDATION_VARIATION:'최근 검증 경로의 부담 차이가 부족해 현재 설정을 유지합니다.'})
     const navigate=useNavigate(),[confirmRestart,setConfirmRestart]=useState(false)
     const [state,setState]=useState(null),[error,setError]=useState(''),[busy,setBusy]=useState(false)
     useEffect(()=>{apiClient.get('/driving-preferences/personalization').then(setState).catch(e=>setError(e.message))},[])

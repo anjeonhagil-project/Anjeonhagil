@@ -2,7 +2,7 @@
 import { useEffect,useRef,useState } from 'react'
 import { loadKakaoMaps } from '../../lib/kakaoMaps.js'
 import {buildTrack,pointAt} from '../../features/navigation/navigationMath.js'
-export default function RouteMap({candidates=[],selectedId,onSelect,origin,destination,height=300,position,progress=0,follow=false,onPan,comparison=false}) {
+export default function RouteMap({candidates=[],selectedId,onSelect,origin,destination,height=300,position,progress=0,follow=false,onPan,comparison=false,focusEvent,originSnap,destinationSnap}) {
     const container=useRef(null),instance=useRef(null),selectRef=useRef(onSelect)
     const [ready,setReady]=useState(false),[error,setError]=useState('')
     const panRef=useRef(onPan)
@@ -51,6 +51,18 @@ export default function RouteMap({candidates=[],selectedId,onSelect,origin,desti
         return ()=>{overlay.setMap(null);circle?.setMap(null)}
     },[ready,position,follow])
     useEffect(()=>{
+        if(!ready||!instance.current)return
+        const {kakao,map}=instance.current,objects=[]
+        for(const [requested,snap] of [[origin,originSnap],[destination,destinationSnap]]){
+            if(!requested||!snap)continue
+            const position=new kakao.maps.LatLng(snap.lat,snap.lng)
+            const dot=document.createElement('span');dot.title='계산 경로의 도로 연결점';dot.style.cssText='display:block;width:10px;height:10px;background:#b94b15;border:2px solid white;border-radius:50%'
+            objects.push(new kakao.maps.CustomOverlay({map,position,content:dot,zIndex:6}))
+            objects.push(new kakao.maps.Polyline({map,path:[new kakao.maps.LatLng(requested.lat,requested.lng),position],strokeStyle:'dash',strokeColor:'#b94b15',strokeWeight:2,zIndex:6}))
+        }
+        return ()=>objects.forEach(o=>o.setMap(null))
+    },[ready,origin,destination,originSnap,destinationSnap])
+    useEffect(()=>{
         if(!ready||!instance.current||progress<=0)return
         const chosen=candidates.find(c=>c.candidate_id===selectedId)
         if(!chosen)return
@@ -59,8 +71,17 @@ export default function RouteMap({candidates=[],selectedId,onSelect,origin,desti
         const line=new kakao.maps.Polyline({map,path:coordinates.map(([lng,lat])=>new kakao.maps.LatLng(lat,lng)),strokeWeight:7,strokeColor:'#92b4ae',strokeOpacity:1,zIndex:5})
         return ()=>line.setMap(null)
     },[ready,candidates,selectedId,progress])
+    useEffect(()=>{
+        if(!ready||!instance.current||!focusEvent)return
+        const {kakao,map}=instance.current,path=focusEvent.geometry.coordinates.map(([lng,lat])=>new kakao.maps.LatLng(lat,lng))
+        const line=new kakao.maps.Polyline({map,path,strokeWeight:11,strokeColor:'#b94b15',strokeOpacity:.9,zIndex:8})
+        const marker=new kakao.maps.Marker({map,position:path[0],zIndex:9})
+        map.setLevel(3);map.panTo(path[0])
+        return ()=>{line.setMap(null);marker.setMap(null)}
+    },[ready,focusEvent])
     return <section aria-label="경로 지도" style={{position:'relative',height,minHeight:height,flexShrink:0,borderRadius:16,overflow:'hidden',background:'#e9eef1'}}>
         <div ref={container} style={{height:'100%',width:'100%'}} />
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" style={{position:'absolute',bottom:22,right:4,zIndex:20,background:'#fffffff0',padding:'2px 5px',fontSize:10,color:'#243746'}}>경로 데이터 © OpenStreetMap contributors</a>
         {error&&<p role="alert" style={{position:'absolute',inset:16,background:'#fff',padding:16}}>{error}<br/>아래 카드에서 계산된 경로 조건은 확인할 수 있습니다.</p>}
     </section>
 }

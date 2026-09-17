@@ -76,7 +76,14 @@ export function validateExposureInput(searchId, body) {
         throw error
     }
 
+    let context
+    if(body.context!==undefined){
+        const c=body.context
+        if(!c||c.policy!=='visible_cards_v2'||![null,'map','card'].includes(c.selectionSource)||!Number.isSafeInteger(c.selectionChanges)||c.selectionChanges<0||c.selectionChanges>100000)throw Object.assign(new Error('노출 기록 형식을 확인해주세요'),{status:400})
+        context={policy:c.policy,selectionSource:c.selectionSource,selectionChanges:c.selectionChanges,autoSelected:false}
+    }
     return {
+        context,
         searchId: requireUuid(searchId, '검색'),
         exposureId: requireUuid(body.exposureId, '노출'),
         candidateIds,

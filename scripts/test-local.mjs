@@ -11,6 +11,7 @@ const checks=[
     [process.execPath,['scripts/test-admin-usage.mjs']],
     [process.execPath,['scripts/test-navigation.mjs']],
     [process.execPath,['scripts/test-q4-policy.mjs']],
+    [process.execPath,['scripts/test-search-queue.mjs']],
     ...['test-service-routing.py','test-q4-data.py','test-algorithms.py','test-models.py','test-personalization.py','test-learning-data.py'].map(p=>[python,['-X','utf8','scripts/'+p]]),
     [process.execPath,['scripts/test-service-db.mjs']],
 ]

@@ -11,6 +11,7 @@ export function routeSnapshot(userId,input,profile,result) {
         recommendedCandidateId:candidates[result.recommended_index].candidate_id,recommendationMethod:result.recommendation_method,
         model:{version:result.model.model_version,trainingSource:result.model.training_source,realUserValidated:false},
         degraded:result.degraded,diagnostics:result.diagnostics,profile:profileSnapshot,
+        originSnap:result.origin_snap??null,destinationSnap:result.destination_snap??null,
         q4:result.q4?{...result.q4,baselineCandidateId:candidates[result.q4.baselineIndex].candidate_id,finalCandidateId:candidates[result.recommended_index].candidate_id}:null,
         notice:'과거 시간대별 교통자료를 사용한 예상값입니다. 실제 교통·사고 위험을 보장하지 않습니다.',versions:VERSIONS}
     return {search:{search_id:searchId,release_id:RELEASE_ID,profile_version:profile.profile_version,model_version:result.model.model_version,

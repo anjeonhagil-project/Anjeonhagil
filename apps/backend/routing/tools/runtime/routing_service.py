@@ -6,6 +6,7 @@ from shapely import from_wkb,STRtree,Point
 from shapely.ops import substring
 from pyproj import Transformer
 import search_engine as graph
+from cancellation import check
 from child_feature import TeamCalculator,FEATURE_VERSION
 from interface import VERSIONS as STATIC_VERSIONS,FACTOR_ORDER,UNITS,survey_weights
 from hourly import HourlySpeed,departure,ETA_VERSION
@@ -75,6 +76,7 @@ class RouteService:
     best[key]=g;parents[key]=(None,segment);heapq.heappush(q,(g+heuristic(key[0]),next(serial),g,dt,key))
   began=time.monotonic()
   while q:
+   if states%256==0:check()
    f,_,g,elapsed,key=heapq.heappop(q)
    if g!=best.get(key):continue
    if f>=upper-1e-9:break

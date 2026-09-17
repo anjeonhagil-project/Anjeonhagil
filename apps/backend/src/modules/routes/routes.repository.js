@@ -23,13 +23,14 @@ export async function history(userId) {
     return data.map(s=>({...s,choice:choices.find(c=>c.search_id===s.search_id)??null}))
 }
 
-export async function recordExposure(userId, { searchId, exposureId, candidateIds, recommendedCandidateId }) {
-    const { data, error } = await supabase.rpc('ag_record_exposure', {
+export async function recordExposure(userId, { searchId, exposureId, candidateIds, recommendedCandidateId,context }) {
+    const { data, error } = await supabase.rpc(context?'ag_record_exposure_v2':'ag_record_exposure', {
         p_user: userId,
         p_search: searchId,
         p_exposure: exposureId,
         p_ids: candidateIds,
         p_recommended: recommendedCandidateId ?? null,
+        ...(context?{p_context:context}:{}),
     })
 
     if (error) throw error

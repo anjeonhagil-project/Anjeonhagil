@@ -63,6 +63,8 @@ def build_reverse_lower_bounds(
     processed = 0
 
     while queue:
+        from cancellation import check
+        if processed % 2048 == 0:check()
         current_distance, node = heapq.heappop(queue)
 
         if current_distance != distances.get(node):
@@ -291,7 +293,7 @@ def yen_k_shortest(
     profile="distance",
     use_h=True,
     time_limit_seconds=None,
-    *, initial_state=None, end_follow_arc=None, diagnostics=None,
+    *, initial_state=None, end_follow_arc=None, diagnostics=None, prepared=None,
 ):
     """
     고정 비용의 확장 상태 그래프에서 K개 경로를 구한다.
@@ -330,14 +332,17 @@ def yen_k_shortest(
     )
 
     # 목적지 진입 조건은 이번 후보 생성에서 한 번만 준비한다.
-    can_enter_goal = build_goal_entry_check(target)
+    key=(target,profile)
+    cached=prepared.get(key) if prepared is not None else None
+    can_enter_goal = cached[0] if cached else build_goal_entry_check(target)
     lower_bounds = None
     # 목적지까지 제한을 완화한 거리 하한을 모든 spur에서 재사용한다.
     if use_h:
         try:
-            lower_bounds = build_reverse_lower_bounds(target, profile, deadline)
+            lower_bounds = cached[1] if cached and cached[1] is not None else build_reverse_lower_bounds(target, profile, deadline)
         except RuntimeError:
             lower_bounds = None
+    if prepared is not None:prepared[key]=(can_enter_goal,lower_bounds)
 
     try:
         cost, path, _, states = engine.search(
@@ -369,6 +374,8 @@ def yen_k_shortest(
     serial = itertools.count()
 
     while len(accepted) < k:
+        from cancellation import check
+        check()
         previous = accepted[-1]
         previous_path = previous["arc_ids"]
         previous_states = previous["states"]

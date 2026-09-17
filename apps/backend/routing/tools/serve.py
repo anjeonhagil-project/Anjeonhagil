@@ -1,12 +1,14 @@
 """Private local routing worker. Node backend calls it; bind loopback by default."""
 from pathlib import Path
 import sys,json,os,hmac,hashlib
+import select,socket
 from http.server import HTTPServer,BaseHTTPRequestHandler
 sys.path.insert(0,str(Path(__file__).resolve().parent/'runtime'))
 from routing_service import VERSIONS
 from integrated_service import IntegratedService
 from personalize import adapt
 from learning import versions
+import cancellation
 ROOT=Path(__file__).resolve().parent.parent
 # Check all supplied dataset hashes before serving. The manifest is generated at packaging.
 def verify():
@@ -35,18 +37,32 @@ class Handler(BaseHTTPRequestHandler):
    length=int(self.headers.get('Content-Length','0'))
    if not 0<length<=2000000:return self.reply(413,{'error':'body size invalid'})
    req=json.loads(self.rfile.read(length));
-   if self.path=='/search':answer=engine.search(req)
+   if self.path=='/search':
+    def disconnected():
+     readable,_,_=select.select([self.connection],[],[],0)
+     if not readable:return False
+     try:return not self.connection.recv(1,socket.MSG_PEEK)
+     except OSError:return True
+    cancellation.probe=disconnected
+    try:answer=engine.search(req)
+    finally:cancellation.probe=None
    elif self.path=='/guidance':
     versions(req)
     from guidance import build_guidance
     from routing_service import graph
     answer=build_guidance(engine,graph,req['segments'])
    elif self.path=='/rank':answer=engine.model.rank(req['candidates'],req['weights'],comparison=True)
+   elif self.path=='/burden':
+    versions(req)
+    from burden import explain
+    answer=explain(engine,req['segments'],req['raw_features'])
    elif self.path=='/personalize':answer=adapt(engine.model,req)
    elif self.path=='/evaluate':
     versions(req);answer=engine.evaluate(req['segments'],req['departure_at'])
    else:return self.reply(404,{'error':'not found'})
    self.reply(200,answer)
+  except cancellation.SearchCancelled:self.close_connection=True
+  except (BrokenPipeError,ConnectionResetError):self.close_connection=True
   except (ValueError,KeyError,TypeError) as e:self.reply(422,{'error':str(e)})
   except RuntimeError as e:self.reply(503,{'error':str(e)})
   except Exception as e:self.reply(500,{'error':'ROUTING_INTERNAL_ERROR'});print(type(e).__name__,str(e),file=sys.stderr,flush=True)

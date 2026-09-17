@@ -7,6 +7,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0,str(Path(__file__).resolve().parents[5] / 'ml/src'))
 from service_area import ServiceArea
 from inference import ChoiceModel
+from cancellation import check
 
 class IntegratedService(RouteService):
     def __init__(self):
@@ -24,13 +25,15 @@ class IntegratedService(RouteService):
         if not all(self.area.contains(request[k]) for k in ('origin','destination')): raise ValueError('OUTSIDE_SEOUL_SERVICE_AREA')
         starts,ss,_=self.snap(request.get('origin')); ends,es,target=self.snap(request.get('destination'))
         if math.dist(self.to_xy.transform(ss['lng'],ss['lat']),self.to_xy.transform(es['lng'],es['lat']))<5:raise ValueError('ORIGIN_DESTINATION_TOO_CLOSE')
-        proposals={}; failures=[]
+        proposals={}; failures=[];timings={'evaluate_seconds':0.,'geometry_seconds':0.};prepared={}
         def add(segments, method):
+            check()
             if proposals and time.monotonic()>=deadline:return False
             key=hashlib.sha256(json.dumps(segments,sort_keys=True,separators=(',',':')).encode()).hexdigest()
             if key in proposals: return
-            result=self.evaluate(segments,dep)
-            result.update(segments=segments,geometry=self.geometry(segments),route_key=key,generation_method=method,
+            stage=time.monotonic();result=self.evaluate(segments,dep);timings['evaluate_seconds']+=time.monotonic()-stage
+            stage=time.monotonic();geometry=self.geometry(segments);timings['geometry_seconds']+=time.monotonic()-stage
+            result.update(segments=segments,geometry=geometry,route_key=key,generation_method=method,
                           display_duration_s=math.floor(result['internal_duration_s']/60+.5)*60,
                           display_duration_source='INTERNAL_HOURLY',profile_weights=weights)
             # LR의 Train scale로 단위 차이를 보정. 학습된 계수는 추천 단계에서 별도로 적용한다.
@@ -38,12 +41,15 @@ class IntegratedService(RouteService):
             proposals[key]=result
             return True
         for mode in ('time','distance','burden'):
+            stage=time.monotonic()
             try:
                 segments,_=self.route(starts,ends,target,ts,mode,weights,deadline=min(deadline,time.monotonic()+6))
                 add(segments, 'ASTAR_'+mode.upper())
             except (ValueError,RuntimeError) as error:
                 failures.append({'stage':mode,'reason':str(error)})
+            finally:timings['astar_'+mode+'_seconds']=time.monotonic()-stage
         diag={'requested_k':10,'truncated':False}
+        stage=time.monotonic()
         # 부분 출발 arc의 진입 이력 및 도착 arc로의 회전 조건을 유지한 Yen 탐색.
         for start in starts:
             if time.monotonic()>=deadline: diag['truncated']=True; break
@@ -57,7 +63,7 @@ class IntegratedService(RouteService):
                 try:
                     attempt_diag={}
                     routes=yen_k_shortest(source,target_node,10,time_limit_seconds=max(.01,min(6,deadline-time.monotonic())),initial_state=initial,
-                        end_follow_arc=end['arc_id'] if end['fraction']>1e-10 else None,diagnostics=attempt_diag)
+                        end_follow_arc=end['arc_id'] if end['fraction']>1e-10 else None,diagnostics=attempt_diag,prepared=prepared)
                     diag['truncated']=diag['truncated'] or attempt_diag.get('truncated',False)
                     for route in routes:
                         if time.monotonic()>=deadline:diag['truncated']=True;break
@@ -65,6 +71,7 @@ class IntegratedService(RouteService):
                         tail=[dict(arc_id=end['arc_id'],start_fraction=0.,end_fraction=end['fraction'])] if end['fraction']>1e-10 else []
                         add(prefix+middle+tail,'YEN_DISTANCE')
                 except (ValueError,RuntimeError) as error: failures.append({'stage':'yen','reason':str(error)})
+        timings['yen_seconds']=time.monotonic()-stage
         if not proposals: raise RuntimeError('NO_VERIFIED_ROUTE_WITHIN_TIME_LIMIT')
         pool=list(proposals.values())
         self.last_pool=pool  # 오프라인 Q4 사례 추출/검증 전용. API 응답에는 표시 후보만 보낸다.
@@ -86,4 +93,4 @@ class IntegratedService(RouteService):
                 'recommended_index':ranking['recommended_index'],'recommendation_method':'model_logistic' if self.model.available else 'survey_fallback',
                 'model':ranking['model'],'minimum_internal_duration_s':min(p['internal_duration_s'] for p in pool),
                 'candidate_scope':'verified_bounded_pool','degraded':degraded,
-                'diagnostics':{**diag,'candidate_count':len(pool),'elapsed_seconds':time.monotonic()-began,'failures':failures}}
+                'diagnostics':{**diag,'stages':timings,'candidate_count':len(pool),'elapsed_seconds':time.monotonic()-began,'failures':failures}}
