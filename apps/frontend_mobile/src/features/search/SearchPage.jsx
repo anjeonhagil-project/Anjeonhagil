@@ -173,8 +173,8 @@ function SearchPage() {
             <div className={styles.searchBar}>
                 <div className={styles.searchForm}>
                     {[
-                        { field: 'origin', dotClass: styles.dotOrigin, placeholder: '출발지 입력 (미입력 시 현위치)', value: origin },
-                        { field: 'destination', dotClass: styles.dotDestination, placeholder: '목적지 입력', value: destination },
+                        { field: 'origin', dotClass: styles.dotOrigin, placeholder: '출발지 입력', value: origin },
+                        { field: 'destination', dotClass: styles.dotDestination, placeholder: '도착지 입력', value: destination },
                     ].map(({ field, dotClass, placeholder, value }) => (
                         <div key={field} className={styles.inputRow}>
                             <span className={dotClass} aria-hidden="true" />
