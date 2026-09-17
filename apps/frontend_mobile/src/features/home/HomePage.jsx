@@ -402,7 +402,7 @@ function HomePage() {
             {mapError && <div className={styles.selection} role="alert"><p>{mapError}</p><Button onClick={() => setAttempt(value => value + 1)}>다시 시도</Button></div>}
             {selected && (
                 <section className={styles.selection} aria-label="선택한 장소">
-                    <button className={styles.sheetToggle} aria-expanded={selectionExpanded} onClick={()=>setSelectionExpanded(v=>!v)}>{selectionExpanded?'장소 정보 접기':'장소 정보 펼치기'}</button>
+                    {/* <button className={styles.sheetToggle} aria-expanded={selectionExpanded} onClick={()=>setSelectionExpanded(v=>!v)}>{selectionExpanded?'▼ 장소 정보 접기':'▲ 장소 정보 펼치기'}</button> */}
                     <div className={styles.selectionHeader}>
                         <div className={styles.selectionText}>
                             <strong>{selected.placeName}</strong>
@@ -433,8 +433,7 @@ function HomePage() {
                         </Button>
                     )}
                     {!editingFavoriteId && !selectingFavoriteLocation && (
-                        <div className={styles.routeControls}>
-
+                        <div>
                             <Button
                                 className={styles.safeRouteButton}
                                 fullWidth
@@ -442,7 +441,7 @@ function HomePage() {
                                 onClick={() => navigate('/search', {
                                     state: buildSafeRouteSearchState(selected),
                                 })}
-                            >내게 편한 길 찾기</Button>
+                            >경로 검색</Button>
                         </div>
                     )}
                 </section>
