@@ -107,8 +107,7 @@ export default function RouteComparePage() {
                 {loading && <section className="route-loading" role="status">
                     <span className="route-spinner" />
                     <h2>내게 맞는 길을 찾고 있어요</h2>
-                    <p>도로 연결과 운전 부담을 계산합니다.<br />
-                    계산은 약 5~30초, 요청이 많으면 대기 시간이 더 걸릴 수 있어요.</p>
+                    <p>도로 연결과 운전 부담을 계산합니다</p>
                     <button className="route-cancel" onClick={() => { abortRef.current?.abort(); navigate('/search') }}>검색 취소</button>
                 </section>}
 
@@ -121,13 +120,13 @@ export default function RouteComparePage() {
                         
                         <p className="route-endpoints">{result.origin.name || '출발지'} → {result.destination.name || '도착지'}</p>
                         <div className="compare-details hide-scrollbar" hidden={!expanded}>
-                            {result.q4?.applied && <p className="service-note">{result.q4.changed ? '추천 평가가 비슷한 후보 중 시간·거리 설문 응답을 참고해 골랐어요.' : '시간·거리 설문 응답을 참고했으며 기존 추천을 유지했어요.'}</p>}
-                            {result.candidates.length === 1 && <p>세 기준에서 같은 경로가 선정되어 하나로 표시합니다.</p>}
+                            {/* {result.q4?.applied && <p className="service-note">{result.q4.changed ? '추천 평가가 비슷한 후보 중 시간·거리 설문 응답을 참고해 골랐어요.' : '시간·거리 설문 응답을 참고했으며 기존 추천을 유지했어요.'}</p>}
+                            {result.candidates.length === 1 && <p>세 기준에서 같은 경로가 선정되어 하나로 표시합니다.</p>} */}
                             <div className="route-list">{result.candidates.filter(c => !chosen || c.candidate_id === selected).map(c => <RouteCandidateCard key={c.candidate_id} cardRef={node => exposure.register(c.candidate_id, node)} candidate={c} candidates={result.candidates} weights={result.profile?.effective_weights} selected={c.candidate_id === selected} recommended={c.candidate_id === result.recommendedCandidateId} recommendationMethod={result.recommendationMethod} q4={result.q4} onSelect={() => !chosen && select(c.candidate_id, 'card')} />)}</div>
                             {exposure.error && <p role="alert">{exposure.error} <button onClick={exposure.retry}>기록 다시 시도</button></p>}
                             {selectedCard && <BurdenTimeline key={selected} candidate={selectedCard} onFocus={e => { setFocusEvent(e); document.querySelector('.compare-map')?.scrollIntoView({ block: 'start', behavior: 'smooth' }) }} />}
                         </div>
-                        <div className="compare-footer">{!chosen ? <><button className="service-primary" disabled={!selected || !exposure.hasSeen(selected) || saving} onClick={choose}>{saving ? '저장 중…' : '이 경로 선택하기'}</button></> : <section className="route-success" role="status"><h2>경로 선택을 저장했어요</h2><p>선택한 경로로 GPS 안내 또는 시뮬레이션을 시작하세요.</p><button className="service-primary" onClick={() => navigate('/navigation?search=' + result.searchId)}>이 경로 안내 시작</button></section>}</div>
+                        <div className="compare-footer">{!chosen ? <><button className="service-primary" disabled={!selected || !exposure.hasSeen(selected) || saving} onClick={choose}>{saving ? '저장 중…' : '이 경로 선택하기'}</button></> : <section className="route-success" role="status"><button className="service-primary" onClick={() => navigate('/navigation?search=' + result.searchId)}>이 경로 안내 시작</button></section>}</div>
                     </section>
                 </>}
             </div>

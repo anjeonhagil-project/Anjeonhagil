@@ -13,7 +13,7 @@ export default function RouteCandidateCard({candidate,selected,recommended,onSel
     return <article className={'route-card'+(selected?' selected':'')}>
         <button ref={cardRef} data-candidate-id={candidate.candidate_id} type="button" aria-pressed={selected} onClick={onSelect}>
             <span>{candidate.route_types.map(k=>ROUTE_LABELS[k]||k).join(' · ')}</span>
-            {recommended&&<strong className="route-badge">{recommendationMethod==='survey_fallback'||candidate.model_version==='survey_only_v1'?'설문 기준 추천':q4?.changed?'모델·설문 참고 추천':'모델 추천'}</strong>}
+            {recommended&&<strong className="route-badge">{recommendationMethod==='survey_fallback'||candidate.model_version==='survey_only_v1'?'설문 기준 추천':q4?.changed?'모델·설문 참고 추천':'추천'}</strong>}
             <b>{durationLabel(candidate.display_duration_s)} <small>{distanceLabel(candidate.distance_m)}</small></b>
         </button>
         {/* {comparison&&<p className="service-note">최단시간 후보 대비 {comparison.minutes===0?'표시 시간 동일':`${Math.abs(comparison.minutes)}분 ${comparison.minutes>0?'더 소요':'단축'}`} · 거리 {comparison.meters===0?'동일':`${distanceLabel(Math.abs(comparison.meters))} ${comparison.meters>0?'증가':'감소'}`}

@@ -143,10 +143,10 @@
 .route-cancel {
     margin-top: 12px;
     padding: 10px 16px;
-    border: 1px solid #087f8c;
+    border: 1px solid var(--color-border-gray);
     border-radius: 10px;
     background: white;
-    color: #087f8c;
+    color: var(--color-primary-600);
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
