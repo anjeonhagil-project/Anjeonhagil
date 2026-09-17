@@ -33,7 +33,7 @@ function LocationPermissionPage() {
                 </div>
                 <h1 className={styles.title}>위치 권한을 허용해 주세요</h1>
                 <p className={styles.description}>
-                    현재 위치에서 출발하거나 지도를 탐색할 때 사용합니다.
+                    현위치에서 출발하거나 지도를 탐색할 때 사용합니다.
                     <br />
                     설정에서 언제든 변경할 수 있어요.
                 </p>

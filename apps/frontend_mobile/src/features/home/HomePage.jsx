@@ -60,7 +60,7 @@ function HomePage() {
     
     useEffect(() => {
         if (!window.isSecureContext || !navigator.geolocation) {
-            setLocationError('현재 위치를 사용할 수 없어요.')
+            setLocationError('현위치를 사용할 수 없어요.')
             return
         }
 
@@ -74,7 +74,7 @@ function HomePage() {
                 setLocationError('')
             },
             () => {
-                setLocationError('현재 위치를 가져오지 못했어요.')
+                setLocationError('현위치를 가져오지 못했어요.')
             },
             {
                 enableHighAccuracy: true,
@@ -108,7 +108,7 @@ function HomePage() {
         )
 
         const dot = document.createElement('span')
-        dot.setAttribute('aria-label', '현재 위치')
+        dot.setAttribute('aria-label', '현위치')
         dot.style.cssText = `
             display: block;
             width: 18px;

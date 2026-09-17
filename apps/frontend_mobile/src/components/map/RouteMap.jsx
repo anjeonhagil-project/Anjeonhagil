@@ -45,7 +45,7 @@ export default function RouteMap({ candidates = [], selectedId, onSelect, origin
     useEffect(() => {
         if (!ready || !instance.current || !position) return
         const { kakao, map } = instance.current, here = new kakao.maps.LatLng(position.lat, position.lng)
-        const dot = document.createElement('span'); dot.setAttribute('aria-label', '현재 위치'); dot.style.cssText = 'display:block;width:18px;height:18px;background:#1476e8;border:4px solid white;border-radius:50%;box-shadow:0 0 0 8px #1476e830'
+        const dot = document.createElement('span'); dot.setAttribute('aria-label', '현위치'); dot.style.cssText = 'display:block;width:18px;height:18px;background:#1476e8;border:4px solid white;border-radius:50%;box-shadow:0 0 0 8px #1476e830'
         const overlay = new kakao.maps.CustomOverlay({ map, position: here, content: dot, zIndex: 10 })
         const circle = Number.isFinite(position.accuracy) ? new kakao.maps.Circle({ map, center: here, radius: Math.min(position.accuracy, 200), strokeWeight: 1, strokeColor: '#1476e8', strokeOpacity: .3, fillColor: '#1476e8', fillOpacity: .08 }) : null
         if (follow) { map.setLevel(3); map.panTo(here) }

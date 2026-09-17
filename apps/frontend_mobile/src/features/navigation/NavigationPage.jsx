@@ -62,7 +62,7 @@ export default function NavigationPage(){
     function reroute(){
         if(!validFix(gps.fix)||gpsError)return
         setMode('ready');window.speechSynthesis?.cancel()
-        navigate('/route-compare',{state:{origin:{name:'현재 위치',lat:gps.fix.lat,lng:gps.fix.lng,...(Number.isFinite(gps.fix.heading)&&gps.fix.speed>2?{heading:gps.fix.heading}:{})},destination:data.destination,departureAt:new Date().toISOString()}})
+        navigate('/route-compare',{state:{origin:{name:'현위치',lat:gps.fix.lat,lng:gps.fix.lng,...(Number.isFinite(gps.fix.heading)&&gps.fix.speed>2?{heading:gps.fix.heading}:{})},destination:data.destination,departureAt:new Date().toISOString()}})
     }
     return <main className="navigation-page journey-wide">
         <Header title="경로 안내" onBack={()=>mode==='ready'||done?leave():setExitOpen(true)}/>
@@ -76,8 +76,8 @@ export default function NavigationPage(){
                 {mode==='ready'&&<BurdenTimeline candidate={data.candidate} onFocus={e=>{setFollow(false);setFocusEvent(e)}}/>}
                 <div className="navigation-summary"><div><strong>{meters(remaining)}</strong></div><div><strong>약 {eta}분</strong></div></div>
                 <progress aria-label="경로 진행률" max={track.total} value={current}/>
-                {mode==='gps'&&(gpsError||stale||gps.status!=='tracking')&&!done&&<p role="status" className="navigation-warning">{gpsError|| (stale?'현재 위치 불러오는 중':gps.status==='offroute'?'선택 경로에서 벗어났어요. 안전한 곳에서 다시 검색해주세요.':'위치와 진행 방향을 확인하고 있어요.')}</p>}
-                {mode==='gps'&&<button disabled={!validFix(gps.fix,clock)||!!gpsError} onClick={reroute}>현재 위치에서 다시 검색</button>}
+                {mode==='gps'&&(gpsError||stale||gps.status!=='tracking')&&!done&&<p role="status" className="navigation-warning">{gpsError|| (stale?'현위치 불러오는 중':gps.status==='offroute'?'선택 경로에서 벗어났어요. 안전한 곳에서 다시 검색해주세요.':'위치와 진행 방향을 확인하고 있어요.')}</p>}
+                {mode==='gps'&&<button disabled={!validFix(gps.fix,clock)||!!gpsError} onClick={reroute}>현위치에서 다시 검색</button>}
                 {mode==='ready'&&<div className="navigation-actions"><button className="nav-primary" onClick={()=>start('gps')}>경로 안내 시작</button><button onClick={()=>start('demo')}>시뮬레이션 시작</button></div>}
                 {mode==='demo'&&<div className="navigation-actions"><button className="nav-primary" onClick={()=>setPlaying(v=>!v)}>{playing?'일시정지':'계속 재생'}</button><label>재생 속도 <select aria-label="재생 속도" value={speed} onChange={e=>setSpeed(Number(e.target.value))}>{[1,2,4,16].map(v=><option key={v} value={v}>{v}배</option>)}</select></label><button onClick={()=>start('demo')}>처음부터</button></div>}
                 {done&&<div className="navigation-actions"><button className="nav-primary" onClick={leave}>안내 마치기</button>{isDemo&&<button onClick={()=>start('demo')}>다시 재생</button>}</div>}

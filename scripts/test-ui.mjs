@@ -204,7 +204,7 @@ try{
     await page.getByRole('button',{name:'이 경로 안내 시작',exact:true}).click()
     await page.getByRole('button',{name:'GPS 안내 시작',exact:true}).click()
     await sendFix(lng,lat)
-    await page.getByRole('button',{name:'현재 위치에서 다시 검색',exact:true}).click()
+    await page.getByRole('button',{name:'현위치에서 다시 검색',exact:true}).click()
     await page.getByRole('button',{name:'이 경로 선택하기',exact:true}).waitFor({timeout:60000})
     assert.notEqual(page.url(),savedUrl);assert.equal(await page.evaluate(()=>window.__gps.watches.size),0);passed++
     // Actual Chrome geolocation API (CDP coordinates) in addition to deterministic callback tests.
