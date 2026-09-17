@@ -176,8 +176,44 @@
 }
 
 /* The map keeps its area; place details scroll independently on short screens. */
-.brand{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;color:#123f46}.brand strong{font-size:18px;letter-spacing:-.3px}.brand span{font-size:12px;color:#617574}
-.selection{max-height:45%;overflow-y:auto;overscroll-behavior:contain;box-sizing:border-box}
-.sheetToggle{display:block;min-height:36px;width:100%;background:none;border:0;color:#617574;font-size:12px;cursor:pointer;margin:-12px 0 8px}
-.searchPanel{max-height:48%;overflow-y:auto;overscroll-behavior:contain}.searchForm input{min-height:44px;box-sizing:border-box}.selectionText strong,.results strong{overflow-wrap:anywhere;letter-spacing:-.2px}
-.searchPanel button:focus-visible,.selection button:focus-visible{outline:3px solid #e9af37;outline-offset:2px}
+.selection {
+    max-height: 45%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-sizing: border-box
+}
+
+.sheetToggle {
+    display: block;
+    min-height: 36px;
+    width: 100%;
+    background: none;
+    border: 0;
+    color: #617574;
+    font-size: 12px;
+    cursor: pointer;
+    margin: -12px 0 8px
+}
+
+.searchPanel {
+    max-height: 48%;
+    overflow-y: auto;
+    overscroll-behavior: contain
+}
+
+.searchForm input {
+    min-height: 44px;
+    box-sizing: border-box
+}
+
+.selectionText strong,
+.results strong {
+    overflow-wrap: anywhere;
+    letter-spacing: -.2px
+}
+
+.searchPanel button:focus-visible,
+.selection button:focus-visible {
+    outline: 3px solid #e9af37;
+    outline-offset: 2px
+}

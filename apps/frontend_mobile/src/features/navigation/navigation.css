@@ -1,6 +1,9 @@
 /* Map and controls remain separate: one scrollable panel, safe-area controls, desktop split. */
 .navigation-page{height:calc(var(--layout-max-height) - var(--statusbar-height));min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;background:#f5f9f8;color:#123f46}
 .navigation-header{display:flex;align-items:center;gap:12px;padding:10px 16px;background:white;border-bottom:1px solid #dce9e6;flex-shrink:0}
+/* 공통 Header: 아래 .navigation-page button 박스 스타일이 뒤로가기 아이콘에 씌워지지 않게 한다 */
+.navigation-page>header{background:white;border-bottom:1px solid #dce9e6}
+.navigation-page>header button{min-height:auto;padding:0;border:0;background:transparent}
 .navigation-header strong{flex:1;min-width:0;font-size:16px;letter-spacing:-.2px}.navigation-header strong span{font-size:12px;font-weight:500;display:block;color:#617574}
 .navigation-page button,.navigation-page select{min-height:44px;border:1px solid #c9ded9;border-radius:12px;padding:10px 14px;background:white;color:#123f46;font:inherit;cursor:pointer}
 .navigation-page button:disabled{opacity:.5;cursor:not-allowed}.navigation-page button:focus-visible,.navigation-page summary:focus-visible{outline:3px solid #e9af37;outline-offset:2px}
