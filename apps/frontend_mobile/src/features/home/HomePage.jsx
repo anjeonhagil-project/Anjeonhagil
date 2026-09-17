@@ -273,7 +273,6 @@ function HomePage() {
         <div className={styles.page+' journey-wide'}>
             <div ref={mapContainerRef} className={styles.map} aria-label="위치를 선택할 카카오 지도" />
             <section className={styles.searchPanel} aria-label="장소 검색">
-                <div className={styles.brand}><strong>안전하길</strong><span>어디로 떠나시나요?</span></div>
                 <form className={styles.searchForm} onSubmit={search} role="search">
                     <input
                         aria-label="장소 검색어"
