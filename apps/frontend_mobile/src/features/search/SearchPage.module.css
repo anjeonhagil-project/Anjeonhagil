@@ -100,6 +100,26 @@
     cursor: default;
 }
 
+.exampleCard {
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    background: var(--color-bg-selected);
+}
+
+.exampleDesc {
+    font-size: 12px;
+    color: var(--color-text-sub);
+}
+
+.exampleBtn {
+    padding: 9px 14px;
+    border: 1px solid #a9cfc9;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+}
+
 .shortcuts {
     display: flex;
     flex-direction: column;
