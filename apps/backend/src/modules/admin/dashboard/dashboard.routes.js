@@ -38,7 +38,7 @@ router.get('/summary',async(req,res,next)=>{
         ])
         let worker
         try{worker=await callWorker('/health',undefined,{timeout:2500})}catch{worker={ok:false,status:'BUSY_OR_UNAVAILABLE'}}
-        res.json({success:true,data:{counts:{users,searches,choices,failures,inquiries},models,releases,active,worker}})
+        res.json({success:true,data:{counts:{users,searches,choices,failures,inquiries},models:models??[],releases:releases??[],active:active??null,worker}})
     }catch(e){next(e)}
 })
 router.get('/routes',async(req,res,next)=>{

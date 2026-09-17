@@ -2,6 +2,7 @@
 import {useEffect,useRef,useState} from 'react'
 import {Search,RefreshCw,Database,BrainCircuit,X} from 'lucide-react'
 import {apiClient} from '../../lib/apiClient.js'
+import {normalizeOperationsData} from './operationsData.js'
 import './operations.css'
 const date=value=>value?new Date(value).toLocaleString('ko-KR'):'—'
 const fields={release_id:'데이터 식별자',dataset_version:'데이터 버전',feature_version:'도로 특성 버전',eta_version:'예상시간 버전',status:'준비 상태',model_version:'모델 버전',model_type:'모델 유형',is_active:'운영 여부',metrics:'평가 지표',searchId:'검색 ID',createdAt:'검색 일시',modelVersion:'모델 버전',profileVersion:'개인화 버전',sampleOrigin:'기록 출처',candidateCount:'후보 수',recommendedId:'추천 후보 ID',selectedId:'선택 후보 ID',elapsedSeconds:'계산시간(초)',degraded:'제한시간 적용',id:'기록 ID',search_id:'검색 ID',error_code:'오류 코드',duration_ms:'계산시간(ms)',created_at:'기록 일시'}
@@ -11,9 +12,10 @@ function Detail({item,onClose}){
     return <dialog ref={ref} className="ops-dialog" onCancel={onClose} onClick={e=>{if(e.target===e.currentTarget)onClose()}} aria-labelledby="ops-detail-title"><div className="operations-heading"><div><span className="ops-eyebrow">DETAIL</span><h2 id="ops-detail-title">기록 상세 정보</h2></div><button onClick={onClose} aria-label="상세 닫기"><X size={20}/></button></div><dl>{Object.entries(item).map(([key,value])=><div key={key}><dt>{fields[key]||key}</dt><dd>{value===null?'—':typeof value==='object'?<pre>{JSON.stringify(value,null,2)}</pre>:typeof value==='boolean'?(value?'예':'아니요'):String(value)}</dd></div>)}</dl><button className="ops-primary" onClick={onClose}>확인</button></dialog>
 }
 export default function OperationsPage({kind}){
-    const [data,setData]=useState(null),[error,setError]=useState(''),[attempt,setAttempt]=useState(0),[search,setSearch]=useState(''),[filter,setFilter]=useState('all'),[page,setPage]=useState(1),[detail,setDetail]=useState(null)
+    const [result,setResult]=useState({kind:null,data:null,error:''}),[attempt,setAttempt]=useState(0),[search,setSearch]=useState(''),[filter,setFilter]=useState('all'),[page,setPage]=useState(1),[detail,setDetail]=useState(null)
+    const {data,error}=result.kind===kind?result:{data:null,error:''}
     const title=kind==='datasets'?'데이터·모델 관리':kind==='failures'?'경로 계산 실패':'경로 검색 기록'
-    useEffect(()=>{let live=true;setData(null);setError('');setSearch('');setFilter('all');setPage(1);setDetail(null);apiClient('/admin/operations/'+(kind==='datasets'?'summary':kind)).then(r=>live&&setData(r.data)).catch(e=>live&&setError(e.message));return()=>{live=false}},[kind,attempt])
+    useEffect(()=>{let live=true;setResult({kind,data:null,error:''});setSearch('');setFilter('all');setPage(1);setDetail(null);apiClient('/admin/operations/'+(kind==='datasets'?'summary':kind)).then(r=>{const value=normalizeOperationsData(kind,r?.data);if(live)setResult({kind,data:value,error:''})}).catch(e=>{if(live)setResult({kind,data:null,error:e.message})});return()=>{live=false}},[kind,attempt])
     const rows=Array.isArray(data)?data.filter(r=>JSON.stringify(r).toLowerCase().includes(search.toLowerCase())&&(filter==='all'||(kind==='failures'?r.error_code===filter:filter==='selected'?!!r.selectedId:filter==='unselected'?!r.selectedId:r.degraded))):[]
     const pages=Math.max(1,Math.ceil(rows.length/10)),current=Math.min(page,pages)
     return <section className="operations"><div className="operations-heading"><div><span className="ops-eyebrow">{kind==='datasets'?'DATA & MODELS':'ROUTING MONITOR'}</span><h1>{title}</h1><p className="ops-muted">{kind==='datasets'?'검증된 도로 데이터와 추천 모델의 운영 상태를 확인합니다.':'저장된 서비스 기록으로 경로 계산과 이용 흐름을 확인합니다.'}</p></div><button onClick={()=>setAttempt(v=>v+1)}><RefreshCw size={15}/> 새로고침</button></div>
