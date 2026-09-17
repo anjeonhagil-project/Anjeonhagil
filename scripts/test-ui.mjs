@@ -77,34 +77,34 @@ try{
     await page.getByRole('button',{name:'다음',exact:true}).click()
     for(let i=0;i<4;i++){
         await page.getByText('경로 비교 설문 '+(i+1)+' / 4',{exact:true}).waitFor()
-        await page.waitForFunction(()=>document.querySelector('.q4-step')?.scrollTop===0)
+        await page.waitForFunction(()=>document.querySelector('[data-testid="q4-step"]')?.scrollTop===0)
         if(i===0){
-            await page.locator('.q4-options').waitFor()
-            assert.equal(await page.locator('.q4-option .q4-focus').count(),2)
-            assert.equal(await page.locator('.q4-option .feature-values').count(),0)
-            assert.equal(await page.locator('.q4-details').getAttribute('open'),null)
-            assert.ok(await page.locator('.q4-progress').evaluate(el=>el.getBoundingClientRect().height>=5))
+            await page.locator('[data-testid="q4-options"]').waitFor()
+            assert.equal(await page.locator('[data-testid="q4-option"] [data-testid="q4-focus"]').count(),2)
+            assert.equal(await page.locator('[data-testid="q4-option"] .feature-values').count(),0)
+            assert.equal(await page.locator('[data-testid="q4-details"]').getAttribute('open'),null)
+            assert.ok(await page.locator('[data-testid="q4-progress"]').evaluate(el=>el.getBoundingClientRect().height>=5))
             await page.setViewportSize({width:360,height:740})
-            assert.ok(await page.locator('.q4-step').evaluate(el=>el.scrollWidth<=el.clientWidth))
-            await page.locator('.q4-details summary').click()
-            assert.equal(await page.locator('.q4-details tbody tr').count(),5)
-            assert.ok(await page.locator('.q4-step').evaluate(el=>el.scrollWidth<=el.clientWidth))
-            await page.locator('.q4-details summary').click()
-            await page.locator('.q4-title').scrollIntoViewIfNeeded()
+            assert.ok(await page.locator('[data-testid="q4-step"]').evaluate(el=>el.scrollWidth<=el.clientWidth))
+            await page.locator('[data-testid="q4-details"] summary').click()
+            assert.equal(await page.locator('[data-testid="q4-details"] tbody tr').count(),5)
+            assert.ok(await page.locator('[data-testid="q4-step"]').evaluate(el=>el.scrollWidth<=el.clientWidth))
+            await page.locator('[data-testid="q4-details"] summary').click()
+            await page.locator('[data-testid="q4-title"]').scrollIntoViewIfNeeded()
             await page.screenshot({path:out+'/02-q4-mobile.png',fullPage:true})
-            await page.locator('.q4-options').screenshot({path:out+'/02-q4-cards.png'})
+            await page.locator('[data-testid="q4-options"]').screenshot({path:out+'/02-q4-cards.png'})
             await page.setViewportSize({width:1280,height:1000})
             await page.screenshot({path:out+'/02-q4.png',fullPage:true});passed+=6
         }
         if(i===2)await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click()
-        else await page.locator('.q4-option').nth(i%2).click()
+        else await page.locator('[data-testid="q4-option"]').nth(i%2).click()
         await page.getByRole('button',{name:i===3?'설정 완료':'다음 문항',exact:true}).click();passed++
     }
     await page.getByRole('heading',{name:'시간·거리 선호',exact:true}).waitFor()
     await page.getByText(/^시간 · /).waitFor();passed++
     await page.setViewportSize({width:360,height:740})
-    assert.ok(await page.locator('.q4-summary').evaluate(el=>el.scrollWidth<=el.clientWidth));passed++
-    await page.locator('.q4-summary').screenshot({path:out+'/11-q4-summary.png'})
+    assert.ok(await page.locator('[data-testid="q4-summary"]').evaluate(el=>el.scrollWidth<=el.clientWidth));passed++
+    await page.locator('[data-testid="q4-summary"]').screenshot({path:out+'/11-q4-summary.png'})
     await page.getByRole('button',{name:'안전하길 시작하기',exact:true}).click()
     await page.waitForURL('**/home');passed++
     if(!q4Only){
@@ -160,17 +160,17 @@ try{
     await page.getByRole('button',{name:'음성 꺼짐',exact:true}).click()
     await page.waitForFunction(()=>window.__speech.length>0);passed++
     await page.waitForFunction(()=>Number(document.querySelector('progress').value)>0);passed++
-    assert.ok(await page.locator('.navigation-instruction').evaluate(el=>{const r=el.getBoundingClientRect();el.style.pointerEvents='auto';const visible=el.contains(document.elementFromPoint(r.x+30,r.y+20));el.style.removeProperty('pointer-events');return visible}),'guidance banner must be above map');passed++
+    assert.ok(await page.locator('[data-testid="navigation-instruction"]').evaluate(el=>{const r=el.getBoundingClientRect();el.style.pointerEvents='auto';const visible=el.contains(document.elementFromPoint(r.x+30,r.y+20));el.style.removeProperty('pointer-events');return visible}),'guidance banner must be above map');passed++
     await page.screenshot({path:out+'/09-navigation-mobile.png',fullPage:true})
     await page.setViewportSize({width:360,height:640})
-    const mobileOverflow=await page.evaluate(()=>({page:document.querySelector('.navigation-page').scrollWidth,viewport:document.documentElement.clientWidth,body:document.body.scrollWidth}))
+    const mobileOverflow=await page.evaluate(()=>({page:document.querySelector('[data-testid="navigation-page"]').scrollWidth,viewport:document.documentElement.clientWidth,body:document.body.scrollWidth}))
     assert.ok(mobileOverflow.page<=mobileOverflow.viewport&&mobileOverflow.body<=mobileOverflow.viewport,JSON.stringify(mobileOverflow));passed++
     await page.setViewportSize({width:1280,height:900})
     await page.waitForFunction(()=>{
-        const page=document.querySelector('.navigation-page'),logo=document.querySelector('img[alt="안전하길 로고"]')
+        const page=document.querySelector('[data-testid="navigation-page"]'),logo=document.querySelector('img[alt="안전하길 로고"]')
         return page&&page.getBoundingClientRect().width<=402&&getComputedStyle(logo).display!=='none'
     })
-    assert.ok(await page.locator('.navigation-stage').evaluate(el=>el.getBoundingClientRect().width<=402));passed++
+    assert.ok(await page.locator('[data-testid="navigation-stage"]').evaluate(el=>el.getBoundingClientRect().width<=402));passed++
     await page.screenshot({path:out+'/10-navigation-desktop.png',fullPage:true})
     await page.clock.install()
     await page.clock.runFor(Math.ceil(guidance.candidate.internal_duration_s*1000/16)+2000)
@@ -204,7 +204,7 @@ try{
     await page.getByRole('button',{name:'이 경로 안내 시작',exact:true}).click()
     await page.getByRole('button',{name:'GPS 안내 시작',exact:true}).click()
     await sendFix(lng,lat)
-    await page.getByRole('button',{name:'현재 위치에서 다시 검색',exact:true}).click()
+    await page.getByRole('button',{name:'현위치에서 다시 검색',exact:true}).click()
     await page.getByRole('button',{name:'이 경로 선택하기',exact:true}).waitFor({timeout:60000})
     assert.notEqual(page.url(),savedUrl);assert.equal(await page.evaluate(()=>window.__gps.watches.size),0);passed++
     // Actual Chrome geolocation API (CDP coordinates) in addition to deterministic callback tests.
@@ -215,12 +215,12 @@ try{
     await page.getByRole('button',{name:'이 경로 안내 시작',exact:true}).click()
     await page.evaluate(()=>{window.__gps.native=true})
     await page.getByRole('button',{name:'GPS 안내 시작',exact:true}).click()
-    await page.waitForFunction(()=>!document.querySelector('.navigation-warning'))
+    await page.waitForFunction(()=>!document.querySelector('[data-testid="navigation-warning"]'))
     assert.equal(await page.evaluate(()=>window.__gps.watches.size),1);passed++
     await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'))})
     await page.getByText(/화면이 숨겨져/).waitFor();assert.equal(await page.evaluate(()=>window.__gps.watches.size),0);passed++
     await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:false});document.dispatchEvent(new Event('visibilitychange'))})
-    await page.waitForFunction(()=>!document.querySelector('.navigation-warning'))
+    await page.waitForFunction(()=>!document.querySelector('[data-testid="navigation-warning"]'))
     assert.equal(await page.evaluate(()=>window.__gps.watches.size),1);passed++
     await page.getByRole('button',{name:'안내 종료',exact:true}).click();await page.getByRole('button',{name:'종료하기',exact:true}).click()
     assert.equal(await page.evaluate(()=>window.__gps.watches.size),0);assert.ok(await page.evaluate(()=>window.__speechCancels)>0);passed++

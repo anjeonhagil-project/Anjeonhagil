@@ -129,7 +129,7 @@ function SearchPage() {
 
     const selectCurrentLocation = () => {
         if (!currentPosition) {
-            setMessage('현재 위치를 확인하고 있어요. 잠시 후 다시 시도해주세요.')
+            setMessage('현위치를 확인하고 있어요. 잠시 후 다시 시도해주세요.')
             return
         }
 
@@ -145,7 +145,7 @@ function SearchPage() {
         setMessage('')
     }
 
-    // 출발지를 안 정했으면 현재 위치를 출발지로 대신 사용
+    // 출발지를 안 정했으면 현위치를 출발지로 대신 사용
     const canSearchRoute = hasRouteLocation(origin.place) && hasRouteLocation(destination.place)
 
     const toRoutePoint = (place) => ({
@@ -195,17 +195,6 @@ function SearchPage() {
                             )}
                         </div>
                     ))}
-                    <button
-                        type="button"
-                        className={styles.currentLocationBtn}
-                        onClick={selectCurrentLocation}
-                        disabled={!currentPosition}
-                    >
-                        <FaLocationDot size={15} />
-                        {activeField === 'origin'
-                            ? '출발지를 현재 위치로 설정'
-                            : '도착지를 현재 위치로 설정'}
-                    </button>
                 </div>
                 <button
                     type="button"
@@ -217,6 +206,18 @@ function SearchPage() {
                     <IoSearchOutline size={20} />
                 </button>
             </div>
+
+            <button
+                type="button"
+                className={styles.currentLocationBtn}
+                onClick={selectCurrentLocation}
+                disabled={!currentPosition}
+            >
+                <FaLocationDot size={15} />
+                {activeField === 'origin'
+                    ? '출발지를 현위치로 설정'
+                    : '도착지를 현위치로 설정'}
+            </button>
 
             <div className={`${styles.content} hide-scrollbar`}>
             {mapError && <p role="alert">{mapError} 새로고침 후 다시 시도해주세요.</p>}
@@ -301,7 +302,7 @@ function SearchPage() {
                                     <span className={styles.resultAddress}>{result.road_address_name || result.address_name}</span>
                                     {distance != null && (
                                         <span className={styles.resultDistance}>
-                                            <FaLocationDot size={12} aria-hidden="true" /> 현재 위치에서 {formatDistance(distance)}
+                                            <FaLocationDot size={12} aria-hidden="true" /> 현위치에서 {formatDistance(distance)}
                                         </span>
                                     )}
                                 </button>

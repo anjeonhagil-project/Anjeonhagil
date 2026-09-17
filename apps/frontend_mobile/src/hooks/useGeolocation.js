@@ -15,7 +15,7 @@ export default function useGeolocation(enabled,onPosition){
             watch=navigator.geolocation.watchPosition(p=>{
                 if(!active||document.hidden)return
                 setError('');onPosition({lat:p.coords.latitude,lng:p.coords.longitude,accuracy:p.coords.accuracy,heading:p.coords.heading,speed:p.coords.speed,timestamp:p.timestamp})
-            },e=>{if(active){setError(e.code===1?'위치 권한이 거부됐어요. 브라우저 설정에서 허용한 뒤 다시 시작해주세요.':e.code===3?'위치를 받는 데 시간이 걸리고 있어요.':'현재 위치를 확인할 수 없어요.');if(e.code===1)stop()}},{enableHighAccuracy:true,maximumAge:0,timeout:10000})
+            },e=>{if(active){setError(e.code===1?'위치 권한이 거부됐어요. 브라우저 설정에서 허용한 뒤 다시 시작해주세요.':e.code===3?'위치를 받는 데 시간이 걸리고 있어요.':'현위치를 확인할 수 없어요.');if(e.code===1)stop()}},{enableHighAccuracy:true,maximumAge:0,timeout:10000})
         }
         start();document.addEventListener('visibilitychange',start)
         return ()=>{active=false;stop();document.removeEventListener('visibilitychange',start)}

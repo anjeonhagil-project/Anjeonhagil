@@ -63,3 +63,18 @@
     margin-left: var(--space-3);
     color: var(--color-text-faint);
 }
+
+/* NoticesPage.jsx 인라인 스타일에서 옮긴 규칙 */
+.card {
+    padding: 16px;
+}
+
+.meta {
+    display: block;
+    margin-top: 8px;
+}
+
+.body {
+    white-space: pre-wrap;
+    line-height: 1.7;
+}

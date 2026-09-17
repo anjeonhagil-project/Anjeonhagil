@@ -9,6 +9,7 @@ import { createFavorite, deleteFavorite, getFavorites } from '../favorites/api.j
 import { buildFavoriteLocationResult, createFavoriteMarkerImage, findFavoriteForPlace, toFavoriteMarkerLocations } from '../favorites/favoriteContract.js'
 import { PLACE_TYPE_LABELS } from '../favorites/favoriteName.js'
 import styles from './HomePage.module.css'
+import markerStyles from '../../components/map/MapMarkers.module.css'
 
 const DEFAULT_CENTER = { lat: 37.4979, lng: 127.0276 }
 
@@ -60,7 +61,7 @@ function HomePage() {
     
     useEffect(() => {
         if (!window.isSecureContext || !navigator.geolocation) {
-            setLocationError('현재 위치를 사용할 수 없어요.')
+            setLocationError('현위치를 사용할 수 없어요.')
             return
         }
 
@@ -74,7 +75,7 @@ function HomePage() {
                 setLocationError('')
             },
             () => {
-                setLocationError('현재 위치를 가져오지 못했어요.')
+                setLocationError('현위치를 가져오지 못했어요.')
             },
             {
                 enableHighAccuracy: true,
@@ -108,16 +109,8 @@ function HomePage() {
         )
 
         const dot = document.createElement('span')
-        dot.setAttribute('aria-label', '현재 위치')
-        dot.style.cssText = `
-            display: block;
-            width: 18px;
-            height: 18px;
-            background: #1476e8;
-            border: 4px solid white;
-            border-radius: 50%;
-            box-shadow: 0 0 0 8px #1476e830;
-        `
+        dot.setAttribute('aria-label', '현위치')
+        dot.className = markerStyles.currentDot
 
         const currentLocationMarker = new kakao.maps.CustomOverlay({
             map,
@@ -180,7 +173,7 @@ function HomePage() {
                     }
                     setMessage('')
                     setSelected({
-                        placeName: data[0].road_address?.building_name || '선택한 위치', address,
+                        placeName: data[0].road_address?.building_name || address, address,
                         latitude: latLng.getLat(), longitude: latLng.getLng(),
                     })
                 })
@@ -369,7 +362,7 @@ function HomePage() {
                 <form className={styles.searchForm} onSubmit={search} role="search">
                     <input
                         aria-label="장소 검색어"
-                        placeholder="카페, 미용실 등 장소를 입력하세요"
+                        placeholder="안전하길 검색"
                         autoComplete="off"
                         value={query}
                         onChange={(event) => changeQuery(event.target.value)}
@@ -402,7 +395,7 @@ function HomePage() {
             {mapError && <div className={styles.selection} role="alert"><p>{mapError}</p><Button onClick={() => setAttempt(value => value + 1)}>다시 시도</Button></div>}
             {selected && (
                 <section className={styles.selection} aria-label="선택한 장소">
-                    <button className={styles.sheetToggle} aria-expanded={selectionExpanded} onClick={()=>setSelectionExpanded(v=>!v)}>{selectionExpanded?'장소 정보 접기':'장소 정보 펼치기'}</button>
+                    {/* <button className={styles.sheetToggle} aria-expanded={selectionExpanded} onClick={()=>setSelectionExpanded(v=>!v)}>{selectionExpanded?'▼ 장소 정보 접기':'▲ 장소 정보 펼치기'}</button> */}
                     <div className={styles.selectionHeader}>
                         <div className={styles.selectionText}>
                             <strong>{selected.placeName}</strong>
@@ -433,8 +426,7 @@ function HomePage() {
                         </Button>
                     )}
                     {!editingFavoriteId && !selectingFavoriteLocation && (
-                        <div className={styles.routeControls}>
-
+                        <div>
                             <Button
                                 className={styles.safeRouteButton}
                                 fullWidth
@@ -442,7 +434,7 @@ function HomePage() {
                                 onClick={() => navigate('/search', {
                                     state: buildSafeRouteSearchState(selected),
                                 })}
-                            >내게 편한 길 찾기</Button>
+                            >경로 검색</Button>
                         </div>
                     )}
                 </section>

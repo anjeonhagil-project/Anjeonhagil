@@ -2,8 +2,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { loadKakaoMaps } from '../../lib/kakaoMaps.js'
 import { buildTrack, pointAt } from '../../features/navigation/navigationMath.js'
+import styles from './RouteMap.module.css'
+import markerStyles from './MapMarkers.module.css'
 
-export default function RouteMap({ candidates = [], selectedId, onSelect, origin, destination, height = 300, position, progress = 0, follow = false, onPan, comparison = false, focusEvent, originSnap, destinationSnap }) {
+export default function RouteMap({ candidates = [], selectedId, onSelect, origin, destination, size, position, progress = 0, follow = false, onPan, comparison = false, focusEvent, originSnap, destinationSnap }) {
     const container = useRef(null), instance = useRef(null), selectRef = useRef(onSelect)
     const [ready, setReady] = useState(false), [error, setError] = useState('')
     const panRef = useRef(onPan)
@@ -36,7 +38,7 @@ export default function RouteMap({ candidates = [], selectedId, onSelect, origin
             if (!p) continue
             const position = new kakao.maps.LatLng(p.lat, p.lng); bounds.extend(position)
             const label = document.createElement('span'); label.textContent = index === 0 ? '출발' : '도착'
-            label.style.cssText = 'display:block;background:' + (index === 0 ? '#123f46' : '#087f8c') + ';color:white;padding:6px 10px;border:2px solid white;border-radius:20px;font:bold 12px sans-serif;box-shadow:0 2px 6px #0003'
+            label.className = `${markerStyles.pin} ${index === 0 ? markerStyles.pinOrigin : markerStyles.pinDestination}`
             markers.push(new kakao.maps.CustomOverlay({ map, position, content: label, yAnchor: 1.2, zIndex: 4 }))
         }
         if (candidates.length || origin || destination) map.setBounds(bounds, 30, 30, 30, 30)
@@ -45,7 +47,7 @@ export default function RouteMap({ candidates = [], selectedId, onSelect, origin
     useEffect(() => {
         if (!ready || !instance.current || !position) return
         const { kakao, map } = instance.current, here = new kakao.maps.LatLng(position.lat, position.lng)
-        const dot = document.createElement('span'); dot.setAttribute('aria-label', '현재 위치'); dot.style.cssText = 'display:block;width:18px;height:18px;background:#1476e8;border:4px solid white;border-radius:50%;box-shadow:0 0 0 8px #1476e830'
+        const dot = document.createElement('span'); dot.setAttribute('aria-label', '현위치'); dot.className = markerStyles.currentDot
         const overlay = new kakao.maps.CustomOverlay({ map, position: here, content: dot, zIndex: 10 })
         const circle = Number.isFinite(position.accuracy) ? new kakao.maps.Circle({ map, center: here, radius: Math.min(position.accuracy, 200), strokeWeight: 1, strokeColor: '#1476e8', strokeOpacity: .3, fillColor: '#1476e8', fillOpacity: .08 }) : null
         if (follow) { map.setLevel(3); map.panTo(here) }
@@ -57,7 +59,7 @@ export default function RouteMap({ candidates = [], selectedId, onSelect, origin
         for (const [requested, snap] of [[origin, originSnap], [destination, destinationSnap]]) {
             if (!requested || !snap) continue
             const position = new kakao.maps.LatLng(snap.lat, snap.lng)
-            const dot = document.createElement('span'); dot.title = '계산 경로의 도로 연결점'; dot.style.cssText = 'display:block;width:10px;height:10px;background:#b94b15;border:2px solid white;border-radius:50%'
+            const dot = document.createElement('span'); dot.title = '계산 경로의 도로 연결점'; dot.className = markerStyles.snapDot
             objects.push(new kakao.maps.CustomOverlay({ map, position, content: dot, zIndex: 6 }))
             objects.push(new kakao.maps.Polyline({ map, path: [new kakao.maps.LatLng(requested.lat, requested.lng), position], strokeStyle: 'dash', strokeColor: '#b94b15', strokeWeight: 2, zIndex: 6 }))
         }
@@ -80,8 +82,8 @@ export default function RouteMap({ candidates = [], selectedId, onSelect, origin
         map.setLevel(3); map.panTo(path[0])
         return () => { line.setMap(null); marker.setMap(null) }
     }, [ready, focusEvent])
-    return <section aria-label="경로 지도" style={{ position: 'relative', height, minHeight: height, flexShrink: 0, borderRadius: 16, overflow: 'hidden', background: '#e9eef1' }}>
-        <div ref={container} style={{ height: '100%', width: '100%' }} />
-        {error && <p role="alert" style={{ position: 'absolute', inset: 16, background: '#fff', padding: 16 }}>{error}<br />아래 카드에서 계산된 경로 조건은 확인할 수 있습니다.</p>}
+    return <section aria-label="경로 지도" className={size ? `${styles.map} ${styles[size]}` : styles.map}>
+        <div ref={container} className={styles.canvas} />
+        {error && <p role="alert" className={styles.error}>{error}<br />아래 카드에서 계산된 경로 조건은 확인할 수 있습니다.</p>}
     </section>
 }
