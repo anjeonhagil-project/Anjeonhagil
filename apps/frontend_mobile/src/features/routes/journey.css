@@ -140,6 +140,22 @@
     margin: auto
 }
 
+.route-cancel {
+    margin-top: 12px;
+    padding: 10px 16px;
+    border: 1px solid #087f8c;
+    border-radius: 10px;
+    background: white;
+    color: #087f8c;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.route-cancel:hover {
+    background: #edf7f5;
+}
+
 @media(max-height:550px) and (max-width:899px) {
     .compare-map {
         min-height: 100px

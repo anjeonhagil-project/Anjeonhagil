@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { IoClose, IoSearchOutline, IoTimeOutline, IoHomeOutline, IoBusinessOutline } from 'react-icons/io5'
 import { FaLocationDot } from 'react-icons/fa6'
 import { loadKakaoMaps } from '../../lib/kakaoMaps.js'
-import { buildRouteSearchFields, toSelectedPlace, hasSelectedLocation } from '../../lib/placeSelection.js'
+import { buildRouteSearchFields,toSelectedPlace, toCurrentLocation, hasSelectedLocation, hasRouteLocation, } from '../../lib/placeSelection.js'
 import BottomNav from '../../components/layout/BottomNav.jsx'
 import { getFavorites } from '../favorites/api.js'
 import { loadRecentSearches, addRecentSearch, removeRecentSearch, clearRecentSearches } from './recentSearches.js'
@@ -63,8 +63,11 @@ function SearchPage() {
 
     useEffect(() => {
         navigator.geolocation?.getCurrentPosition(
-            (position) => setCurrentPosition({ latitude: position.coords.latitude, longitude: position.coords.longitude }),
-            () => setCurrentPosition(null),
+            (position) => setCurrentPosition({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                accuracy: position.coords.accuracy,
+            }),
         )
     }, [])
 
@@ -124,24 +127,40 @@ function SearchPage() {
 
     const selectShortcut = (place) => resolveField(activeField, place)
 
+    const selectCurrentLocation = () => {
+        if (!currentPosition) {
+            setMessage('현재 위치를 확인하고 있어요. 잠시 후 다시 시도해주세요.')
+            return
+        }
+
+        const setter = activeField === 'origin' ? setOrigin : setDestination
+        const place = toCurrentLocation({
+            lat: currentPosition.latitude,
+            lng: currentPosition.longitude,
+            accuracy: currentPosition.accuracy,
+        })
+
+        setter({ text: place.placeName, place })
+        setResults([])
+        setMessage('')
+    }
+
     // 출발지를 안 정했으면 현재 위치를 출발지로 대신 사용
-    const canSearchRoute = hasSelectedLocation(destination.place) && (hasSelectedLocation(origin.place) || Boolean(currentPosition))
+    const canSearchRoute = hasRouteLocation(origin.place) && hasRouteLocation(destination.place)
+
+    const toRoutePoint = (place) => ({
+        lat: place.latitude,
+        lng: place.longitude,
+        name: place.placeName,
+    })
 
     const handleSearchRoute = () => {
         if (!canSearchRoute) return
-        const originLocation = hasSelectedLocation(origin.place)
-            ? { lat: origin.place.latitude, lng: origin.place.longitude }
-            : { lat: currentPosition.latitude, lng: currentPosition.longitude }
 
         navigate('/route-compare', {
             state: {
-                origin: originLocation,
-                destination: {
-                    lat: destination.place.latitude,
-                    lng: destination.place.longitude,
-                    name: destination.place.placeName,
-                    address: destination.place.address,
-                },
+                origin: toRoutePoint(origin.place),
+                destination: toRoutePoint(destination.place),
             },
         })
     }
@@ -154,8 +173,8 @@ function SearchPage() {
             <div className={styles.searchBar}>
                 <div className={styles.searchForm}>
                     {[
-                        { field: 'origin', dotClass: styles.dotOrigin, placeholder: '출발지 입력 (미입력 시 현위치)', value: origin },
-                        { field: 'destination', dotClass: styles.dotDestination, placeholder: '목적지 입력', value: destination },
+                        { field: 'origin', dotClass: styles.dotOrigin, placeholder: '출발지 입력', value: origin },
+                        { field: 'destination', dotClass: styles.dotDestination, placeholder: '도착지 입력', value: destination },
                     ].map(({ field, dotClass, placeholder, value }) => (
                         <div key={field} className={styles.inputRow}>
                             <span className={dotClass} aria-hidden="true" />
@@ -176,6 +195,17 @@ function SearchPage() {
                             )}
                         </div>
                     ))}
+                    <button
+                        type="button"
+                        className={styles.currentLocationBtn}
+                        onClick={selectCurrentLocation}
+                        disabled={!currentPosition}
+                    >
+                        <FaLocationDot size={15} />
+                        {activeField === 'origin'
+                            ? '출발지를 현재 위치로 설정'
+                            : '도착지를 현재 위치로 설정'}
+                    </button>
                 </div>
                 <button
                     type="button"

@@ -109,7 +109,7 @@ export default function RouteComparePage() {
                     <h2>내게 맞는 길을 찾고 있어요</h2>
                     <p>도로 연결과 운전 부담을 계산합니다.<br />
                     계산은 약 5~30초, 요청이 많으면 대기 시간이 더 걸릴 수 있어요.</p>
-                    <button onClick={() => { abortRef.current?.abort(); navigate('/search') }}>검색 취소</button>
+                    <button className="route-cancel" onClick={() => { abortRef.current?.abort(); navigate('/search') }}>검색 취소</button>
                 </section>}
 
                 {error && <section role="alert" className="service-error">{error}<button onClick={() => { if (result && !loading) { choose(); return } promiseRef.current = null; setAttempt(v => v + 1) }}>{result && !loading ? '선택 저장 다시 시도' : '다시 시도'}</button></section>}

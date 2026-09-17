@@ -29,6 +29,10 @@ function HomePage() {
     const [busy, setBusy] = useState(false)
     const [message, setMessage] = useState('')
     const [mapError, setMapError] = useState('')
+    const [currentPosition, setCurrentPosition] = useState(null)
+    const [locationError, setLocationError] = useState('')
+    const centeredCurrentLocationRef = useRef(false)
+    
     const [favorites, setFavorites] = useState([])
     const [favoriteBusy, setFavoriteBusy] = useState(false)
     const [favoriteError, setFavoriteError] = useState('')
@@ -37,6 +41,7 @@ function HomePage() {
     const editingFavoriteId = location.state?.editingFavoriteId
     const selectingFavoriteLocation = Boolean(location.state?.placeType) && !editingFavoriteId
     const selectedFavorite = findFavoriteForPlace(favorites, selected)
+
 
     useEffect(() => {
         let active = true
@@ -52,11 +57,99 @@ function HomePage() {
             active = false
         }
     }, [])
+    
+    useEffect(() => {
+        if (!window.isSecureContext || !navigator.geolocation) {
+            setLocationError('현재 위치를 사용할 수 없어요.')
+            return
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setCurrentPosition({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    accuracy: position.coords.accuracy,
+                })
+                setLocationError('')
+            },
+            () => {
+                setLocationError('현재 위치를 가져오지 못했어요.')
+            },
+            {
+                enableHighAccuracy: true,
+                maximumAge: 0,
+                timeout: 10000,
+            },
+        )
+    }, [])
+
+    useEffect(() => {
+        if (!ready || !currentPosition || !sdkRef.current) return
+        if (centeredCurrentLocationRef.current) return
+
+        const { kakao, map } = sdkRef.current
+        const position = new kakao.maps.LatLng(currentPosition.lat, currentPosition.lng)
+
+        map.setLevel(3)
+        map.panTo(position)
+
+        centeredCurrentLocationRef.current = true
+    }, [ready, currentPosition])
+
+    // 지도에 현위치 표시
+    useEffect(() => {
+        if (!ready || !currentPosition || !sdkRef.current) return
+
+        const { kakao, map } = sdkRef.current
+        const here = new kakao.maps.LatLng(
+            currentPosition.lat,
+            currentPosition.lng,
+        )
+
+        const dot = document.createElement('span')
+        dot.setAttribute('aria-label', '현재 위치')
+        dot.style.cssText = `
+            display: block;
+            width: 18px;
+            height: 18px;
+            background: #1476e8;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 8px #1476e830;
+        `
+
+        const currentLocationMarker = new kakao.maps.CustomOverlay({
+            map,
+            position: here,
+            content: dot,
+            zIndex: 10,
+        })
+
+        const accuracyCircle = Number.isFinite(currentPosition.accuracy)
+            ? new kakao.maps.Circle({
+                map,
+                center: here,
+                radius: Math.min(currentPosition.accuracy, 200),
+                strokeWeight: 1,
+                strokeColor: '#1476e8',
+                strokeOpacity: 0.3,
+                fillColor: '#1476e8',
+                fillOpacity: 0.08,
+            })
+            : null
+
+        return () => {
+            currentLocationMarker.setMap(null)
+            accuracyCircle?.setMap(null)
+        }
+    }, [ready, currentPosition])
 
     useEffect(() => {
         let cancelled = false
         let cleanup = () => {}
         setMapError('')
+        centeredCurrentLocationRef.current = false
         setReady(false)
         loadKakaoMaps().then((kakao) => {
             if (cancelled || !mapContainerRef.current) return
@@ -292,7 +385,7 @@ function HomePage() {
                     />
                     <Button type="submit" size="sm" disabled={!ready || !query.trim()}>검색</Button>
                 </form>
-                <p className={styles.hint} role="status">{mapError ? '지도를 불러오지 못했어요.' : message || (ready ? '지도를 누르거나 장소를 검색해 위치를 선택하세요.' : '지도를 불러오고 있어요.')}</p>
+                <p className={styles.hint} role="status">{mapError ? '지도를 불러오지 못했어요.' : locationError || message || (ready ? '지도를 누르거나 장소를 검색해 위치를 선택하세요.' : '지도를 불러오고 있어요.')}</p>
                 {results.length > 0 && (
                     <ul className={`${styles.results} hide-scrollbar`} aria-label="장소 검색 결과">
                         {results.map((result) => (
