@@ -362,7 +362,7 @@ function HomePage() {
                 <form className={styles.searchForm} onSubmit={search} role="search">
                     <input
                         aria-label="장소 검색어"
-                        placeholder="카페, 미용실 등 장소를 입력하세요"
+                        placeholder="안전하길 검색"
                         autoComplete="off"
                         value={query}
                         onChange={(event) => changeQuery(event.target.value)}
