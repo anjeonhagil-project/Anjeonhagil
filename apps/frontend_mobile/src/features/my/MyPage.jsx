@@ -12,6 +12,7 @@ import { withdrawMyAccount } from './api.js'
 
 
 const MENU_ITEMS = [
+    {id:'routes',title:'최근 경로',description:'검색한 경로와 실제 선택 기록'},
     {
         id: 'profile',
         title: '프로필 관리',
@@ -86,6 +87,7 @@ function MyPage() {
     }
 
     const handleMenuClick = (menuId) => {
+        if(menuId==='routes')navigate('/my/routes')
         if (menuId === 'profile') {
             if (isEmailLogin) {
                 setIsProfilePasswordOpen(true)

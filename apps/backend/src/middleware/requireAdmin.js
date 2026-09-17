@@ -24,6 +24,9 @@ export async function requireAdmin(req, res, next) {
         if (error) {
             return next(error)
         }
+        const {data:account,error:accountError}=await supabase.from('users').select('is_active').eq('id',req.user.id).maybeSingle()
+        if(accountError)return next(accountError)
+        if(!account?.is_active)return res.status(403).json({success:false,error:{message:'활성 회원 계정이 필요합니다'}})
 
         // admins 테이블에 등록되지 않은 일반 사용자
         if (!admin) {

@@ -1,0 +1,1 @@
+{"version":"behavior_pilot_20260917","half_life_days":14,"blend_k":10,"window_switch_searches":10,"minimum_searches":4,"maximum_searches":20,"regularization":0.05,"minimum_validation_improvement":0.001}

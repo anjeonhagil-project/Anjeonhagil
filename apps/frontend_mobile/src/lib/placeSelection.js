@@ -15,8 +15,8 @@ export function hasSelectedLocation(place) {
         && Number.isFinite(place.longitude) && Math.abs(place.longitude) <= 180)
 }
 
-export function buildSafeRouteSearchState(destination, detourMinutes) {
-    return { destination, detourMinutes }
+export function buildSafeRouteSearchState(destination) {
+    return { destination }
 }
 
 export function buildRouteSearchFields(destination) {

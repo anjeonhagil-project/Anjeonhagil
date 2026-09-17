@@ -41,6 +41,7 @@ function LocationPermissionPage() {
                 <Button fullWidth onClick={handleAllow} className={styles.submitBtn}>
                     위치 권한 허용
                 </Button>
+                <button type="button" onClick={goNext} style={{marginTop:16,border:0,background:'none',color:'#526b70',cursor:'pointer'}}>출발지를 직접 입력할게요</button>
             </div>
         </div>
     )

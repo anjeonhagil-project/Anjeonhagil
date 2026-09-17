@@ -1,5 +1,6 @@
 // 기능: USER-001~004: 가입 완료/내정보/프로필수정/탈퇴 비즈니스 규칙/transaction
 import * as usersRepository from './users.repository.js'
+import {getDrivingPreferences} from '../preferences/preferences.service.js'
 
 // 내 정보 조회
 export async function getMe(userId) {
@@ -11,7 +12,8 @@ export async function getMe(userId) {
         throw err
     }
 
-    return user
+    const state=await getDrivingPreferences(userId)
+    return {...user,onboarding:state.onboarding.surveyCompleted&&state.onboarding.routeChoicesCompleted}
 }
 
 const REQUIRED_TERMS = ['service', 'privacy', 'location']

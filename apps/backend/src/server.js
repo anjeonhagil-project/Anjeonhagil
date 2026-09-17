@@ -2,6 +2,7 @@
 import app from './app.js'
 import { env } from './config/env.js'
 import { checkSupabaseConnection } from './lib/supabase.js'
+import {startPersonalizationDispatcher} from './modules/preferences/personalization.service.js'
 
 try {
     await checkSupabaseConnection()
@@ -10,6 +11,8 @@ try {
     console.error('[server] Supabase 연결 실패:', err.message)
 }
 
-app.listen(env.port, () => {
+app.listen(env.port, (error) => {
+    if(error){console.error('[server] 시작 실패:',error.code);process.exitCode=1;return}
     console.log(`[server] 안전하길 서버 실행 중... ${env.port}`)
+    startPersonalizationDispatcher()
 })

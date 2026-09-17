@@ -7,7 +7,7 @@ import styles from './App.module.css'
 function App() {
     return (
         <div className={styles.wrapper}>
-            <img className={styles.logo} src="../public/brand/logo.png" alt='안전하길 로고'/>
+            <img className={styles.logo} src="/brand/logo.png" alt='안전하길 로고'/>
             <div className={styles.mobileFrame}>
                 <StatusBar />
                 <AppRouter />

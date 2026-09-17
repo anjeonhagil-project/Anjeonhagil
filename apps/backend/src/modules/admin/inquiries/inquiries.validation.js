@@ -43,7 +43,8 @@ export function validateInquiryId(
         const inquiryId =
             req.params.inquiryId
         
-        const uuidPattern = /^[0-9a-fA-F]{8}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/i
+        // UUID는 8-4-4-4-12 형식이다. time_mid 그룹 누락으로 정상 문의 상세가 차단되던 오류를 수정한다.
+        const uuidPattern = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/i
 
         if (
             !inquiryId ||

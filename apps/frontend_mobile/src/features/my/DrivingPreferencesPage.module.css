@@ -1,6 +1,8 @@
 .page {
     display: flex;
     height: calc(var(--layout-max-height) - var(--statusbar-height));
+    min-height: 0;
+    overflow: hidden;
     flex-direction: column;
     background: var(--color-bg-white);
 }

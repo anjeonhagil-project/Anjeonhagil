@@ -17,6 +17,8 @@ import MyPage from '../features/my/MyPage.jsx'
 import OnboardingPage from '../features/onboarding/OnboardingPage.jsx'
 import FavoriteDetailPage from '../features/favorites/FavoriteDetailPage.jsx'
 import RouteComparePage from '../features/routes/RouteComparePage.jsx'
+import RouteHistoryPage from '../features/routes/RouteHistoryPage.jsx'
+import NavigationPage from '../features/navigation/NavigationPage.jsx'
 import AuthRedirect from './AuthRedirect.jsx'
 
 import ProfileManagePage from '../features/my/ProfileManagePage.jsx'
@@ -44,9 +46,11 @@ function AppRouter() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/route-compare" element={<RouteComparePage />} />
+                <Route path="/navigation" element={<NavigationPage />} />
                 <Route path="/favorites" element={<FavoritesPage />} />
 
                 <Route path="/my" element={<MyPage />} />
+                <Route path="/my/routes" element={<RouteHistoryPage />} />
                 <Route path="/my/profile" element={<ProfileManagePage />} />
                 <Route path="/my/driving-preferences" element={<DrivingPreferencesPage />}/>
                 <Route path="/my/support" element={<HelpSupportPage />} />

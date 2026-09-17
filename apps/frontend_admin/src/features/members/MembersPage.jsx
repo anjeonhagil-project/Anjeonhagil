@@ -638,7 +638,7 @@ export default function MembersPage() {
                     member={selectedMember}
                     isLoading={isDetailLoading}
                     errorMessage={detailError}
-                    canManageAdmins={canManageAdmins}
+                    canManageAdmins={canManageAdmins && selectedMember?.role !== 'super_admin'}
                     onEditPermission={handleEditPermission}
                     onClose={handleDetailClose}
                 />

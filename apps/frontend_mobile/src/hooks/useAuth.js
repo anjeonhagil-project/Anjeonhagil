@@ -11,6 +11,9 @@ export function useAuth({ includeAccountStatus = false } = {}) {
     const [termsAgreed, setTermsAgreed] = useState(null) // null = 아직 확인 전
     const [loading, setLoading] = useState(true)
     const [accountStatus, setAccountStatus] = useState(null)
+    const [sessionReady,setSessionReady]=useState(false)
+    const [revision,setRevision]=useState(0)
+    useEffect(()=>{const refresh=()=>{setLoading(true);setRevision(n=>n+1)};window.addEventListener('anjeon:profile-updated',refresh);return()=>window.removeEventListener('anjeon:profile-updated',refresh)},[])
 
     // 최초 진입 시 현재 세션을 가져오고, 이후 로그인/로그아웃/토큰 갱신을 실시간으로 반영
     useEffect(() => {
@@ -18,6 +21,7 @@ export function useAuth({ includeAccountStatus = false } = {}) {
 
         supabase.auth.getSession().then(({ data }) => {
             if (mounted) {
+                setSessionReady(true)
                 setSession((currentSession) => (
                     shouldApplyAuthSession(currentSession, data.session, 'INITIAL_SESSION')
                         ? data.session
@@ -27,6 +31,7 @@ export function useAuth({ includeAccountStatus = false } = {}) {
         })
 
         const { data: listener } = supabase.auth.onAuthStateChange((event, newSession) => {
+            setSessionReady(true)
             setSession((currentSession) => (
                 shouldApplyAuthSession(currentSession, newSession, event)
                     ? newSession
@@ -75,14 +80,14 @@ export function useAuth({ includeAccountStatus = false } = {}) {
         return () => {
             mounted = false
         }
-    }, [includeAccountStatus, session])
+    }, [includeAccountStatus, session, revision])
 
     return {
         session,
         user: session?.user ?? null,
         profile,
         termsAgreed,
-        loading,
+        loading:!sessionReady||loading,
         isAuthenticated: Boolean(session),
         accountStatus,
     }

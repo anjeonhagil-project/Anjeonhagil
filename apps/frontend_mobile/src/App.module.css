@@ -1,11 +1,15 @@
 .wrapper{
     display: flex;
     align-items: center;
-    gap: 100px;
+    justify-content: center;
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    gap: clamp(48px, 8vw, 100px);
 }
 
 .logo {
-    width: 391px;
+    width: min(31vw, 391px);
     height: auto;
     transition: transform 0.2s;
     filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.25));
@@ -29,8 +33,14 @@
     background: var(--color-bg-white);
 
     border-radius: var(--radius-frame);
+    box-shadow: 0 12px 38px rgba(18, 63, 70, 0.08);
 
-    overflow-y: auto;   /* height 넘어가면 세로 스크롤 생성 */
+    display: flex;
+    min-height: 0;
+    flex: 0 0 auto;
+    flex-direction: column;
+    overflow: hidden; /* 각 페이지 본문만 스크롤해 중첩 스크롤을 막음 */
+    touch-action: pan-y;
 
     /* 스크롤 바 없애기 */
     -ms-overflow-style: none; /* 구형 Edge/IE */
@@ -41,14 +51,14 @@
     display: none; /* Chrome, Edge, Safari */
 }
 
-.mobileFrame:has([data-page="favorite-detail"]) {
-    overflow-y: hidden;
-}
+/* 사용자 앱은 화면 종류와 관계없이 PC에서도 동일한 모바일 프레임을 유지한다. */
+@media (min-width:481px) and (max-width:899px) {.logo{display:none}.wrapper{gap:0}}
 
 /* 실제 모바일 화면에서는 폰 목업이 아니라 화면 전체를 그대로 채움 */
 @media (max-width: 480px) {
     .wrapper {
         gap: 0;
+        align-items: stretch;
     }
 
     .logo {
@@ -57,5 +67,7 @@
 
     .mobileFrame {
         border-radius: 0;
+        width: 100vw;
+        height: 100dvh;
     }
 }

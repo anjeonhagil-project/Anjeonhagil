@@ -4,7 +4,7 @@ import { adminNavigation } from '../../config/adminNavigation'
 
 import styles from './AdminSidebar.module.css'
 
-function AdminSidebar() {
+function AdminSidebar({admin}) {
     const location = useLocation()
 
     return (
@@ -23,7 +23,7 @@ function AdminSidebar() {
 
             {/* Navigation */}
             <nav className={styles.navigation}>
-                {adminNavigation.map((menu) => {
+                {adminNavigation.filter(menu=>!menu.superOnly||admin?.role==='super_admin').map((menu) => {
                     const Icon = menu.icon
                     const hasChildren = menu.children?.length > 0
 
@@ -118,11 +118,11 @@ function AdminSidebar() {
             {/* Sidebar Footer */}
             <div className={styles.sidebarFooter}>
                 <span className={styles.accountLabel}>
-                    Super Admin 계정
+                    {admin?.role==='super_admin'?'슈퍼관리자':'관리자'} 계정
                 </span>
 
                 <span className={styles.version}>
-                    v1.2.0 (Stable)
+                    Anjeonhagil
                 </span>
             </div>
         </aside>

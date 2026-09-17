@@ -1,0 +1,6 @@
+# 기능: Anjeonhagil 계산기 실행 의존성. 전달본의 계산용 버전을 유지하고 Supabase 전체 그래프 적재용 psycopg는 제외한다.
+# coding: utf-8
+numpy==2.3.5
+certifi==2026.7.22
+shapely==2.1.2
+pyproj==3.8.0

@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): 라우팅·모델 내부 API 주소/토큰/시간 제한을 검증하고 브라우저 환경변수와 분리한다.
 // # 기능: 서버 환경변수 존재 여부/형식 검증 후 export
 import 'dotenv/config'
 

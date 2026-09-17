@@ -1,3 +1,4 @@
+// 공개/비공개를 명시적으로 선택해 저장한다. 신규 공지는 비공개 초안으로 시작한다.
 import {
     useEffect,
     useState,
@@ -33,7 +34,7 @@ export default function NoticeFormPage() {
 
     // 수정 시 기존 노출 상태 유지
     const [isPublished, setIsPublished] =
-        useState(true)
+        useState(false)
 
     const [isLoading, setIsLoading] =
         useState(isEditMode)
@@ -160,8 +161,7 @@ export default function NoticeFormPage() {
                     title: trimmedTitle,
                     content: trimmedContent,
 
-                    // 신규 등록 공지는 노출
-                    isPublished: true,
+                    isPublished,
                 })
             }
 
@@ -258,6 +258,15 @@ export default function NoticeFormPage() {
                     onSubmit={handleSubmit}
                 >
 
+                    <div className={styles.field}>
+                        <h2>{isEditMode?'공지사항 수정':'공지사항 작성'}</h2>
+                        <label htmlFor="notice-visibility">공개 설정</label>
+                        <select id="notice-visibility" value={String(isPublished)} onChange={e=>setIsPublished(e.target.value==='true')} disabled={isSubmitting}>
+                            <option value="false">비공개 · 초안 보관</option>
+                            <option value="true">공개 · 사용자에게 표시</option>
+                        </select>
+                        <p>{isPublished?'저장하면 사용자 공지 목록에 표시됩니다.':'관리자만 조회할 수 있으며 사용자에게 표시되지 않습니다.'}</p>
+                    </div>
                     {/* 공지 제목 */}
                     <div className={styles.field}>
                         <label htmlFor="notice-title">

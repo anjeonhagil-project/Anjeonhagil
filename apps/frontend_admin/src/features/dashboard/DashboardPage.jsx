@@ -1,175 +1,32 @@
-import DashboardStatCard from "./components/DashboardStatCard.jsx"
-import styles from "./DashboardPage.module.css"
-import { useState } from "react"
-import DashboardUsageChart from "./components/DashboardUsageChart.jsx"
-
-const PERIOD_INFO = {
-    daily: {
-        title: "시간대별 경로 검색 요청",
-        description: "오늘 하루 동안 발생한 시간대별 경로 검색 요청입니다."
-    },
-    monthly: {
-        title: "요일별 경로 검색 추이",
-        description: "선택한 월의 요일별 경로 검색 요청 추이입니다."
-    },
-    yearly: {
-        title: "월별 경로 검색 추이",
-        description: "선택한 연도의 월별 경로 검색 요청 추이입니다."
-    },
-};
-
-const DAILY_DATA = [
-  { label: "00~02", value: 12 },
-  { label: "02~04", value: 7 },
-  { label: "04~06", value: 8 },
-  { label: "06~08", value: 17 },
-  { label: "08~10", value: 42 },
-  { label: "10~12", value: 31 },
-  { label: "12~14", value: 28 },
-  { label: "14~16", value: 34 },
-  { label: "16~18", value: 39 },
-  { label: "18~20", value: 56, highlight: true },
-  { label: "20~22", value: 47 },
-  { label: "22~24", value: 29 },
-];
-
-const MONTHLY_DATA = [
-  { label: "월", value: 165 },
-  { label: "화", value: 182 },
-  { label: "수", value: 174 },
-  { label: "목", value: 201 },
-  { label: "금", value: 238, highlight: true },
-  { label: "토", value: 215 },
-  { label: "일", value: 148 },
-];
-
-const YEARLY_DATA = [
-  { label: "1월", value: 1380 },
-  { label: "2월", value: 1240 },
-  { label: "3월", value: 1560 },
-  { label: "4월", value: 1720 },
-  { label: "5월", value: 1890 },
-  { label: "6월", value: 2130 },
-  { label: "7월", value: 2350 },
-  { label: "8월", value: 2670, highlight: true },
-  { label: "9월", value: 2280 },
-  { label: "10월", value: 2470 },
-  { label: "11월", value: 2190 },
-  { label: "12월", value: 1980 },
-];
-
-function DashboardPage() {
-  const [period, setPeriod] = useState("daily");
-  const currentPeriod = PERIOD_INFO[period];
-  const chartData = {
-    daily: DAILY_DATA,
-    monthly: MONTHLY_DATA,
-    yearly: YEARLY_DATA,
-  }[period];
-
-  return (
-    <div className={styles.dashboard}>
-      <section className={styles.statGrid}>
-        <DashboardStatCard
-          title="전체 회원 수"
-          value="1,247명"
-          change="↑ 12% 이번 달 대비"
-          changeType="positive"
-        />
-
-        <DashboardStatCard
-          title="경로 검색 수"
-          value="3,892건"
-          change="↑ 245건 오늘"
-          changeType="positive"
-        />
-
-        <DashboardStatCard
-          title="실패한 경로 검색 수"
-          value="24건"
-          change="↓ 4% 전일 대비"
-          changeType="negative"
-        />
-
-        <DashboardStatCard
-          title="데이터 최신 갱신 일자"
-          value="2026.08.25"
-          change="정기 업데이트 완료"
-          changeType="positive"
-        />
-      </section>
-
-      <div className={styles.dataStatusRow}>
-        <div className={styles.dataStatus}>
-          <span className={styles.statusDot} />
-          <span>TAAS 사고 데이터 최신일</span>
-          <strong>2026.08.20</strong>
-        </div>
-
-        <div className={styles.dataStatus}>
-          <span className={styles.statusDot} />
-          <span>표준노드링크 최신일</span>
-          <strong>2026.08.22</strong>
-        </div>
-      </div>
-
-      <section className={styles.chartCard}>
-        <div className={styles.sectionHeader}>
-          <div>
-            <h2 className={styles.sectionTitle}>
-              {currentPeriod.title}
-            </h2>
-
-            <p className={styles.sectionDescription}>
-              {currentPeriod.description}
-            </p>
-          </div>
-
-          <div className={styles.periodTabs}>
-            <button
-              className={
-                period === "daily" 
-                ? styles.activeTab 
-                : styles.periodTab
-            }
-            onClick={() => setPeriod("daily")}
-            aria-pressed={period === "daily"}  
-            >
-              일간
-            </button>
-
-            <button
-              className={
-                period === "monthly" 
-                ? styles.activeTab 
-                : styles.periodTab
-              }
-              onClick={() => setPeriod("monthly")}
-              aria-pressed={period === "monthly"}  
-            >
-              월간
-            </button>
-
-            <button
-              className={
-                period === "yearly" 
-                ? styles.activeTab 
-                : styles.periodTab
-              }
-              onClick={() => setPeriod("yearly")}
-              aria-pressed={period === "yearly"}  
-            >
-              연간
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.chartArea}>
-          <DashboardUsageChart data={chartData} />
-        </div>
-      </section>
-    </div>
-  );
+// 실시간 조회한 운영 수치와 한국 시간별 검색 집계를 표시한다. 합성 모델 성능은 별도로 표기한다.
+import {useEffect,useState} from 'react'
+import {Link} from 'react-router-dom'
+import {Users,Route,CheckCheck,TriangleAlert,RefreshCw,ArrowUpRight,Database,Activity} from 'lucide-react'
+import {apiClient} from '../../lib/apiClient.js'
+import DashboardUsageChart from './components/DashboardUsageChart.jsx'
+import './operations.css'
+export default function DashboardPage(){
+    const [data,setData]=useState(null),[error,setError]=useState(''),[attempt,setAttempt]=useState(0)
+    const [period,setPeriod]=useState('today'),[usage,setUsage]=useState(null),[usageError,setUsageError]=useState('')
+    useEffect(()=>{let live=true;setError('');apiClient('/admin/operations/summary').then(r=>{if(live)setData(r.data)}).catch(e=>live&&setError(e.message));return()=>{live=false}},[attempt])
+    useEffect(()=>{let live=true;setUsage(null);setUsageError('');apiClient('/admin/operations/usage?period='+period).then(r=>{if(live)setUsage(r.data)}).catch(e=>live&&setUsageError(e.message));return()=>{live=false}},[period,attempt])
+    const peak=Math.max(...(usage?.items.map(i=>i.value)||[]),0)
+    return <section className="operations">
+        <div className="operations-heading"><div><span className="ops-eyebrow">OVERVIEW</span><h1>서비스 운영 현황</h1><p className="ops-muted">안전하길의 이용 현황과 데이터 연결 상태를 한눈에 확인하세요.</p></div><button onClick={()=>setAttempt(v=>v+1)}><RefreshCw size={15}/> 새로고침</button></div>
+        {error&&<p role="alert">{error}</p>}{!data&&!error&&<p role="status">운영 현황을 불러오는 중입니다…</p>}
+        {data&&<>
+            <div className="operations-stats">{[
+                ['전체 회원',data.counts.users,'명',Users,'/members','서비스에 등록된 회원'],
+                ['저장된 검색',data.counts.searches,'건',Route,'/routes','검산 후 저장된 검색'],
+                ['실제 선택',data.counts.choices,'건',CheckCheck,'/routes','사용자가 확정한 경로'],
+                ['기록된 실패',data.counts.failures,'건',TriangleAlert,'/datasets/failure','실패 기록 확인이 필요해요'],
+            ].map(([title,n,unit,Icon,to,description],i)=><Link to={to} className={'ops-stat '+(i===3?'ops-stat-warning':'')} key={title}><div><span>{title}</span><Icon size={19}/></div><strong>{n.toLocaleString()}<small>{unit}</small></strong><p>{description}<ArrowUpRight size={14}/></p></Link>)}</div>
+            <div className="ops-status-strip"><span className={'ops-pill '+(data.worker.ok?'':'ops-pill-warning')}><Activity size={14}/>계산기: {data.worker.ok?'정상 응답':'계산 중이거나 연결 확인 필요'}</span><span className="ops-pill"><Database size={14}/>{data.active?'검증된 도로 데이터 활성':'활성 데이터 확인 필요'}</span><Link to="/inquiries">문의 {data.counts.inquiries.toLocaleString()}건 확인 →</Link></div>
+        </>}
+        <article className="operations-panel ops-chart-panel">
+            <div className="operations-heading"><div><h2>기간별 경로 검색</h2><p className="ops-muted">한국 시간 기준 · 성공적으로 저장된 서비스 검색 · 최대 30초 간격 갱신</p></div><div className="ops-tabs" role="group" aria-label="통계 기간">{[['today','오늘'],['month','이번 달'],['year','올해']].map(([key,label])=><button key={key} aria-pressed={period===key} onClick={()=>setPeriod(key)}>{label}</button>)}</div></div>
+            {usageError?<p role="alert">{usageError}</p>:!usage?<div className="ops-chart-empty" role="status">검색 통계를 불러오는 중입니다…</div>:<><div className="ops-chart-total"><strong>{usage.total.toLocaleString()}</strong> 건 <span>조회 기간 내 저장된 검색</span></div>{usage.total===0&&<p className="ops-empty-note">아직 저장된 검색이 없습니다. 사용자가 경로를 검색하면 통계가 표시됩니다.</p>}<div className="operations-scroll"><DashboardUsageChart data={usage.items.map(i=>({...i,highlight:peak>0&&i.value===peak}))}/></div><p className="ops-muted">마지막 조회 {new Date(usage.updatedAt).toLocaleTimeString('ko-KR')}</p></>}
+        </article>
+        {data&&<div className="ops-two-columns"><article className="operations-panel"><div className="operations-heading"><h2>데이터 연결</h2><Link to="/datasets">상세 보기 →</Link></div><div className="ops-connection"><span className="ops-dot"/>도로망 · 백엔드 SQLite/GPKG</div><div className="ops-connection"><span className="ops-dot"/>회원 · 검색 · 선택 이력 · Supabase</div><p className="ops-muted">활성 데이터</p><code>{data.active?.release_id||'없음'}</code></article><article className="operations-panel"><div className="operations-heading"><h2>운영 모델</h2><span className="ops-pill">합성 데이터 평가</span></div>{data.models.filter(m=>m.is_active).map(m=><div key={m.model_version}><h3 className="ops-model-name">{m.model_type==='logistic'?'Logistic Regression':m.model_type}</h3><p>1위 일치율 <b>{m.metrics.test?.top1_accuracy!=null?(m.metrics.test.top1_accuracy*100).toFixed(1)+'%':'미측정'}</b> · Log Loss <b>{m.metrics.test?.log_loss?.toFixed(4)??'미측정'}</b></p><p className="ops-muted">실제 이용자 성능과 사고 위험은 검증하지 않았습니다.</p></div>)}</article></div>}
+    </section>
 }
-
-export default DashboardPage

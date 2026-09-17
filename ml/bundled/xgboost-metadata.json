@@ -1,0 +1,39 @@
+{
+  "features": [
+    "time_diff",
+    "distance_diff",
+    "intersection_weighted_diff",
+    "merge_weighted_diff",
+    "narrow_weighted_diff",
+    "turn_weighted_diff",
+    "consecutive_weighted_diff",
+    "child_100m_weighted_diff"
+  ],
+  "scale": [
+    301.15911865234375,
+    987.940673828125,
+    0.44589734077453613,
+    287.36077880859375,
+    173.01840209960938,
+    0.3482699394226074,
+    0.8600035905838013,
+    84.01488494873047
+  ],
+  "scale_basis": "Train X only",
+  "center": false,
+  "probability": "(p(x)+1-p(-x))/2",
+  "ranking": "probability_sum",
+  "top1_pair_policy": "reconstruct all 3 candidate pairs from 2 observed selected-vs-unselected pairs",
+  "top1_reconstruction_uses_y": false,
+  "comparison_scope": "Validation metrics only",
+  "train_rows": 4200,
+  "validation_rows": 900,
+  "test_rows": 900,
+  "train_searches": 2100,
+  "validation_searches": 450,
+  "test_searches": 450,
+  "test_evaluated": false,
+  "selection_note": "Logistic Regression과의 모델 비교에는 Validation 결과만 사용하며, Test는 최종 모델 선택 전 평가하지 않음",
+  "training_source": "SYNTHETIC_TEAM_DATA",
+  "model_version": "xgboost_comparison_20260916"
+}

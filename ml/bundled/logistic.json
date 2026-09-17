@@ -1,0 +1,74 @@
+{
+  "model_version": "logistic_synthetic_20260916",
+  "scaler_version": "train_standard_deviation_20260916",
+  "training_source": "SYNTHETIC_TEAM_DATA",
+  "real_user_validated": false,
+  "feature_order": [
+    "time_diff",
+    "distance_diff",
+    "intersection_weighted_diff",
+    "merge_weighted_diff",
+    "narrow_weighted_diff",
+    "turn_weighted_diff",
+    "consecutive_weighted_diff",
+    "child_100m_weighted_diff"
+  ],
+  "coefficients": [
+    -1.1140287502823765,
+    -0.18660451131569317,
+    -1.3510072843926706,
+    -1.4062059747002416,
+    -1.710381575940075,
+    -1.6221661398057299,
+    -1.2988268850083455,
+    -1.684962536103237
+  ],
+  "scales": [
+    301.15912372353347,
+    987.9406774299155,
+    0.4458973514638569,
+    287.3607866115419,
+    173.01840149943624,
+    0.3482699274977062,
+    0.8600035396574081,
+    84.01488742897423
+  ],
+  "intercept": 0,
+  "with_mean": false,
+  "feature_version": "static_burden_v5_child_circle_inside",
+  "contract_version": "anjeon_contract_v6_child100",
+  "eta_version": "internal_hourly_topis_v1",
+  "probability": "(p(x)+1-p(-x))/2",
+  "ranking": "probability_sum",
+  "test_metrics": {
+    "rows": 900,
+    "searches": 450,
+    "pair_accuracy": 0.8822222222222222,
+    "roc_auc": 0.9573522439949431,
+    "log_loss": 0.2704669479855462,
+    "top1_accuracy": 0.8,
+    "top1_hits": 360,
+    "top1_searches": 450
+  },
+  "validation_comparison": [
+    {
+      "model": "XGBoost",
+      "validation_accuracy": 0.8666666666666667,
+      "validation_roc_auc": 0.946106068317365,
+      "validation_log_loss": 0.2951773405075073,
+      "validation_top1": 0.7688888888888888,
+      "validation_searches": 450,
+      "validation_pair_rows": 900
+    },
+    {
+      "model": "Logistic Regression",
+      "validation_accuracy": 0.8644444444444445,
+      "validation_roc_auc": 0.9497922215249605,
+      "validation_log_loss": 0.28226245579683223,
+      "validation_top1": 0.7666666666666667,
+      "validation_searches": 450,
+      "validation_pair_rows": 900
+    }
+  ],
+  "source_artifact_sha256": "b218e24a069d20651ddc3bb7c5bf35f5b8ce552ab747be8a63883d6903e03367"
+}

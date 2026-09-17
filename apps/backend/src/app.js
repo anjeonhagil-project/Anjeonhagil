@@ -8,6 +8,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.get('/api/health',(req,res)=>res.json({success:true,data:{ok:true,service:'Anjeonhagil'}}))
 
 app.use('/api', router)
 

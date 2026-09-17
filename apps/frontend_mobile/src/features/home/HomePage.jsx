@@ -11,7 +11,6 @@ import { PLACE_TYPE_LABELS } from '../favorites/favoriteName.js'
 import styles from './HomePage.module.css'
 
 const DEFAULT_CENTER = { lat: 37.4979, lng: 127.0276 }
-const DETOUR_TIME_OPTIONS = [10, 20, 30, 60]
 
 function HomePage() {
     const navigate = useNavigate()
@@ -33,7 +32,7 @@ function HomePage() {
     const [favorites, setFavorites] = useState([])
     const [favoriteBusy, setFavoriteBusy] = useState(false)
     const [favoriteError, setFavoriteError] = useState('')
-    const [detourMinutes, setDetourMinutes] = useState(20)
+    const [selectionExpanded, setSelectionExpanded] = useState(true)
     const placeType = location.state?.placeType || 'custom'
     const editingFavoriteId = location.state?.editingFavoriteId
     const selectingFavoriteLocation = Boolean(location.state?.placeType) && !editingFavoriteId
@@ -271,9 +270,10 @@ function HomePage() {
     }
 
     return (
-        <div className={styles.page}>
+        <div className={styles.page+' journey-wide'}>
             <div ref={mapContainerRef} className={styles.map} aria-label="위치를 선택할 카카오 지도" />
             <section className={styles.searchPanel} aria-label="장소 검색">
+                <div className={styles.brand}><strong>안전하길</strong><span>어디로 떠나시나요?</span></div>
                 <form className={styles.searchForm} onSubmit={search} role="search">
                     <input
                         aria-label="장소 검색어"
@@ -310,10 +310,11 @@ function HomePage() {
             {mapError && <div className={styles.selection} role="alert"><p>{mapError}</p><Button onClick={() => setAttempt(value => value + 1)}>다시 시도</Button></div>}
             {selected && (
                 <section className={styles.selection} aria-label="선택한 장소">
+                    <button className={styles.sheetToggle} aria-expanded={selectionExpanded} onClick={()=>setSelectionExpanded(v=>!v)}>{selectionExpanded?'장소 정보 접기':'장소 정보 펼치기'}</button>
                     <div className={styles.selectionHeader}>
                         <div className={styles.selectionText}>
                             <strong>{selected.placeName}</strong>
-                            <p>{selected.address}</p>
+                            {selectionExpanded&&<p>{selected.address}</p>}
                         </div>
                         {!editingFavoriteId && !selectingFavoriteLocation && (
                             <button
@@ -341,30 +342,15 @@ function HomePage() {
                     )}
                     {!editingFavoriteId && !selectingFavoriteLocation && (
                         <div className={styles.routeControls}>
-                            <fieldset className={styles.timeFieldset}>
-                                <legend>얼마나 돌아가도 괜찮으세요?</legend>
-                                <div className={styles.timeOptions}>
-                                    {DETOUR_TIME_OPTIONS.map((minutes) => (
-                                        <button
-                                            key={minutes}
-                                            type="button"
-                                            className={minutes === detourMinutes ? styles.timeOptionActive : ''}
-                                            aria-pressed={minutes === detourMinutes}
-                                            onClick={() => setDetourMinutes(minutes)}
-                                        >
-                                            {minutes === 60 ? '1시간' : `${minutes}분`}
-                                        </button>
-                                    ))}
-                                </div>
-                            </fieldset>
+
                             <Button
                                 className={styles.safeRouteButton}
                                 fullWidth
                                 disabled={busy || favoriteBusy || !hasSelectedLocation(selected)}
                                 onClick={() => navigate('/search', {
-                                    state: buildSafeRouteSearchState(selected, detourMinutes),
+                                    state: buildSafeRouteSearchState(selected),
                                 })}
-                            >안심경로 찾기</Button>
+                            >내게 편한 길 찾기</Button>
                         </div>
                     )}
                 </section>

@@ -9,7 +9,7 @@ import { requireActiveUser } from '../../middleware/requireActiveUser.js'
 const router = Router()
 
 // 즐겨찾기 API는 로그인 사용자만 접근 가능
-router.use(authenticate, requireActiveUser)
+router.use('/favorites',authenticate, requireActiveUser)
 
 // 즐겨찾기 목록 조회
 router.get('/favorites', placesController.listFavorites)

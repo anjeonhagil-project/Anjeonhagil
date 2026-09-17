@@ -1,3 +1,4 @@
+// 수정 필요(Anjeonhagil): auth/public 사용자 영구 삭제 시 신규 ag_ 설문·검색·선택·프로필·갱신 작업이 FK cascade로 제거되는지 확인한다. 기존 유예기간은 유지한다.
 // 30일이 지난 탈퇴 계정을 점검하거나 정리하는 독립 실행 스크립트.
 // 기본 실행은 조회만 한다. 실제 삭제는 --execute를 명시해야 한다.
 import { supabase } from '../src/lib/supabase.js'

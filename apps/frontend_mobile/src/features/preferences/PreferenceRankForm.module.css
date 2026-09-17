@@ -1,0 +1,46 @@
+.form {
+    display: grid;
+    gap: var(--space-4);
+}
+
+.section {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-50);
+}
+
+.section h2 {
+    font-size: var(--font-size-base);
+    line-height: 1.45;
+}
+
+.section p {
+    color: var(--color-text-faint);
+    font-size: var(--font-size-xs);
+    line-height: 1.5;
+}
+
+.section select {
+    min-height: 42px;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-border-gray);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-white);
+    color: var(--color-text-sub);
+    font: inherit;
+}
+
+.rankRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 108px;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+}
+
+.error {
+    color: var(--color-danger);
+    font-size: var(--font-size-sm);
+}

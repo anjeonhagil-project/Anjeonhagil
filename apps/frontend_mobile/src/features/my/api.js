@@ -1,18 +1,20 @@
+// 수정 필요(Anjeonhagil): 운전 선호·개인화 요청은 preferences/api.js로 위임하고 기존 프로필/탈퇴 API는 유지한다.
 // # 기능: my feature에서 사용하는 Express API 함수 모음
 
 
 import { apiClient } from '../../lib/apiClient.js'
+import { getPreferences, savePreferences } from '../preferences/api.js'
 
 export function updateMyProfile({ nickname }) {
     return apiClient.patch('/users/me', { nickname })
 }
 
 export function getDrivingPreferences() {
-    return apiClient.get('/driving-preferences')
+    return getPreferences()
 }
 
 export function updateDrivingPreferences(answers) {
-    return apiClient.put('/driving-preferences', answers)
+    return savePreferences(answers)
 }
 
 export function withdrawMyAccount() {

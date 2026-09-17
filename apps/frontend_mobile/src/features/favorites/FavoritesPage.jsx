@@ -106,9 +106,9 @@ function FavoritesPage() {
         navigateToFavorite(favorite)
     }
 
-    const handleFindRoute = (event) => {
+    const handleFindRoute = (event, favorite) => {
         event.stopPropagation()
-        navigate('/home')
+        navigate('/search', { state: { destination: favorite } })
     }
 
     const handleEdit = (event, favorite) => {
@@ -166,7 +166,7 @@ function FavoritesPage() {
                                     </div>
                                     {favorite ? (
                                         <div className={styles.frequentActions}>
-                                            <button type="button" className={styles.routeAction} onClick={handleFindRoute}>➤ 경로 찾기</button>
+                                            <button type="button" className={styles.routeAction} onClick={(event) => handleFindRoute(event, favorite)}>➤ 경로 찾기</button>
                                         </div>
                                     ) : (
                                         <button type="button" className={styles.textAction} onClick={() => openSaveModal(placeType)}>등록</button>
@@ -211,7 +211,7 @@ function FavoritesPage() {
                                     <span>{favorite.address}</span>
                                 </div>
                                 <div className={styles.itemActions}>
-                                    <button type="button" className={styles.routeAction} onClick={handleFindRoute}>➤ 경로 찾기</button>
+                                    <button type="button" className={styles.routeAction} onClick={(event) => handleFindRoute(event, favorite)}>➤ 경로 찾기</button>
                                     <button type="button" onClick={(event) => handleEdit(event, favorite)}>수정</button>
                                     <button type="button" className={styles.deleteAction} onClick={(event) => handleDeleteRequest(event, favorite)}>삭제</button>
                                 </div>

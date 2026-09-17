@@ -11,7 +11,7 @@ export async function getDrivingPreferences(req, res, next) {
     }
 }
 
-// Q1~Q4 답변 저장 및 온보딩 완료
+// Q1/Q2 원본 응답 저장. Q4가 끝나기 전에는 전체 온보딩 완료로 처리하지 않는다.
 export async function saveDrivingPreferences(req, res, next) {
     try {
         const preferences = await preferencesService.saveDrivingPreferences(req.user.id, req.body)
