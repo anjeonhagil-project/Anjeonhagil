@@ -104,7 +104,7 @@
     padding: 14px 18px;
     margin-bottom: 16px;
     border-radius: 12px;
-    background: var(--color-bg-selected);
+    background: var(--color-primary-50);
 }
 
 .exampleDesc {
@@ -114,10 +114,18 @@
 
 .exampleBtn {
     padding: 9px 14px;
-    border: 1px solid #a9cfc9;
+    border: 1px solid var(--color-border-gray);
     border-radius: 8px;
     background: white;
+    color: var(--color-primary-600);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
     cursor: pointer;
+}
+
+/* 마우스를 올렸을 때 */
+.exampleBtn:hover {
+    background: var(--color-bg-selected);
 }
 
 .shortcuts {
