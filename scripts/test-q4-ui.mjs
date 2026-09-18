@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 import {chromium} from 'playwright'
 import {readFileSync,mkdirSync} from 'node:fs'
 import assert from 'node:assert/strict'
-const html=`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><div id="root"></div><script type="module">import React from 'react';import {createRoot} from 'react-dom/client';import {MemoryRouter} from 'react-router-dom';import Page from '/src/features/my/DrivingPreferencesPage.jsx';import '/src/styles/global.css';createRoot(document.getElementById('root')).render(React.createElement(MemoryRouter,null,React.createElement(Page)));</script></html>`
+const html=`<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><div id="root"></div><script type="module">import React from 'react';import {createRoot} from 'react-dom/client';import {MemoryRouter,Routes,Route} from 'react-router-dom';import Preferences from '/src/features/my/DrivingPreferencesPage.jsx';import Onboarding from '/src/features/onboarding/OnboardingPage.jsx';import '/src/styles/global.css';const app=React.createElement(MemoryRouter,{initialEntries:['/my/driving-preferences']},React.createElement(Routes,null,React.createElement(Route,{path:'/my/driving-preferences',element:React.createElement(Preferences)}),React.createElement(Route,{path:'/onboarding',element:React.createElement(Onboarding)})));createRoot(document.getElementById('root')).render(app);</script></html>`
 const server=await createServer({root:'apps/frontend_mobile',configFile:false,plugins:[react(),{name:'q4-test-page',configureServer(s){s.middlewares.use('/__q4_test',async(req,res)=>{res.setHeader('Content-Type','text/html');res.end(await s.transformIndexHtml('/__q4_test',html))})}}],server:{host:'127.0.0.1',port:5189,strictPort:true}})
 let browser,passed=0
 try{
@@ -43,10 +43,11 @@ try{
     await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click();failNext=true
     await page.getByRole('button',{name:'다음 문항',exact:true}).click();await page.getByRole('alert').filter({hasText:'일시적인 저장 오류'}).waitFor();passed++
     await page.getByRole('button',{name:'다음 문항',exact:true}).click();await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor()
-    await page.getByRole('button',{name:'나중에 이어서 하기',exact:true}).click()
+    await page.goto('http://127.0.0.1:5189/__q4_test')
     await page.getByRole('button',{name:'시간·거리 설문 이어서 하기',exact:true}).click();await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor();passed++
     mkdirSync('.test-tools/q4-ui',{recursive:true});await page.screenshot({path:'.test-tools/q4-ui/survey-mobile.png',fullPage:true})
     for(let i=1;i<4;i++){await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click();await page.getByRole('button',{name:i===3?'설정 완료':'다음 문항',exact:true}).click()}
+    await page.goto('http://127.0.0.1:5189/__q4_test')
     await page.getByRole('button',{name:'시간·거리 선호 다시 설정',exact:true}).waitFor();assert.equal(revision,2);passed++
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true);passed++
     await page.evaluate(()=>document.querySelectorAll('*').forEach(el=>{if(el.scrollTop)el.scrollTop=0}))

@@ -1,0 +1,31 @@
+.card {
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 18px;
+}
+
+.subtitle {
+    margin-top: 22px;
+    font-size: 16px;
+}
+
+.q4Toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.behaviorToggle {
+    display: flex;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+/* serviceRoutes.css의 .route-card > button { padding: 18px } 보다 우선하도록 부모 클래스를 함께 쓴다 */
+.card > .resetButton {
+    padding: 10px;
+    margin-top: 14px;
+}

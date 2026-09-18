@@ -12,11 +12,15 @@ import { withdrawMyAccount } from './api.js'
 
 
 const MENU_ITEMS = [
-    {id:'routes',title:'최근 경로',description:'검색한 경로와 실제 선택 기록'},
     {
         id: 'profile',
         title: '프로필 관리',
         description: '닉네임, 비밀번호 변경',
+    },
+    {
+        id: 'routes',
+        title: '최근 경로',
+        description: '검색한 경로와 실제 선택 기록'
     },
     {
         id: 'survey',
@@ -27,7 +31,7 @@ const MENU_ITEMS = [
         id: 'support',
         title: '도움말 / 지원',
         description: '공지사항 / 문의하기 / 약관 및 개인정보',
-    },
+    }
 ]
 
 function MyPage() {
