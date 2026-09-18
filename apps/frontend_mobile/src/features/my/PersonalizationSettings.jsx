@@ -23,8 +23,8 @@ export default function PersonalizationSettings(){
         {error&&<p role="alert">{error}</p>}
         {state&&<>
             <Q4PreferenceSummary value={state.q4}/>
-            <label className={styles.q4Toggle}><input type="checkbox" checked={state.q4?.enabled??false} disabled={busy} onChange={e=>q4Change(e.target.checked)}/>시간·거리 설문을 추천에 참고</label>
-            {!confirmRestart?<button disabled={busy} onClick={()=>setConfirmRestart(true)}>경로 비교 설문 다시하기</button>:<div><p className="service-note">부담 순위는 유지하고 행동 보정은 설문 초기값으로 돌아갑니다. 이전 응답·선택 기록은 보존됩니다.</p><button disabled={busy} onClick={restart}>새 설문 시작</button> <button disabled={busy} onClick={()=>setConfirmRestart(false)}>취소</button></div>}
+            {state.q4?.applicable&&<label className={styles.q4Toggle}><input type="checkbox" checked={state.q4?.enabled??false} disabled={busy} onChange={e=>q4Change(e.target.checked)}/>시간·거리 설문을 추천에 참고</label>}
+            {state.q4?.pending||state.q4?.status==='INCOMPLETE'?<button disabled={busy} onClick={()=>navigate('/onboarding?q4=true')}>{state.q4?.pending?'시간·거리 설문 이어서 하기':'시간·거리 선호 설문 시작'}</button>:!confirmRestart?<button disabled={busy} onClick={()=>setConfirmRestart(true)}>시간·거리 선호 다시 설정</button>:<div><p className="service-note">부담 순위와 행동 보정, 이전 응답은 유지됩니다. 새 응답은 학습 준비용으로 저장하며 추천에는 아직 적용하지 않습니다.</p><button disabled={busy} onClick={restart}>새 설문 시작</button> <button disabled={busy} onClick={()=>setConfirmRestart(false)}>취소</button></div>}
             <h3 className={styles.subtitle}>행동 개인화 · 실제 이용 기반 보정</h3>
             <p className="service-note">{state.notice}</p>
             <label className={styles.behaviorToggle}><input type="checkbox" checked={state.enabled} disabled={busy} onChange={e=>change(e.target.checked)}/>실제 경로 선택을 다음 추천에 반영</label>

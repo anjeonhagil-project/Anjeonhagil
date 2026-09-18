@@ -272,6 +272,30 @@ def train_and_select(df: pd.DataFrame, c_values: list[float], seed: int = 42):
     return best, best_params, results, skipped
 
 
+def refit_final_model(df: pd.DataFrame, params: dict, seed: int = 42) -> Pipeline:
+    """선택된 설정으로 Train+Validation을 합쳐 최종 저장 모델을 학습한다.
+
+    Test는 이 함수의 입력 학습행에서 제외되어 최종 평가 전까지 모델과 scaler에
+    영향을 주지 않는다. 검색별 sample weight 규칙은 탐색 단계와 동일하다.
+    """
+    final_fit = df[df["split"].isin(["train", "validation"])].copy()
+    if final_fit.empty or set(final_fit["y"].unique()) != {0, 1}:
+        raise ValueError("FINAL_REFIT_REQUIRES_TRAIN_VALIDATION_WITH_BOTH_LABELS")
+    counts = final_fit.groupby("search_id")["search_id"].transform("count").to_numpy(float)
+    sample_weight = 1.0 / counts
+    pipeline = make_pipeline(params, seed)
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always", ConvergenceWarning)
+        pipeline.fit(
+            final_fit[FEATURES].to_numpy(float),
+            final_fit["y"].to_numpy(int),
+            model__sample_weight=sample_weight,
+        )
+    if any(issubclass(w.category, ConvergenceWarning) for w in caught):
+        raise RuntimeError("선택된 설정이 Train+Validation 최종 재학습에서 수렴하지 않았습니다.")
+    return pipeline
+
+
 def json_ready(value):
     if isinstance(value, dict):
         return {str(k): json_ready(v) for k, v in value.items()}
@@ -329,12 +353,15 @@ def main():
     args = parser.parse_args()
 
     df, metadata = load_dataset(args.data, args.metadata)
-    model, best_params, grid, skipped = train_and_select(df, args.c_values, args.seed)
+    selection_model, best_params, grid, skipped = train_and_select(df, args.c_values, args.seed)
 
     val = df[df["split"] == "validation"].copy()
     test = df[df["split"] == "test"].copy()
-    val_metrics, val_pred = evaluate(model, val)
+    val_metrics, val_pred = evaluate(selection_model, val)
+    model = refit_final_model(df, best_params, args.seed)
     test_metrics, test_pred = evaluate(model, test)
+    selection_train = df[df["split"] == "train"]
+    final_fit = df[df["split"].isin(["train", "validation"])]
 
     report = {
         "data": {
@@ -347,12 +374,30 @@ def main():
             "seed": args.seed,
             "features": FEATURES,
             "orientation": "use_csv_as_is",
-            "scaler": "StandardScaler(with_mean=False), fit on train only",
+            "scaler": "selection fit on train; final saved scaler fit on train+validation",
             "fit_intercept": False,
             "selection_metric": "validation_log_loss_then_top1",
             "aggregation": "sum_pair_probability",
             "best_parameters": best_params,
             "valid_grid_count": len(valid_parameter_combinations(args.c_values)),
+        },
+        "selection": {
+            "fit_splits": ["train"],
+            "fit_rows": len(selection_train),
+            "fit_searches": int(selection_train["search_id"].nunique()),
+            "evaluation_split": "validation",
+            "evaluation_rows": len(val),
+            "evaluation_searches": int(val["search_id"].nunique()),
+            "best_parameters": best_params,
+        },
+        "final_training": {
+            "fit_splits": ["train", "validation"],
+            "fit_rows": len(final_fit),
+            "fit_searches": int(final_fit["search_id"].nunique()),
+            "fit_ratio": 0.85,
+            "evaluation_split": "test",
+            "evaluation_rows": len(test),
+            "evaluation_searches": int(test["search_id"].nunique()),
         },
         "validation_grid": grid,
         "skipped_candidates": skipped,
@@ -363,6 +408,10 @@ def main():
 
     print(f"유효 하이퍼파라미터 조합: {len(valid_parameter_combinations(args.c_values))}개")
     print(f"선택 설정: {best_params}")
+    print(
+        f"최종 재학습: Train+Validation {len(final_fit):,} rows / "
+        f"{final_fit['search_id'].nunique():,} searches"
+    )
     for name, metrics in (("validation", val_metrics), ("test", test_metrics)):
         print(
             f"{name}: Pair Accuracy {metrics['pair_accuracy']:.2%}, "
