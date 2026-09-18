@@ -75,11 +75,6 @@
     background: white
 }
 
-.compare-footer>.service-primary {
-    width: 100%;
-    min-height: 48px
-}
-
 .compare-footer .route-success {
     padding: 0;
     background: none
