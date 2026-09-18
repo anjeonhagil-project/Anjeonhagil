@@ -40,7 +40,7 @@ export async function search(userId,input,{signal}={}) {
         const {data:model,error:me}=await supabase.from('ag_model_versions').select('*').eq('model_version',result.model.model_version).maybeSingle()
         if(me) throw me
         if(!model||(!model.is_active&&result.recommendation_method!=='survey_fallback')||model.artifact_sha256!==result.model.artifact_sha256||model.scale_version!==result.model.scaler_version) throw Object.assign(new Error('DB와 실행 모델이 일치하지 않습니다. 모델 등록 상태를 확인해주세요.'),{status:503,code:'MODEL_REGISTRY_MISMATCH'})
-        applyQ4(result,await q4Profile(userId,profile.survey_version))
+        applyQ4(result,await q4Profile(userId,profile.survey_version,{includeTraining:false}))
         const payload=routeSnapshot(userId,input,profile,result)
         signal?.throwIfAborted()
         const saveStarted=Date.now()

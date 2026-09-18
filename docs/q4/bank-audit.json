@@ -1,0 +1,751 @@
+{
+  "method": "joint_8_feature_comparison_not_tolerance_threshold",
+  "sourcePoolCount": 93,
+  "sourceCandidateSlots": 2616,
+  "sourceHash": "4915ac7100096e49e2aff3c1eed88ed1e874328f175781003e86ef4f183ae097",
+  "modelHash": "31cf65c7eeb530dc665da061ae711e7a743d528ed3501f9b92a92776ce3d3c43",
+  "before": [
+    {
+      "factor": "COMPLEX_INTERSECTION",
+      "id": "COMPLEX_INTERSECTION_TIME_SMALL",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 15.978783727818154,
+      "improvement": 1,
+      "otherRatio": 0.6088036858388868,
+      "pSinglePriority": 0.05706021347797096,
+      "routeKeys": [
+        "c96bb4d008927cd2d17cdb9a274ee2e9666cf58b94811cbb033daae6209c21bd",
+        "36b1f7e131d3b389189a0fda7cb5ebac804bb4ada143521e342adfbbac5269bc"
+      ]
+    },
+    {
+      "factor": "COMPLEX_INTERSECTION",
+      "id": "COMPLEX_INTERSECTION_TIME_LARGE",
+      "dimension": "TIME",
+      "seconds": 120,
+      "meters": 207.74639015765933,
+      "improvement": 3,
+      "otherRatio": 0.9689699533412871,
+      "pSinglePriority": 0.0001828888736916023,
+      "routeKeys": [
+        "399373b10b54174d69637de2082e9f158e86ece61694f5e4e3d25f288894b6db",
+        "e8585b8a23b770f86f712ebdae6e8a66c6cc38935d38afb45606f1842b52ec90"
+      ]
+    },
+    {
+      "factor": "COMPLEX_INTERSECTION",
+      "id": "COMPLEX_INTERSECTION_DISTANCE_SMALL",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 234.48069071184477,
+      "improvement": 2,
+      "otherRatio": 0.3494167308414751,
+      "pSinglePriority": 0.0024348457807297935,
+      "routeKeys": [
+        "52f112be6e6fe109f3b0832188ede3a7d667b95cb4b4ec014c183f9c85035eb9",
+        "d0272955fc7660ae4c20a54ee32fed559685dc1e3d0cea7f39adfe4a4a5e2ae0"
+      ]
+    },
+    {
+      "factor": "COMPLEX_INTERSECTION",
+      "id": "COMPLEX_INTERSECTION_DISTANCE_LARGE",
+      "dimension": "DISTANCE",
+      "seconds": 60,
+      "meters": 457.0617386994322,
+      "improvement": 1,
+      "otherRatio": 1.2345835316745708,
+      "pSinglePriority": 0.0617117661280211,
+      "routeKeys": [
+        "6fb8dddf48a14222d933f8c84f86a184dd805b9c0980bd205789ccae47854a92",
+        "bb151316fb11f020c524b8e2ebe71e41a3c552559e95ea75f50204921d379b8e"
+      ]
+    },
+    {
+      "factor": "MERGE_BRANCH",
+      "id": "MERGE_BRANCH_TIME_SMALL",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": -152.33795668692164,
+      "improvement": 547.0180556832466,
+      "otherRatio": 1.6945918238835942,
+      "pSinglePriority": 0.07701093540056866,
+      "routeKeys": [
+        "6c4cc6434a2dd48ae3966457052dca3cd8ec30303080f39d7cb4ac4c5a1eb906",
+        "df66f70536ed65804ac3e66ac3250ae950a3d47a1f6028b61b961df21b2b033b"
+      ]
+    },
+    {
+      "factor": "MERGE_BRANCH",
+      "id": "MERGE_BRANCH_TIME_LARGE",
+      "dimension": "TIME",
+      "seconds": 120,
+      "meters": 158.18788423184742,
+      "improvement": 1068.7995394862369,
+      "otherRatio": 2.379507916838219,
+      "pSinglePriority": 0.00852308377950935,
+      "routeKeys": [
+        "ce12725cec2a198b7a6f16f96c9012001ee6a603be0e3481546aa27ce8d62d77",
+        "b62b982ff3b389104886a30854461224a91ab1fb45ccc3b82db4f84c9361bdfe"
+      ]
+    },
+    {
+      "factor": "MERGE_BRANCH",
+      "id": "MERGE_BRANCH_DISTANCE_SMALL",
+      "dimension": "DISTANCE",
+      "seconds": 60,
+      "meters": 151.1307495930232,
+      "improvement": 1179.2430258210288,
+      "otherRatio": 2.023882646811864,
+      "pSinglePriority": 0.0039892448468727,
+      "routeKeys": [
+        "17972ff99855c563479e8f9dbaea6b1abc865904a7a7d4b85c0f5cf0ad021a5f",
+        "b62b982ff3b389104886a30854461224a91ab1fb45ccc3b82db4f84c9361bdfe"
+      ]
+    },
+    {
+      "factor": "MERGE_BRANCH",
+      "id": "MERGE_BRANCH_DISTANCE_LARGE",
+      "dimension": "DISTANCE",
+      "seconds": 120,
+      "meters": 491.48571518039034,
+      "improvement": 1196.7282140998614,
+      "otherRatio": 2.2039705696495915,
+      "pSinglePriority": 0.004871427134857318,
+      "routeKeys": [
+        "6b8cd76a536c7801b1135c80eb1c214f94fc9f133200334fa294f012d54529df",
+        "d74c346cee07a64ce0443f44b9fadd41408a3f2a90a241f1c6d2637d188486f5"
+      ]
+    },
+    {
+      "factor": "NARROW_ROAD",
+      "id": "NARROW_ROAD_TIME_SMALL",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 5.690145575272027,
+      "improvement": 217.48969040328808,
+      "otherRatio": 0.03426314264159489,
+      "pSinglePriority": 0.12708504397540785,
+      "routeKeys": [
+        "7165d23c567e0f8b163e14fb595ada31c2df6a10aa7aaea004aa43df9d56cfc0",
+        "2eba45461a2b3deb3377ddeb374ac59f6e77318daf926cc0b458dc67afd9dd7c"
+      ]
+    },
+    {
+      "factor": "NARROW_ROAD",
+      "id": "NARROW_ROAD_TIME_LARGE",
+      "dimension": "TIME",
+      "seconds": 120,
+      "meters": 762.4242917358911,
+      "improvement": 732.5324500815569,
+      "otherRatio": 1.3014724687904915,
+      "pSinglePriority": 0.0012877383311031495,
+      "routeKeys": [
+        "4ea4eedc53068871ba108368ed16f3bbc11cda3846a73f7ad5588e4fc4cc6a95",
+        "81046d756789ae3fd85fcaf953594ebfa188bb2b6cd2fd0622bb761ba580266f"
+      ]
+    },
+    {
+      "factor": "NARROW_ROAD",
+      "id": "NARROW_ROAD_DISTANCE_SMALL",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 126.88413275533208,
+      "improvement": 213.65037748772846,
+      "otherRatio": 0.03487885382178737,
+      "pSinglePriority": 0.11026032831503071,
+      "routeKeys": [
+        "dc57e0ea7b7df24409373d104ad278fe24a4c0f789024d9e04b14dcc68777e33",
+        "701c4035126c66caefde376eb01208dc4e375383755f597a416324023c6932e3"
+      ]
+    },
+    {
+      "factor": "NARROW_ROAD",
+      "id": "NARROW_ROAD_DISTANCE_LARGE",
+      "dimension": "DISTANCE",
+      "seconds": 60,
+      "meters": 786.034655703671,
+      "improvement": 670.9495369911704,
+      "otherRatio": 1.1210790306326077,
+      "pSinglePriority": 0.0019032503368668285,
+      "routeKeys": [
+        "8effa5ac98edd43b49f05ecfb8463b9ccbf6fc748db077a6f2ee49cfc91bba01",
+        "81046d756789ae3fd85fcaf953594ebfa188bb2b6cd2fd0622bb761ba580266f"
+      ]
+    },
+    {
+      "factor": "UNFAMILIAR_TURN",
+      "id": "UNFAMILIAR_TURN_TIME_SMALL",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 27.356917108303605,
+      "improvement": 1,
+      "otherRatio": 0.027533463074737453,
+      "pSinglePriority": 0.011766427968341627,
+      "routeKeys": [
+        "552f6b966b32866277223146c61ee396d88a843372c9d4c01762f53de0cec1c6",
+        "01139a307e825ffd8ce0f3e3f14be05db69b9d028881f8642fc10d281ef82ff6"
+      ]
+    },
+    {
+      "factor": "UNFAMILIAR_TURN",
+      "id": "UNFAMILIAR_TURN_TIME_LARGE",
+      "dimension": "TIME",
+      "seconds": 120,
+      "meters": 435.8711143761325,
+      "improvement": 2,
+      "otherRatio": 0.1748254450212159,
+      "pSinglePriority": 0.00015232474278593385,
+      "routeKeys": [
+        "6a42ea21eaca32944aaf80126cac03d927c6359c345c6279effd41010d792215",
+        "2b1508fcda6880d48f71212b4ea015e20c5856cdebc49e7485dae791a8499c75"
+      ]
+    },
+    {
+      "factor": "UNFAMILIAR_TURN",
+      "id": "UNFAMILIAR_TURN_DISTANCE_SMALL",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 100.63602223136968,
+      "improvement": 1,
+      "otherRatio": 0.05209846843008731,
+      "pSinglePriority": 0.009576923852103483,
+      "routeKeys": [
+        "e1fc8e660a44180aefabafd7ab97c6d1811ae229205d47f7778b41b5ec8a2453",
+        "3b8cc0819a1fad6980f6cea842fd17c1361ed11a1931ceeb0d1555bc1556b9ec"
+      ]
+    },
+    {
+      "factor": "UNFAMILIAR_TURN",
+      "id": "UNFAMILIAR_TURN_DISTANCE_LARGE",
+      "dimension": "DISTANCE",
+      "seconds": 120,
+      "meters": 478.72645258762395,
+      "improvement": 2,
+      "otherRatio": 0.25617129031694513,
+      "pSinglePriority": 0.0001535625666874406,
+      "routeKeys": [
+        "bca313dfd243e4348ee50de77ac2dd8f65fcf4a01e1bbc883768a6193ae0c65a",
+        "1c83ca1a94260a62191c916dee3ea21c708e052420f77b0c37d63cb2dc3bf9d3"
+      ]
+    },
+    {
+      "factor": "CONSECUTIVE_ACTION",
+      "id": "CONSECUTIVE_ACTION_TIME_SMALL",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 11.488953519287861,
+      "improvement": 4,
+      "otherRatio": 0.007138359711972159,
+      "pSinglePriority": 0.002967947871766675,
+      "routeKeys": [
+        "413e5dea84b374e5993cf2db80044cf7d37b3402ba9d13ce473e9f197e6c543d",
+        "0d6f541554e598a01537b917fed8391f1d4615953af1b0b04bc6cf4dce877076"
+      ]
+    },
+    {
+      "factor": "CONSECUTIVE_ACTION",
+      "id": "CONSECUTIVE_ACTION_TIME_LARGE",
+      "dimension": "TIME",
+      "seconds": 120,
+      "meters": 420.0047304873842,
+      "improvement": 4,
+      "otherRatio": 0.14514420114227414,
+      "pSinglePriority": 0.003998607196035604,
+      "routeKeys": [
+        "481a3676daaea7e9bf06590de8ec998718b9f5a7fe64fc125605f9d5d181aa7b",
+        "f63107a8d8346136aaaf5706bb40dca8ba7999675e02d3873f467770fa30b8b7"
+      ]
+    },
+    {
+      "factor": "CONSECUTIVE_ACTION",
+      "id": "CONSECUTIVE_ACTION_DISTANCE_SMALL",
+      "dimension": "DISTANCE",
+      "seconds": 60,
+      "meters": 166.23756226295518,
+      "improvement": 4,
+      "otherRatio": 0.05671309447698007,
+      "pSinglePriority": 0.0030557101118543943,
+      "routeKeys": [
+        "66b522a5a9d7bf4f70db9490d0345e945042b6c0a673cd5831c9912102adce0e",
+        "aefe68f14b45acf3282ccf8b7bca0be20baecaef2067d91a2d2902a6380a7322"
+      ]
+    },
+    {
+      "factor": "CONSECUTIVE_ACTION",
+      "id": "CONSECUTIVE_ACTION_DISTANCE_LARGE",
+      "dimension": "DISTANCE",
+      "seconds": 60,
+      "meters": 472.66838990803194,
+      "improvement": 7,
+      "otherRatio": 0.6421550353881336,
+      "pSinglePriority": 0.00003498429477379449,
+      "routeKeys": [
+        "d6010ae2e51f759edf8897bbc0f06f9c97a671a30bf171c9cf99c93acab77c4f",
+        "829d224c012f5df079d64f224e96393cd43a233b4ba7eed5d2060329aaa2bf6f"
+      ]
+    },
+    {
+      "factor": "CHILD_ZONE_NEARBY",
+      "id": "CHILD_ZONE_NEARBY_TIME_SMALL",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 109.75449496548435,
+      "improvement": 158.83443340366838,
+      "otherRatio": 0.167768961568222,
+      "pSinglePriority": 0.05007653864402008,
+      "routeKeys": [
+        "5db523f340156f96d4577fb719c02d3ba6901368bc9439a2f7abafaceb3a4102",
+        "8197e7cd380dee602690bc669ce52604b5ec34eade98d1e7e7042d812b0594e2"
+      ]
+    },
+    {
+      "factor": "CHILD_ZONE_NEARBY",
+      "id": "CHILD_ZONE_NEARBY_TIME_LARGE",
+      "dimension": "TIME",
+      "seconds": 120,
+      "meters": 171.4176762199245,
+      "improvement": 457.41921633790344,
+      "otherRatio": 0.298612102579714,
+      "pSinglePriority": 0.00016697364104228252,
+      "routeKeys": [
+        "2ae81ce3f96345067d2e02e3d065db8d40fef384832e09228aa1ecb34488b827",
+        "1ebaee3c87ac4ffd47a174b03185d6befc3679cc10cd25bbb10aeb130370ede1"
+      ]
+    },
+    {
+      "factor": "CHILD_ZONE_NEARBY",
+      "id": "CHILD_ZONE_NEARBY_DISTANCE_SMALL",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 146.4682071966622,
+      "improvement": 158.83443340366838,
+      "otherRatio": 0.14437333062047594,
+      "pSinglePriority": 0.04078337414932886,
+      "routeKeys": [
+        "0d5bd054be71c5c359adfb3b0f89b91b10173bc97884d16614ec4ee456c917fc",
+        "24f97def8f0e9a58a4b372a98ec92d97d73ecd3002e6d18cd7c27ae247e11416"
+      ]
+    },
+    {
+      "factor": "CHILD_ZONE_NEARBY",
+      "id": "CHILD_ZONE_NEARBY_DISTANCE_LARGE",
+      "dimension": "DISTANCE",
+      "seconds": 60,
+      "meters": 468.5904092579067,
+      "improvement": 248.3004151608868,
+      "otherRatio": 1.1823338439562556,
+      "pSinglePriority": 0.009291336168701127,
+      "routeKeys": [
+        "f0e422588f26616b3489c88efb41b8abba4c5c3007389cb6945fe8ee5c79e2b9",
+        "6ece236266094048babe24fe25de4bc605ab13a3895648e7ddb79104538076da"
+      ]
+    }
+  ],
+  "after": [
+    {
+      "factor": "COMPLEX_INTERSECTION",
+      "id": "COMPLEX_INTERSECTION_JOINT_1",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 15.978783727818154,
+      "improvement": 1,
+      "otherRatio": 0.6088036858388868,
+      "pSinglePriority": 0.05706021347797096,
+      "routeKeys": [
+        "c96bb4d008927cd2d17cdb9a274ee2e9666cf58b94811cbb033daae6209c21bd",
+        "36b1f7e131d3b389189a0fda7cb5ebac804bb4ada143521e342adfbbac5269bc"
+      ]
+    },
+    {
+      "factor": "COMPLEX_INTERSECTION",
+      "id": "COMPLEX_INTERSECTION_JOINT_2",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 236.3632176342519,
+      "improvement": 1,
+      "otherRatio": 0.520658747806636,
+      "pSinglePriority": 0.04809821393670894,
+      "routeKeys": [
+        "2e265c85a0235b9b754ebe8ea45d1608122bde3fa46b7cdffc1287a0569ef327",
+        "4a5f929da684855c52d55cbcdebc25beb70457a19fe31196ff6d9d4e03abc878"
+      ]
+    },
+    {
+      "factor": "COMPLEX_INTERSECTION",
+      "id": "COMPLEX_INTERSECTION_JOINT_3",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 4.455252931662017,
+      "improvement": 1,
+      "otherRatio": 0.8629628630283411,
+      "pSinglePriority": 0.056943216264325094,
+      "routeKeys": [
+        "28f0f28344e59eb3a513b7e898f32d3f8ff1acddf69b4d5a55ebd84e03f96e1b",
+        "94ba0ab0240b884602a2c0b2d425a9978c6b7f32df7431ecd8a43ebbde15144b"
+      ]
+    },
+    {
+      "factor": "COMPLEX_INTERSECTION",
+      "id": "COMPLEX_INTERSECTION_JOINT_4",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 238.79027042676057,
+      "improvement": 1,
+      "otherRatio": 0.7119144144272138,
+      "pSinglePriority": 0.048119207277602334,
+      "routeKeys": [
+        "f3b547826622aaeee79f3c19382df8e759a6de86bc9026168f4f6b3ac1f4c313",
+        "4a5f929da684855c52d55cbcdebc25beb70457a19fe31196ff6d9d4e03abc878"
+      ]
+    },
+    {
+      "factor": "MERGE_BRANCH",
+      "id": "MERGE_BRANCH_TIME_SMALL",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": -152.33795668692164,
+      "improvement": 547.0180556832466,
+      "otherRatio": 1.6945918238835942,
+      "pSinglePriority": 0.07701093540056866,
+      "routeKeys": [
+        "6c4cc6434a2dd48ae3966457052dca3cd8ec30303080f39d7cb4ac4c5a1eb906",
+        "df66f70536ed65804ac3e66ac3250ae950a3d47a1f6028b61b961df21b2b033b"
+      ]
+    },
+    {
+      "factor": "MERGE_BRANCH",
+      "id": "MERGE_BRANCH_TIME_LARGE",
+      "dimension": "TIME",
+      "seconds": 120,
+      "meters": 158.18788423184742,
+      "improvement": 1068.7995394862369,
+      "otherRatio": 2.379507916838219,
+      "pSinglePriority": 0.00852308377950935,
+      "routeKeys": [
+        "ce12725cec2a198b7a6f16f96c9012001ee6a603be0e3481546aa27ce8d62d77",
+        "b62b982ff3b389104886a30854461224a91ab1fb45ccc3b82db4f84c9361bdfe"
+      ]
+    },
+    {
+      "factor": "MERGE_BRANCH",
+      "id": "MERGE_BRANCH_DISTANCE_SMALL",
+      "dimension": "DISTANCE",
+      "seconds": 60,
+      "meters": 151.1307495930232,
+      "improvement": 1179.2430258210288,
+      "otherRatio": 2.023882646811864,
+      "pSinglePriority": 0.0039892448468727,
+      "routeKeys": [
+        "17972ff99855c563479e8f9dbaea6b1abc865904a7a7d4b85c0f5cf0ad021a5f",
+        "b62b982ff3b389104886a30854461224a91ab1fb45ccc3b82db4f84c9361bdfe"
+      ]
+    },
+    {
+      "factor": "MERGE_BRANCH",
+      "id": "MERGE_BRANCH_DISTANCE_LARGE",
+      "dimension": "DISTANCE",
+      "seconds": 120,
+      "meters": 491.48571518039034,
+      "improvement": 1196.7282140998614,
+      "otherRatio": 2.2039705696495915,
+      "pSinglePriority": 0.004871427134857318,
+      "routeKeys": [
+        "6b8cd76a536c7801b1135c80eb1c214f94fc9f133200334fa294f012d54529df",
+        "d74c346cee07a64ce0443f44b9fadd41408a3f2a90a241f1c6d2637d188486f5"
+      ]
+    },
+    {
+      "factor": "NARROW_ROAD",
+      "id": "NARROW_ROAD_JOINT_1",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 2.5906297913172693,
+      "improvement": 155.36745623597835,
+      "otherRatio": 0.04796294195642847,
+      "pSinglePriority": 0.21190930523145854,
+      "routeKeys": [
+        "91dd72e4dacaf2eb752862a03452e03c0d425718dcbc6a4eb2221214e8752b60",
+        "92c39ff1208d0c9020b46f1078d344a275d7acaf1691dbd7af9afacbbbefd55e"
+      ]
+    },
+    {
+      "factor": "NARROW_ROAD",
+      "id": "NARROW_ROAD_JOINT_2",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 125.33437486335492,
+      "improvement": 182.5892604040735,
+      "otherRatio": 0.04081225954293816,
+      "pSinglePriority": 0.14414005599341187,
+      "routeKeys": [
+        "e071bc0e853bf8982e66d57bfc30e711774686bebf0c7430bce6f336d76b4940",
+        "701c4035126c66caefde376eb01208dc4e375383755f597a416324023c6932e3"
+      ]
+    },
+    {
+      "factor": "NARROW_ROAD",
+      "id": "NARROW_ROAD_JOINT_3",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 4.140387683294648,
+      "improvement": 186.4285733196332,
+      "otherRatio": 0.03997177124017286,
+      "pSinglePriority": 0.16517477747015002,
+      "routeKeys": [
+        "91dd72e4dacaf2eb752862a03452e03c0d425718dcbc6a4eb2221214e8752b60",
+        "2eba45461a2b3deb3377ddeb374ac59f6e77318daf926cc0b458dc67afd9dd7c"
+      ]
+    },
+    {
+      "factor": "NARROW_ROAD",
+      "id": "NARROW_ROAD_JOINT_4",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 126.88413275533208,
+      "improvement": 213.65037748772846,
+      "otherRatio": 0.03487885382178737,
+      "pSinglePriority": 0.11026032831503071,
+      "routeKeys": [
+        "dc57e0ea7b7df24409373d104ad278fe24a4c0f789024d9e04b14dcc68777e33",
+        "701c4035126c66caefde376eb01208dc4e375383755f597a416324023c6932e3"
+      ]
+    },
+    {
+      "factor": "UNFAMILIAR_TURN",
+      "id": "UNFAMILIAR_TURN_JOINT_1",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 27.356917108303605,
+      "improvement": 1,
+      "otherRatio": 0.027533463074737453,
+      "pSinglePriority": 0.011766427968341627,
+      "routeKeys": [
+        "552f6b966b32866277223146c61ee396d88a843372c9d4c01762f53de0cec1c6",
+        "01139a307e825ffd8ce0f3e3f14be05db69b9d028881f8642fc10d281ef82ff6"
+      ]
+    },
+    {
+      "factor": "UNFAMILIAR_TURN",
+      "id": "UNFAMILIAR_TURN_JOINT_2",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 150.45547481719632,
+      "improvement": 1,
+      "otherRatio": 0.1612452529558648,
+      "pSinglePriority": 0.009666592918311945,
+      "routeKeys": [
+        "8db2120c5b5414465779006b03fe04b707a55cc9ad7a0964e3a121cb3378f8dd",
+        "ba798cf9b311bab771cb52ccce9823c64beabf18afc3be6c6d68ddf585293455"
+      ]
+    },
+    {
+      "factor": "UNFAMILIAR_TURN",
+      "id": "UNFAMILIAR_TURN_JOINT_3",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 5.387997938679973,
+      "improvement": 1,
+      "otherRatio": 0.17151078290887262,
+      "pSinglePriority": 0.011718274827683464,
+      "routeKeys": [
+        "91dd72e4dacaf2eb752862a03452e03c0d425718dcbc6a4eb2221214e8752b60",
+        "5f37ea0e276cb69166949c541a5e49fa3fc944aed62e80910b7aec4f4832b665"
+      ]
+    },
+    {
+      "factor": "UNFAMILIAR_TURN",
+      "id": "UNFAMILIAR_TURN_JOINT_4",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 236.34323525003447,
+      "improvement": 1,
+      "otherRatio": 0.4481879559782607,
+      "pSinglePriority": 0.00982313684603277,
+      "routeKeys": [
+        "153fab2946861da5359978bdaeb91a4b53fe08177ed2028746249e1f6adac643",
+        "d38a2c560789857aa90f9e7117731ff824d3b88a83ce53c812439c837c18959e"
+      ]
+    },
+    {
+      "factor": "CONSECUTIVE_ACTION",
+      "id": "CONSECUTIVE_ACTION_JOINT_1",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 8.66956436165583,
+      "improvement": 2,
+      "otherRatio": 0.010773212522045264,
+      "pSinglePriority": 0.0574903266369513,
+      "routeKeys": [
+        "39b3b101b619778b4ded758a493b9b937dcf9863ccf20a41bbae68efa129f327",
+        "2d5dcbeaa2b666ce17a027b1e4090cae641619eea3ac52cda6cc421cd435f664"
+      ]
+    },
+    {
+      "factor": "CONSECUTIVE_ACTION",
+      "id": "CONSECUTIVE_ACTION_JOINT_2",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 166.3911086785024,
+      "improvement": 2,
+      "otherRatio": 0.08332123227839573,
+      "pSinglePriority": 0.047921334033612255,
+      "routeKeys": [
+        "57f23102203b39d219c26942eeb35cf043c2404dcba2ecac41952b61b3129f3b",
+        "aefe68f14b45acf3282ccf8b7bca0be20baecaef2067d91a2d2902a6380a7322"
+      ]
+    },
+    {
+      "factor": "CONSECUTIVE_ACTION",
+      "id": "CONSECUTIVE_ACTION_JOINT_3",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 10.587556894186491,
+      "improvement": 2,
+      "otherRatio": 0.013156601156892326,
+      "pSinglePriority": 0.05750995971524637,
+      "routeKeys": [
+        "413e5dea84b374e5993cf2db80044cf7d37b3402ba9d13ce473e9f197e6c543d",
+        "676c4832c61dde40bbe5014e9170c5cc6e8b408a5f7bab4312f96cfaf30766a0"
+      ]
+    },
+    {
+      "factor": "CONSECUTIVE_ACTION",
+      "id": "CONSECUTIVE_ACTION_JOINT_4",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 285.8407151577517,
+      "improvement": 2,
+      "otherRatio": 0.4951241525774944,
+      "pSinglePriority": 0.04896128188430584,
+      "routeKeys": [
+        "2b223693e917c798b4e59a8ff2d12010e8344869e480cd2a20a3c200da9cf22c",
+        "70b310992b5cd933d64fa15d70d40af51a20010cc8647aa9752c5cceef8d7317"
+      ]
+    },
+    {
+      "factor": "CHILD_ZONE_NEARBY",
+      "id": "CHILD_ZONE_NEARBY_JOINT_1",
+      "dimension": "TIME",
+      "seconds": 60,
+      "meters": 45.52169080607496,
+      "improvement": 55.568575017391396,
+      "otherRatio": 0.45269617617817687,
+      "pSinglePriority": 0.29236810112848693,
+      "routeKeys": [
+        "7651a0488e7d60522ebd56a10291a42dc1cac0fd1679d25062afa70611ab8453",
+        "2d51ac7fc1d2b72f2d159afb0a99f31e9701947ef7e6872d0aa592101f3d0f51"
+      ]
+    },
+    {
+      "factor": "CHILD_ZONE_NEARBY",
+      "id": "CHILD_ZONE_NEARBY_JOINT_2",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 146.4682071966622,
+      "improvement": 158.83443340366838,
+      "otherRatio": 0.14437333062047594,
+      "pSinglePriority": 0.04078337414932886,
+      "routeKeys": [
+        "0d5bd054be71c5c359adfb3b0f89b91b10173bc97884d16614ec4ee456c917fc",
+        "24f97def8f0e9a58a4b372a98ec92d97d73ecd3002e6d18cd7c27ae247e11416"
+      ]
+    },
+    {
+      "factor": "CHILD_ZONE_NEARBY",
+      "id": "CHILD_ZONE_NEARBY_JOINT_3",
+      "dimension": "TIME",
+      "seconds": 120,
+      "meters": 176.8155079640328,
+      "improvement": 94.3535162336911,
+      "otherRatio": 0.555866068200661,
+      "pSinglePriority": 0.19544419647106492,
+      "routeKeys": [
+        "8e24bc2c8218ec1ca474a54d356f50e7524d6e75d76aba72d08f7e506912d7b8",
+        "2847d7cef5e32de57bda63be167b674753f9c80f6390c65369941331d5e9ac1b"
+      ]
+    },
+    {
+      "factor": "CHILD_ZONE_NEARBY",
+      "id": "CHILD_ZONE_NEARBY_JOINT_4",
+      "dimension": "DISTANCE",
+      "seconds": 0,
+      "meters": 128.4361934927531,
+      "improvement": 158.83443340366838,
+      "otherRatio": 0.19632550645721394,
+      "pSinglePriority": 0.040650342124641914,
+      "routeKeys": [
+        "5ebdb364cdd25b23cbf4b16af02d22f55434c08ce97eed60fcc4c36029340c68",
+        "50116c4553b225a6cbd3fb983649133e20b85796dc011e34bc319d837d63c67a"
+      ]
+    }
+  ],
+  "limitations": [
+    "Synthetic model used only for design diagnostics; no real-user efficacy claim.",
+    "Four answers cannot establish precise individual coefficients."
+  ],
+  "selectionPolicy": {
+    "maximumOtherToTargetRatio": 1,
+    "minimumDesignRatio": 0.03,
+    "ranking": "confounding - log(4*p*(1-p)) + cross-axis change - 2*design ratio; p conditional on single Q2 priority"
+  },
+  "factors": {
+    "COMPLEX_INTERSECTION": {
+      "eligible": 42,
+      "design": {
+        "minimumEigenvalue": 0.07892662952194769,
+        "maximumEigenvalue": 0.11640179865782684,
+        "ratio": 0.6780533499654877,
+        "rank": 2
+      }
+    },
+    "MERGE_BRANCH": {
+      "eligible": 0,
+      "status": "HELD",
+      "reason": "INSUFFICIENT_QUALIFIED_REAL_PAIRS",
+      "design": {
+        "minimumEigenvalue": 0,
+        "maximumEigenvalue": 0,
+        "ratio": 0,
+        "rank": 0
+      }
+    },
+    "NARROW_ROAD": {
+      "eligible": 17,
+      "design": {
+        "minimumEigenvalue": 0.03257464461768986,
+        "maximumEigenvalue": 0.07942472604180945,
+        "ratio": 0.4101322880300834,
+        "rank": 2
+      }
+    },
+    "UNFAMILIAR_TURN": {
+      "eligible": 316,
+      "design": {
+        "minimumEigenvalue": 0.0736356466206462,
+        "maximumEigenvalue": 0.08696921746902098,
+        "ratio": 0.8466863191781129,
+        "rank": 2
+      }
+    },
+    "CONSECUTIVE_ACTION": {
+      "eligible": 179,
+      "design": {
+        "minimumEigenvalue": 0.07893297892964266,
+        "maximumEigenvalue": 0.112722023911482,
+        "ratio": 0.7002445146977391,
+        "rank": 2
+      }
+    },
+    "CHILD_ZONE_NEARBY": {
+      "eligible": 78,
+      "design": {
+        "minimumEigenvalue": 0.03370878169839124,
+        "maximumEigenvalue": 0.2377902701953925,
+        "ratio": 0.14175845660418612,
+        "rank": 2
+      }
+    }
+  },
+  "bankHash": "10b4321a778373f74aac1149ab73628505a7e19698b075b71a0dc85d73950fc7"
+}

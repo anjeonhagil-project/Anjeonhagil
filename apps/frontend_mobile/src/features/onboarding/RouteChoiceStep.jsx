@@ -57,6 +57,6 @@ export default function RouteChoiceStep({onComplete}) {
         <details className={styles.details} data-testid="q4-details" key={q.question_id}><summary>다른 도로 조건 비교하기</summary><table><caption>경로별 부담 지표</caption><thead><tr><th scope="col">비교 항목</th>{routes.map(r=><th scope="col" key={r.label}>경로 {r.label}</th>)}</tr></thead><tbody>{BURDEN_FACTORS.map((f,i)=>i!==factorIndex&&<tr key={f.code}><th scope="row">{f.label}</th>{routes.map(r=><td key={r.label}>{metricValue(r.raw_features[i],i)}</td>)}</tr>)}</tbody></table><p className="service-note">지표는 부담값, 점수·m는 부담 점수 × 통과 거리, m는 시설 중심 100m 원 내부 통과 거리입니다.</p></details>
         {error&&<p className="service-error" role="alert">{error}</p>}
         <button className="service-primary" disabled={!choice||busy} onClick={next}>{busy?'저장 중…':index===3?'설정 완료':'다음 문항'}</button>
-        <p className="service-note">답변은 추천 평가가 비슷한 경로의 시간·거리 선호에 참고합니다. 판단 보류는 기본 기준을 유지하며 실제 이용 건수에는 포함하지 않습니다.</p>
+        <p className="service-note">{session.q4AffectsRecommendation?'이전 설문은 추천 평가가 비슷한 경로의 보조 기준으로 사용합니다.':'답변은 모델 학습 준비용으로 저장합니다. 새 시간·거리 계수는 검증 후 추천에 반영합니다.'} 판단 보류는 선택 정답으로 사용하지 않습니다.</p>
     </div>
 }

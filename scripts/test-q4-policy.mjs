@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {interpretQ4,applyQ4,POLICY} from '../apps/backend/src/modules/preferences/q4Policy.js'
-const bank=JSON.parse(readFileSync('apps/backend/src/config/q4Cases.json','utf8'))
+const bank=JSON.parse(readFileSync('scripts/fixtures/q4-legacy.json','utf8'))
 let passed=0
 for(const [factor,questions] of Object.entries(bank.cases)){
     const session={session_id:'session',survey_version:'survey',case_set_version:bank.case_set_version,reference_factor:factor,reference_source:'Q2_TOP',completed_at:'2026-09-17',questions:questions.map(q=>({...q,routes:q.routes.map((r,i)=>({...r,label:i?'B':'A'}))}))}

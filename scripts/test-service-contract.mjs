@@ -39,18 +39,21 @@ for(const [factor,questions]of Object.entries(bank.cases)){
         assert.ok(improvement/a.raw_features[i]>=.2)
         assert.ok(improvement/scales[i]>=.5)
         const other=a.raw_features.reduce((sum,x,j)=>sum+(j===i?0:Math.abs(x-b.raw_features[j])/scales[j]),0)
-        assert.ok(other/(improvement/scales[i])<=3)
+        assert.ok(other/(improvement/scales[i])<=(q.training_eligible?1:3))
         const arcsA=new Set(a.segments.map(s=>s.arc_id)),arcsB=new Set(b.segments.map(s=>s.arc_id))
         assert.ok([...arcsA].filter(x=>arcsB.has(x)).length/new Set([...arcsA,...arcsB]).size<=.8)
         assert.equal(a.departure_at,b.departure_at)
         const signature=q.routes.map(r=>[r.display_duration_s,Math.round(r.distance_m/10),Math.round(r.raw_features[i])].join(':')).join('|')
         assert.ok(!signatures.has(signature),'same displayed comparison repeated');signatures.add(signature)
         const delta=b[q.dimension==='TIME'?'display_duration_s':'distance_m']-a[q.dimension==='TIME'?'display_duration_s':'distance_m']
-        const [min,max]=q.dimension==='TIME'?(q.level==='SMALL'?[60,60]:[120,600]):(q.level==='SMALL'?[100,350]:[450,1500])
+        const [min,max]=q.level==='COMPARISON'?(q.dimension==='TIME'?[60,300]:[100,1500]):q.dimension==='TIME'?(q.level==='SMALL'?[60,60]:[120,600]):(q.level==='SMALL'?[100,350]:[450,1500])
         assert.ok(delta>=min&&delta<=max)
         for(const r of q.routes){assert.equal(r.display_duration_s,Math.round(r.internal_duration_s/60)*60);assert.equal(r.quality.production_route_approved,false)}
     }
-    for(const [small,large,metric]of [[questions[0],questions[1],'display_duration_s'],[questions[2],questions[3],'distance_m']])assert.ok(small.routes[1][metric]-small.routes[0][metric]<large.routes[1][metric]-large.routes[0][metric])
+    if(questions.every(q=>q.training_eligible)){
+        assert.equal(questions.filter(q=>q.dimension==='TIME').length,2)
+        assert.equal(questions.filter(q=>q.dimension==='DISTANCE').length,2)
+    }else assert.ok(questions.every(q=>q.training_eligible===false&&q.training_hold_reason))
 }
 const model=JSON.parse(readFileSync('ml/bundled/logistic.json','utf8'))
 assert.equal(model.feature_order.length,8);assert.equal(model.with_mean,false);assert.equal(model.intercept,0)

@@ -53,3 +53,16 @@ Thumbs.db
 
 Anjeonhagil_FINAL_CHILD100_20260915 (1).zip
 /data/
+
+# Local archives and handoff packages
+/*.zip
+
+# Regenerable Q4 validation outputs
+/docs/q4/trial-validation.json
+
+# Local Q4 training exports
+/q4-training.json
+/q4-pairs.csv
+/manifest.json
+/q4-export/
+/exports/

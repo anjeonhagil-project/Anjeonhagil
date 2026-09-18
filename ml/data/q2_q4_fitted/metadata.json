@@ -1,0 +1,175 @@
+{
+  "purpose": "q4_fitted_multiplier_additional_experiment",
+  "training_source": "DERIVED_FROM_COMMON_SYNTHETIC_Q2_Q4_DATA",
+  "real_user_validated": false,
+  "model_not_run": true,
+  "scaler_fitted": false,
+  "search_count": 3000,
+  "pair_row_count": 6000,
+  "candidate_count_per_search": 3,
+  "pair_rows_per_search": 2,
+  "split_search_counts": {
+    "train": 2100,
+    "validation": 450,
+    "test": 450
+  },
+  "split_pair_counts": {
+    "train": 4200,
+    "validation": 900,
+    "test": 900
+  },
+  "placement_seed": 2026,
+  "q4_response_seed": 20260918,
+  "feature_names": [
+    "time_diff",
+    "distance_diff",
+    "intersection_weighted_diff",
+    "merge_weighted_diff",
+    "narrow_weighted_diff",
+    "turn_weighted_diff",
+    "consecutive_weighted_diff",
+    "child_100m_weighted_diff"
+  ],
+  "factor_order": [
+    "COMPLEX_INTERSECTION",
+    "MERGE_BRANCH",
+    "NARROW_ROAD",
+    "UNFAMILIAR_TURN",
+    "CONSECUTIVE_ACTION",
+    "CHILD_ZONE_NEARBY"
+  ],
+  "raw6_units": [
+    "count",
+    "score*m",
+    "score*m",
+    "count",
+    "count",
+    "m"
+  ],
+  "feature_version": "static_burden_v5_child_circle_inside",
+  "contract_version": "anjeon_contract_v6_child100",
+  "csv_audit_columns_not_model_features": [
+    "sample_weight",
+    "m_time",
+    "m_distance"
+  ],
+  "source_dataset": {
+    "purpose": "synthetic_q2_q4_common_model_comparison",
+    "training_source": "SYNTHETIC_Q2_Q4_PROFILE",
+    "output_sha256": {
+      "synthetic_pairwise_q2_q4.csv": "c69a0f4daec499adb5487431fce22c86229a36394ad0a326d065791868a94a1b",
+      "synthetic_pairwise_q2_control.csv": "50c9d7b54cfc6d2808f28991a3a62cd3b148aef56c427afadf9547ee481c22de",
+      "synthetic_searches_q2_q4.json": "394fe75a060148c0b5c3bf7df43657c06705fa5e052bc8fe9c16c698f6ec2d4b",
+      "metadata.json": "5b0b794806af4a5533e8cf8a1fc5ca1692ab9e4433ac0dd66ddf27b4205fdc6f"
+    }
+  },
+  "preserved_from_source": [
+    "search_id",
+    "split",
+    "routes",
+    "q2_weights",
+    "a_b_placement",
+    "y",
+    "sample_weight",
+    "x2_to_x7"
+  ],
+  "changed_from_source": [
+    "q4_responses",
+    "m_time",
+    "m_distance",
+    "x0_time_diff",
+    "x1_distance_diff"
+  ],
+  "label_policy": {
+    "y": "preserved exactly from common simulated Q2+Q4 source",
+    "no_choice_regeneration": true,
+    "source_simulated_multiplier_used_only_as_hidden_preference_for_response_generation": true
+  },
+  "q4_profile": {
+    "mode": "fitted-responses-additional-experiment",
+    "fit_from_synthetic_q4_answers": true,
+    "answers_per_search": 4,
+    "answer_values": [
+      "A",
+      "B"
+    ],
+    "bounds": [
+      0.5,
+      2.0
+    ],
+    "fallback": "[1,1] under fitTrial policy or unvalidated/no-Q2 reference",
+    "status_counts": {
+      "HELD": 873,
+      "TRIAL_ONLY": 2127
+    },
+    "reason_counts": {
+      "UNVALIDATED_BANK_OR_NO_Q2_REFERENCE": 873,
+      "REGULARIZED_CONDITIONAL_FIT": 2127
+    },
+    "bank_version": "q4_joint_training_20260917_v1",
+    "bank_sha256": "94b66a390048ec0c79a7b38bad93c79910fd96e0231e7c4e34999feb8b79813a",
+    "estimator_version": "q4_trial_20260917_v1",
+    "estimator_model_version": "logistic_synthetic_20260916",
+    "estimator_model_hash": "31cf65c7eeb530dc665da061ae711e7a743d528ed3501f9b92a92776ce3d3c43",
+    "trial_policy_executed": {
+      "version": "q4_trial_20260917_v1",
+      "experimental": true,
+      "productionEnabled": false,
+      "bounds": [
+        0.5,
+        2
+      ],
+      "regularization": 1,
+      "minimumAnswers": 3,
+      "minimumDesignRatio": 0.01
+    }
+  },
+  "pair_policy": "chosen vs each unchosen; random A/B; no reverse augmentation",
+  "sample_weight_policy": "1 / pairs_per_search = 0.5",
+  "validation": {
+    "status": "passed",
+    "search_count": 3000,
+    "pair_row_count": 6000,
+    "split_search_counts": {
+      "train": 2100,
+      "validation": 450,
+      "test": 450
+    },
+    "split_pair_counts": {
+      "train": 4200,
+      "validation": 900,
+      "test": 900
+    },
+    "checks": [
+      "X8 formula/order/finite",
+      "Q2 once",
+      "Q4 per search",
+      "AB sign reversal",
+      "selected vs unselected only",
+      "no reverse duplicates",
+      "weight sum 1 per search",
+      "search-disjoint 70:15:15",
+      "matched Q2-only control"
+    ],
+    "source_comparison": "passed",
+    "preserved_pair_rows": 6000,
+    "rows_with_changed_x0_or_x1": 4250
+  },
+  "versions": {
+    "python": "3.12.7",
+    "numpy": "2.3.5"
+  },
+  "code_sha256": {
+    "generate_synthetic_q2_q4_fitted.py": "91bc7c910f61243d4cbed0bbc25455ccb9d8ba916f78bcc743b53232fd27f50e",
+    "q4-trial.mjs": "f900434b53f81f1e3041f92079cc8723cfbdf034128c9c03e90c43450f502d4e",
+    "q4-synthetic-profiles.mjs": "ac8a7c0296c2086bb1e6d27a26d5a6cf6671fb0a8e6259086bfd3dae5a7c43a6",
+    "synthesize-q4-profiles.mjs": "11f617f1dfa97221a889528e49d506e2bed05c2a88c090fbb004aecc0316caca",
+    "q2_q4_features.py": "8723d06426f9b057ceb4a2fc6eb2b09194a89c3812aebccba0034bfa4ef170dc"
+  },
+  "output_sha256": {
+    "synthetic_pairwise_q2_q4.csv": "1ebdb01eb22d200db78ec90cc94d521c8b89dc36e1d7af8f11768cd3846d811e",
+    "synthetic_pairwise_q2_control.csv": "1643796299fb54f670801114de6d4e18ccd7834229f36fb620f14441c2010704",
+    "synthetic_searches_q2_q4.json": "efecf5e5ee295f9422b4db109479b3075fa994cec93431b647750166d6fdbc88"
+  },
+  "warning": "Synthetic four-answer Q4 sensitivity experiment only; not real-user validation."
+}

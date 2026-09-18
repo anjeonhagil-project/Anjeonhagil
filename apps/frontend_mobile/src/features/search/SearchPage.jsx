@@ -281,7 +281,7 @@ function SearchPage() {
                                 origin: { lng: 127.0331208, lat: 37.5110356, name: '예시 출발지' }, destination: { lng: 127.0380034, lat: 37.5011924, name: '예시 도착지' }, departureAt: '2026-09-16T08:00:00+09:00'
                             }
                         })}>예시 구간 A</button>
-                    </section>} 
+                    </section>}
                 </div>
             )}
 
