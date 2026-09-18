@@ -66,7 +66,7 @@ try{
     await page.getByRole('button',{name:/^전체 동의/}).click()
     await page.getByRole('button',{name:'동의하고 가입 완료',exact:true}).click()
     await page.waitForURL('**/location-permission')
-    await page.getByRole('button',{name:'출발지를 직접 입력할게요'}).click()
+    await page.getByRole('button',{name:'위치 권한 허용 거부'}).click()
     await page.getByRole('button',{name:'시작하기',exact:true}).click()
     await page.getByLabel('운전 빈도').selectOption('daily')
     const ranks=['2','0','1','0','0','3']

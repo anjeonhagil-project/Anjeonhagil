@@ -41,7 +41,7 @@ function LocationPermissionPage() {
                 <Button fullWidth onClick={handleAllow} className={styles.submitBtn}>
                     위치 권한 허용
                 </Button>
-                <button type="button" className={styles.skipBtn} onClick={goNext}>출발지를 직접 입력할게요</button>
+                <button type="button" className={styles.skipBtn} onClick={goNext}>위치 권한 허용 거부</button>
             </div>
         </div>
     )
