@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { IoBusinessOutline, IoHeartOutline, IoHomeOutline } from 'react-icons/io5'
 import { hasSelectedLocation } from '../../lib/placeSelection.js'
 import { Button, Input, Modal } from '../../components/common/index.js'
 import Header from '../../components/layout/Header.jsx'
@@ -12,9 +13,9 @@ import { buildFavoriteLocationSelection } from './favoriteContract.js'
 
 const FREQUENT_PLACE_TYPES = ['home', 'work']
 const PLACE_TYPE_ICONS = {
-    home: '⌂',
-    work: '▦',
-    custom: '♡',
+    home: <IoHomeOutline />,
+    work: <IoBusinessOutline />,
+    custom: <IoHeartOutline />,
 }
 
 function FavoritesPage() {

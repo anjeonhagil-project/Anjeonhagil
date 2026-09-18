@@ -33,7 +33,7 @@ function LocationPermissionPage() {
                 </div>
                 <h1 className={styles.title}>위치 권한을 허용해 주세요</h1>
                 <p className={styles.description}>
-                    현재 위치에서 출발하거나 지도를 탐색할 때 사용합니다.
+                    현위치에서 출발하거나 지도를 탐색할 때 사용합니다.
                     <br />
                     설정에서 언제든 변경할 수 있어요.
                 </p>
@@ -41,7 +41,7 @@ function LocationPermissionPage() {
                 <Button fullWidth onClick={handleAllow} className={styles.submitBtn}>
                     위치 권한 허용
                 </Button>
-                <button type="button" onClick={goNext} style={{marginTop:16,border:0,background:'none',color:'#526b70',cursor:'pointer'}}>출발지를 직접 입력할게요</button>
+                <button type="button" className={styles.skipBtn} onClick={goNext}>출발지를 직접 입력할게요</button>
             </div>
         </div>
     )

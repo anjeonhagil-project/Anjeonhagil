@@ -1,0 +1,270 @@
+/* 비교 설문 전용 스타일: 핵심 세 수치만 카드에, 나머지 조건은 펼침 표에 표시한다. */
+
+/* serviceRoutes.css에 있던 Q4 기본 규칙 중 아래 규칙에 덮이지 않는 것 */
+.progress {
+    height: 5px;
+    background: #dae5e9;
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+.progress > span {
+    display: block;
+    height: 100%;
+    background: #087f8c;
+}
+
+/* 설문은 고정 4문항이라 진행률을 단계별 클래스로 표시한다 */
+.progressStep1 {
+    width: 25%;
+}
+
+.progressStep2 {
+    width: 50%;
+}
+
+.progressStep3 {
+    width: 75%;
+}
+
+.progressStep4 {
+    width: 100%;
+}
+
+.option b {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.unsure {
+    padding: 12px;
+    background: white;
+    border: 1px solid #bccbd4;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.unsure.selected {
+    border: 2px solid #087f8c;
+}
+
+/* RouteChoiceStep 전용 규칙 */
+.step {
+    color: #173e43;
+    gap: 0;
+}
+
+.step > * {
+    flex-shrink: 0;
+}
+
+.step .progress {
+    margin: 8px 0 0;
+}
+
+.step .title {
+    font-size: 23px;
+    line-height: 1.4;
+    letter-spacing: -.6px;
+    margin: 18px 0 10px;
+}
+
+.intro {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #526c71;
+    margin: 0 0 16px;
+    word-break: keep-all;
+}
+
+.mapLegend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 8px 0 14px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.mapLegend span:first-child,
+.cardHeading.routeA {
+    color: #087f8c;
+}
+
+.mapLegend span:last-child,
+.cardHeading.routeB {
+    color: #5264ba;
+}
+
+.difference {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #edf6f5;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.difference span {
+    color: #526c71;
+}
+
+.step .options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 12px 0 8px;
+}
+
+.step .option {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 12px;
+    border: 2px solid #dce7e7;
+    border-radius: 16px;
+    background: #fff;
+    color: #173e43;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    box-shadow: 0 3px 10px #163e4305;
+}
+
+.step .option.selected {
+    border-color: #087f8c;
+    background: #f0faf8;
+    box-shadow: 0 0 0 1px #087f8c;
+}
+
+.cardHeading {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.step .cardHeading b {
+    font-size: 14px;
+    margin: 0;
+}
+
+.step .option .time {
+    display: block;
+    font-size: 25px;
+    line-height: 1.4;
+    margin: 12px 0 0;
+    letter-spacing: -.5px;
+}
+
+.distance {
+    font-size: 13px;
+    color: #5d7479;
+}
+
+.focus {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #dce7e7;
+}
+
+.focus > span {
+    font-size: 12px;
+    line-height: 1.5;
+    word-break: keep-all;
+    min-height: 36px;
+}
+
+.step .focus > b {
+    font-size: 15px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    margin: 0;
+}
+
+.unitNote {
+    font-size: 12px;
+    line-height: 1.65;
+    color: #64797e;
+    margin: 8px 0 14px;
+}
+
+.step .unsure {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 12px;
+    font: inherit;
+    font-size: 14px;
+}
+
+.step .unsure + :global(.service-note) {
+    margin-top: 12px;
+}
+
+.step :global(.service-primary) + :global(.service-note) {
+    margin-top: 12px;
+}
+
+.details {
+    border: 1px solid #dce7e7;
+    border-radius: 12px;
+    margin: 14px 0 20px;
+    padding: 12px;
+}
+
+.details summary {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 24px;
+}
+
+.details table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 12px 0;
+}
+
+.details caption {
+    text-align: left;
+    margin: 4px 0 8px;
+    color: #64797e;
+}
+
+.details th,
+.details td {
+    padding: 10px 3px;
+    border-bottom: 1px solid #e7eeee;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.details th:first-child {
+    width: 40%;
+    text-align: left;
+    font-weight: 500;
+}
+
+.details td {
+    text-align: center;
+}
+
+.step button:focus-visible,
+.details summary:focus-visible {
+    outline: 3px solid #e3aa39;
+    outline-offset: 3px;
+}
+
+.step button:disabled {
+    cursor: default;
+    opacity: .6;
+}

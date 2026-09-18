@@ -19,7 +19,7 @@ export function hasSelectedLocation(place) {
 
 export function toCurrentLocation(position) {
     return {
-        placeName: '현재 위치',
+        placeName: '현위치',
         address: '',
         latitude: position.lat,
         longitude: position.lng,
@@ -28,7 +28,7 @@ export function toCurrentLocation(position) {
     }
 }
 
-// 현재 위치 → 주소가 없어도 GPS 좌표만 정상이면 경로 검색 가능
+// 현위치 → 주소가 없어도 GPS 좌표만 정상이면 경로 검색 가능
 
 export function hasRouteLocation(place) {
     const hasCoordinates = Number.isFinite(place?.latitude)

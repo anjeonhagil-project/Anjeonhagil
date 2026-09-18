@@ -51,3 +51,11 @@
 .submitBtn {
     width: 100%;
 }
+
+.skipBtn {
+    margin-top: 16px;
+    border: 0;
+    background: none;
+    color: #526b70;
+    cursor: pointer;
+}
