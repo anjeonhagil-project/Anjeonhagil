@@ -100,9 +100,12 @@ function OnboardingPage() {
             <Header title="운전 부담 설문" onBack={() => setScreen('intro')} />
             <div className={`${styles.body} hide-scrollbar`}>
                 <section className={styles.questionContent}>
-                    <PreferenceRankForm initialValue={initialValue} onSubmit={saveSurvey} disabled={isSubmitting} submitLabel={isSubmitting ? '저장 중...' : '다음'} />
+                    <PreferenceRankForm formId="onboarding-preference-form" showSubmit={false} initialValue={initialValue} onSubmit={saveSurvey} disabled={isSubmitting} />
                     {submitError && <p className={styles.errorMessage} role="alert">{submitError}</p>}
                 </section>
+            </div>
+            <div className={styles.fixedAction}>
+                <Button type="submit" form="onboarding-preference-form" fullWidth disabled={isSubmitting}>{isSubmitting ? '저장 중...' : '다음'}</Button>
             </div>
         </main>
     )
