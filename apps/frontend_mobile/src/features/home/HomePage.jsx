@@ -422,7 +422,7 @@ function HomePage() {
                             disabled={busy || !hasSelectedLocation(selected)}
                             onClick={completeFavoriteLocationSelection}
                         >
-                            {editingFavoriteId ? '이 위치로 변경' : `이 위치를 ${PLACE_TYPE_LABELS[placeType]}로 등록`}
+                            {editingFavoriteId ? '이 위치로 변경' : `${PLACE_TYPE_LABELS[placeType]}(으)로 등록`}
                         </Button>
                     )}
                     {!editingFavoriteId && !selectingFavoriteLocation && (

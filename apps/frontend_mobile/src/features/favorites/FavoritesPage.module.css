@@ -107,7 +107,6 @@
     border: 0;
     color: var(--color-primary-600);
     background: transparent;
-    font: inherit;
     font-size: 11px;
     font-weight: 700;
     cursor: pointer;
@@ -117,9 +116,8 @@
     flex-shrink: 0;
     padding: 0;
     border: 0;
-    color: var(--color-primary-500-main);
+    color: var(--color-primary-600);
     background: transparent;
-    font: inherit;
     font-size: 12px;
     font-weight: 380;
     cursor: pointer;
@@ -205,7 +203,6 @@
     border: 0;
     color: var(--color-text-faint);
     background: transparent;
-    font: inherit;
     font-size: 11px;
     cursor: pointer;
 }
@@ -382,7 +379,6 @@
     border-radius: 8px;
     color: var(--color-text-sub);
     background: var(--color-bg-white);
-    font: inherit;
     font-size: 13px;
     cursor: pointer;
 }
