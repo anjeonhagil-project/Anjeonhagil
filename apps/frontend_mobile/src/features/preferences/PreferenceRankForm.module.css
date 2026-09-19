@@ -24,3 +24,8 @@
 .section button:disabled { opacity:.45; cursor:default; }
 .section button:focus-visible { outline:3px solid #e3aa39; outline-offset:2px; }
 .error { color:#a23a2a; font-size:13px; }
+.rankChoices { display:grid; gap:8px; }
+.rankChoices button { display:flex; align-items:center; gap:12px; width:100%; min-height:50px; padding:10px 12px; border:1px solid #e2ebeb; border-radius:12px; background:white; text-align:left; }
+.rankChoices button[aria-pressed=true] { background:#f0f8f6; border-color:#a9d2cc; }
+.rankChoices button[data-rank="1"] .rank { background:var(--color-primary-500-main); color:white; }
+.section .reset { justify-self:end; min-height:40px; border:0; padding:8px 0 8px 12px; background:none; color:#52767b; font-size:12px; text-decoration:underline; text-underline-offset:3px; }

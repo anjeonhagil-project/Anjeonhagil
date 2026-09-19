@@ -32,7 +32,7 @@ try{
                     if(failSave){failSave=false;return route.fulfill({status:503,json:{success:false,error:{message:'기본 설정 저장 오류'}}})}
                     saveCount++;preferences={...req.postDataJSON(),surveyVersion:'survey'+saveCount};pending=true;session.answers=[];session.completed_at=null
                 }
-                data={preferences,onboarding:{surveyCompleted:true,routeChoicesCompleted:!!session.completed_at,usesCurrentSurvey:true}}
+                data={preferences,onboarding:{surveyCompleted:!!preferences,routeChoicesCompleted:!!session.completed_at,usesCurrentSurvey:true}}
             }
             return route.fulfill({json:{success:true,data}})
         }
@@ -40,17 +40,40 @@ try{
         return route.continue()
     })
     const visit=()=>page.goto('http://127.0.0.1:5189/__q4_test')
+    async function checkFooter(){
+        await page.setViewportSize({width:360,height:640})
+        const footer=page.getByTestId('q4-footer')
+        const before=await footer.boundingBox()
+        await page.getByTestId('q4-details').locator('summary').click()
+        const audit=await page.getByTestId('q4-step').evaluate(el=>{
+            let scroll=el
+            while(scroll&&!['auto','scroll'].includes(getComputedStyle(scroll).overflowY))scroll=scroll.parentElement
+            if(!scroll)return null
+            scroll.scrollTop=scroll.scrollHeight
+            const footer=document.querySelector('[data-testid="q4-footer"]'),rect=footer.getBoundingClientRect()
+            const notes=el.querySelectorAll(':scope > .service-note'),last=notes[notes.length-1].getBoundingClientRect()
+            return {canScroll:scroll.scrollHeight>scroll.clientHeight,scrollTop:scroll.scrollTop,hidden:getComputedStyle(scroll).scrollbarWidth==='none',noteAboveFooter:last.bottom<=rect.top+1}
+        })
+        const after=await footer.boundingBox()
+        assert.ok(audit?.canScroll&&audit.scrollTop>0&&audit.hidden&&audit.noteAboveFooter,JSON.stringify(audit))
+        assert.ok(Math.abs(before.y-after.y)<1&&after.y+after.height<=640&&after.x>=0&&after.x+after.width<=360)
+        assert.equal(await page.getByRole('button',{name:'다음',exact:true}).count(),1);passed+=3
+        await page.getByTestId('q4-details').locator('summary').click()
+        await page.setViewportSize({width:390,height:844})
+    }
     await visit()
     await page.getByRole('button',{name:'선호 다시 불러오기'}).click()
     await page.getByTestId('q4-summary').waitFor();passed++
     assert.equal(await page.evaluate(()=>Boolean(document.querySelector('[data-testid="q4-summary"]').compareDocumentPosition(document.querySelector('form'))&Node.DOCUMENT_POSITION_FOLLOWING)),true);passed++
     assert.equal(await page.getByRole('region',{name:'Q3 경로 비교'}).getByRole('button',{name:'경로 비교 다시 하기',exact:true}).count(),1);passed++
     await page.getByRole('button',{name:'좁은 도로·골목길',exact:true}).click()
-    await page.getByRole('button',{name:'좁은 도로·골목길 순위 올리기',exact:true}).click()
-    assert.match(await page.getByRole('list',{name:'선택한 부담 순위'}).locator('li').first().innerText(),/좁은 도로/);passed++
-    await page.getByRole('button',{name:'좁은 도로·골목길 순위 내리기',exact:true}).click()
-    await page.getByRole('button',{name:'좁은 도로·골목길 선택 해제',exact:true}).click()
-    assert.equal(await page.getByRole('list',{name:'선택한 부담 순위'}).locator('li').count(),1);passed++
+    assert.equal(await page.getByRole('button',{name:'좁은 도로·골목길',exact:true}).getAttribute('data-rank'),'2');passed++
+    await page.getByRole('button',{name:'복잡한 교차로',exact:true}).click()
+    assert.equal(await page.getByRole('button',{name:'좁은 도로·골목길',exact:true}).getAttribute('data-rank'),'1');passed++
+    await page.getByRole('button',{name:'순위 다시 정하기',exact:true}).click()
+    assert.equal(await page.getByRole('group',{name:'부담 순위 선택'}).locator('[aria-pressed=true]').count(),0)
+    assert.equal(saveCount,0);passed+=2
+    await page.getByRole('button',{name:'복잡한 교차로',exact:true}).click()
     await page.getByRole('button',{name:'경로 비교 다시 하기',exact:true}).click()
     await page.getByRole('button',{name:'취소',exact:true}).click();assert.equal(pending,false);passed++
     await page.getByRole('button',{name:'경로 비교 다시 하기',exact:true}).click()
@@ -60,40 +83,57 @@ try{
     assert.equal(await page.getByRole('button',{name:'거의 매일',exact:true}).isDisabled(),true)
     assert.equal(await page.getByTestId('q4-details').locator('tbody tr').count(),6)
     assert.equal(await page.getByTestId('q4-details').getAttribute('open'),null);passed+=4
+    await checkFooter()
     await page.getByRole('button',{name:'비교 잠시 닫기'}).click()
     await page.getByRole('button',{name:'경로 비교 이어서 하기',exact:true}).click()
     await page.getByText('경로 비교 설문 1 / 4',{exact:true}).waitFor();passed++
-    assert.equal(await page.getByRole('button',{name:'다음 문항',exact:true}).isDisabled(),true);passed++
-    await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click();failNext=true
-    await page.getByRole('button',{name:'다음 문항',exact:true}).click();await page.getByRole('alert').filter({hasText:'일시적인 저장 오류'}).waitFor();passed++
-    await page.getByRole('button',{name:'다음 문항',exact:true}).click();await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor()
+    assert.equal(await page.getByRole('button',{name:'다음',exact:true}).isDisabled(),true);passed++
+    await page.getByRole('button',{name:'상관없음',exact:true}).click();failNext=true
+    await page.getByRole('button',{name:'다음',exact:true}).click();await page.getByRole('alert').filter({hasText:'일시적인 저장 오류'}).waitFor();passed++
+    await page.getByRole('button',{name:'다음',exact:true}).click();await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor()
     await visit();await page.getByRole('button',{name:'경로 비교 이어서 하기',exact:true}).click();await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor();passed++
     mkdirSync('.test-tools/q4-ui',{recursive:true});await page.screenshot({path:'.test-tools/q4-ui/survey-mobile.png',fullPage:true})
-    for(let i=1;i<4;i++){await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click();await page.getByRole('button',{name:i===3?'변경사항 저장':'다음 문항',exact:true}).click()}
+    for(let i=1;i<4;i++){await page.getByRole('button',{name:'상관없음',exact:true}).click();await page.getByRole('button',{name:i===3?'변경사항 저장':'다음',exact:true}).click()}
     await page.getByRole('heading',{name:'마이페이지',exact:true}).waitFor();await page.getByRole('status').filter({hasText:'변경사항이 저장되었습니다.'}).waitFor();passed+=2
     await page.getByRole('button',{name:'저장 알림 닫기'}).click();assert.equal(await page.getByRole('status').count(),0);passed++
     await visit();await page.getByRole('button',{name:'변경사항 저장',exact:true}).click();await page.getByRole('heading',{name:'마이페이지',exact:true}).waitFor();assert.equal(saveCount,0);passed++
     await visit();await page.getByRole('button',{name:'주 1회 이상',exact:true}).click();failSave=true
     await page.getByRole('button',{name:'좁은 도로·골목길',exact:true}).click()
-    await page.getByRole('button',{name:'좁은 도로·골목길 순위 올리기',exact:true}).click()
+    await page.getByRole('button',{name:'복잡한 교차로',exact:true}).click()
+    await page.getByRole('button',{name:'복잡한 교차로',exact:true}).click()
     assert.equal(await page.getByTestId('q4-summary').count(),1)
     assert.equal(await page.getByRole('button',{name:'경로 비교 다시 하기',exact:true}).count(),0);passed+=2
     await page.getByRole('button',{name:'저장하고 경로 비교',exact:true}).click();await page.getByRole('alert').filter({hasText:'기본 설정 저장 오류'}).waitFor();assert.equal(saveCount,0);assert.equal(await page.getByRole('button',{name:'주 1회 이상',exact:true}).getAttribute('aria-pressed'),'true');passed++
     await page.getByRole('button',{name:'저장하고 경로 비교',exact:true}).click();await page.getByText('경로 비교 설문 1 / 4',{exact:true}).waitFor();assert.equal(saveCount,1);passed++
     assert.deepEqual(preferences.ranks,[2,0,1,0,0,0]);passed++
-    for(let i=0;i<4;i++){await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click();await page.getByRole('button',{name:i===3?'변경사항 저장':'다음 문항',exact:true}).click()}
+    for(let i=0;i<4;i++){await page.getByRole('button',{name:'상관없음',exact:true}).click();await page.getByRole('button',{name:i===3?'변경사항 저장':'다음',exact:true}).click()}
     await page.getByRole('heading',{name:'마이페이지',exact:true}).waitFor();passed++
     await visit();await page.getByRole('button',{name:'경로 비교 다시 하기',exact:true}).waitFor()
-    assert.match(await page.getByRole('list',{name:'선택한 부담 순위'}).locator('li').first().innerText(),/좁은 도로/);passed++
+    assert.equal(await page.getByRole('button',{name:'좁은 도로·골목길',exact:true}).getAttribute('data-rank'),'1');passed++
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true);passed++
     await page.screenshot({path:'.test-tools/q4-ui/settings-mobile.png',fullPage:true})
-    await page.getByRole('list',{name:'선택한 부담 순위'}).locator('..').screenshot({path:'.test-tools/q4-ui/ranking-mobile.png'})
+    await page.getByRole('group',{name:'부담 순위 선택'}).locator('..').screenshot({path:'.test-tools/q4-ui/ranking-mobile.png'})
     await page.setViewportSize({width:1280,height:900});await page.screenshot({path:'.test-tools/q4-ui/settings-desktop.png',fullPage:true})
     // Signup still finishes at its own completion screen, not MyPage.
-    session.completed_at=null;session.answers=[]
+    session.completed_at=null;session.answers=[];preferences=null
     await page.goto('http://127.0.0.1:5189/__q4_test?entry=/onboarding')
+    await page.getByRole('button',{name:'시작하기',exact:true}).click()
+    assert.equal(await page.locator('form > button').count(),0)
+    await page.getByRole('button',{name:'다음',exact:true}).click()
+    await page.getByRole('alert').waitFor()
+    await page.getByRole('button',{name:'거의 매일',exact:true}).click()
+    await page.getByRole('button',{name:'복잡한 교차로',exact:true}).click()
+    const buttonClass=await page.getByRole('button',{name:'다음',exact:true}).getAttribute('class')
+    await page.getByRole('button',{name:'다음',exact:true}).click()
     await page.getByText('경로 비교 설문 1 / 4',{exact:true}).waitFor()
-    for(let i=0;i<4;i++){await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click();await page.getByRole('button',{name:i===3?'설정 완료':'다음 문항',exact:true}).click()}
+    assert.equal(saveCount,2);passed+=2
+    await checkFooter()
+    await page.getByRole('button',{name:'상관없음',exact:true}).click()
+    assert.equal(await page.getByRole('button',{name:'다음',exact:true}).getAttribute('class'),buttonClass)
+    assert.equal(await page.getByRole('button',{name:'다음',exact:true}).isEnabled(),true);passed++
+    await page.getByTestId('q4-title').scrollIntoViewIfNeeded()
+    await page.screenshot({path:'.test-tools/q4-ui/signup-fixed-footer.png',fullPage:true})
+    for(let i=0;i<4;i++){await page.getByRole('button',{name:'상관없음',exact:true}).click();await page.getByRole('button',{name:i===3?'설정 완료':'다음',exact:true}).click()}
     await page.getByRole('button',{name:'안전하길 시작하기'}).waitFor();passed++
     assert.deepEqual(errors,[]);passed++;console.log({passed,scope:'React + mocked API: Q3, retry, resume, no-op save, edited save, MyPage toast, signup, mobile/desktop'})
 }finally{await browser?.close();await server.close()}

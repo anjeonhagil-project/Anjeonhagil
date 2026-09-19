@@ -9,7 +9,6 @@ export default function PreferenceRankForm({initialValue,onSubmit,submitLabel='�
     useEffect(()=>{onDirtyChange?.(JSON.stringify(answers)!==JSON.stringify(normalizePreferences(initialValue)))},[answers,initialValue,onDirtyChange])
     const ordered=answers.ranks.map((rank,index)=>({rank,index})).filter(v=>v.rank>0).sort((a,b)=>a.rank-b.rank).map(v=>v.index)
     function reorder(indices){setError('');setAnswers(current=>({...current,ranks:BURDEN_FACTORS.map((_,i)=>indices.includes(i)?indices.indexOf(i)+1:0)}))}
-    function move(position,delta){const next=[...ordered];[next[position],next[position+delta]]=[next[position+delta],next[position]];reorder(next)}
     async function submit(event){
         event.preventDefault()
         if(disabled)return
@@ -29,22 +28,15 @@ export default function PreferenceRankForm({initialValue,onSubmit,submitLabel='�
         <section className={styles.section}>
             <span className={styles.eyebrow}>02 · 부담되는 상황</span>
             <h2>가장 부담되는 것부터 골라주세요</h2>
-            <p>누르는 순서대로 순위가 정해져요. 화살표로 바꿀 수 있어요.</p>
-            <ol className={styles.ranking} aria-label="선택한 부담 순위">
-                {ordered.map((index,position)=><li key={BURDEN_FACTORS[index].code}>
-                    <span className={styles.rank}>{position+1}</span><span className={styles.factor}>{BURDEN_FACTORS[index].label}</span>
-                    <div className={styles.controls}>
-                        <button type="button" aria-label={BURDEN_FACTORS[index].label+' 순위 올리기'} disabled={disabled||position===0} onClick={()=>move(position,-1)}>↑</button>
-                        <button type="button" aria-label={BURDEN_FACTORS[index].label+' 순위 내리기'} disabled={disabled||position===ordered.length-1} onClick={()=>move(position,1)}>↓</button>
-                        <button type="button" aria-label={BURDEN_FACTORS[index].label+' 선택 해제'} disabled={disabled} onClick={()=>reorder(ordered.filter(i=>i!==index))}>×</button>
-                    </div>
-                </li>)}
-            </ol>
-            {!ordered.length&&<p className={styles.empty}>아래에서 부담되는 상황을 선택해주세요.</p>}
-            <div className={styles.available} aria-label="추가할 부담 상황">
-                {BURDEN_FACTORS.map((factor,index)=>!ordered.includes(index)&&<button key={factor.code} type="button" disabled={disabled} onClick={()=>reorder([...ordered,index])}><span aria-hidden="true">＋</span> {factor.label}</button>)}
+            <p>부담되는 순서대로 누르고, 다시 누르면 해제돼요.</p>
+            <div className={styles.rankChoices} role="group" aria-label="부담 순위 선택">
+                {BURDEN_FACTORS.map((factor,index)=>{
+                    const rank=ordered.indexOf(index)+1
+                    return <button key={factor.code} type="button" aria-label={factor.label} aria-pressed={rank>0} aria-description={rank?`${rank}순위`:'상관없음'} data-rank={rank} disabled={disabled} onClick={()=>reorder(rank?ordered.filter(i=>i!==index):[...ordered,index])}><span className={styles.rank} aria-hidden="true">{rank||'＋'}</span><span className={styles.factor}>{factor.label}</span></button>
+                })}
             </div>
             <p className={styles.note}>선택하지 않은 항목은 ‘상관없음’으로 저장돼요.</p>
+            <button className={styles.reset} type="button" disabled={disabled||!ordered.length} onClick={()=>reorder([])}>순위 다시 정하기</button>
         </section>
         {children}
         {error&&<p className={styles.error} role="alert">{error}</p>}
