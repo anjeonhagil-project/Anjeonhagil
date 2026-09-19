@@ -93,7 +93,7 @@
 
 .compare-footer .route-success button {
     width: 100%;
-    background: #087f8c;
+    background: var(--color-primary-500-main);
     color: white;
     border: 0;
     padding: 14px;

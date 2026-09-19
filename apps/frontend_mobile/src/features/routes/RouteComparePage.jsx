@@ -127,7 +127,7 @@ export default function RouteComparePage() {
                             {exposure.error && <p role="alert">{exposure.error} <button onClick={exposure.retry}>기록 다시 시도</button></p>}
                             {selectedCard && <BurdenTimeline key={selected} candidate={selectedCard} onFocus={e => { setFocusEvent(e); document.querySelector('.compare-map')?.scrollIntoView({ block: 'start', behavior: 'smooth' }) }} />}
                         </div>
-                        <div className="compare-footer">{!chosen ? <><Button fullWidth disabled={!selected || !exposure.hasSeen(selected) || saving} onClick={choose}>{saving ? '저장 중…' : '이 경로 선택하기'}</Button></> : <section className="route-success" role="status"><button className="service-primary" onClick={() => navigate('/navigation?search=' + result.searchId)}>이 경로 안내 시작</button></section>}</div>
+                        <div className="compare-footer">{!chosen ? <><Button fullWidth disabled={!selected || !exposure.hasSeen(selected) || saving} onClick={choose}>{saving ? '저장 중…' : '이 경로 선택하기'}</Button></> : <section className="route-success" role="status"><button className="service-primary" onClick={() => navigate('/navigation?search=' + result.searchId)}>경로 안내 시작</button></section>}</div>
                     </section>
                 </>}
             </div>
