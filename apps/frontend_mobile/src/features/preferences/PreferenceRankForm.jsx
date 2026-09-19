@@ -3,7 +3,7 @@ import Button from '../../components/common/Button/Button.jsx'
 import styles from './PreferenceRankForm.module.css'
 import {BURDEN_FACTORS,DRIVING_FREQUENCY_OPTIONS,normalizePreferences,validatePreferences} from './preferenceFields.js'
 
-export default function PreferenceRankForm({initialValue,onSubmit,submitLabel='설문 저장',disabled=false,children,onDirtyChange,hideSubmit=false}){
+export default function PreferenceRankForm({initialValue,onSubmit,submitLabel='설문 저장',disabled=false,children,onDirtyChange,hideSubmit=false,formId,showSubmit=true}){
     const [answers,setAnswers]=useState(()=>normalizePreferences(initialValue)),[error,setError]=useState('')
     useEffect(()=>{setAnswers(normalizePreferences(initialValue))},[initialValue])
     useEffect(()=>{onDirtyChange?.(JSON.stringify(answers)!==JSON.stringify(normalizePreferences(initialValue)))},[answers,initialValue,onDirtyChange])
@@ -18,7 +18,7 @@ export default function PreferenceRankForm({initialValue,onSubmit,submitLabel='�
         if(message){setError(message);return}
         setError('');await onSubmit(payload)
     }
-    return <form className={styles.form} onSubmit={submit}>
+    return <form id={formId} className={styles.form} onSubmit={submit}>
         <section className={styles.section}>
             <span className={styles.eyebrow}>01 · 운전 경험</span>
             <h2>얼마나 자주 운전하시나요?</h2>
@@ -48,6 +48,6 @@ export default function PreferenceRankForm({initialValue,onSubmit,submitLabel='�
         </section>
         {children}
         {error&&<p className={styles.error} role="alert">{error}</p>}
-        {!hideSubmit&&<Button type="submit" fullWidth disabled={disabled}>{submitLabel}</Button>}
+        {!hideSubmit&&showSubmit&&<Button type="submit" fullWidth disabled={disabled}>{submitLabel}</Button>}
     </form>
 }
