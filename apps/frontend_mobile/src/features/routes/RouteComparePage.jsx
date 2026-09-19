@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import Header from '../../components/layout/Header.jsx'
 import Button from '../../components/common/Button/Button.jsx'
+import Modal from '../../components/common/Modal/Modal.jsx'
 import RouteMap from '../../components/map/RouteMap.jsx'
 import RouteCandidateCard, { ROUTE_LABELS, durationLabel, distanceLabel } from './RouteCandidateCard.jsx'
 import { searchRoutes, getSearch, recordRouteChoice } from './api.js'
@@ -112,7 +113,17 @@ export default function RouteComparePage() {
                     <button className="route-cancel" onClick={() => { abortRef.current?.abort(); navigate('/search') }}>검색 취소</button>
                 </section>}
 
-                {error && <section role="alert" className="service-error">{error}<button onClick={() => { if (result && !loading) { choose(); return } promiseRef.current = null; setAttempt(v => v + 1) }}>{result && !loading ? '선택 저장 다시 시도' : '다시 시도'}</button></section>}
+                <Modal
+                    open={!!error}
+                    icon="warning"
+                    title={result && !loading ? '선택을 저장하지 못했어요' : '경로를 찾지 못했어요'}
+                    description={error}
+                    confirmLabel={result && !loading ? '다시 시도' : '위치 다시 선택하기'}
+                    onConfirm={() => {
+                        if (result && !loading) { choose(); return }
+                        navigate('/search')
+                    }}
+                />
 
                 {result && !loading && <>
                     <div className="compare-map"><RouteMap originSnap={result.originSnap} destinationSnap={result.destinationSnap} focusEvent={focusEvent} candidates={result.candidates} selectedId={selected} onSelect={chosen ? undefined : id => select(id, 'map')} origin={result.origin} destination={result.destination} size="fill" /></div>
