@@ -7,7 +7,7 @@ import {q4Profile} from './q4Profile.service.js'
 async function progress(session) {
     const {data,error}=await supabase.from('ag_q4_responses').select('question_index,answer,answered_at').eq('session_id',session.session_id).order('question_index')
     if(error) throw error
-    return {...session,answers:data,q4AffectsRecommendation:session.case_set_version==='q4_real_routes_20260917',q4Profile:session.completed_at?await q4Profile(session.user_id,session.survey_version):null}
+    return {...session,answers:data,q4AffectsRecommendation:['q4_real_routes_20260917','q4_joint_training_20260917_v1'].includes(session.case_set_version),q4Profile:session.completed_at?await q4Profile(session.user_id,session.survey_version):null}
 }
 export async function items(userId) {
     const {data:cur,error}=await supabase.from('ag_preferences').select('survey_version').eq('user_id',userId).maybeSingle()

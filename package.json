@@ -7,7 +7,7 @@
     "apps/*"
   ],
   "scripts": {
-    "test:q4": "node scripts/test-q4-revisions.mjs && node scripts/test-q4-trial.mjs && node scripts/test-q4-ui.mjs",
+    "test:q4": "node scripts/test-q4-revisions.mjs && node scripts/test-q4-trial.mjs && node scripts/test-q4-serving.mjs && node scripts/test-q4-comparison.mjs && node scripts/test-q4-ui.mjs",
     "export:q4": "node scripts/export-q4-training.mjs",
     "start": "node scripts/start-local.mjs",
     "test": "node scripts/test-service-contract.mjs && node scripts/test-route-comparison.mjs && node scripts/test-admin-usage.mjs && node scripts/test-admin-operations-data.mjs && node scripts/test-navigation.mjs && node scripts/test-q4-policy.mjs",

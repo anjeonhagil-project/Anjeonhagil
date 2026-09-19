@@ -58,6 +58,12 @@
     gap: 0;
 }
 
+.step.embedded {
+    flex: none;
+    overflow: visible;
+    padding: 0;
+}
+
 .step > * {
     flex-shrink: 0;
 }
@@ -159,11 +165,18 @@
 
 .step .option .time {
     display: block;
-    font-size: 25px;
+    font-size: 22px;
     line-height: 1.4;
     margin: 12px 0 0;
     letter-spacing: -.5px;
 }
+
+.bar { display:block; height:7px; width:100%; border-radius:8px; overflow:hidden; background:#e6eded; }
+.bar > span { display:block; height:100%; border-radius:8px; }
+.focus > .bar { min-height:7px; height:7px; }
+.focus small { font-size:10px; font-weight:400; color:#657d81; }
+.difference > span { flex-basis:100%; font-weight:700; color:#235d62; }
+.difference > b { padding:3px 7px; border-radius:6px; background:white; font-size:11px; }
 
 .distance {
     font-size: 13px;

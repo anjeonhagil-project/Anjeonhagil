@@ -6,6 +6,10 @@
 .title {
     font-size: 18px;
 }
+.settings { margin-top: 16px; font-size: 14px; }
+.settings summary { cursor: pointer; padding: 8px 0; }
+.settings label { margin-top: 14px; line-height: 1.5; }
+.settings button { padding: 10px; border: 1px solid #d9e2e8; border-radius: 8px; background: white; }
 
 .subtitle {
     margin-top: 22px;

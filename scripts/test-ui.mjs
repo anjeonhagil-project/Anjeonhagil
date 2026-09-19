@@ -10,7 +10,7 @@ const admin=createClient(env.SUPABASE_URL,env.SUPABASE_SECRET_KEY,{auth:{persist
 const base=process.argv.find(v=>v.startsWith('--url='))?.slice(6)||'http://localhost:5173'
 const email='ag-ui-'+randomUUID()+'@example.test',password=randomBytes(24).toString('base64url')
 const out='.test-tools/ui-results';mkdirSync(out,{recursive:true})
-let userId,browser,page,passed=0,cardCount=0
+let userId,browser,page,context,closing=false,passed=0,cardCount=0
 const q4Only=process.argv.includes('--q4-only')
 const errors=[],providerFailures=[]
 async function assertPageScroll(url,label){
@@ -39,12 +39,18 @@ try{
     if(created.error)throw new Error('UI test account creation failed: '+created.error.code)
     userId=created.data.user.id
     browser=await chromium.launch({executablePath:process.env.CHROME_PATH||'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true})
-    const context=await browser.newContext({viewport:{width:1280,height:1000},locale:'ko-KR'})
+    context=await browser.newContext({viewport:{width:1280,height:1000},locale:'ko-KR'})
     const testApi=process.argv.find(v=>v.startsWith('--api-url='))?.slice(10)
     if(testApi)await context.route(url=>['localhost','127.0.0.1'].includes(url.hostname)&&url.pathname.startsWith('/api/'),async route=>{
         const url=new URL(route.request().url())
-        const response=await route.fetch({url:testApi.replace(/\/$/,'')+url.pathname.slice(4)+url.search})
-        await route.fulfill({response})
+        try{
+            const response=await route.fetch({url:testApi.replace(/\/$/,'')+url.pathname.slice(4)+url.search,timeout:30000})
+            await route.fulfill({response})
+        }catch(error){
+            const kind=/closed|disposed|cancel|abort/i.test(error.message)?'CANCELED':/timeout/i.test(error.message)?'TIMEOUT':'NETWORK'
+            if(!closing)errors.push(`LOCAL_TEST_API_FORWARD_FAILED:${url.pathname}:${kind}`)
+            await route.abort().catch(()=>{})
+        }
     })
     page=await context.newPage();page.setDefaultTimeout(30000)
     // Deterministic foreground GPS callbacks exercise production hook and cleanup.
@@ -68,9 +74,8 @@ try{
     await page.waitForURL('**/location-permission')
     await page.getByRole('button',{name:'위치 권한 허용 거부'}).click()
     await page.getByRole('button',{name:'시작하기',exact:true}).click()
-    await page.getByLabel('운전 빈도').selectOption('daily')
-    const ranks=['2','0','1','0','0','3']
-    for(let i=0;i<6;i++)await page.locator('select').nth(i+1).selectOption(ranks[i])
+    await page.getByRole('button',{name:'거의 매일',exact:true}).click()
+    for(const label of ['좁은 도로·골목길','복잡한 교차로','어린이 보호시설 주변'])await page.getByRole('button',{name:label,exact:true}).click()
     assert.equal(await page.getByText(/^Q3\./).count(),0);passed++
     await page.setViewportSize({width:390,height:430});await assertPageScroll(null,'온보딩 설문');await page.setViewportSize({width:1280,height:1000})
     await page.screenshot({path:out+'/01-survey.png',fullPage:true})
@@ -87,7 +92,7 @@ try{
             await page.setViewportSize({width:360,height:740})
             assert.ok(await page.locator('[data-testid="q4-step"]').evaluate(el=>el.scrollWidth<=el.clientWidth))
             await page.locator('[data-testid="q4-details"] summary').click()
-            assert.equal(await page.locator('[data-testid="q4-details"] tbody tr').count(),5)
+            assert.equal(await page.locator('[data-testid="q4-details"] tbody tr').count(),6)
             assert.ok(await page.locator('[data-testid="q4-step"]').evaluate(el=>el.scrollWidth<=el.clientWidth))
             await page.locator('[data-testid="q4-details"] summary').click()
             await page.locator('[data-testid="q4-title"]').scrollIntoViewIfNeeded()
@@ -100,8 +105,8 @@ try{
         else await page.locator('[data-testid="q4-option"]').nth(i%2).click()
         await page.getByRole('button',{name:i===3?'설정 완료':'다음 문항',exact:true}).click();passed++
     }
-    await page.getByRole('heading',{name:'시간·거리 선호',exact:true}).waitFor()
-    await page.getByText(/^시간 · /).waitFor();passed++
+    await page.getByRole('heading',{name:'나의 운전 선호',exact:true}).waitFor()
+    await page.getByText(/평가가 비슷한 경로에서만|기본 추천을 유지해요/).waitFor();passed++
     await page.setViewportSize({width:360,height:740})
     assert.ok(await page.locator('[data-testid="q4-summary"]').evaluate(el=>el.scrollWidth<=el.clientWidth));passed++
     await page.locator('[data-testid="q4-summary"]').screenshot({path:out+'/11-q4-summary.png'})
@@ -232,7 +237,7 @@ try{
     await assertPageScroll(base+'/terms/service','긴 약관')
     await page.setViewportSize({width:390,height:844})
     await page.goto(base+'/my/driving-preferences')
-    await page.getByText('행동 개인화',{exact:false}).waitFor();passed++
+    await page.getByText('추천 개인화 설정',{exact:false}).waitFor();passed++
     await page.screenshot({path:out+'/05-personalization.png',fullPage:true})
     }
     const choices=await admin.from('ag_choices').select('*',{count:'exact',head:true}).eq('user_id',userId)
@@ -241,17 +246,31 @@ try{
     const answers=await admin.from('ag_q4_responses').select('answer').eq('session_id',q4.data.session_id)
     assert.equal(choices.count,q4Only?0:1);assert.equal(answers.data.length,4);assert.ok(answers.data.some(a=>a.answer==='UNSURE'));passed+=3
     await page.goto(base+'/my/driving-preferences')
-    await page.getByText('새 설문은 모델 학습 준비용이며 실제 이용 건수에 포함되지 않습니다.',{exact:false}).waitFor();passed++
+    await page.getByText('나의 운전 선호',{exact:true}).waitFor();passed++
     assert.equal(await page.getByLabel('이전 설문 결과를 추천에 참고').count(),0);passed++
-    await page.getByRole('button',{name:'시간·거리 선호 다시 설정',exact:true}).click()
+    await page.getByRole('button',{name:'경로 비교 다시 하기',exact:true}).click()
     await page.getByRole('button',{name:'새 설문 시작',exact:true}).click()
     await page.getByText('경로 비교 설문 1 / 4',{exact:true}).waitFor();passed++
     await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click()
     await page.getByRole('button',{name:'다음 문항',exact:true}).click()
     await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor()
     await page.reload()
-    await page.getByRole('button',{name:'시간·거리 설문 이어서 하기',exact:true}).click()
+    await page.getByRole('button',{name:'경로 비교 이어서 하기',exact:true}).click()
     await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor();passed++
+    for(let i=1;i<4;i++){
+        await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click()
+        await page.getByRole('button',{name:i===3?'변경사항 저장':'다음 문항',exact:true}).click()
+    }
+    await page.waitForURL('**/my');await page.getByRole('status').filter({hasText:'변경사항이 저장되었습니다.'}).waitFor();passed++
+    await page.goto(base+'/my/driving-preferences')
+    await page.getByRole('button',{name:'주 1회 이상',exact:true}).click()
+    await page.getByRole('button',{name:'저장하고 경로 비교',exact:true}).click()
+    await page.getByText('경로 비교 설문 1 / 4',{exact:true}).waitFor();passed++
+    for(let i=0;i<4;i++){
+        await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click()
+        await page.getByRole('button',{name:i===3?'변경사항 저장':'다음 문항',exact:true}).click()
+    }
+    await page.waitForURL('**/my');await page.getByRole('status').filter({hasText:'변경사항이 저장되었습니다.'}).waitFor();passed++
     assert.deepEqual(errors,[]);assert.deepEqual(providerFailures,[]);passed+=2
     const report={passed,cardCount,providerFailures,pageErrors:errors,scope:'real Chrome + local API + Supabase, temporary account'}
     writeFileSync(out+(q4Only?'/report-q4.json':'/report.json'),JSON.stringify(report,null,2));console.log(report)
@@ -259,6 +278,8 @@ try{
     if(page){await page.screenshot({path:out+'/failure.png',fullPage:true}).catch(()=>{});writeFileSync(out+'/failure.txt',error.message+'\n'+page.url()+'\n'+JSON.stringify({errors,providerFailures}))}
     throw error
 }finally{
+    closing=true
+    await context?.unrouteAll({behavior:'ignoreErrors'})
     await browser?.close()
     if(userId){await new Promise(r=>setTimeout(r,1500));const {error}=await admin.auth.admin.deleteUser(userId);if(error)console.error('UI test account cleanup failed:',userId,error.code)}
 }

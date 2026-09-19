@@ -1,20 +1,23 @@
-// Q4 초기 선호와 실제 선택 기반 행동 보정을 구분해 표시한다.
 import {useEffect,useState} from 'react'
 import {apiClient} from '../../lib/apiClient.js'
+import {BURDEN_FACTORS} from './preferenceFields.js'
 import styles from './Q4PreferenceSummary.module.css'
-
-const labels={accept_both:'두 예시에서 부담 감소를 선택했어요',prefer_shorter:'두 예시에서 짧은 이동을 선택했어요',accept_small:'작은 증가 예시에서만 부담 감소를 선택했어요',inconsistent:'예시별 선택이 달라 기본 기준을 유지해요',unconfirmed:'판단 보류가 있어 기본 기준을 유지해요',no_reference:'비교할 부담 순위를 먼저 선택해주세요'}
-export default function Q4PreferenceSummary({value}){
+export default function Q4PreferenceSummary({value,ranks}){
     const [loaded,setLoaded]=useState(null),[error,setError]=useState('')
     useEffect(()=>{if(value!==undefined)return;let active=true;apiClient.get('/driving-preferences/personalization').then(r=>active&&setLoaded(r.q4)).catch(e=>active&&setError(e.message));return ()=>{active=false}},[value])
-    const q4=value??loaded
+    const q4=value??loaded, top=BURDEN_FACTORS[ranks?.indexOf(1)]
     return <section className={styles.summary} data-testid="q4-summary">
-        <h3 className={styles.title}>시간·거리 선호</h3>
+        <h3 className={styles.title}>나의 운전 선호</h3>
+        <span className={styles.label}>가장 부담되는 상황</span>
+        <strong className={styles.factor}>{top?.label||'선택한 부담 없음'}</strong>
         {error&&<p role="alert">{error}</p>}
-        {!q4&&!error&&<p role="status">설문 결과를 불러오고 있어요…</p>}
-        {q4&&<>{q4.status==='INCOMPLETE'?<p>현재 부담 설정에 맞는 경로 비교 설문을 진행해주세요.</p>:<>
-            <p>시간 · {labels[q4.axes?.TIME?.state]??'기본 기준 유지'}</p><p>거리 · {labels[q4.axes?.DISTANCE?.state]??'기본 기준 유지'}</p>
-            <p>{!q4.enabled?'시간·거리 선호 반영을 껐어요.':q4.applicable?'추천 평가가 비슷한 후보에서 보조 기준으로 반영해요.':'현재 응답에서는 공통 추천 기준을 유지해요.'}</p>
-        </>}{q4.pending&&<p>진행 중인 설문이 있습니다. 기존 완료 결과는 유지됩니다.</p>}{q4.training&&<p role="status">{q4.training.status==='TRIAL_ONLY'?'새 답변을 저장했습니다. 시간·거리 선호는 모델 검증 후 추천에 반영할 예정입니다.':'답변은 저장했습니다. 아직 선호를 확정하기 어려워 기본 기준을 유지합니다.'}</p>}</>}
+        {!q4&&!error&&<p role="status">설정한 선호를 불러오고 있어요…</p>}
+        {q4&&<>
+            <div className={styles.statuses}>
+                <div><span className={styles.label}>경로 비교</span><span className={styles.badge}>{q4.pending?'작성 중':q4.status==='INCOMPLETE'?'미완료':'완료'}</span></div>
+                <div><span className={styles.label}>추천 반영</span><span className={q4.enabled&&q4.applicable?styles.active:styles.badge}>{!q4.enabled?'꺼짐':q4.status==='INCOMPLETE'?'대기':q4.applicable?'사용 중':'보류'}</span></div>
+            </div>
+            <p className={styles.note}>{q4.pending&&q4.status!=='INCOMPLETE'?(q4.enabled&&q4.applicable?'이전 완료 답변 적용 · 새 답변 작성 중':'이전 답변 저장됨 · 새 답변 작성 중'):!q4.enabled?'답변은 보관하고 기본 추천을 사용해요.':q4.status==='INCOMPLETE'?'Q3에서 경로 비교를 완료해주세요.':q4.applicable?'평가가 비슷한 경로에서만 참고해요.':'현재는 기본 추천을 유지해요.'}</p>
+        </>}
     </section>
 }

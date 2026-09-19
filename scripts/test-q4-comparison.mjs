@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict'
+import {burdenComparison,exactDuration,metricNumber} from '../apps/frontend_mobile/src/features/preferences/q4Comparison.js'
+assert.deepEqual(burdenComparison(100,70).widths,[100,70])
+assert.match(burdenComparison(100,70).summary,/B · A보다 부담 지표 30%/)
+assert.match(burdenComparison(70,100).summary,/A · B보다 부담 지표 30%/)
+assert.deepEqual(burdenComparison(0,0).widths,[0,0])
+assert.match(burdenComparison(0,100).summary,/100%/)
+assert.match(burdenComparison(0.01,100).summary,/99.9%/)
+assert.match(burdenComparison(99.999,100).summary,/0.1% 미만/)
+assert.match(burdenComparison(1,1).summary,/같아요/)
+assert.equal(burdenComparison(NaN,1).valid,false)
+assert.equal(burdenComparison(-1,1).valid,false)
+assert.equal(exactDuration(61),'1분 1초')
+assert.equal(exactDuration(60),'1분')
+assert.equal(exactDuration(30),'30초')
+assert.equal(metricNumber(1234.5),'1,234.5')
+assert.notEqual(metricNumber(0.00001),'0')
+console.log({passed:15,scope:'display only: A/B symmetry, zero, tiny differences, invalid values, time precision'})

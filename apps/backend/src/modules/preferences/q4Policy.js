@@ -1,5 +1,6 @@
 // Q4는 초기 설문 보조 정책이다. X8/공통 모델은 고정하고 근소한 후보 간 추천에만 사용한다.
 // 아래 0.08/0.04는 검증된 심리계수가 아닌 제한된 파일럿 정책값이며 snapshot에 보존한다.
+import {applyServingQ4, POLICY as SERVING_POLICY} from './q4ServingPolicy.js'
 export const Q4_POLICY='q4_tiebreak_20260917'
 export const POLICY=Object.freeze({version:Q4_POLICY,maximumModelGap:.08,maximumAxisBonus:.04,experimental:true})
 const fields={TIME:'display_duration_s',DISTANCE:'distance_m'}
@@ -36,6 +37,7 @@ export function interpretQ4(session,answers){
 }
 
 export function applyQ4(result,preference){
+    if(preference.policy?.version===SERVING_POLICY.version)return applyServingQ4(result,preference)
     const n=result.candidates.length,base=result.recommended_index
     const audit={...preference,applied:false,changed:false,baselineIndex:base,finalIndex:base,reason:'NO_CONFIRMED_PREFERENCE'}
     result.q4=audit

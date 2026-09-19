@@ -78,7 +78,7 @@ function OnboardingPage() {
                     <section className={styles.completeContent}>
                         <div className={styles.completeIcon}><FaCheck /></div>
                         <h2 className={styles.completeTitle}>나의 운전 부담 설정이 완료됐어요</h2>
-                        <Q4PreferenceSummary/>
+                        <Q4PreferenceSummary ranks={initialValue?.ranks}/>
                     </section>
                     <div className={styles.bottomAction}><Button fullWidth onClick={() => navigate('/home', { replace: true })}>안전하길 시작하기</Button></div>
                 </div>

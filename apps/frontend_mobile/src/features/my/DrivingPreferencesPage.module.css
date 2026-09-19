@@ -36,10 +36,14 @@
 }
 
 .questionCard {
-    padding: var(--space-3);
-    border-radius: var(--radius-md);
-    background: var(--color-primary-50);
+    padding: 20px 16px;
+    border: 1px solid #e2ebeb;
+    border-radius: 20px;
+    background: white;
 }
+
+.questionCard > div:not(:global(.service-content)) button,.questionCard > button { min-height:44px; padding:10px 14px; margin:8px 6px 0 0; border:1px solid #bddbd8; border-radius:12px; background:#eaf7f5; color:#166f72; font:inherit; font-size:13px; font-weight:600; cursor:pointer; }
+.questionCard button:focus-visible { outline:3px solid #e3aa39; outline-offset:2px; }
 
 .questionCard h2 {
     display: flex;
