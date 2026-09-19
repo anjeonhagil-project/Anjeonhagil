@@ -1,0 +1,2 @@
+.notice { position: fixed; z-index: 100; bottom: 90px; left: 50%; transform: translateX(-50%); width: min(90vw, 380px); display: flex; align-items: center; justify-content: space-between; gap: 12px; box-sizing: border-box; padding: 14px 18px; border-radius: 12px; background: #164e49; color: white; box-shadow: 0 4px 16px #0002; font-size: 14px; }
+.notice button { border: 0; color: white; background: transparent; font-size: 24px; padding: 4px 8px; cursor: pointer; }

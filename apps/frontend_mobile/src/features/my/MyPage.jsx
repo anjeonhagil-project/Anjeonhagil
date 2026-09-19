@@ -9,6 +9,7 @@ import styles from './MyPage.module.css'
 import { Modal } from '../../components/common/index.js'
 import SocialReauthModal from './Modal/SocialReauthModal.jsx'
 import { withdrawMyAccount } from './api.js'
+import SurveySavedNotice from './SurveySavedNotice.jsx'
 
 
 const MENU_ITEMS = [
@@ -118,6 +119,7 @@ function MyPage() {
 
     return (
         <div className={styles.page}>
+            <SurveySavedNotice/>
             <header className={styles.header}>
                 <h1>마이페이지</h1>
             </header>

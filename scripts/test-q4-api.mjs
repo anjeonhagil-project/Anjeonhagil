@@ -21,9 +21,9 @@ try{
     await call('/users/me/terms','PUT',{agreed:true})
     const pref=await call('/driving-preferences','PUT',{drivingFrequency:'daily',ranks:[1,2,3,0,0,0]})
     const initial=await row('ag_user_profiles')
-    const session=await call('/driving-preferences/q4');assert.equal(session.questions.length,4);assert.equal(session.q4AffectsRecommendation,false);passed+=2
+    const session=await call('/driving-preferences/q4');assert.equal(session.questions.length,4);assert.equal(session.q4AffectsRecommendation,true);passed+=2
     for(let i=0;i<4;i++)await call('/driving-preferences/q4','POST',{sessionId:session.session_id,questionIndex:i,answer:'A'})
-    const state=await call('/driving-preferences/personalization');assert.equal(state.q4.training.status,'TRIAL_ONLY');assert.equal(state.q4.training.policy.productionEnabled,false);assert.equal(state.q4.applicable,false);passed+=3
+    const state=await call('/driving-preferences/personalization');assert.equal(state.q4.training.status,'TRIAL_ONLY');assert.equal(state.q4.training.policy.productionEnabled,false);assert.equal(state.q4.policy.version,'q4_bounded_rerank_20260919_v1');passed+=3
     const restarted=await call('/driving-preferences/q4/restart','POST',{});assert.equal(restarted.surveyVersion,pref.preferences.surveyVersion);assert.deepEqual(await row('ag_user_profiles'),initial);passed+=2
     assert.equal((await call('/driving-preferences/personalization')).q4.pending,true);passed++
     const next=await call('/driving-preferences/q4');assert.notEqual(next.session_id,session.session_id);assert.equal(next.revision,2);passed+=2
@@ -31,14 +31,35 @@ try{
     const resumed=await call('/driving-preferences/q4');assert.equal(resumed.answers.length,1);assert.equal(resumed.session_id,next.session_id);passed+=2
     for(let i=1;i<4;i++)await call('/driving-preferences/q4','POST',{sessionId:next.session_id,questionIndex:i,answer:'B'})
     const updated=await call('/driving-preferences/personalization');assert.equal(updated.q4.training.sessionId,next.session_id);assert.equal(updated.q4.pending,false);assert.deepEqual(await row('ag_user_profiles'),initial);passed+=3
+    const {q4Profile}=await import('../apps/backend/src/modules/preferences/q4Profile.service.js')
+    const serving=await q4Profile(id,pref.preferences.surveyVersion,{includeTraining:false})
+    assert.equal(serving.sessionId,next.session_id);assert.equal(serving.revision,2);assert.equal(serving.training,null);assert.equal(serving.policy.version,'q4_bounded_rerank_20260919_v1');passed+=4
     const sessions=await db.from('ag_q4_sessions').select('*').eq('user_id',id);assert.ifError(sessions.error);assert.equal(sessions.data.length,2);passed++
     const records=[]
     for(const s of sessions.data){const a=await db.from('ag_q4_responses').select('question_index,answer').eq('session_id',s.session_id).order('question_index');assert.ifError(a.error);records.push({session:s,answers:a.data,survey_weights:[.5,1/3,1/6,0,0,0]})}
     mkdirSync('.test-tools/q4-export-qa',{recursive:true});writeFileSync('.test-tools/q4-export-qa/records.json',JSON.stringify(records))
     execFileSync(process.execPath,['scripts/export-q4-training.mjs','--input=.test-tools/q4-export-qa/records.json','--output=.test-tools/q4-export-qa/output'],{env:{...process.env,Q4_EXPORT_KEY:randomBytes(32).toString('hex')},stdio:'pipe'})
     const exported=JSON.parse(readFileSync('.test-tools/q4-export-qa/output/q4-training.json','utf8'));assert.equal(exported.rows.length,8);assert.equal(exported.manifest.eligible_rows,7);assert.equal(exported.rows.some(r=>r.user_id===id),false);passed+=3
+    await call('/driving-preferences/q4/restart','POST',{})
+    assert.equal((await q4Profile(id,pref.preferences.surveyVersion)).sessionId,next.session_id);passed++
+    const heldSession=await call('/driving-preferences/q4')
+    for(let i=0;i<4;i++)await call('/driving-preferences/q4','POST',{sessionId:heldSession.session_id,questionIndex:i,answer:'UNSURE'})
+    const held=await q4Profile(id,pref.preferences.surveyVersion,{includeTraining:false})
+    assert.equal(held.sessionId,heldSession.session_id);assert.equal(held.applicable,false);assert.equal(held.revision,3);passed+=3
     await call('/driving-preferences','PUT',{drivingFrequency:'daily',ranks:[2,1,0,0,0,0]})
-    const changed=await call('/driving-preferences/personalization');assert.equal(changed.q4.status,'INCOMPLETE');assert.equal(changed.q4.training,null);passed+=2
+    const changed=await call('/driving-preferences/personalization');assert.equal(changed.q4.status,'INCOMPLETE');assert.equal(changed.q4.training,null);assert.equal((await call('/driving-preferences')).onboarding.routeChoicesCompleted,false);passed+=3
+    // A legacy user keeps legacy behavior until the new survey completes, even if new result is HELD.
+    const legacyBank=JSON.parse(readFileSync('scripts/fixtures/q4-legacy.json','utf8'))
+    const legacyQuestions=legacyBank.cases.MERGE_BRANCH.map(q=>({...q,routes:q.routes.map((r,i)=>({...r,label:i?'B':'A'}))}))
+    const legacy=await db.rpc('ag_begin_q4',{p_user:id,p_survey:changed.surveyVersion,p_case_set:'q4_real_routes_20260917',p_reference:'MERGE_BRANCH',p_source:'Q2_TOP',p_questions:legacyQuestions});assert.ifError(legacy.error)
+    for(let i=0;i<4;i++)await call('/driving-preferences/q4','POST',{sessionId:legacy.data.session_id,questionIndex:i,answer:'A'})
+    assert.equal((await q4Profile(id,changed.surveyVersion)).policy.version,'q4_tiebreak_20260917');passed++
+    await call('/driving-preferences/q4/restart','POST',{})
+    const transition=await call('/driving-preferences/q4')
+    assert.equal((await q4Profile(id,changed.surveyVersion)).sessionId,legacy.data.session_id);passed++
+    for(let i=0;i<4;i++)await call('/driving-preferences/q4','POST',{sessionId:transition.session_id,questionIndex:i,answer:'A'})
+    const switched=await q4Profile(id,changed.surveyVersion,{includeTraining:false})
+    assert.equal(switched.sessionId,transition.session_id);assert.equal(switched.policy.version,'q4_bounded_rerank_20260919_v1');assert.equal(switched.applicable,false);passed+=3
     const choices=await db.from('ag_choices').select('*',{count:'exact',head:true}).eq('user_id',id);assert.ifError(choices.error);assert.equal(choices.count,0);passed++
     const report={passed,scope:'Production Express routes + hosted Supabase, temporary automated test account; export CLI; not real-user efficacy'}
     writeFileSync('.test-tools/q4-api-report.json',JSON.stringify(report,null,2));console.log(report)

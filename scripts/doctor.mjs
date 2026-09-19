@@ -32,7 +32,17 @@ for(const file of ['ml/bundled/logistic.json','ml/bundled/xgboost.json','apps/ba
 if(process.argv.includes('--db')){
     const result=spawnSync(python,['-X','utf8','database/manage.py','status'],{cwd:root,encoding:'utf8',windowsHide:true,env:{...process.env,PYTHONUTF8:'1'}})
     let s;try{s=JSON.parse(result.stdout).status}catch{}
-    check(result.status===0&&s?.table_count===18&&s?.tables?.includes('ag_q4_profiles')&&s?.tables?.includes('ag_personalization_queue')&&s?.active_release?.length===1&&s?.active_model?.length===1&&s?.unvalidated_constraints?.length===0&&s?.rls_disabled?.length===0&&s?.local_release_matches&&s?.local_model_matches,'원격 DB: 18개 서비스 테이블·Q4 프로필·개인화 대기열·활성 데이터/모델 해시 일치·제약·RLS')
+    // 추가 테이블은 허용하되, 현재 서비스가 사용하는 필수 테이블은 모두 확인한다.
+    const requiredTables=[
+        'ag_dataset_releases','ag_dataset_active','ag_model_versions',
+        'ag_preference_history','ag_preferences','ag_profile_versions','ag_user_profiles',
+        'ag_profile_update_jobs','ag_onboarding_progress','ag_searches','ag_candidates',
+        'ag_exposures','ag_choices','ag_q4_sessions','ag_q4_responses','ag_route_failures',
+        'ag_q4_profiles','ag_personalization_queue','ag_q4_retake_requests','ag_q4_trial_estimates',
+    ]
+    const missingTables=requiredTables.filter(name=>!s?.tables?.includes(name))
+    check(result.status===0&&missingTables.length===0,'원격 DB: 필수 서비스 테이블'+(missingTables.length?' (누락: '+missingTables.join(', ')+')':''))
+    check(result.status===0&&s?.active_release?.length===1&&s?.active_model?.length===1&&s?.unvalidated_constraints?.length===0&&s?.rls_disabled?.length===0&&s?.local_release_matches&&s?.local_model_matches,'원격 DB: 활성 데이터/모델 해시 일치·제약·RLS')
     check(s?.missing_core_tables?.length===0&&s?.browser_table_access?.length===0&&s?.missing_service_read?.length===0,'기존 22개 테이블·서버 조회 권한·브라우저 직접 접근 차단')
 }
 console.log(failures?`${failures}개 항목을 준비한 뒤 다시 검사하세요. 비밀 설정은 .env.example을 참고하세요.`:'실행 준비 검사 통과. 카카오 허용 도메인과 소셜 로그인 설정은 공급자 콘솔에서도 확인하세요.')

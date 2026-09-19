@@ -1,5 +1,6 @@
 // 불변 응답에서 정책 버전별 초기 시간·거리 프로필을 저장한다. 기존 완료 세션도 첫 조회에 재현 가능하게 해석한다.
 import {supabase} from '../../lib/supabase.js'
+import {BANK, servingProfile} from './q4ServingPolicy.js'
 import {interpretQ4,Q4_POLICY,POLICY} from './q4Policy.js'
 import {readFileSync} from 'node:fs'
 import {fitTrial,rowsFor,VERSION,POLICY as TRIAL_POLICY} from '../../../../../ml/q4-trial.mjs'
@@ -12,7 +13,7 @@ export async function q4Profile(userId,surveyVersion,{includeTraining=true}={}){
     const [session,latest,completed,requests]=await Promise.all([
         value(query().eq('case_set_version','q4_real_routes_20260917').not('completed_at','is',null).maybeSingle()),
         includeTraining?value(query().maybeSingle()):null,
-        includeTraining?value(query().not('completed_at','is',null).maybeSingle()):null,
+        value(query().not('completed_at','is',null).maybeSingle()),
         includeTraining?value(supabase.from('ag_q4_retake_requests').select('survey_version').eq('user_id',userId).eq('survey_version',surveyVersion)):[],
     ])
     let training=null
@@ -32,9 +33,11 @@ export async function q4Profile(userId,surveyVersion,{includeTraining=true}={}){
         }
         training={...storedTrial.result,sessionId:completed.session_id,revision:completed.revision}
     }
-    // Preserve the pre-existing serving policy only for legacy sessions. Trial estimates never serve.
+    // Latest completed session wins, even when held; never revive older evidence.
     const context={training,pending:!!latest&&!latest.completed_at||requests.length>0,revision:latest?.revision??null}
     const empty={policy:POLICY,enabled:user.q4_personalization_enabled,applicable:false,axes:{},surveyVersion,sessionId:completed?.session_id??null,status:completed?'COMPLETE':'INCOMPLETE',...context}
+    if(completed?.case_set_version===BANK)return {...empty,...servingProfile(completed,training,trialModel),training:includeTraining?training:null,pending:context.pending,status:'COMPLETE'}
+    if(completed && completed.case_set_version!=='q4_real_routes_20260917')return empty
     if(!session)return empty
     let stored=await value(supabase.from('ag_q4_profiles').select('interpretation').eq('session_id',session.session_id).eq('policy_version',Q4_POLICY).maybeSingle())
     if(!stored){

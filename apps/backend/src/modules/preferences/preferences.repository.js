@@ -22,6 +22,7 @@ export async function findByUserId(userId) {
             .from('ag_q4_sessions')
             .select('survey_version, case_set_version, completed_at, created_at')
             .eq('user_id', userId)
+            .eq('survey_version', current.survey_version)
             .not('completed_at','is',null)
             .order('completed_at',{ascending:false}).limit(1)
             .maybeSingle(),
