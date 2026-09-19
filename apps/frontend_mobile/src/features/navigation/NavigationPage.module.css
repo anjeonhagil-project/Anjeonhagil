@@ -6,7 +6,6 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background: #f5f9f8;
     color: #123f46;
 }
 
@@ -237,6 +236,10 @@
     padding: 32px;
     line-height: 1.7;
     overflow: auto;
+}
+
+.loading {
+    margin: auto;
 }
 
 .empty button {

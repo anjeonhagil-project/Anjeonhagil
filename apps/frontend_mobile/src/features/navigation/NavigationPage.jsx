@@ -7,6 +7,7 @@ import RouteMap from '../../components/map/RouteMap.jsx'
 import BurdenTimeline from '../routes/BurdenTimeline.jsx'
 import useGeolocation from '../../hooks/useGeolocation.js'
 import {advanceGps,buildTrack,pointAt,validFix} from './navigationMath.js'
+import '../routes/serviceRoutes.css'
 import styles from './NavigationPage.module.css'
 const icons={left:'↰',right:'↱',uturn:'↶',arrival:'⚑'}
 const meters=n=>n>=1000?`${(n/1000).toFixed(1)} km`:`${Math.max(0,Math.round(n))} m`
@@ -67,7 +68,7 @@ export default function NavigationPage(){
     }
     return <main className={`${styles.page} journey-wide`} data-testid="navigation-page">
         <Header title="경로 안내" onBack={()=>mode==='ready'||done?leave():setExitOpen(true)}/>
-        {error?<section className={styles.empty} role="alert"><h1>안내를 준비하지 못했어요</h1><p>{error}</p><button onClick={()=>setRetry(n=>n+1)}>다시 시도</button><button onClick={()=>navigate('/search')}>경로 검색</button></section>:!data?<section className={styles.empty} role="status">경로 안내를 준비하고 있습니다…</section>:<>
+        {error?<section className={styles.empty} role="alert"><h1>안내를 준비하지 못했어요</h1><p>{error}</p><button onClick={()=>setRetry(n=>n+1)}>다시 시도</button><button onClick={()=>navigate('/search')}>경로 검색</button></section>:!data?<section className={`route-loading ${styles.loading}`} role="status"><span className="route-spinner"/><h2>경로 안내를 준비하고 있어요</h2><p>선택한 경로를 불러오는 중입니다</p></section>:<>
             <section className={styles.stage} data-testid="navigation-stage">
                 <RouteMap focusEvent={focusEvent} candidates={candidates} selectedId={data.candidate.candidate_id} origin={data.origin} destination={data.destination} size="fill" position={position} progress={current} follow={follow} onPan={()=>setFollow(false)}/>
                 <div className={styles.instruction} data-testid="navigation-instruction" aria-live="polite"><b aria-hidden="true">{done?'⚑':icons[next?.kind]||'↑'}</b><div><strong>{done?(isDemo?'시뮬레이션을 완료했어요':'경로 끝 지점에 도착했어요'):mode==='ready'?'선택한 경로로 출발하세요':tracking||isDemo?`${meters(Math.max(0,(next?.at||0)-current))} 앞`:'위치 확인 중'}</strong><p>{done?'목적지까지 남은 접근 구간과 주변을 확인하세요.':mode==='ready'?data.destination.name||'목적지':tracking||isDemo?next?.instruction:'정확한 위치가 확인되면 안내합니다.'}</p></div></div>
