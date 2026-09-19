@@ -256,34 +256,6 @@
     margin: 8px;
 }
 
-.dialog {
-    position: fixed;
-    inset: 0;
-    margin: auto;
-    width: min(360px, 85vw);
-    height: fit-content;
-    border: 0;
-    border-radius: 20px;
-    padding: 24px;
-    color: #123f46;
-}
-
-/* 실제로 dialog가 열렸을 때만 flex 적용 */
-.dialog[open] {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
-
-.dialog h2,
-.dialog p {
-    margin: 0;
-}
-
-.dialog::backdrop {
-    background: #123f4670;
-}
-
 @media (max-height: 550px) and (max-width: 899px) {
     .instruction {
         padding: 8px;
