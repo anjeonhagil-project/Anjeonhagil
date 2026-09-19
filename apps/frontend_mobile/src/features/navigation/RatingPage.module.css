@@ -1,0 +1,70 @@
+.page {
+    height: calc(var(--layout-max-height) - var(--statusbar-height));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--color-bg-white);
+    color: var(--color-text);
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+}
+
+.destination {
+    margin: 0;
+    font-size: var(--font-size-base);
+    color: var(--color-text-sub);
+    overflow-wrap: anywhere;
+}
+
+.stars {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+}
+
+.star {
+    display: flex;
+    padding: var(--space-1);
+    border: 0;
+    background: none;
+    font-size: 40px;
+    color: var(--color-border-gray);
+    cursor: pointer;
+}
+
+.star.filled {
+    color: var(--color-accent-gold);
+}
+
+.star:focus-visible {
+    outline: 2px solid var(--color-primary-500-main);
+    border-radius: var(--radius-sm);
+}
+
+.label {
+    min-height: 1.5em;
+    margin: 0;
+    font-size: var(--font-size-md);
+    color: var(--color-text-sub);
+}
+
+.footer {
+    flex-shrink: 0;
+    padding: var(--space-3) var(--space-5) max(var(--space-5), env(safe-area-inset-bottom));
+    background: var(--color-bg-white);
+}
