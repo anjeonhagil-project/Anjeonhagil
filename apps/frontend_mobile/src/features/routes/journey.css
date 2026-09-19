@@ -175,7 +175,8 @@
 }
 
 @media(prefers-reduced-motion:reduce) {
-    .route-spinner {
+    .route-spinner,
+    .route-loading-message {
         animation: none
     }
 }

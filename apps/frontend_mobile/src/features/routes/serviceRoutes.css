@@ -168,6 +168,22 @@
     }
 }
 
+.route-loading-message {
+    animation: route-message-in .4s ease
+}
+
+@keyframes route-message-in {
+    from {
+        opacity: 0;
+        transform: translateY(4px)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
 .route-endpoints {
     font-weight: 700;
     margin: 0
