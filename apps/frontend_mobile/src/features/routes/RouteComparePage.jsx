@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import Header from '../../components/layout/Header.jsx'
+import Button from '../../components/common/Button/Button.jsx'
+import Modal from '../../components/common/Modal/Modal.jsx'
 import RouteMap from '../../components/map/RouteMap.jsx'
 import RouteCandidateCard, { ROUTE_LABELS, durationLabel, distanceLabel } from './RouteCandidateCard.jsx'
 import { searchRoutes, getSearch, recordRouteChoice } from './api.js'
@@ -10,10 +12,31 @@ import BurdenTimeline from './BurdenTimeline.jsx'
 import './serviceRoutes.css'
 import './journey.css'
 
+// 서버 진행 신호가 없으므로 시간에 따라 넘기는 안내 문구다. 실제 단계 완료를 뜻하지 않는다.
+const LOADING_STEPS = [
+    { title: '내게 맞는 길 찾는 중', desc: '출발지와 도착지를 도로에 맞추고 있어요' },
+    { title: '빠른 길과 짧은 길 찾는 중', desc: '시간대별 도로 속도를 반영합니다' },
+    { title: '운전 부담이 적은 길 찾는 중', desc: '교차로·좁은 길·어린이구역을 계산합니다' },
+    { title: '다른 경로도 비교 중', desc: '여러 후보를 다시 검산하고 있어요' },
+    { title: '거의 다 됐어요', desc: '장거리는 조금 더 걸릴 수 있어요' }
+]
+const LOADING_STEP_MS = 4000
+
 export default function RouteComparePage() {
     const location = useLocation(), navigate = useNavigate(), [params, setParams] = useSearchParams()
     const inputRef = useRef(null), promiseRef = useRef(null), choiceRef = useRef(crypto.randomUUID()), interaction = useRef({ selectionSource: null, selectionChanges: 0 }), frozenChoice = useRef(null), abortRef = useRef(null), cleanupRef = useRef(null)
     const [result, setResult] = useState(null), [selected, setSelected] = useState(null), [error, setError] = useState(''), [loading, setLoading] = useState(true), [saving, setSaving] = useState(false), [chosen, setChosen] = useState(false), [attempt, setAttempt] = useState(0)
+    const [loadingStep, setLoadingStep] = useState(0)
+
+    // 마지막 문구에서 멈춰 오래 걸려도 같은 문구를 반복하지 않는다.
+    useEffect(() => {
+        if (!loading) return
+        setLoadingStep(0)
+        const timer = setInterval(() => {
+            setLoadingStep(step => Math.min(step + 1, LOADING_STEPS.length - 1))
+        }, LOADING_STEP_MS)
+        return () => clearInterval(timer)
+    }, [loading])
 
     useEffect(() => {
         clearTimeout(cleanupRef.current)
@@ -106,12 +129,24 @@ export default function RouteComparePage() {
             <div className="service-content compare-layout">
                 {loading && <section className="route-loading" role="status">
                     <span className="route-spinner" />
-                    <h2>내게 맞는 길을 찾고 있어요</h2>
-                    <p>도로 연결과 운전 부담을 계산합니다</p>
-                    <button className="route-cancel" onClick={() => { abortRef.current?.abort(); navigate('/search') }}>검색 취소</button>
+                    <div key={loadingStep} className="route-loading-message">
+                        <h2>{LOADING_STEPS[loadingStep].title}</h2>
+                        <p>{LOADING_STEPS[loadingStep].desc}</p>
+                    </div>
+                    <Button variant="secondary" size="sm" className="route-cancel" onClick={() => { abortRef.current?.abort(); navigate('/search') }}>검색 취소</Button>
                 </section>}
 
-                {error && <section role="alert" className="service-error">{error}<button onClick={() => { if (result && !loading) { choose(); return } promiseRef.current = null; setAttempt(v => v + 1) }}>{result && !loading ? '선택 저장 다시 시도' : '다시 시도'}</button></section>}
+                <Modal
+                    open={!!error}
+                    icon="warning"
+                    title={result && !loading ? '선택을 저장하지 못했어요' : '경로를 찾지 못했어요'}
+                    description={error}
+                    confirmLabel={result && !loading ? '다시 시도' : '위치 다시 선택하기'}
+                    onConfirm={() => {
+                        if (result && !loading) { choose(); return }
+                        navigate('/search')
+                    }}
+                />
 
                 {result && !loading && <>
                     <div className="compare-map"><RouteMap originSnap={result.originSnap} destinationSnap={result.destinationSnap} focusEvent={focusEvent} candidates={result.candidates} selectedId={selected} onSelect={chosen ? undefined : id => select(id, 'map')} origin={result.origin} destination={result.destination} size="fill" /></div>
@@ -126,7 +161,7 @@ export default function RouteComparePage() {
                             {exposure.error && <p role="alert">{exposure.error} <button onClick={exposure.retry}>기록 다시 시도</button></p>}
                             {selectedCard && <BurdenTimeline key={selected} candidate={selectedCard} onFocus={e => { setFocusEvent(e); document.querySelector('.compare-map')?.scrollIntoView({ block: 'start', behavior: 'smooth' }) }} />}
                         </div>
-                        <div className="compare-footer">{!chosen ? <><button className="service-primary" disabled={!selected || !exposure.hasSeen(selected) || saving} onClick={choose}>{saving ? '저장 중…' : '이 경로 선택하기'}</button></> : <section className="route-success" role="status"><button className="service-primary" onClick={() => navigate('/navigation?search=' + result.searchId)}>이 경로 안내 시작</button></section>}</div>
+                        <div className="compare-footer">{!chosen ? <><Button fullWidth disabled={!selected || !exposure.hasSeen(selected) || saving} onClick={choose}>{saving ? '저장 중…' : '이 경로 선택하기'}</Button></> : <section className="route-success" role="status"><button className="service-primary" onClick={() => navigate('/navigation?search=' + result.searchId)}>경로 안내 시작</button></section>}</div>
                     </section>
                 </>}
             </div>

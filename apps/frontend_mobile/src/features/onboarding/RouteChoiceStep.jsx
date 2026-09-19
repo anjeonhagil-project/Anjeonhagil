@@ -20,15 +20,30 @@ export default function RouteChoiceStep({onComplete,completionLabel='설정 완�
         }).catch(e=>active&&setError(e.message))
         return ()=>{active=false}
     },[attempt])
+
     async function next(){
         if(!choice||busy)return
         setBusy(true);setError('')
+
         try {
             const r=await apiClient.post('/driving-preferences/q4',{sessionId:session.session_id,questionIndex:index,answer:choice})
-            if(r.completed){window.dispatchEvent(new Event('anjeon:profile-updated'));onComplete();return}
-            setChoice(null);setIndex(r.answered)
-        }catch(e){setError(e.message)}finally{setBusy(false)}
+
+            if(r.completed){
+                window.dispatchEvent(new Event('anjeon:profile-updated'))
+                onComplete()
+                return
+            }
+
+            setChoice(null)
+            setIndex(r.answered)
+
+        } catch(e) {
+            setError(e.message)
+        } finally {
+            setBusy(false)
+        }
     }
+
     const q=session?.questions[index]
     useEffect(()=>{if(content.current){if(embedded)content.current.scrollIntoView({block:'start'});else content.current.scrollTop=0}},[q?.question_id,embedded])
     const factor=BURDEN_FACTORS.find(f=>f.code===session?.reference_factor)

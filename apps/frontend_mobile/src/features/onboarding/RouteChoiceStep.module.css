@@ -11,7 +11,7 @@
 .progress > span {
     display: block;
     height: 100%;
-    background: #087f8c;
+    background: var(--color-primary-500-main);
 }
 
 /* 설문은 고정 4문항이라 진행률을 단계별 클래스로 표시한다 */
@@ -45,8 +45,11 @@
     cursor: pointer;
 }
 
-.unsure.selected {
-    border: 2px solid #087f8c;
+/* .step .unsure(아래)의 border-color보다 우선하도록 .step을 함께 쓴다 */
+.step .unsure.selected {
+    color: var(--color-text);
+    border: 2px solid var(--color-primary-500-main);
+    background-color: var(--color-primary-50);
 }
 
 /* RouteChoiceStep 전용 규칙 */
@@ -66,11 +69,13 @@
 }
 
 .step .progress {
-    margin: 8px 0 0;
+    margin: 4px 0 0;
 }
 
 .step .title {
     font-size: 23px;
+    color: var(--color-text);
+
     line-height: 1.4;
     letter-spacing: -.6px;
     margin: 18px 0 10px;
@@ -130,27 +135,27 @@
     display: flex;
     flex-direction: column;
     padding: 14px 12px;
-    border: 2px solid #dce7e7;
+    border: 2px solid var(--color-border-gray);
     border-radius: 16px;
     background: #fff;
     color: #173e43;
     text-align: left;
     font: inherit;
     cursor: pointer;
-    box-shadow: 0 3px 10px #163e4305;
 }
 
 .step .option.selected {
-    border-color: #087f8c;
-    background: #f0faf8;
-    box-shadow: 0 0 0 1px #087f8c;
+    border-color: var(--color-primary-500-main);
+    background: var(--color-primary-50);
 }
 
 .cardHeading {
     display: flex;
     width: 100%;
     justify-content: space-between;
+
     font-size: 14px;
+    color: var(--color-text);
 }
 
 .step .cardHeading b {
@@ -202,19 +207,14 @@
     margin: 0;
 }
 
-.unitNote {
-    font-size: 12px;
-    line-height: 1.65;
-    color: #64797e;
-    margin: 8px 0 14px;
-}
-
 .step .unsure {
     width: 100%;
     min-height: 46px;
     border-radius: 12px;
-    font: inherit;
+    border-color: var(--color-border-gray);
+
     font-size: 14px;
+    color: var(--color-text);
 }
 
 .step .unsure + :global(.service-note) {
@@ -280,4 +280,11 @@
 .step button:disabled {
     cursor: default;
     opacity: .6;
+}
+
+/* 스크롤 영역 밖에서 화면 하단에 고정되는 버튼 영역 */
+.footer {
+    flex-shrink: 0;
+    padding: var(--space-5) max(var(--space-5), env(safe-area-inset-bottom));
+    background: white;
 }

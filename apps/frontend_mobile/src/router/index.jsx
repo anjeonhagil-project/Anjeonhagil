@@ -19,6 +19,7 @@ import FavoriteDetailPage from '../features/favorites/FavoriteDetailPage.jsx'
 import RouteComparePage from '../features/routes/RouteComparePage.jsx'
 import RouteHistoryPage from '../features/routes/RouteHistoryPage.jsx'
 import NavigationPage from '../features/navigation/NavigationPage.jsx'
+import RatingPage from '../features/navigation/RatingPage.jsx'
 import AuthRedirect from './AuthRedirect.jsx'
 
 import ProfileManagePage from '../features/my/ProfileManagePage.jsx'
@@ -47,6 +48,7 @@ function AppRouter() {
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/route-compare" element={<RouteComparePage />} />
                 <Route path="/navigation" element={<NavigationPage />} />
+                <Route path="/navigation/rating" element={<RatingPage />} />
                 <Route path="/favorites" element={<FavoritesPage />} />
 
                 <Route path="/my" element={<MyPage />} />
