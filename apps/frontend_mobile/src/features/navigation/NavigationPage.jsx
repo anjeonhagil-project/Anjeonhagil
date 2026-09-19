@@ -4,6 +4,7 @@ import {useNavigate,useSearchParams} from 'react-router-dom'
 import {apiClient} from '../../lib/apiClient.js'
 import Header from '../../components/layout/Header.jsx'
 import RouteMap from '../../components/map/RouteMap.jsx'
+import Modal from '../../components/common/Modal/Modal.jsx'
 import BurdenTimeline from '../routes/BurdenTimeline.jsx'
 import useGeolocation from '../../hooks/useGeolocation.js'
 import {advanceGps,buildTrack,pointAt,validFix} from './navigationMath.js'
@@ -15,7 +16,7 @@ export default function NavigationPage(){
     const [params]=useSearchParams(),navigate=useNavigate(),searchId=params.get('search')
     const [data,setData]=useState(null),[error,setError]=useState(''),[retry,setRetry]=useState(0)
     const [mode,setMode]=useState('ready'),[progress,setProgress]=useState(0),[playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1),[gps,setGps]=useState({}),[voice,setVoice]=useState(false),[follow,setFollow]=useState(true),[clock,setClock]=useState(Date.now()),[exitOpen,setExitOpen]=useState(false)
-    const spoken=useRef(new Set()),dialog=useRef(null)
+    const spoken=useRef(new Set())
     const [focusEvent,setFocusEvent]=useState(null)
     useEffect(()=>{let active=true;setData(null);setError('');setMode('ready');setGps({});setProgress(0)
         if(!searchId){setError('선택한 경로가 없습니다. 먼저 경로를 선택해주세요.');return}
@@ -57,16 +58,16 @@ export default function NavigationPage(){
     },[voice,next,current,tracking,mode,playing,done])
     useEffect(()=>{if(!voice||done||(!tracking&&!(mode==='demo'&&playing)))window.speechSynthesis?.cancel()},[voice,done,tracking,mode,playing])
     useEffect(()=>()=>window.speechSynthesis?.cancel(),[])
-    useEffect(()=>{if(exitOpen)dialog.current?.showModal();else dialog.current?.close()},[exitOpen])
     function start(nextMode){spoken.current.clear();window.speechSynthesis?.cancel();setGps({});setProgress(0);setMode(nextMode);setPlaying(nextMode==='demo');setFollow(true)}
     function leave(){setMode('ready');setPlaying(false);window.speechSynthesis?.cancel();navigate(searchId?'/route-compare?search='+encodeURIComponent(searchId):'/search')}
+    function exit(){setMode('ready');setPlaying(false);window.speechSynthesis?.cancel();navigate('/search')}
     function finish(){setPlaying(false);window.speechSynthesis?.cancel();navigate('/navigation/rating',{replace:true,state:{destination:data.destination.name}})}
     function reroute(){
         if(!validFix(gps.fix)||gpsError)return
         setMode('ready');window.speechSynthesis?.cancel()
         navigate('/route-compare',{state:{origin:{name:'현위치',lat:gps.fix.lat,lng:gps.fix.lng,...(Number.isFinite(gps.fix.heading)&&gps.fix.speed>2?{heading:gps.fix.heading}:{})},destination:data.destination,departureAt:new Date().toISOString()}})
     }
-    return <main className={`${styles.page} journey-wide`} data-testid="navigation-page">
+    return <><main className={`${styles.page} journey-wide`} data-testid="navigation-page">
         <Header title="경로 안내" onBack={()=>mode==='ready'||done?leave():setExitOpen(true)}/>
         {error?<section className={styles.empty} role="alert"><h1>안내를 준비하지 못했어요</h1><p>{error}</p><button onClick={()=>setRetry(n=>n+1)}>다시 시도</button><button onClick={()=>navigate('/search')}>경로 검색</button></section>:!data?<section className={`route-loading ${styles.loading}`} role="status"><span className="route-spinner"/><h2>경로 안내를 준비하고 있어요</h2><p>선택한 경로를 불러오는 중입니다</p></section>:<>
             <section className={styles.stage} data-testid="navigation-stage">
@@ -88,6 +89,8 @@ export default function NavigationPage(){
                 <details><summary>전체 안내 {track.steps.length}개</summary><ol className={styles.steps}>{track.steps.map(s=><li key={s.id} className={s.at<current?styles.passed:''}><span>{icons[s.kind]} {s.instruction}</span><small>출발 기준 {meters(s.at)}</small></li>)}</ol></details> */}
             </section>
         </>}
-        <dialog ref={dialog} onCancel={()=>setExitOpen(false)} className={styles.dialog}><h2>안내를 종료할까요?</h2><p>위치 추적과 음성 안내를 멈춥니다.</p><div className={styles.actions}><button onClick={()=>setExitOpen(false)}>계속 안내</button><button className={styles.primary} onClick={leave}>종료하기</button></div></dialog>
     </main>
+    {/* .page button 규칙이 공통 Button을 덮지 않도록 main 바깥에 둔다. 배경은 폰 프레임 기준으로 깔린다. */}
+    <Modal open={exitOpen} icon="warning" title="안내를 종료할까요?" description="위치 추적과 음성 안내를 멈춥니다." cancelLabel="계속 안내" onCancel={()=>setExitOpen(false)} confirmLabel="종료하기" onConfirm={exit}/>
+    </>
 }
