@@ -59,6 +59,7 @@ export default function NavigationPage(){
     useEffect(()=>{if(exitOpen)dialog.current?.showModal();else dialog.current?.close()},[exitOpen])
     function start(nextMode){spoken.current.clear();window.speechSynthesis?.cancel();setGps({});setProgress(0);setMode(nextMode);setPlaying(nextMode==='demo');setFollow(true)}
     function leave(){setMode('ready');setPlaying(false);window.speechSynthesis?.cancel();navigate(searchId?'/route-compare?search='+encodeURIComponent(searchId):'/search')}
+    function finish(){setPlaying(false);window.speechSynthesis?.cancel();navigate('/navigation/rating',{replace:true,state:{destination:data.destination.name}})}
     function reroute(){
         if(!validFix(gps.fix)||gpsError)return
         setMode('ready');window.speechSynthesis?.cancel()
@@ -80,7 +81,7 @@ export default function NavigationPage(){
                 {mode==='gps'&&<button disabled={!validFix(gps.fix,clock)||!!gpsError} onClick={reroute}>현위치에서 다시 검색</button>}
                 {mode==='ready'&&<div className={styles.actions}><button className={styles.primary} onClick={()=>start('gps')}>경로 안내 시작</button><button onClick={()=>start('demo')}>시뮬레이션 시작</button></div>}
                 {mode==='demo'&&<div className={styles.actions}><button className={styles.primary} onClick={()=>setPlaying(v=>!v)}>{playing?'일시정지':'계속 재생'}</button><label>재생 속도 <select aria-label="재생 속도" value={speed} onChange={e=>setSpeed(Number(e.target.value))}>{[1,2,4,16].map(v=><option key={v} value={v}>{v}배</option>)}</select></label><button onClick={()=>start('demo')}>처음부터</button></div>}
-                {done&&<div className={styles.actions}><button className={styles.primary} onClick={leave}>안내 마치기</button>{isDemo&&<button onClick={()=>start('demo')}>다시 재생</button>}</div>}
+                {done&&<div className={styles.actions}><button className={styles.primary} onClick={finish}>안내 마치기</button>{isDemo&&<button onClick={()=>start('demo')}>다시 재생</button>}</div>}
                 {!done&&mode!=='ready'&&<button onClick={()=>setExitOpen(true)}>안내 종료</button>}
                 {/* <p className={styles.note}>{isDemo?'가상 위치로 재생 중 · 실제 주행·학습 기록에 반영되지 않습니다.':data.notice} 현재 경로는 참고 안내이며 실시간 교통·차선 안내는 포함하지 않습니다.</p>
                 <details><summary>전체 안내 {track.steps.length}개</summary><ol className={styles.steps}>{track.steps.map(s=><li key={s.id} className={s.at<current?styles.passed:''}><span>{icons[s.kind]} {s.instruction}</span><small>출발 기준 {meters(s.at)}</small></li>)}</ol></details> */}
