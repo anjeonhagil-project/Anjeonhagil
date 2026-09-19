@@ -183,6 +183,14 @@
     color: #5d7479;
 }
 
+.unitNote {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #365b60;
+    word-break: keep-all;
+}
+
 .focus {
     display: flex;
     flex-direction: column;
@@ -214,6 +222,7 @@
     border-color: var(--color-border-gray);
 
     font-size: 14px;
+    font-weight: 500;
     color: var(--color-text);
 }
 
@@ -285,6 +294,6 @@
 /* 스크롤 영역 밖에서 화면 하단에 고정되는 버튼 영역 */
 .footer {
     flex-shrink: 0;
-    padding: var(--space-5) max(var(--space-5), env(safe-area-inset-bottom));
+    padding: var(--space-3) var(--space-5) max(var(--space-5), env(safe-area-inset-bottom));
     background: white;
 }

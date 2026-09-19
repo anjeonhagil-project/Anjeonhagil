@@ -101,9 +101,9 @@ try{
             await page.setViewportSize({width:1280,height:1000})
             await page.screenshot({path:out+'/02-q4.png',fullPage:true});passed+=6
         }
-        if(i===2)await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click()
+        if(i===2)await page.getByRole('button',{name:'상관없음',exact:true}).click()
         else await page.locator('[data-testid="q4-option"]').nth(i%2).click()
-        await page.getByRole('button',{name:i===3?'설정 완료':'다음 문항',exact:true}).click();passed++
+        await page.getByRole('button',{name:i===3?'설정 완료':'다음',exact:true}).click();passed++
     }
     await page.getByRole('heading',{name:'나의 운전 선호',exact:true}).waitFor()
     await page.getByText(/평가가 비슷한 경로에서만|기본 추천을 유지해요/).waitFor();passed++
@@ -251,15 +251,15 @@ try{
     await page.getByRole('button',{name:'경로 비교 다시 하기',exact:true}).click()
     await page.getByRole('button',{name:'새 설문 시작',exact:true}).click()
     await page.getByText('경로 비교 설문 1 / 4',{exact:true}).waitFor();passed++
-    await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click()
-    await page.getByRole('button',{name:'다음 문항',exact:true}).click()
+    await page.getByRole('button',{name:'상관없음',exact:true}).click()
+    await page.getByRole('button',{name:'다음',exact:true}).click()
     await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor()
     await page.reload()
     await page.getByRole('button',{name:'경로 비교 이어서 하기',exact:true}).click()
     await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor();passed++
     for(let i=1;i<4;i++){
-        await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click()
-        await page.getByRole('button',{name:i===3?'변경사항 저장':'다음 문항',exact:true}).click()
+        await page.getByRole('button',{name:'상관없음',exact:true}).click()
+        await page.getByRole('button',{name:i===3?'변경사항 저장':'다음',exact:true}).click()
     }
     await page.waitForURL('**/my');await page.getByRole('status').filter({hasText:'변경사항이 저장되었습니다.'}).waitFor();passed++
     await page.goto(base+'/my/driving-preferences')
@@ -267,8 +267,8 @@ try{
     await page.getByRole('button',{name:'저장하고 경로 비교',exact:true}).click()
     await page.getByText('경로 비교 설문 1 / 4',{exact:true}).waitFor();passed++
     for(let i=0;i<4;i++){
-        await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click()
-        await page.getByRole('button',{name:i===3?'변경사항 저장':'다음 문항',exact:true}).click()
+        await page.getByRole('button',{name:'상관없음',exact:true}).click()
+        await page.getByRole('button',{name:i===3?'변경사항 저장':'다음',exact:true}).click()
     }
     await page.waitForURL('**/my');await page.getByRole('status').filter({hasText:'변경사항이 저장되었습니다.'}).waitFor();passed++
     assert.deepEqual(errors,[]);assert.deepEqual(providerFailures,[]);passed+=2

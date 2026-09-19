@@ -11,6 +11,7 @@ export default function DrivingPreferencesPage(){
     const navigate=useNavigate()
     const [dirty,setDirty]=useState(false)
     const [comparisonBusy,setComparisonBusy]=useState(false)
+    const [footerTarget,setFooterTarget]=useState(null)
     const [summaryTarget,setSummaryTarget]=useState(null),[actionsTarget,setActionsTarget]=useState(null)
     const [initialValue,setInitialValue]=useState(null),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState(''),[screen,setScreen]=useState('survey'),[attempt,setAttempt]=useState(0),[completed,setCompleted]=useState(false)
     useEffect(()=>{let active=true;setLoading(true);setError('');getDrivingPreferences().then(r=>{if(active){setInitialValue(r.preferences);setCompleted(!!r.onboarding?.routeChoicesCompleted&&r.onboarding?.usesCurrentSurvey!==false)}}).catch(e=>active&&setError(e.message)).finally(()=>active&&setLoading(false));return()=>{active=false}},[attempt])
@@ -37,12 +38,13 @@ export default function DrivingPreferencesPage(){
                     {dirty&&<p className={styles.description}>위 요약은 현재 저장된 선호입니다. 운전 빈도나 부담 순위를 저장하면 새 설문으로 기록되며, 경로 비교 4문항도 다시 진행합니다.</p>}
                     <PreferenceRankForm initialValue={initialValue} onSubmit={save} onDirtyChange={setDirty} hideSubmit={screen==='q3'} disabled={busy||screen==='q3'} submitLabel={busy?'저장 중…':dirty||!completed?'저장하고 경로 비교':'변경사항 저장'}>
                         <section className={styles.questionCard} aria-label="Q3 경로 비교">
-                            {screen==='q3'?<><p className={styles.description}>기본 설정은 저장되어 있습니다. 비교 답변은 문항마다 저장되며, 나중에 이어서 할 수 있어요.</p><RouteChoiceStep embedded onBusyChange={setComparisonBusy} onComplete={finish} completionLabel="변경사항 저장"/><button type="button" disabled={comparisonBusy} onClick={()=>setScreen('survey')}>비교 잠시 닫기</button></>:<><h2>Q3. 경로 비교</h2><p className={styles.description}>두 경로 중 하나를 고르는 비교 4문항입니다. 시간·거리와 부담되는 상황을 함께 살펴봐주세요.</p>{dirty?<p className={styles.description}>수정한 기본 설정을 먼저 저장하면 새 기준으로 비교를 시작합니다.</p>:<div ref={setActionsTarget}/>}</>}
+                            {screen==='q3'?<><p className={styles.description}>기본 설정은 저장되어 있습니다. 비교 답변은 문항마다 저장되며, 나중에 이어서 할 수 있어요.</p><RouteChoiceStep embedded footerTarget={footerTarget} onBusyChange={setComparisonBusy} onComplete={finish} completionLabel="변경사항 저장"/><button type="button" disabled={comparisonBusy} onClick={()=>setScreen('survey')}>비교 잠시 닫기</button></>:<><h2>Q3. 경로 비교</h2><p className={styles.description}>두 경로 중 하나를 고르는 비교 4문항입니다. 시간·거리와 부담되는 상황을 함께 살펴봐주세요.</p>{dirty?<p className={styles.description}>수정한 기본 설정을 먼저 저장하면 새 기준으로 비교를 시작합니다.</p>:<div ref={setActionsTarget}/>}</>}
                         </section>
                     </PreferenceRankForm>
                     <PersonalizationSettings key={initialValue.surveyVersion} ranks={initialValue.ranks} summaryTarget={summaryTarget} actionsTarget={!dirty&&screen!=='q3'?actionsTarget:null} locked={busy||screen==='q3'} onQ4={()=>{setCompleted(false);setScreen('q3')}}/>
                 </>}
             </>}
         </section>
+        <div ref={setFooterTarget} style={{flexShrink:0}}/>
     </main>
 }
