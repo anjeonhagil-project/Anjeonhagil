@@ -35,10 +35,10 @@ try{
     const preferences=await call('/driving-preferences',user.token,'PUT',answers)
     assert.equal(preferences.onboarding.routeChoicesCompleted,false);passed++
     const q4=await call('/driving-preferences/q4',user.token)
-    assert.equal(q4.questions.length,4);assert.deepEqual(q4.questions.map(q=>q.dimension),['TIME','TIME','DISTANCE','DISTANCE']);passed+=2
+    assert.equal(q4.questions.length,4);assert.deepEqual(q4.questions.map(q=>q.dimension),['TIME','DISTANCE','TIME','DISTANCE']);passed+=2
     for(let i=0;i<4;i++)await call('/driving-preferences/q4',user.token,'POST',{sessionId:q4.session_id,questionIndex:i,answer:q4.questions[i].routes.find(r=>r.route_key===q4.questions[i].lower_burden_route_key).label})
     const initial=await call('/driving-preferences/personalization',user.token)
-    assert.equal(initial.q4.axes.TIME.state,'accept_both');assert.equal(initial.q4.applicable,true);passed+=2
+    assert.equal(initial.q4.training.status,'TRIAL_ONLY');assert.equal(initial.q4.applicable,false);passed+=2
     await call('/driving-preferences/q4/settings',user.token,'PATCH',{enabled:'yes'},400)
     const repeated=await call('/driving-preferences/q4',user.token)
     assert.equal(repeated.q4Profile.sessionId,q4.session_id);passed++
@@ -65,7 +65,7 @@ try{
     await call('/routes/searches/'+result.searchId+'/candidates/'+randomUUID()+'/burden',user.token,'GET',undefined,404)
     const recovered=await call('/routes/searches/'+result.searchId,user.token)
     assert.deepEqual(recovered.candidates,result.candidates);passed++
-    assert.equal(result.q4.sessionId,q4.session_id);assert.equal(result.q4.policy.version,'q4_tiebreak_20260917')
+    assert.equal(result.q4.applied,false);assert.equal(result.q4.policy.version,'q4_tiebreak_20260917')
     assert.deepEqual(recovered.q4,result.q4);passed+=3
     const off=await call('/driving-preferences/q4/settings',user.token,'PATCH',{enabled:false})
     assert.equal(off.q4.enabled,false)
@@ -102,8 +102,8 @@ try{
     await call('/admin/operations/routes',other.token)
     await call('/admin/operations/failures',other.token)
     const restart=await call('/driving-preferences/q4/restart',user.token,'POST',{})
-    assert.notEqual(restart.surveyVersion,initial.surveyVersion)
-    assert.equal((await call('/driving-preferences/personalization',user.token)).q4.status,'INCOMPLETE')
+    assert.equal(restart.surveyVersion,initial.surveyVersion)
+    assert.equal((await call('/driving-preferences/personalization',user.token)).q4.pending,true)
     assert.deepEqual((await call('/routes/searches/'+result.searchId,user.token)).q4,result.q4);passed+=3
     const report={passed,scope:'local HTTP and remote Supabase with disposable accounts',routingSeconds:result.diagnostics.elapsed_seconds,candidates:result.candidates.length,q4Separated:true}
     writeFileSync('.test-tools/service-api-report.json',JSON.stringify(report,null,2));console.log(report)

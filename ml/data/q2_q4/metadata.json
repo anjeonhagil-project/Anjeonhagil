@@ -1,0 +1,159 @@
+{
+  "purpose": "synthetic_q2_q4_common_model_comparison",
+  "training_source": "SYNTHETIC_Q2_Q4_PROFILE",
+  "real_user_validated": false,
+  "model_not_run": true,
+  "scaler_fitted": false,
+  "search_count": 3000,
+  "pair_row_count": 6000,
+  "candidate_count_per_search": 3,
+  "pair_rows_per_search": 2,
+  "split_search_counts": {
+    "train": 2100,
+    "validation": 450,
+    "test": 450
+  },
+  "split_pair_counts": {
+    "train": 4200,
+    "validation": 900,
+    "test": 900
+  },
+  "generation_seed": 42,
+  "placement_seed": 2026,
+  "q4_seed": 20260917,
+  "feature_names": [
+    "time_diff",
+    "distance_diff",
+    "intersection_weighted_diff",
+    "merge_weighted_diff",
+    "narrow_weighted_diff",
+    "turn_weighted_diff",
+    "consecutive_weighted_diff",
+    "child_100m_weighted_diff"
+  ],
+  "factor_order": [
+    "COMPLEX_INTERSECTION",
+    "MERGE_BRANCH",
+    "NARROW_ROAD",
+    "UNFAMILIAR_TURN",
+    "CONSECUTIVE_ACTION",
+    "CHILD_ZONE_NEARBY"
+  ],
+  "raw6_units": [
+    "count",
+    "score*m",
+    "score*m",
+    "count",
+    "count",
+    "m"
+  ],
+  "feature_version": "static_burden_v5_child_circle_inside",
+  "contract_version": "anjeon_contract_v6_child100",
+  "csv_audit_columns_not_model_features": [
+    "sample_weight",
+    "m_time",
+    "m_distance"
+  ],
+  "time_policy": "display_duration_s=floor(legacy_time_s/60+0.5)*60; matches service UI",
+  "original_baseline_replay": {
+    "status": "passed",
+    "rows": 6000,
+    "sha256": "3914545283566a538f9ea0dd7dc5fde8638e544742f24773625af7567dbf18d7"
+  },
+  "original_generator": {
+    "name": "generate_synthetic_child100_final_data.py",
+    "sha256": "1d7cc7da601f2b6de63fa971bbbc7a1d7e964c907a09273bbaf30bd273219293",
+    "preserved": [
+      "route distributions",
+      "Q2 distribution",
+      "noise draws",
+      "split RNG",
+      "placement RNG"
+    ]
+  },
+  "label_policy": {
+    "cost": "0.68*m_time*display_duration_s/650 + 0.32*m_distance*distance_m/5000 + 2.8*sum(Q2*raw6/norm)",
+    "burden_norm": [
+      3,
+      1800,
+      900,
+      2,
+      6,
+      450
+    ],
+    "noise": "original Gumbel(0,0.34) draws per candidate",
+    "selection": "argmin(cost+noise)",
+    "y": "1 iff displayed A is chosen",
+    "cost_reference_units_are_not_fitted_scaler": true
+  },
+  "q4_profile": {
+    "mode": "simulated",
+    "distribution_assumption": "independent LogUniform(0.5,2) for each multiplier",
+    "bounds": [
+      0.5,
+      2.0
+    ],
+    "not_fit_from_q4_answers": true,
+    "fallback": "[1,1] for no Q2 priority or ineligible bank factor",
+    "status_counts": {
+      "HELD_NO_Q2_PRIORITY": 452,
+      "SIMULATED_PROFILE": 2127,
+      "HELD_BANK_INELIGIBLE": 421
+    },
+    "bank_version": "q4_joint_training_20260917_v1",
+    "bank_sha256": "94b66a390048ec0c79a7b38bad93c79910fd96e0231e7c4e34999feb8b79813a",
+    "trial_policy_reference_only_not_executed": {
+      "regularization": 1,
+      "minimumAnswers": 3,
+      "minimumDesignRatio": 0.01
+    }
+  },
+  "pair_policy": "chosen vs each unchosen; random A/B; no reverse augmentation",
+  "sample_weight_policy": "1 / pairs_per_search = 0.5",
+  "q2_control": "same NEW chosen/Y, candidates, split, A/B and sample weights; Q4 omitted from X only; audit m columns still describe the synthetic profile",
+  "choice_changes_due_to_q4_with_displayed_time": 79,
+  "choice_changes_due_to_time_rounding_without_q4": 35,
+  "comparison_limit": "Old published metrics vs new metrics also differ in labels/pairs and displayed time. Use matched control for Q4 input ablation.",
+  "validation": {
+    "status": "passed",
+    "search_count": 3000,
+    "pair_row_count": 6000,
+    "split_search_counts": {
+      "train": 2100,
+      "validation": 450,
+      "test": 450
+    },
+    "split_pair_counts": {
+      "train": 4200,
+      "validation": 900,
+      "test": 900
+    },
+    "checks": [
+      "X8 formula/order/finite",
+      "Q2 once",
+      "Q4 per search",
+      "AB sign reversal",
+      "selected vs unselected only",
+      "no reverse duplicates",
+      "weight sum 1 per search",
+      "search-disjoint 70:15:15",
+      "matched Q2-only control"
+    ]
+  },
+  "versions": {
+    "python": "3.12.8",
+    "numpy": "2.5.3"
+  },
+  "code_sha256": {
+    "generate_synthetic_q2_q4.py": "0ca2a273d260c775c9838c1cecce25783cce0819a56c75973476fc0e342f09c2",
+    "q2_q4_features.py": "8723d06426f9b057ceb4a2fc6eb2b09194a89c3812aebccba0034bfa4ef170dc",
+    "features.py": "603afcf50c22cd4603fc44dfdd039500242899bf9261f9699aeb634ea6fbe4b9",
+    "inference.py": "41c168b4eefbe237ecb75ea93d4aa9a597527928c7e1300d7a54126fa1234999"
+  },
+  "output_sha256": {
+    "synthetic_pairwise_q2_q4.csv": "c69a0f4daec499adb5487431fce22c86229a36394ad0a326d065791868a94a1b",
+    "synthetic_pairwise_q2_control.csv": "50c9d7b54cfc6d2808f28991a3a62cd3b148aef56c427afadf9547ee481c22de",
+    "synthetic_searches_q2_q4.json": "394fe75a060148c0b5c3bf7df43657c06705fa5e052bc8fe9c16c698f6ec2d4b"
+  },
+  "warning": "Synthetic profiles and choices, not real Q4 responses. Input and labels share an assumed cost rule; no real-user efficacy claim."
+}

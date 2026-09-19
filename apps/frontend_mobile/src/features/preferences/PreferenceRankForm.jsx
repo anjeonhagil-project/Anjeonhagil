@@ -27,6 +27,9 @@ function PreferenceRankForm({ initialValue, onSubmit, submitLabel = '설문 저�
         }))
     }
 
+    const usedRanks = answers.ranks.filter((rank) => rank > 0)
+
+
     const submit = async (event) => {
         event.preventDefault()
         const validationError = validatePreferences(answers)
@@ -69,9 +72,20 @@ function PreferenceRankForm({ initialValue, onSubmit, submitLabel = '설문 저�
                         >
                             <option value="" disabled>선택</option>
                             <option value="0">상관없음</option>
-                            {BURDEN_FACTORS.map((_, rankIndex) => (
-                                <option key={rankIndex + 1} value={rankIndex + 1}>{rankIndex + 1}순위</option>
-                            ))}
+                            {BURDEN_FACTORS.map((_, rankIndex) => {
+                                const rank = rankIndex + 1
+                                const isUsedByAnother = answers.ranks[index] !== rank && usedRanks.includes(rank)
+
+                                if (isUsedByAnother) {
+                                    return null
+                                }
+
+                                return (
+                                    <option key={rank} value={rank}>
+                                        {rank}순위
+                                    </option>
+                                )
+                            })}
                         </select>
                     </label>
                 ))}

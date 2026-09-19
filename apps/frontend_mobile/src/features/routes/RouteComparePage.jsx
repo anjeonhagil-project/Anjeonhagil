@@ -15,7 +15,7 @@ export default function RouteComparePage() {
     const location = useLocation(), navigate = useNavigate(), [params, setParams] = useSearchParams()
     const inputRef = useRef(null), promiseRef = useRef(null), choiceRef = useRef(crypto.randomUUID()), interaction = useRef({ selectionSource: null, selectionChanges: 0 }), frozenChoice = useRef(null), abortRef = useRef(null), cleanupRef = useRef(null)
     const [result, setResult] = useState(null), [selected, setSelected] = useState(null), [error, setError] = useState(''), [loading, setLoading] = useState(true), [saving, setSaving] = useState(false), [chosen, setChosen] = useState(false), [attempt, setAttempt] = useState(0)
-    
+
     useEffect(() => {
         clearTimeout(cleanupRef.current)
 
@@ -58,7 +58,7 @@ export default function RouteComparePage() {
 
             if (!savedId) setParams({ search: data.searchId }, { replace: true })
         }).catch(e => { if (active) setError(e.message) }).finally(() => active && setLoading(false))
-        
+
             return () => {
                 active = false
                 cleanupRef.current = setTimeout(() => abortRef.current?.abort(), 0)
@@ -93,7 +93,7 @@ export default function RouteComparePage() {
 
             setSelected(id); setFocusEvent(null)
             setExpanded(true)
-            
+
             if (source === 'map') {
                 requestAnimationFrame(() => document.querySelector(`[data-candidate-id="${id}"]`)?.scrollIntoView({ block: 'center', behavior: 'smooth' }))
             }
@@ -118,7 +118,7 @@ export default function RouteComparePage() {
                     <div className="compare-map"><RouteMap originSnap={result.originSnap} destinationSnap={result.destinationSnap} focusEvent={focusEvent} candidates={result.candidates} selectedId={selected} onSelect={chosen ? undefined : id => select(id, 'map')} origin={result.origin} destination={result.destination} size="fill" /></div>
                     <section className={'compare-panel' + (expanded ? '' : ' collapsed')}>
                         <button className="compare-toggle" aria-expanded={expanded} onClick={() => setExpanded(v => !v)}>{expanded ? '▼ 경로 정보 접기' : '▲ 경로 정보 펼치기'}</button>
-                        
+
                         <p className="route-endpoints">{result.origin.name || '출발지'} → {result.destination.name || '도착지'}</p>
                         <div className="compare-details hide-scrollbar" hidden={!expanded}>
                             {/* {result.q4?.applied && <p className="service-note">{result.q4.changed ? '추천 평가가 비슷한 후보 중 시간·거리 설문 응답을 참고해 골랐어요.' : '시간·거리 설문 응답을 참고했으며 기존 추천을 유지했어요.'}</p>}

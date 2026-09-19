@@ -237,23 +237,20 @@ try{
     }
     const choices=await admin.from('ag_choices').select('*',{count:'exact',head:true}).eq('user_id',userId)
     const q4=await admin.from('ag_q4_sessions').select('session_id,case_set_version').eq('user_id',userId).single()
-    assert.equal(q4.data.case_set_version,'q4_real_routes_20260917');passed++
+    assert.equal(q4.data.case_set_version,'q4_joint_training_20260917_v1');passed++
     const answers=await admin.from('ag_q4_responses').select('answer').eq('session_id',q4.data.session_id)
     assert.equal(choices.count,q4Only?0:1);assert.equal(answers.data.length,4);assert.ok(answers.data.some(a=>a.answer==='UNSURE'));passed+=3
     await page.goto(base+'/my/driving-preferences')
-    await page.getByLabel('시간·거리 설문을 추천에 참고').click()
-    await page.getByText('시간·거리 선호 반영을 껐어요.',{exact:true}).waitFor();passed++
-    assert.equal(await page.getByLabel('시간·거리 설문을 추천에 참고').isChecked(),false)
-    await page.getByLabel('시간·거리 설문을 추천에 참고').click()
-    await page.getByText('시간·거리 선호 반영을 껐어요.',{exact:true}).waitFor({state:'hidden'});passed++
-    assert.equal(await page.getByLabel('시간·거리 설문을 추천에 참고').isChecked(),true)
-    await page.getByRole('button',{name:'경로 비교 설문 다시하기',exact:true}).click()
+    await page.getByText('새 설문은 모델 학습 준비용이며 실제 이용 건수에 포함되지 않습니다.',{exact:false}).waitFor();passed++
+    assert.equal(await page.getByLabel('이전 설문 결과를 추천에 참고').count(),0);passed++
+    await page.getByRole('button',{name:'시간·거리 선호 다시 설정',exact:true}).click()
     await page.getByRole('button',{name:'새 설문 시작',exact:true}).click()
     await page.getByText('경로 비교 설문 1 / 4',{exact:true}).waitFor();passed++
     await page.getByRole('button',{name:'판단하기 어려워요',exact:true}).click()
     await page.getByRole('button',{name:'다음 문항',exact:true}).click()
     await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor()
     await page.reload()
+    await page.getByRole('button',{name:'시간·거리 설문 이어서 하기',exact:true}).click()
     await page.getByText('경로 비교 설문 2 / 4',{exact:true}).waitFor();passed++
     assert.deepEqual(errors,[]);assert.deepEqual(providerFailures,[]);passed+=2
     const report={passed,cardCount,providerFailures,pageErrors:errors,scope:'real Chrome + local API + Supabase, temporary account'}

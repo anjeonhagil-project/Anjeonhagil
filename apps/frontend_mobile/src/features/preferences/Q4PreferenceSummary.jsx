@@ -12,9 +12,9 @@ export default function Q4PreferenceSummary({value}){
         <h3 className={styles.title}>시간·거리 선호</h3>
         {error&&<p role="alert">{error}</p>}
         {!q4&&!error&&<p role="status">설문 결과를 불러오고 있어요…</p>}
-        {q4&&<>{q4.status==='INCOMPLETE'?<p>경로 비교 설문을 완료하면 첫 추천부터 참고합니다.</p>:<>
+        {q4&&<>{q4.status==='INCOMPLETE'?<p>현재 부담 설정에 맞는 경로 비교 설문을 진행해주세요.</p>:<>
             <p>시간 · {labels[q4.axes?.TIME?.state]??'기본 기준 유지'}</p><p>거리 · {labels[q4.axes?.DISTANCE?.state]??'기본 기준 유지'}</p>
             <p>{!q4.enabled?'시간·거리 선호 반영을 껐어요.':q4.applicable?'추천 평가가 비슷한 후보에서 보조 기준으로 반영해요.':'현재 응답에서는 공통 추천 기준을 유지해요.'}</p>
-        </>}</>}
+        </>}{q4.pending&&<p>진행 중인 설문이 있습니다. 기존 완료 결과는 유지됩니다.</p>}{q4.training&&<p role="status">{q4.training.status==='TRIAL_ONLY'?'새 답변을 저장했습니다. 시간·거리 선호는 모델 검증 후 추천에 반영할 예정입니다.':'답변은 저장했습니다. 아직 선호를 확정하기 어려워 기본 기준을 유지합니다.'}</p>}</>}
     </section>
 }

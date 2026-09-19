@@ -7,15 +7,13 @@ import {q4Profile} from './q4Profile.service.js'
 async function progress(session) {
     const {data,error}=await supabase.from('ag_q4_responses').select('question_index,answer,answered_at').eq('session_id',session.session_id).order('question_index')
     if(error) throw error
-    return {...session,answers:data,q4AffectsRecommendation:true,q4Profile:session.completed_at?await q4Profile(session.user_id,session.survey_version):null}
+    return {...session,answers:data,q4AffectsRecommendation:session.case_set_version==='q4_real_routes_20260917',q4Profile:session.completed_at?await q4Profile(session.user_id,session.survey_version):null}
 }
 export async function items(userId) {
     const {data:cur,error}=await supabase.from('ag_preferences').select('survey_version').eq('user_id',userId).maybeSingle()
     if(error) throw error
     if(!cur) throw Object.assign(new Error('기본 설문부터 완료해주세요'),{status:409})
-    const {data:session,error:se}=await supabase.from('ag_q4_sessions').select('*').eq('user_id',userId).eq('survey_version',cur.survey_version).maybeSingle()
-    if(se) throw se
-    if(session) return progress(session)
+    // ag_begin_q4 serializes resume/restart under the user lock, including concurrent tabs.
     const {data:history,error:he}=await supabase.from('ag_preference_history').select('ranks').eq('survey_version',cur.survey_version).single()
     if(he) throw he
     const top=history.ranks.indexOf(1),reference=FACTOR_ORDER[top<0?2:top]
