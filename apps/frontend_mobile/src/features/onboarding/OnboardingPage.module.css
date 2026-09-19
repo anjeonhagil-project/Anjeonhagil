@@ -115,6 +115,13 @@
     margin-top: auto;
 }
 
+/* 스크롤 영역(.body) 밖에서 화면 하단에 고정되는 버튼 영역 */
+.fixedAction {
+    flex-shrink: 0;
+    padding: var(--space-3) var(--space-5) max(var(--space-5), env(safe-area-inset-bottom));
+    background: var(--color-bg-white);
+}
+
 .helperText {
     margin-bottom: var(--space-3);
     color: var(--color-text-faint);

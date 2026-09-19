@@ -30,7 +30,7 @@ export default function RouteMap({ candidates = [], selectedId, onSelect, origin
         for (const c of candidates) {
             const path = c.geometry.coordinates.map(([lng, lat]) => new kakao.maps.LatLng(lat, lng))
             path.forEach(p => bounds.extend(p))
-            const line = new kakao.maps.Polyline({ map, path, strokeWeight: c.candidate_id === selectedId ? 7 : 4, strokeColor: comparison ? (c.label === 'B' ? '#5264ba' : '#087f8c') : c.candidate_id === selectedId ? '#087f8c' : '#a7b6c6', strokeStyle: comparison && c.label === 'B' ? 'dash' : 'solid', strokeOpacity: .9, zIndex: c.candidate_id === selectedId ? 3 : 1 })
+            const line = new kakao.maps.Polyline({ map, path, strokeWeight: c.candidate_id === selectedId ? 7 : 4, strokeColor: comparison ? (c.label === 'B' ? '#5264ba' : '#087f8c') : c.candidate_id === selectedId ? '#087f8c' : '#a7b6c6', strokeStyle: 'solid', strokeOpacity: .9, zIndex: c.candidate_id === selectedId ? 3 : 1 })
             const click = () => selectRef.current?.(c.candidate_id)
             kakao.maps.event.addListener(line, 'click', click); lines.push([line, click])
         }

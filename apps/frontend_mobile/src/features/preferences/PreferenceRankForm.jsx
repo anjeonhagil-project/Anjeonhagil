@@ -9,7 +9,8 @@ import {
     validatePreferences,
 } from './preferenceFields.js'
 
-function PreferenceRankForm({ initialValue, onSubmit, submitLabel = '설문 저장', disabled = false }) {
+// showSubmit=false면 버튼을 그리지 않는다. 부모가 폼 밖에 <button form={formId}>를 두어 하단에 고정할 때 쓴다.
+function PreferenceRankForm({ initialValue, onSubmit, submitLabel = '설문 저장', disabled = false, formId, showSubmit = true }) {
     const [answers, setAnswers] = useState(() => normalizePreferences(initialValue))
     const [error, setError] = useState('')
 
@@ -41,7 +42,7 @@ function PreferenceRankForm({ initialValue, onSubmit, submitLabel = '설문 저�
     }
 
     return (
-        <form className={styles.form} onSubmit={submit}>
+        <form id={formId} className={styles.form} onSubmit={submit}>
             <section className={styles.section}>
                 <h2>Q1. 평소 얼마나 자주 운전하시나요?</h2>
                 <select
@@ -59,7 +60,7 @@ function PreferenceRankForm({ initialValue, onSubmit, submitLabel = '설문 저�
 
             <section className={styles.section}>
                 <h2>Q2. 부담되는 상황의 순위를 정해주세요.</h2>
-                <p>부담되지 않는 항목은 ‘상관없음’을 선택하세요. 나머지는 1순위부터 연속으로 선택합니다.</p>
+                <p>부담되지 않는 항목은 ‘상관없음’을 선택하세요.<br></br>나머지는 1순위부터 연속으로 선택합니다.</p>
                 {BURDEN_FACTORS.map((factor, index) => (
                     <label key={factor.code} className={styles.rankRow}>
                         <span>{factor.label}</span>
@@ -93,7 +94,7 @@ function PreferenceRankForm({ initialValue, onSubmit, submitLabel = '설문 저�
 
 
             {error && <p className={styles.error} role="alert">{error}</p>}
-            <Button type="submit" fullWidth disabled={disabled}>{submitLabel}</Button>
+            {showSubmit && <Button type="submit" fullWidth disabled={disabled}>{submitLabel}</Button>}
         </form>
     )
 }
