@@ -132,18 +132,8 @@
 
 .route-cancel {
     margin-top: 12px;
-    padding: 10px 16px;
-    border: 1px solid var(--color-border-gray);
-    border-radius: 10px;
-    background: white;
-    color: var(--color-primary-600);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.route-cancel:hover {
-    background: #edf7f5;
+    color: white;
+    background-color: var(--color-primary-500-main);
 }
 
 @media(max-height:550px) and (max-width:899px) {

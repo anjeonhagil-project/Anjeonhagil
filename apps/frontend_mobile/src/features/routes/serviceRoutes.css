@@ -9,8 +9,7 @@
     height: calc(var(--layout-max-height) - var(--statusbar-height));
     min-height: 0;
     overflow: hidden;
-    background: #f6f8fa;
-    color: #20323f
+    color: #20323f;
 }
 
 .service-content {

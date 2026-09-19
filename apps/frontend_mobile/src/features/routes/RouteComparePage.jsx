@@ -110,7 +110,7 @@ export default function RouteComparePage() {
                     <span className="route-spinner" />
                     <h2>내게 맞는 길을 찾고 있어요</h2>
                     <p>도로 연결과 운전 부담을 계산합니다</p>
-                    <button className="route-cancel" onClick={() => { abortRef.current?.abort(); navigate('/search') }}>검색 취소</button>
+                    <Button variant="secondary" size="sm" className="route-cancel" onClick={() => { abortRef.current?.abort(); navigate('/search') }}>검색 취소</Button>
                 </section>}
 
                 <Modal
