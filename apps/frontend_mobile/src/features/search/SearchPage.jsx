@@ -163,6 +163,15 @@ function SearchPage() {
                 destination: toRoutePoint(destination.place),
             },
         })
+
+    }
+
+    const swapRouteFields = () => {
+        setOrigin(destination)
+        setDestination(origin)
+        setActiveField((field) => field === 'origin' ? 'destination' : 'origin')
+        setResults([])
+        setMessage('')
     }
 
     const homeFavorite = favorites.find((favorite) => favorite.placeType === 'home')
@@ -189,22 +198,41 @@ function SearchPage() {
                                 onCompositionEnd={() => { composingRef.current = false }}
                             />
                             {value.text && (
-                                <button type="button" className={styles.clearBtn} aria-label="입력 지우기" onClick={() => changeField(field, '')}>
+                                <button
+                                    type="button"
+                                    className={styles.clearBtn}
+                                    aria-label="입력 지우기"
+                                    onClick={() => changeField(field, '')}
+                                >
                                     <IoClose size={16} />
                                 </button>
                             )}
                         </div>
                     ))}
                 </div>
-                <button
-                    type="button"
-                    className={styles.searchBtn}
-                    aria-label="경로 검색"
-                    disabled={!canSearchRoute}
-                    onClick={handleSearchRoute}
-                >
-                    <IoSearchOutline size={20} />
-                </button>
+
+                <div className={styles.routeActions}>
+                    <button
+                        type="button"
+                        className={styles.swapBtn}
+                        aria-label="출발지와 도착지 바꾸기"
+                        title="출발지와 도착지 바꾸기"
+                        onClick={swapRouteFields}
+                    >
+                        ⇅
+                    </button>
+
+                    <button
+                        type="button"
+                        className={styles.searchBtn}
+                        aria-label="경로 검색"
+                        title="경로 검색"
+                        disabled={!canSearchRoute}
+                        onClick={handleSearchRoute}
+                    >
+                        <IoSearchOutline size={20} />
+                    </button>
+                </div>
             </div>
 
             <button

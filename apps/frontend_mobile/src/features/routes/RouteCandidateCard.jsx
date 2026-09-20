@@ -19,8 +19,9 @@ export default function RouteCandidateCard({candidate,selected,recommended,onSel
         {recommended && candidate.route_types.includes('PERSONALIZED') && (candidate.route_types.includes('SHORTEST_TIME')
                 ? <p className="service-note">최단시간 경로와 동일한 경로예요</p>
                 : comparison && <p className="service-note">
-                    최단시간 후보 대비 {comparison.minutes===0?'표시 시간 동일':`${Math.abs(comparison.minutes)}분 ${comparison.minutes>0?'더 소요':'단축'}`} · 거리 {comparison.meters===0?'동일':`${distanceLabel(Math.abs(comparison.meters))} ${comparison.meters>0?'증가':'감소'}`}
-                    {comparison.reductions.map(r=><span key={r.index}><br/>{BURDEN_FACTORS[r.index].label} 약 {Math.round(r.percent)}% 감소</span>)}
+                    최단시간 대비 {comparison.minutes===0?'표시 시간 동일':`${Math.abs(comparison.minutes)}분 ${comparison.minutes>0?'▲ ':'단축 ▼ '}`}
+                    <br />거리 {comparison.meters===0?'동일':`${distanceLabel(Math.abs(comparison.meters))} ${comparison.meters>0?' ▲':' ▼'}`}
+                    {comparison.reductions.map(r=><span key={r.index}><br/>{BURDEN_FACTORS[r.index].label} 약 {Math.round(r.percent)}% ▼</span>)}
                     {comparison.increases.map(r=><span key={r.index}><br/>{BURDEN_FACTORS[r.index].label} {increaseLabel(r.percent)}</span>)}
                 </p>
         )}
@@ -31,8 +32,8 @@ export default function RouteCandidateCard({candidate,selected,recommended,onSel
 // 100% 이상 증가율을 배수 표현
 export const increaseLabel = percent => {
     if (percent === null) return '추가 발생'
-    if (percent < 100) return `약 ${Math.round(percent)}% 증가`
+    if (percent < 100) return `약 ${Math.round(percent)}% 증가 ▲ `
 
     const multiple = Number((1 + percent / 100).toFixed(1))
-    return `최단시간 경로의 약 ${multiple}배`
+    return `약 ${multiple}배 ▲`
 }
